@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Catalog",
+  "type": "object",
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Record"
+      }
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0
+    },
+    "snapshots": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Snapshot"
+      }
+    },
+    "source": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "source",
+    "snapshots",
+    "records"
+  ],
+  "$defs": {
+    "Fact": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "description": "JSON Pointer into the original response, including the record path.",
+          "type": "string"
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "pointer"
+      ]
+    },
+    "Origin": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "type": "string"
+        },
+        "snapshot": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "snapshot",
+        "pointer"
+      ]
+    },
+    "Record": {
+      "type": "object",
+      "properties": {
+        "facts": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/Fact"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/RecordKind"
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "origin": {
+          "$ref": "#/$defs/Origin"
+        },
+        "schema_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0
+        },
+        "source": {
+          "type": "string"
+        },
+        "upstream_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "id",
+        "source",
+        "upstream_id",
+        "name",
+        "origin",
+        "facts"
+      ]
+    },
+    "RecordKind": {
+      "type": "string",
+      "enum": [
+        "model",
+        "service"
+      ]
+    },
+    "Snapshot": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "upstream_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "id",
+        "source",
+        "url",
+        "retrieved_at",
+        "sha256"
+      ]
+    }
+  }
+}

@@ -1,0 +1,523 @@
+"schema_version": 1
+"sources":
+  "anthropic-messages":
+    "url": "https://platform.claude.com/docs/en/api/messages/create"
+    "title": "Create a Message — Claude API"
+    "checked_on": "2026-10-15"
+  "anthropic-structured":
+    "url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+    "title": "Structured outputs — Claude Platform Docs"
+    "checked_on": "2026-10-15"
+  "aws-message":
+    "url": "https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Message.html"
+    "title": "Message — Amazon Bedrock API Reference"
+    "checked_on": "2026-10-15"
+  "chronos-card":
+    "url": "https://huggingface.co/amazon/chronos-2"
+    "title": "amazon/chronos-2 — Author model card"
+    "checked_on": "2026-10-15"
+  "cohere-embed-api":
+    "url": "https://docs.cohere.com/reference/embed"
+    "title": "Embed API v2 — Cohere"
+    "checked_on": "2026-10-15"
+  "cohere-embed-models":
+    "url": "https://docs.cohere.com/docs/cohere-embed"
+    "title": "Cohere Embed Models"
+    "checked_on": "2026-10-15"
+  "cohere-rerank-api":
+    "url": "https://docs.cohere.com/v2/reference/rerank"
+    "title": "Rerank API v2 — Cohere"
+    "checked_on": "2026-10-15"
+  "esmc-card":
+    "url": "https://huggingface.co/biohub/ESMC-6B"
+    "title": "biohub/ESMC-6B — Author model card"
+    "checked_on": "2026-10-15"
+  "google-cloud-generate-content":
+    "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/rest/v1/projects.locations.endpoints/generateContent"
+    "title": "Method: endpoints.generateContent — Google Cloud Gemini API"
+    "checked_on": "2026-10-15"
+  "google-generate-content":
+    "url": "https://ai.google.dev/api/generate-content"
+    "title": "Generating content — Gemini API"
+    "checked_on": "2026-10-15"
+  "google-live":
+    "url": "https://ai.google.dev/gemini-api/docs/live-api/capabilities"
+    "title": "Live API capabilities guide — Gemini API"
+    "checked_on": "2026-10-15"
+  "google-structured":
+    "url": "https://ai.google.dev/gemini-api/docs/structured-output"
+    "title": "Structured outputs — Gemini API"
+    "checked_on": "2026-10-15"
+  "google-thinking":
+    "url": "https://ai.google.dev/gemini-api/docs/generate-content/thinking"
+    "title": "Gemini thinking — Generate Content API"
+    "checked_on": "2026-10-15"
+  "mistral-audio":
+    "url": "https://docs.mistral.ai/studio/audio/overview"
+    "title": "Audio — Mistral Docs"
+    "checked_on": "2026-10-15"
+  "mistral-limits":
+    "url": "https://docs.mistral.ai/resources/known-limitations"
+    "title": "Known limitations — Mistral Docs"
+    "checked_on": "2026-10-15"
+  "mistral-offline":
+    "url": "https://docs.mistral.ai/studio/audio/speech_to_text/offline_transcription"
+    "title": "Offline transcription — Mistral Docs"
+    "checked_on": "2026-10-15"
+  "openvla-card":
+    "url": "https://huggingface.co/openvla/openvla-7b"
+    "title": "openvla/openvla-7b — Author model card"
+    "checked_on": "2026-10-15"
+  "sam2-readme":
+    "url": "https://github.com/facebookresearch/sam2/blob/main/README.md"
+    "title": "SAM 2 official README"
+    "checked_on": "2026-10-15"
+"assertions":
+- "id": "gemini-generate-system-image"
+  "scope":
+    "kind": "interface"
+    "id": "google/gemini-developer.generate-content.v1beta"
+  "property": "input.system_instruction.image"
+  "value": false
+  "status": "unsupported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "google-generate-content"
+    "locator": "Request body / systemInstruction"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "Applies to systemInstruction.parts, not ordinary contents image parts."
+- "id": "cloud-generate-system-image"
+  "scope":
+    "kind": "interface"
+    "id": "google/cloud-gemini.generate-content.v1"
+  "property": "input.system_instruction.image"
+  "value": false
+  "status": "unsupported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "google-cloud-generate-content"
+    "locator": "Request body / systemInstruction"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "The old Vertex publisher URL redirected; final REST reference covers publisher models and tuned endpoints."
+- "id": "bedrock-image-roles"
+  "scope":
+    "kind": "interface"
+    "id": "aws/bedrock.converse"
+  "property": "input.image.allowed_message_roles"
+  "value":
+  - "user"
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "aws-message"
+    "locator": "Contents / content"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+- "id": "bedrock-image-limits"
+  "scope":
+    "kind": "interface"
+    "id": "aws/bedrock.converse"
+  "property": "input.image.limits"
+  "value":
+    "max_count": 20
+    "max_size":
+      "value": 3.75
+      "unit": "MB"
+    "max_width":
+      "value": 8000
+      "unit": "px"
+    "max_height":
+      "value": 8000
+      "unit": "px"
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "aws-message"
+    "locator": "Contents / content"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "Per Message.content; preserve source MB unit, do not silently convert to MiB. Model-specific limits\
+    \ may be smaller."
+- "id": "bedrock-document-text-required"
+  "scope":
+    "kind": "interface"
+    "id": "aws/bedrock.converse"
+  "property": "input.document.requires_text"
+  "value": true
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "aws-message"
+    "locator": "Contents / content"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+- "id": "claude-system-types"
+  "scope":
+    "kind": "interface"
+    "id": "anthropic/messages.v1"
+  "property": "input.top_level_system.content_types"
+  "value":
+  - "text"
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "anthropic-messages"
+    "locator": "Request body / system"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "Only the top-level request.system field. This does not constrain messages with role=system, whose support\
+    \ and content rules differ by model and mode."
+- "id": "claude-json-citations"
+  "scope":
+    "kind": "interface"
+    "id": "anthropic/messages.v1"
+  "property": "output.citations"
+  "value": false
+  "status": "unsupported"
+  "conditions":
+  - "path": "output_config.format.type"
+    "op": "eq"
+    "value": "json_schema"
+  "review": "accepted"
+  "evidence":
+  - "source": "anthropic-structured"
+    "locator": "Feature compatibility"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "Within the JSON output feature on models supporting that feature, citations cannot be combined with\
+    \ output_config.format; the documentation specifies HTTP 400. This does not assert JSON output availability\
+    \ for every model."
+- "id": "gemini-pro-thinking-disable"
+  "scope":
+    "kind": "model"
+    "id": "google/gemini-2.5-pro"
+  "property": "thinking.disable"
+  "value": false
+  "status": "unsupported"
+  "conditions":
+  - "path": "interface"
+    "op": "eq"
+    "value": "google/gemini-developer.generate-content.v1beta"
+  "review": "accepted"
+  "evidence":
+  - "source": "google-thinking"
+    "locator": "Thinking budgets / 2.5 Pro"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+- "id": "gemini-flash-thinking-disable"
+  "scope":
+    "kind": "model"
+    "id": "google/gemini-2.5-flash"
+  "property": "thinking.disable"
+  "value": true
+  "status": "supported"
+  "conditions":
+  - "path": "interface"
+    "op": "eq"
+    "value": "google/gemini-developer.generate-content.v1beta"
+  - "path": "generationConfig.thinkingConfig.thinkingBudget"
+    "op": "eq"
+    "value": 0
+  "review": "accepted"
+  "evidence":
+  - "source": "google-thinking"
+    "locator": "Thinking budgets / 2.5 Flash"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+- "id": "cohere-embed-dimensions"
+  "scope":
+    "kind": "model"
+    "id": "cohere/embed-v4.0"
+  "property": "embedding.output_dimensions"
+  "value":
+  - 256
+  - 512
+  - 1024
+  - 1536
+  "status": "supported"
+  "conditions":
+  - "path": "interface"
+    "op": "eq"
+    "value": "cohere/embed.v2"
+  "review": "accepted"
+  "evidence":
+  - "source": "cohere-embed-models"
+    "locator": "Model details / embed-v4.0"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "unit": "dimensions"
+  "notes": "Allowed dimensions for embed-v4.0, not an inclusive integer range or a rule for later model versions."
+- "id": "cohere-embed-input-count"
+  "scope":
+    "kind": "interface"
+    "id": "cohere/embed.v2"
+  "property": "input.inputs.max_items"
+  "value": 96
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "cohere-embed-api"
+    "locator": "Request / inputs"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "unit": "inputs"
+  "notes": "The request.inputs array has this limit. This does not limit individual components or the separate request.images\
+    \ array."
+- "id": "cohere-embed-truncate-default"
+  "scope":
+    "kind": "interface"
+    "id": "cohere/embed.v2"
+  "property": "input.truncate.default"
+  "value": "END"
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "cohere-embed-api"
+    "locator": "Request / truncate"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "Default behavior; not an immutable model hard limit."
+- "id": "cohere-rerank-truncate-default"
+  "scope":
+    "kind": "interface"
+    "id": "cohere/rerank.v2"
+  "property": "input.document.max_tokens.default"
+  "value": 4096
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "cohere-rerank-api"
+    "locator": "Request / max_tokens_per_doc"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "unit": "tokens"
+  "notes": "Endpoint truncation default, not the model's context maximum."
+- "id": "voxtral-realtime-diarization"
+  "scope":
+    "kind": "model"
+    "id": "mistral/voxtral-mini-transcribe-realtime-2602"
+  "property": "audio.transcription.diarize"
+  "value": false
+  "status": "unsupported"
+  "conditions":
+  - "path": "operation"
+    "op": "eq"
+    "value": "realtime_transcription"
+  "review": "accepted"
+  "evidence":
+  - "source": "mistral-audio"
+    "locator": "Capabilities / Speech to text"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+- "id": "gemini-live-output-sample-rate"
+  "scope":
+    "kind": "interface"
+    "id": "google/gemini-developer.live"
+  "property": "output.audio.sample_rate"
+  "value": 24000
+  "status": "supported"
+  "conditions":
+  - "path": "response_modality"
+    "op": "eq"
+    "value": "AUDIO"
+  "review": "accepted"
+  "evidence":
+  - "source": "google-live"
+    "locator": "Audio formats"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "unit": "Hz"
+- "id": "chronos-history"
+  "scope":
+    "kind": "model"
+    "id": "amazon/chronos-2"
+  "property": "forecast.context.max_steps"
+  "value": 8192
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "chronos-card"
+    "locator": "Comparison of model capabilities / Max. Context Length"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "unit": "time_steps"
+- "id": "chronos-horizon"
+  "scope":
+    "kind": "model"
+    "id": "amazon/chronos-2"
+  "property": "forecast.prediction.max_steps"
+  "value": 1024
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "chronos-card"
+    "locator": "Comparison of model capabilities / Max. Prediction Length"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "unit": "time_steps"
+- "id": "openvla-action-dimensions"
+  "scope":
+    "kind": "model"
+    "id": "openvla/openvla-7b"
+  "property": "output.action.dimensions"
+  "value": 7
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "openvla-card"
+    "locator": "Uses"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "unit": "dimensions"
+  "notes": "x, y, z, roll, pitch, yaw, gripper; normalized end-effector deltas."
+- "id": "openvla-action-normalization"
+  "scope":
+    "kind": "model"
+    "id": "openvla/openvla-7b"
+  "property": "output.action.unnormalization_scope"
+  "value":
+  - "robot"
+  - "dataset"
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "openvla-card"
+    "locator": "Uses"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "Actions require un-normalization with robot/dataset-specific statistics before execution."
+- "id": "esmc-context"
+  "scope":
+    "kind": "model"
+    "id": "biohub/ESMC-6B"
+  "property": "input.context.max_tokens"
+  "value": 2048
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "esmc-card"
+    "locator": "Biases and Limitations / Limitations"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "unit": "protein_tokens"
+  "notes": "Protein tokenizer context; not amino-acid count or natural-language word count."
+- "id": "esmc-attention-maps-flash"
+  "scope":
+    "kind": "model"
+    "id": "biohub/ESMC-6B"
+  "property": "output.attentions"
+  "value": false
+  "status": "unsupported"
+  "conditions":
+  - "path": "runtime"
+    "op": "eq"
+    "value": "transformers"
+  - "path": "attn_implementation"
+    "op": "eq"
+    "value": "flash_attention_2"
+  "review": "accepted"
+  "evidence":
+  - "source": "esmc-card"
+    "locator": "Usage / Attention Maps"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "Implementation configuration constraint, not a universal inability to return attention maps."
+- "id": "esmc-classification-pretraining"
+  "scope":
+    "kind": "model"
+    "id": "biohub/ESMC-6B"
+  "property": "classification.head.pretrained"
+  "value": false
+  "status": "unsupported"
+  "conditions":
+  - "path": "task_head"
+    "op": "in"
+    "value":
+    - "token_classification"
+    - "sequence_classification"
+  "review": "accepted"
+  "evidence":
+  - "source": "esmc-card"
+    "locator": "Usage / Other Usage"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "The classifier heads need downstream fine-tuning."
+- "id": "sam2-video-state"
+  "scope":
+    "kind": "interface"
+    "id": "meta/sam2.video-predictor"
+  "property": "workflow.inference_state.required"
+  "value": true
+  "status": "supported"
+  "conditions": []
+  "review": "accepted"
+  "evidence":
+  - "source": "sam2-readme"
+    "locator": "Getting Started / Video prediction"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "The video prediction workflow maintains per-video inference state. This does not claim init_state itself\
+    \ requires an existing state, or imply chat streaming."
+- "id": "gemini-tools-json-conflict"
+  "scope":
+    "kind": "model"
+    "id": "google/gemini-4-argon"
+  "property": "output.structured_with_tools"
+  "value": null
+  "status": "unknown"
+  "conditions":
+  - "path": "interface"
+    "op": "eq"
+    "value": "google/interactions.v1beta"
+  "review": "conflicted"
+  "evidence":
+  - "source": "google-structured"
+    "locator": "Structured outputs with tools / preview note and REST example"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "notes": "Text restricts the feature to Gemini 3 series; same-section example uses gemini-4-argon."
+- "id": "mistral-offline-duration-conflict"
+  "scope":
+    "kind": "interface"
+    "id": "mistral/audio-transcriptions.v1"
+  "property": "input.audio.max_duration"
+  "value": null
+  "status": "unknown"
+  "conditions":
+  - "path": "request.model"
+    "op": "eq"
+    "value": "voxtral-mini-latest"
+  "review": "conflicted"
+  "evidence":
+  - "source": "mistral-audio"
+    "locator": "Capabilities / Speech to text: Mini Transcribe 2 up to 3 hours"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  - "source": "mistral-limits"
+    "locator": "Audio transcription: 60 minutes"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  - "source": "mistral-offline"
+    "locator": "Transcription / currently supports voxtral-mini-latest"
+    "checked_on": "2026-10-15"
+    "kind": "reported"
+  "unit": "seconds"
+  "notes": "The official offline guide states voxtral-mini-latest currently runs Mini Transcribe 2; the generic\
+    \ 60-minute limit and model-specific 3-hour claim remain unresolved. This does not establish a stable model\
+    \ ID."

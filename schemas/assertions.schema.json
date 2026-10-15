@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AssertionSet",
+  "type": "object",
+  "properties": {
+    "assertions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Assertion"
+      }
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/DocumentSource"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sources",
+    "assertions"
+  ],
+  "$defs": {
+    "Assertion": {
+      "type": "object",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "property": {
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/Review"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "scope",
+        "property",
+        "value",
+        "status",
+        "conditions",
+        "review",
+        "evidence"
+      ]
+    },
+    "Condition": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "$ref": "#/$defs/Operator"
+        },
+        "path": {
+          "type": "string"
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "op",
+        "value"
+      ]
+    },
+    "DocumentSource": {
+      "type": "object",
+      "properties": {
+        "checked_on": {
+          "type": "string"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "checked_on"
+      ]
+    },
+    "Evidence": {
+      "type": "object",
+      "properties": {
+        "checked_on": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/EvidenceKind"
+        },
+        "locator": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "locator",
+        "checked_on",
+        "kind"
+      ]
+    },
+    "EvidenceKind": {
+      "type": "string",
+      "enum": [
+        "reported"
+      ]
+    },
+    "Operator": {
+      "type": "string",
+      "enum": [
+        "eq",
+        "in"
+      ]
+    },
+    "Review": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "conflicted"
+      ]
+    },
+    "Scope": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ScopeKind"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id"
+      ]
+    },
+    "ScopeKind": {
+      "type": "string",
+      "enum": [
+        "model",
+        "interface"
+      ]
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "supported",
+        "unsupported",
+        "unknown",
+        "not_applicable"
+      ]
+    }
+  }
+}
