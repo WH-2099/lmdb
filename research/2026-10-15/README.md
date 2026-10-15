@@ -3,7 +3,8 @@
 [返回调研区](../README.md) · [项目跟踪](../../project/README.md) · [路线与待办](../../project/roadmap.md)
 
 调研日期：2026-10-15。
-状态：第一轮完成，结论用于下一阶段样本设计，正式 schema 与依赖尚未定案。
+状态：第一轮调研完成；以下保留调研阶段的建议与未决项。
+后续实现、schema 和数据集进展见[项目路线](../../project/roadmap.md)与[仓库使用说明](../../README.md)。
 范围：二十六组来源调查、九项同类项目比较、五个组织的十七类接口限制、四类专业模型样本、有限源码考察、采集与存储技术选型。
 
 ## 先读这些结论
@@ -38,7 +39,8 @@
 │   ├── README.md             来源阅读入口
 │   ├── catalog.md            官方、聚合、跨任务来源地图
 │   ├── constraints.md        真实限制、冲突、YAML 讨论示例
-│   └── specialized-models.md 视觉、时序、机器人和科学模型
+│   ├── specialized-models.md 视觉、时序、机器人和科学模型
+│   └── seed-catalog.md       169 个公开仓库的采集依据
 ├── comparisons/
 │   ├── README.md
 │   └── projects.md           九项对比、固定提交代码考察

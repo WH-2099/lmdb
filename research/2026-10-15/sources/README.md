@@ -9,6 +9,7 @@
 | --- | --- |
 | [来源目录](catalog.md) | 26 组来源的覆盖、字段粒度、访问方式和局限 |
 | [专业模型补充](specialized-models.md) | 分割、时序预测、机器人动作与蛋白质表示模型的作者资料 |
+| [公开采集种子](seed-catalog.md) | 147 个 Hugging Face 与 22 个 ModelScope 仓库的选择、访问及字段边界 |
 | [访问采样记录](../evidence/source-probes.md) | 公开 API 的请求、时间、响应形状与文档冲突 |
 | [本轮调研索引](../README.md) | 返回其他调研主题 |
 
