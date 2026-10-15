@@ -1,0 +1,1617 @@
+schema_version: 1
+source: modelscope
+snapshots:
+- schema_version: 1
+  id: modelscope:08c23976e343100209c45d9d353d0b97def2568e149468244d2f6aa5de75b0b1
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3.8-27B
+  retrieved_at: "2026-10-15T08:22:05.343712922Z"
+  sha256: 08c23976e343100209c45d9d353d0b97def2568e149468244d2f6aa5de75b0b1
+- schema_version: 1
+  id: modelscope:2f37d86f5eecf21959911b72d8c20ec6182bb988b006f34678d4d61b4a26df38
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-TTS-12Hz-1.7B-Base
+  retrieved_at: "2026-10-15T08:22:04.568523964Z"
+  sha256: 2f37d86f5eecf21959911b72d8c20ec6182bb988b006f34678d4d61b4a26df38
+- schema_version: 1
+  id: modelscope:44867ae7c278e81f167582b57653587f202edeb087a09c65124a5ce5d858cb8c
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen2.5-Coder-7B-Instruct
+  retrieved_at: "2026-10-15T08:22:01.683963356Z"
+  sha256: 44867ae7c278e81f167582b57653587f202edeb087a09c65124a5ce5d858cb8c
+- schema_version: 1
+  id: modelscope:586cfa5c992e376cd3475de2f9840e6ac075d3eaf07b1ae59bcf5d28e33a0426
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen-Image
+  retrieved_at: "2026-10-15T08:21:59.88089853Z"
+  sha256: 586cfa5c992e376cd3475de2f9840e6ac075d3eaf07b1ae59bcf5d28e33a0426
+- schema_version: 1
+  id: modelscope:668848782c3c6fe1ac3a75b6a27288e6a10235ebe3cb0bedfdeda3bc873ae229
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/BAAI/bge-m3
+  retrieved_at: "2026-10-15T08:22:00.243360451Z"
+  sha256: 668848782c3c6fe1ac3a75b6a27288e6a10235ebe3cb0bedfdeda3bc873ae229
+- schema_version: 1
+  id: modelscope:67ee9b3c774ed635e9198b06ab369affd3dc6eb2ed55caaefcdfb64d8409241e
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-Reranker-4B
+  retrieved_at: "2026-10-15T08:22:03.59120639Z"
+  sha256: 67ee9b3c774ed635e9198b06ab369affd3dc6eb2ed55caaefcdfb64d8409241e
+- schema_version: 1
+  id: modelscope:72040b7d8fbd579023d1ae49d99f7d3aac5cd7efbf58f6480115356d5abb9f14
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3.6-35B-A3B
+  retrieved_at: "2026-10-15T08:22:06.014417444Z"
+  sha256: 72040b7d8fbd579023d1ae49d99f7d3aac5cd7efbf58f6480115356d5abb9f14
+- schema_version: 1
+  id: modelscope:74eebb693a2aa8babc90ee7a208f7e75c479df2c1a50112610a9d94a78c70202
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/deepseek-ai/DeepSeek-V3.2
+  retrieved_at: "2026-10-15T08:22:09.405448984Z"
+  sha256: 74eebb693a2aa8babc90ee7a208f7e75c479df2c1a50112610a9d94a78c70202
+- schema_version: 1
+  id: modelscope:7742b037f4acff693b2595d8707de211ed4d9afdfc4f2e6025664bec270812e8
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/BAAI/bge-reranker-v2-m3
+  retrieved_at: "2026-10-15T08:21:59.069749161Z"
+  sha256: 7742b037f4acff693b2595d8707de211ed4d9afdfc4f2e6025664bec270812e8
+- schema_version: 1
+  id: modelscope:830581d1f2ef3a43adef2a2f6f1d452931bd335898022a925d96dc60b2f7cd29
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-Embedding-0.6B
+  retrieved_at: "2026-10-15T08:22:02.590912661Z"
+  sha256: 830581d1f2ef3a43adef2a2f6f1d452931bd335898022a925d96dc60b2f7cd29
+- schema_version: 1
+  id: modelscope:88a5b88c0c4d019238c20d6682485a38ba9d8f75a04f528c10a19e8212cf5bf0
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.1-VACE-1.3B
+  retrieved_at: "2026-10-15T08:22:07.71003861Z"
+  sha256: 88a5b88c0c4d019238c20d6682485a38ba9d8f75a04f528c10a19e8212cf5bf0
+- schema_version: 1
+  id: modelscope:9a8c6107026eb3dfdfa816b69e0f0f40cd3ab06cfafbcf405c59fae45baeead3
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/deepseek-ai/DeepSeek-R1
+  retrieved_at: "2026-10-15T08:22:09.443340674Z"
+  sha256: 9a8c6107026eb3dfdfa816b69e0f0f40cd3ab06cfafbcf405c59fae45baeead3
+- schema_version: 1
+  id: modelscope:a81f0f47eedbf29ec523812185bb82a644683fac2d4c7ac954e6e83eb6275a16
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-8B
+  retrieved_at: "2026-10-15T08:22:01.408565251Z"
+  sha256: a81f0f47eedbf29ec523812185bb82a644683fac2d4c7ac954e6e83eb6275a16
+- schema_version: 1
+  id: modelscope:d09450259cdf4c6f3b35d938ce5bde9a2a3fe78330bd6a18b1b1a608c955de72
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.2-TI2V-5B
+  retrieved_at: "2026-10-15T08:22:07.615316013Z"
+  sha256: d09450259cdf4c6f3b35d938ce5bde9a2a3fe78330bd6a18b1b1a608c955de72
+- schema_version: 1
+  id: modelscope:d32ee51d07cf4586cd3fec7719e20f01150f9e0a685c293797eeda340f68f833
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.1-T2V-14B
+  retrieved_at: "2026-10-15T08:22:06.550058853Z"
+  sha256: d32ee51d07cf4586cd3fec7719e20f01150f9e0a685c293797eeda340f68f833
+- schema_version: 1
+  id: modelscope:d8ebe09e90e231814684f031cddb4f58dfa47fc07c3cdd6e1696455412a76595
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.1-I2V-14B-720P
+  retrieved_at: "2026-10-15T08:22:05.931896338Z"
+  sha256: d8ebe09e90e231814684f031cddb4f58dfa47fc07c3cdd6e1696455412a76595
+- schema_version: 1
+  id: modelscope:df7a94fc0ff877cad86fe10a2e31ce2cc95ee782895dcf1ca267d0a3ad85f4bb
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen2.5-Omni-7B
+  retrieved_at: "2026-10-15T08:22:03.153220944Z"
+  sha256: df7a94fc0ff877cad86fe10a2e31ce2cc95ee782895dcf1ca267d0a3ad85f4bb
+- schema_version: 1
+  id: modelscope:e15adcf911f36fafbb853d454af69d6decdbcdba59df325870f6eb9a58df50a3
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.2-Animate-14B
+  retrieved_at: "2026-10-15T08:22:08.831963364Z"
+  sha256: e15adcf911f36fafbb853d454af69d6decdbcdba59df325870f6eb9a58df50a3
+- schema_version: 1
+  id: modelscope:e62c6b6656f69c1effaa525484cf9646102b7ea988a64746bb66c612f622a5b2
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/deepseek-ai/DeepSeek-OCR-2
+  retrieved_at: "2026-10-15T08:22:07.91234402Z"
+  sha256: e62c6b6656f69c1effaa525484cf9646102b7ea988a64746bb66c612f622a5b2
+- schema_version: 1
+  id: modelscope:f4472979175cdfa38927bc7d94b1cc78c93d53d21b44cfa0b62cac113437d0e3
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/OpenGVLab/InternVL3-8B
+  retrieved_at: "2026-10-15T08:21:59.417236933Z"
+  sha256: f4472979175cdfa38927bc7d94b1cc78c93d53d21b44cfa0b62cac113437d0e3
+- schema_version: 1
+  id: modelscope:f5081fc944d52d599d1d2cfee4b529af92556959761f12283f2272f07914b4c6
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-VL-8B-Instruct
+  retrieved_at: "2026-10-15T08:22:04.840917461Z"
+  sha256: f5081fc944d52d599d1d2cfee4b529af92556959761f12283f2272f07914b4c6
+- schema_version: 1
+  id: modelscope:fcf1148248a6e38117740826e3931fc39effcba3f988bcf9b490d26e39c2548d
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen-Image-Edit
+  retrieved_at: "2026-10-15T08:22:03.512781596Z"
+  sha256: fcf1148248a6e38117740826e3931fc39effcba3f988bcf9b490d26e39c2548d
+records:
+- schema_version: 1
+  kind: model
+  id: modelscope:model:BAAI/bge-m3
+  source: modelscope
+  upstream_id: BAAI/bge-m3
+  name: bge-m3
+  origin:
+    snapshot: modelscope:668848782c3c6fe1ac3a75b6a27288e6a10235ebe3cb0bedfdeda3bc873ae229
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - XLMRobertaModel
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1726197423
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: mit
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: BAAI
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 句子相似度
+        Description: ""
+        DomainName: nlp
+        Id: 17
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: false
+        IsRetrieval: true
+        Level: 1
+        Name: sentence-similarity
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: ""
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1726273563
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:BAAI/bge-reranker-v2-m3
+  source: modelscope
+  upstream_id: BAAI/bge-reranker-v2-m3
+  name: bge-reranker-v2-m3
+  origin:
+    snapshot: modelscope:7742b037f4acff693b2595d8707de211ed4d9afdfc4f2e6025664bec270812e8
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - XLMRobertaForSequenceClassification
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1726209357
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: BAAI
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 文本分类
+        Description: ""
+        DomainName: nlp
+        Id: 147
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: false
+        IsRetrieval: true
+        Level: 1
+        Name: text-classification
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1726209444
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:OpenGVLab/InternVL3-8B
+  source: modelscope
+  upstream_id: OpenGVLab/InternVL3-8B
+  name: InternVL3-8B
+  origin:
+    snapshot: modelscope:f4472979175cdfa38927bc7d94b1cc78c93d53d21b44cfa0b62cac113437d0e3
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - InternVLChatModel
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: finetune
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value:
+      - OpenGVLab/InternVL3-8B-Instruct
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1744310489
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: OpenGVLab
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 视觉多模态理解
+        Description: ""
+        DomainName: multi-modal
+        Id: 295
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: image-text-to-text
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1757606487
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen-Image
+  source: modelscope
+  upstream_id: Qwen/Qwen-Image
+  name: Qwen-Image
+  origin:
+    snapshot: modelscope:586cfa5c992e376cd3475de2f9840e6ac075d3eaf07b1ae59bcf5d28e33a0426
+    pointer: /Data
+  facts:
+    architectures:
+      value: []
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1754108745
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - Pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 文本生成图片
+        Description: ""
+        DomainName: multi-modal
+        Id: 3
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: text-to-image-synthesis
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: true
+        TypicalModel: ""
+        WidgetConfig: "{\"task\": \"text-to-image-synthesis\", \"inputs\": [{\"type\": \"text\", \"displayType\": \"OnlyTextArea\", \"displayProps\": {\"size\": \"small\"}}], \"output\": {\"displayType\": \"ReadonlyImageList\", \"transformOutputs\": [{\"outputKey\": \"output_imgs\"}], \"displayOutputMapping\": \"output_imgs\"}, \"examples\": []}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1755484972
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen-Image-Edit
+  source: modelscope
+  upstream_id: Qwen/Qwen-Image-Edit
+  name: Qwen-Image-Edit
+  origin:
+    snapshot: modelscope:fcf1148248a6e38117740826e3931fc39effcba3f988bcf9b490d26e39c2548d
+    pointer: /Data
+  facts:
+    architectures:
+      value: []
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1755417492
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - Pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 图片生成图片
+        Description: ""
+        DomainName: multi-modal
+        Id: 300
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: image-to-image
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1758612733
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen2.5-Coder-7B-Instruct
+  source: modelscope
+  upstream_id: Qwen/Qwen2.5-Coder-7B-Instruct
+  name: Qwen2.5-Coder-7B-Instruct
+  origin:
+    snapshot: modelscope:44867ae7c278e81f167582b57653587f202edeb087a09c65124a5ce5d858cb8c
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - Qwen2ForCausalLM
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: finetune
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value:
+      - Qwen/Qwen2.5-Coder-7B
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1726525670
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value: []
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 文本生成
+        Description: ""
+        DomainName: nlp
+        Id: 22
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: text-generation
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{\"task\": \"text-generation\", \"inputs\": [{\"type\": \"text\", \"validator\": {\"max_words\": \"1000\"}, \"displayType\": \"OnlyTextArea\"}], \"output\": {\"displayType\": \"ReadonlyText\", \"transformOutputs\": [{\"outputKey\": \"text\"}], \"displayOutputMapping\": \"text\"}, \"examples\": []}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1741335540
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen2.5-Omni-7B
+  source: modelscope
+  upstream_id: Qwen/Qwen2.5-Omni-7B
+  name: Qwen2.5-Omni-7B
+  origin:
+    snapshot: modelscope:df7a94fc0ff877cad86fe10a2e31ce2cc95ee782895dcf1ca267d0a3ad85f4bb
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - Qwen2_5OmniModel
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1742799805
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: other
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 统一多模态
+        Description: ""
+        DomainName: multi-modal
+        Id: 298
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: false
+        IsRetrieval: true
+        Level: 1
+        Name: any-to-any
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1746029233
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen3-8B
+  source: modelscope
+  upstream_id: Qwen/Qwen3-8B
+  name: Qwen3-8B
+  origin:
+    snapshot: modelscope:a81f0f47eedbf29ec523812185bb82a644683fac2d4c7ac954e6e83eb6275a16
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - Qwen3ForCausalLM
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: finetune
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value:
+      - Qwen/Qwen3-8B-Base
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1745834265
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 文本生成
+        Description: ""
+        DomainName: nlp
+        Id: 22
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: text-generation
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{\"task\": \"text-generation\", \"inputs\": [{\"type\": \"text\", \"validator\": {\"max_words\": \"1000\"}, \"displayType\": \"OnlyTextArea\"}], \"output\": {\"displayType\": \"ReadonlyText\", \"transformOutputs\": [{\"outputKey\": \"text\"}], \"displayOutputMapping\": \"text\"}, \"examples\": []}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1753546353
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen3-Embedding-0.6B
+  source: modelscope
+  upstream_id: Qwen/Qwen3-Embedding-0.6B
+  name: Qwen3-Embedding-0.6B
+  origin:
+    snapshot: modelscope:830581d1f2ef3a43adef2a2f6f1d452931bd335898022a925d96dc60b2f7cd29
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - Qwen3ForCausalLM
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: finetune
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value:
+      - Qwen/Qwen3-0.6B-Base
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1749017563
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 文本向量
+        Description: ""
+        DomainName: nlp
+        Id: 24
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: false
+        IsRetrieval: true
+        Level: 1
+        Name: sentence-embedding
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: ""
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1786108842
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen3-Reranker-4B
+  source: modelscope
+  upstream_id: Qwen/Qwen3-Reranker-4B
+  name: Qwen3-Reranker-4B
+  origin:
+    snapshot: modelscope:67ee9b3c774ed635e9198b06ab369affd3dc6eb2ed55caaefcdfb64d8409241e
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - Qwen3ForCausalLM
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: finetune
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value:
+      - Qwen/Qwen3-4B-Base
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1749017759
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 语义相关性
+        Description: ""
+        DomainName: nlp
+        Id: 41
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: false
+        IsRetrieval: true
+        Level: 1
+        Name: text-ranking
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: ""
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1786108797
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen3-TTS-12Hz-1.7B-Base
+  source: modelscope
+  upstream_id: Qwen/Qwen3-TTS-12Hz-1.7B-Base
+  name: Qwen3-TTS-12Hz-1.7B-Base
+  origin:
+    snapshot: modelscope:2f37d86f5eecf21959911b72d8c20ec6182bb988b006f34678d4d61b4a26df38
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - Qwen3TTSForConditionalGeneration
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1768984262
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - Pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 语音合成
+        Description: ""
+        DomainName: audio
+        Id: 32
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: text-to-speech
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: true
+        TypicalModel: ""
+        WidgetConfig: "{\"task\": \"text-to-speech\", \"inputs\": [{\"type\": \"text\", \"validator\": {\"max_words\": 300}, \"displayType\": \"OnlyTextArea\"}], \"output\": {\"displayType\": \"AudioPlayer\", \"transformOutputs\": [{\"fileType\": \"pcm\", \"outputKey\": \"output_pcm\"}], \"displayOutputMapping\": \"output_pcm\"}, \"examples\": []}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1769170649
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen3-VL-8B-Instruct
+  source: modelscope
+  upstream_id: Qwen/Qwen3-VL-8B-Instruct
+  name: Qwen3-VL-8B-Instruct
+  origin:
+    snapshot: modelscope:f5081fc944d52d599d1d2cfee4b529af92556959761f12283f2272f07914b4c6
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - Qwen3VLForConditionalGeneration
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1760183490
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 视觉多模态理解
+        Description: ""
+        DomainName: multi-modal
+        Id: 295
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: image-text-to-text
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1772415218
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen3.6-35B-A3B
+  source: modelscope
+  upstream_id: Qwen/Qwen3.6-35B-A3B
+  name: Qwen3.6-35B-A3B
+  origin:
+    snapshot: modelscope:72040b7d8fbd579023d1ae49d99f7d3aac5cd7efbf58f6480115356d5abb9f14
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - Qwen3_5MoeForConditionalGeneration
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1776344284
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - Pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 视觉多模态理解
+        Description: ""
+        DomainName: multi-modal
+        Id: 295
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: image-text-to-text
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1786108729
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Qwen/Qwen3.8-27B
+  source: modelscope
+  upstream_id: Qwen/Qwen3.8-27B
+  name: Qwen3.8-27B
+  origin:
+    snapshot: modelscope:08c23976e343100209c45d9d353d0b97def2568e149468244d2f6aa5de75b0b1
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - Qwen3_5ForConditionalGeneration
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1786526721
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value: []
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Qwen
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 视觉多模态理解
+        Description: ""
+        DomainName: multi-modal
+        Id: 295
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: image-text-to-text
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1786731897
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Wan-AI/Wan2.1-I2V-14B-720P
+  source: modelscope
+  upstream_id: Wan-AI/Wan2.1-I2V-14B-720P
+  name: Wan2.1-I2V-14B-720P
+  origin:
+    snapshot: modelscope:d8ebe09e90e231814684f031cddb4f58dfa47fc07c3cdd6e1696455412a76595
+    pointer: /Data
+  facts:
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1740472339
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Wan-AI
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 图片生成视频
+        Description: ""
+        DomainName: multi-modal
+        Id: 296
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: image-to-video
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1740607606
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Wan-AI/Wan2.1-T2V-14B
+  source: modelscope
+  upstream_id: Wan-AI/Wan2.1-T2V-14B
+  name: Wan2.1-T2V-14B
+  origin:
+    snapshot: modelscope:d32ee51d07cf4586cd3fec7719e20f01150f9e0a685c293797eeda340f68f833
+    pointer: /Data
+  facts:
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1740474782
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Wan-AI
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 文本生成视频
+        Description: ""
+        DomainName: multi-modal
+        Id: 252
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: text-to-video-synthesis
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1745446059
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Wan-AI/Wan2.1-VACE-1.3B
+  source: modelscope
+  upstream_id: Wan-AI/Wan2.1-VACE-1.3B
+  name: Wan2.1-VACE-1.3B
+  origin:
+    snapshot: modelscope:88a5b88c0c4d019238c20d6682485a38ba9d8f75a04f528c10a19e8212cf5bf0
+    pointer: /Data
+  facts:
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1747208610
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Wan-AI
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 图片生成视频
+        Description: ""
+        DomainName: multi-modal
+        Id: 296
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: image-to-video
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1747671142
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Wan-AI/Wan2.2-Animate-14B
+  source: modelscope
+  upstream_id: Wan-AI/Wan2.2-Animate-14B
+  name: Wan2.2-Animate-14B
+  origin:
+    snapshot: modelscope:e15adcf911f36fafbb853d454af69d6decdbcdba59df325870f6eb9a58df50a3
+    pointer: /Data
+  facts:
+    architectures:
+      value: []
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: finetune
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value:
+      - Wan-AI/Wan2.2-I2V-A14B
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1757572642
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - Pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Wan-AI
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: ""
+        Description: ""
+        DomainName: ""
+        Id: 0
+        IsExhibition: false
+        IsHot: 0
+        IsLeaf: false
+        IsLoginRequired: false
+        IsRetrieval: false
+        Level: 0
+        Name: ""
+        ParentId: 0
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: ""
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1786536865
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:Wan-AI/Wan2.2-TI2V-5B
+  source: modelscope
+  upstream_id: Wan-AI/Wan2.2-TI2V-5B
+  name: Wan2.2-TI2V-5B
+  origin:
+    snapshot: modelscope:d09450259cdf4c6f3b35d938ce5bde9a2a3fe78330bd6a18b1b1a608c955de72
+    pointer: /Data
+  facts:
+    architectures:
+      value: []
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1752769615
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - Pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: Wan-AI
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 统一多模态
+        Description: ""
+        DomainName: multi-modal
+        Id: 298
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: false
+        IsRetrieval: true
+        Level: 1
+        Name: any-to-any
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1762414942
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:deepseek-ai/DeepSeek-OCR-2
+  source: modelscope
+  upstream_id: deepseek-ai/DeepSeek-OCR-2
+  name: DeepSeek-OCR-2
+  origin:
+    snapshot: modelscope:e62c6b6656f69c1effaa525484cf9646102b7ea988a64746bb66c612f622a5b2
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - DeepseekOCR2ForCausalLM
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    created_at:
+      value: 1769492011
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: apache-2.0
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: deepseek-ai
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 视觉多模态理解
+        Description: ""
+        DomainName: multi-modal
+        Id: 295
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: image-text-to-text
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1770121021
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:deepseek-ai/DeepSeek-R1
+  source: modelscope
+  upstream_id: deepseek-ai/DeepSeek-R1
+  name: DeepSeek-R1
+  origin:
+    snapshot: modelscope:9a8c6107026eb3dfdfa816b69e0f0f40cd3ab06cfafbcf405c59fae45baeead3
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - DeepseekV3ForCausalLM
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1737352135
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: mit
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: deepseek-ai
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: ""
+        Description: ""
+        DomainName: ""
+        Id: 0
+        IsExhibition: false
+        IsHot: 0
+        IsLeaf: false
+        IsLoginRequired: false
+        IsRetrieval: false
+        Level: 0
+        Name: ""
+        ParentId: 0
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: ""
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1741335540
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
+- schema_version: 1
+  kind: model
+  id: modelscope:model:deepseek-ai/DeepSeek-V3.2
+  source: modelscope
+  upstream_id: deepseek-ai/DeepSeek-V3.2
+  name: DeepSeek-V3.2
+  origin:
+    snapshot: modelscope:74eebb693a2aa8babc90ee7a208f7e75c479df2c1a50112610a9d94a78c70202
+    pointer: /Data
+  facts:
+    architectures:
+      value:
+      - DeepseekV32ForCausalLM
+      pointer: /Data/Architectures
+    base_model_relation:
+      value: ""
+      pointer: /Data/BaseModelRelation
+    base_models:
+      value: []
+      pointer: /Data/BaseModel
+    created_at:
+      value: 1764556517
+      pointer: /Data/CreatedTime
+      unit: unix_seconds
+    frameworks:
+      value:
+      - Pytorch
+      pointer: /Data/Frameworks
+    license:
+      value: ""
+      pointer: /Data/License
+    license_link:
+      value: ""
+      pointer: /Data/LicenseLink
+    publisher:
+      value: deepseek-ai
+      pointer: /Data/Path
+    revision:
+      value: master
+      pointer: /Data/Revision
+    tasks:
+      value:
+      - ChineseName: 文本生成
+        Description: ""
+        DomainName: nlp
+        Id: 22
+        IsExhibition: true
+        IsHot: 0
+        IsLeaf: true
+        IsLoginRequired: true
+        IsRetrieval: true
+        Level: 1
+        Name: text-generation
+        ParentId: -1
+        ParentTask: null
+        Sorting: 0
+        SupportWidgets: false
+        TypicalModel: ""
+        WidgetConfig: "{\"task\": \"text-generation\", \"inputs\": [{\"type\": \"text\", \"validator\": {\"max_words\": \"1000\"}, \"displayType\": \"OnlyTextArea\"}], \"output\": {\"displayType\": \"ReadonlyText\", \"transformOutputs\": [{\"outputKey\": \"text\"}], \"displayOutputMapping\": \"text\"}, \"examples\": []}"
+        WidgetValidator: ""
+      pointer: /Data/Tasks
+    updated_at:
+      value: 1764586285
+      pointer: /Data/LastUpdatedTime
+      unit: unix_seconds
+    visibility:
+      value: 5
+      pointer: /Data/Visibility
