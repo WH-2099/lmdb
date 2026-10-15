@@ -1,0 +1,14 @@
+{
+  "id": "example/future-model",
+  "author": "example",
+  "pipeline_tag": "future-task",
+  "library_name": "transformers",
+  "private": false,
+  "gated": false,
+  "sha": "0123456789abcdef",
+  "createdAt": "2025-01-01T00:00:00Z",
+  "lastModified": "2026-10-01T00:00:00Z",
+  "config": {"architectures": ["ExampleModel"], "model_type": "example"},
+  "cardData": {"license": null, "base_model": ["example/base"]},
+  "safetensors": {"parameters": {"BF16": 0}, "total": 0}
+}

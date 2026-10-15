@@ -1,0 +1,11 @@
+{
+  "results": [{
+    "owner": "example", "name": "image-model", "description": "Synthetic fixture",
+    "url": "https://replicate.com/example/image-model", "visibility": "public",
+    "github_url": "https://example.com/code", "paper_url": null,
+    "license_url": "https://example.com/license", "weights_url": "https://example.com/weights",
+    "latest_version": {"id": "example-version", "created_at": "2026-01-01T00:00:00Z"}
+  }],
+  "previous": null,
+  "next": null
+}

@@ -1,0 +1,18 @@
+{
+  "Code": 200,
+  "Success": true,
+  "Data": {
+    "Path": "example",
+    "Name": "future-model",
+    "Tasks": [{"Name": "future-task"}],
+    "Frameworks": ["pytorch"],
+    "License": "apache-2.0",
+    "BaseModel": ["example/base"],
+    "BaseModelRelation": "finetune",
+    "Architectures": ["ExampleModel"],
+    "Revision": "master",
+    "CreatedTime": 1735689600,
+    "LastUpdatedTime": 1753546353,
+    "Visibility": null
+  }
+}

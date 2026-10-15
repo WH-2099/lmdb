@@ -1,0 +1,7 @@
+{
+  "models": [{
+    "name": "example-embed", "is_deprecated": false, "endpoints": ["embed"], "finetuned": false,
+    "context_length": 512, "tokenizer_url": "https://example.com/tokenizer.json",
+    "default_endpoints": ["embed"], "features": ["image"], "sampling_defaults": {}
+  }]
+}

@@ -1,0 +1,9 @@
+{
+  "models": [{
+    "name": "models/example-gemini", "displayName": "Example Gemini", "baseModelId": "example-gemini",
+    "version": "001", "description": "Synthetic multimodal fixture",
+    "inputTokenLimit": 1000000, "outputTokenLimit": 8192,
+    "supportedGenerationMethods": ["generateContent", "countTokens"],
+    "thinking": true, "temperature": 1, "maxTemperature": 2, "topP": 0.95, "topK": 40
+  }]
+}

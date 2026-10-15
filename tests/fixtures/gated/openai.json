@@ -1,0 +1,4 @@
+{
+  "object": "list",
+  "data": [{"id": "example-openai", "object": "model", "created": 1767225600, "owned_by": "example", "shutdown_date": null}]
+}

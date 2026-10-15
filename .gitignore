@@ -1,0 +1,7 @@
+/target/
+/.cache/
+/dist/
+/.venv/
+__pycache__/
+*.pyc
+

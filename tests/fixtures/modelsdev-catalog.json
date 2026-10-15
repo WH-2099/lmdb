@@ -1,0 +1,26 @@
+{
+  "models": {},
+  "providers": {
+    "host~a": {
+      "id": "host~a",
+      "name": "Example Host",
+      "models": {
+        "deployed/model~v1": {
+          "id": "deployed/model~v1",
+          "name": "Hosted Vision",
+          "canonical_model_id": "lab~one/vision/one",
+          "modalities": {"input": ["text", "image"], "output": ["text"]},
+          "limit": {"context": 16000, "output": 0},
+          "cost": {"input": 0, "output": 1},
+          "reasoning": false
+        },
+        "lab/embedding": {
+          "id": "lab/embedding",
+          "canonical_model_id": null,
+          "supported_parameters": ["tools"],
+          "quantization": "fp16"
+        }
+      }
+    }
+  }
+}

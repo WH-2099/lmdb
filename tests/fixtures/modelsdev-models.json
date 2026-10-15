@@ -1,0 +1,24 @@
+{
+  "lab~one/vision/one": {
+    "id": "lab~one/vision/one",
+    "name": "Example Vision",
+    "publisher": "Example Lab",
+    "modalities": {"input": ["text", "image"], "output": ["text"]},
+    "limit": {"context": 32000, "input": 31000, "output": 0},
+    "reasoning": false,
+    "tool_call": true,
+    "structured_output": null,
+    "open_weights": false,
+    "knowledge": "2025-05",
+    "release_date": "2026-01-01"
+  },
+  "lab/embedding": {
+    "id": "lab/embedding",
+    "type": "embedding",
+    "modalities": {"input": ["text"], "output": ["text"]},
+    "limit": {"context": 8192, "output": 0},
+    "open_weights": true,
+    "license": "MIT",
+    "weights": [{"url": "https://huggingface.co/example/embedding"}]
+  }
+}

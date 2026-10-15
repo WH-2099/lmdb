@@ -1,0 +1,13 @@
+{
+  "models": [{
+    "endpoint_id": "example/image/v1",
+    "metadata": {
+      "display_name": "Example image endpoint", "category": "text-to-image",
+      "description": "Synthetic fixture", "status": "active", "tags": ["image"],
+      "updated_at": "2026-01-01T00:00:00Z", "model_url": "https://example.com/image/v1",
+      "date": "2026-01-01T00:00:00Z", "is_favorited": false
+    }
+  }],
+  "next_cursor": null,
+  "has_more": false
+}

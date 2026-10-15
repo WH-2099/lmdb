@@ -1,0 +1,10 @@
+{
+  "object": "list",
+  "data": [{
+    "id": "example-deepseek", "object": "model", "owned_by": "example", "name": "Example DeepSeek",
+    "context_window": 1000000, "max_output_tokens": 8192,
+    "input_modalities": ["text", "image"], "output_modalities": ["text"],
+    "effort": {"supported_levels": ["low", "high"], "default_level": "high"},
+    "api_capabilities": {"anthropic_messages": {"system_prompt_update": "in-history"}}
+  }]
+}

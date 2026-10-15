@@ -1,0 +1,17 @@
+{
+  "data": [
+    {
+      "id": "example/audio",
+      "name": "Example Audio",
+      "hugging_face_id": "example/future-model",
+      "created": 1792013919,
+      "context_length": 0,
+      "architecture": {"input_modalities": ["audio"], "output_modalities": ["transcription"]},
+      "pricing": {"prompt": "0.0000833333", "completion": "0"},
+      "top_provider": {"context_length": 0, "max_completion_tokens": 0, "is_moderated": false},
+      "supported_parameters": [],
+      "per_request_limits": null
+    },
+    {"id": "example/image", "context_length": 2048, "architecture": {"output_modalities": ["image"]}}
+  ]
+}
