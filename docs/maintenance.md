@@ -1,6 +1,6 @@
 # 维护与验证
 
-[项目首页](../README.md) · [数据模型](data-model.md) · [规则查询](rule-queries.md) · [候选发现](discovery.md) · [认证来源](authenticated-sources.md)
+[项目首页](../README.md) · [数据模型](data-model.md) · [官方页面](official-documents.md) · [规则查询](rule-queries.md) · [候选发现](discovery.md) · [认证来源](authenticated-sources.md)
 
 当前工具以本地 Rust CLI 运行，Git 中的 YAML 是版本维护入口。
 更新上游目录后，维护者检查 diff 与证据，再提交变更。
@@ -13,26 +13,30 @@
 
 | 命令 | 用途 |
 | --- | --- |
-| `cargo run --release --locked -- sources` | 读取 12 个来源的范围、认证约定和条款状态 |
-| `cargo run --release --locked -- sync` | 更新四个默认公开来源 |
+| `cargo run --release --locked -- sources` | 读取 13 个来源的范围、认证约定和条款状态 |
+| `cargo run --release --locked -- sync` | 更新五个默认公开来源，包含官方页面 |
 | `cargo run --release --locked -- sync --source modelsdev,openrouter` | 仅更新指定来源，`--source` 也可重复提供 |
+| `cargo run --release --locked -- sync --source official` | 更新配置中的官方页面 |
+| `cargo run --release --locked -- documents sync --vendor qwen` | 只更新指定厂商的官方页面 |
+| `cargo run --release --locked -- documents list --record huggingface:model:Qwen/Qwen3-8B` | 查看模型明确绑定的页面、声明、警告和失败 |
+| `cargo run --release --locked -- documents check --record huggingface:model:Qwen/Qwen3-8B` | 离线比较页面声明与同一记录的目录事实 |
 | `cargo run --release --locked -- discover --source huggingface,modelscope --output dist/discovery.json` | 将有数量上限的公开候选保存为报告，供种子审查 |
-| `cargo run --release --locked -- validate` | 离线检查目录、领域字段、声明、身份、关系和配置 |
-| `cargo run --release --locked -- validate --evidence` | 使用本地快照核对导入字段的原值 |
-| `cargo run --release --locked -- stats` | 输出来源、最近同步、字段覆盖、身份、关系与声明统计 |
+| `cargo run --release --locked -- validate` | 离线检查目录、领域字段、声明、身份、关系、官方页面和配置 |
+| `cargo run --release --locked -- validate --evidence` | 核对目录原值并从页面原文重放完整提取结果 |
+| `cargo run --release --locked -- stats` | 输出来源、最近同步、字段覆盖、身份、关系、声明与页面统计 |
 | `cargo run --release --locked -- query Qwen --source huggingface --kind model --limit 10` | 在 ID 与名称中匹配文本，并按来源和类型筛选 |
 | `cargo run --release --locked -- query --task robotics --kind model` | 根据领域任务标签筛选模型记录 |
-| `cargo run --release --locked -- inspect huggingface:model:nvidia/GR00T-N1.7-3B` | 查看原始记录、profile、绑定、关系、最近同步状态与规则候选 |
+| `cargo run --release --locked -- inspect huggingface:model:nvidia/GR00T-N1.7-3B` | 查看原始记录、profile、绑定、关系、同步状态、规则候选与官方页面比较 |
 | `cargo run --release --locked -- identities --record huggingface:model:BAAI/bge-m3` | 查看记录的直接身份成员或接口绑定 |
 | `cargo run --release --locked -- relations --record huggingface:model:BAAI/bge-m3 --limit 10` | 查看涉及此记录的显式关系 |
 | `cargo run --release --locked -- rules --record huggingface:model:physical-intelligence/fast --property artifact.role` | 求值记录直接绑定作用域中的指定属性 |
 | `cargo run --release --locked -- evidence archive --output dist/evidence` | 归档当前目录引用的原始快照并核对证据 |
 | `cargo run --release --locked -- evidence restore --input dist/evidence` | 从归档目录恢复并核对证据 |
 | `cargo run --release --locked -- export --output dist/registry.json` | 生成 JSON；省略 `--output` 时使用同一路径 |
-| `cargo run --release --locked -- schema` | 从 Rust 类型生成 9 个 JSON Schema 文件 |
+| `cargo run --release --locked -- schema` | 从 Rust 类型生成 12 个 JSON Schema 文件 |
 | `cargo run --release --locked -- schema --check` | 检查 schema 是否与当前类型一致 |
 
-`sources`、`stats`、`query`、`inspect`、`identities`、`relations` 和 `rules` 输出便于其他工具读取的 JSON。
+`sources`、`stats`、`query`、`inspect`、`identities`、`relations`、`rules` 和 `documents` 的子命令输出便于其他工具读取的 JSON。
 `query` 的文本可省略，默认最多返回 20 条记录，结果包含事实和证据指针。
 查询按不区分大小写的子字符串匹配 ID 和名称，来源筛选使用精确来源键。
 结果按 ID 排序；字段筛选支持 `--task`、`--input`、`--output`、`--min-context`、`--capability` 与 `--identity`。
@@ -61,6 +65,7 @@ cargo run --release --locked -- rules --record huggingface:model:wanglab/MedSAM2
 | `huggingface` | 配置中每个仓库的模型详情 | [`config/huggingface-models.txt`](../config/huggingface-models.txt) |
 | `modelscope` | 配置中每个仓库的模型详情 | [`config/modelscope-models.txt`](../config/modelscope-models.txt) |
 | `openrouter` | 显式请求全部输出模态的模型目录并处理分页 | 适配器内的固定入口 |
+| `official` | 选定厂商的发布博客、模型卡、模型详情页和文档 | [`config/official-pages.yaml`](../config/official-pages.yaml) |
 
 精选清单每行一个 `组织/模型` 上游 ID，支持空行和以 `#` 开头的注释，重复 ID 会报错。
 添加模型前确认原始组织、仓库路径、任务与资料可访问性，避免根据名称推断 ID。
@@ -77,7 +82,7 @@ git diff -- data/catalogs config
 cargo run --release --locked -- export
 ```
 
-同步先校验旧注册表，再获取某来源所需的响应并验证新证据。
+目录同步先校验旧注册表，再获取某来源所需的响应并验证新证据。
 该来源成功完成后，合并旧记录、校验结果，并原子替换其 YAML 文件。
 来源请求或解析失败时保留该来源旧文件；其他成功来源可以更新，最终命令会报告失败并返回非零状态。
 整个同步不是跨所有来源的一次事务，失败后应检查已更新文件再选择重试来源。
@@ -88,6 +93,19 @@ cargo run --release --locked -- export
 `stats` 返回每来源的返回与缺席数量，`inspect` 返回该记录是否在最近同步出现。
 缺席记录继续保留，不能据此宣布退役；最近同步快照也会参与归档与证据校验。
 人工修订导入字段可能被未来发生内容变化的同步替换；来源事实应通过适配器修正，独立文档结论应写入人工声明。
+
+## 官方页面维护
+
+官方页面配置当前包含 12 个厂商的 27 个页面，最多允许 200 个条目。
+页面要求准确 URL 和已有模型记录绑定，采集匿名进行，详细范围见[官方页面与字段核对](official-documents.md)。
+`documents sync --vendor NAME` 按厂商重试；成功内容与页面失败一起写入 `data/documents/official.yaml`，存在失败时命令返回非零状态。
+失败时只保留完整 `source` 定义相同的旧内容，`checked_at` 记录最近尝试，旧快照保留实际获取时间，比较结果标记 `official_stale`。
+修改 URL、格式或绑定后重新同步，避免旧页面内容被用于新的来源定义。
+
+维护者用 `documents list` 检查来源、错误和警告，再用 `documents check` 审查可比较字段。
+页面发布时间不自动成为模型发布日期，近似数值、附加条件和旧内容不会产生精确一致结论。
+字段差异不会自动改写 API 目录事实；需要核对模型版本、单位、适用条件和双方定位。
+页面条件目前保存为文字说明，不能直接当作 `rules` 的 `eq` / `in` 条件执行。
 
 ## 网络与凭据
 
@@ -105,24 +123,25 @@ HTTP 客户端复用连接，设置请求超时和响应体上限，拒绝 HTTP 
 
 ## 缓存与证据保存
 
-`.cache/snapshots/<sha256>.json` 保存原始 JSON 字节，`.cache/http/` 保存公开请求的条件缓存收据。
-这两个目录和 `dist/` 均被 Git 忽略。
+`.cache/snapshots/<sha256>.json` 保存目录原始 JSON，`.cache/documents/<sha256>.bin` 保存官方页面原始字节，`.cache/http/` 保存公开请求的条件缓存收据。
+这些缓存目录和 `dist/` 均被 Git 忽略，页面 YAML 只保存元数据、短摘录、定位和字段声明。
 认证响应同样可能包含账户范围内的数据，不应直接发布整个缓存目录。
 
 普通 `validate` 从 YAML 检查结构与引用，不读取缓存，也不会请求上游。
-`validate --evidence` 读取每个被引用的快照，核对摘要、记录位置与事实值。
-它不重新运行适配器，不联网核对人工声明，也不证明模型实际支持某个功能。
+`validate --evidence` 读取每个被引用的目录快照，核对摘要、记录位置与事实值。
+对官方页面，它从原始 UTF-8 响应重新执行提取，核对完整结果，包括元数据、链接、声明、警告和定位。
+目录适配器不会在证据校验中重新采集，人工声明也不会联网复核；通过校验不证明模型实际支持某个功能。
 干净克隆可以执行普通校验和导出，但缺少历史原始响应时无法完成证据校验。
 重新同步只能取得当前响应，无法保证恢复已经变化的历史快照。
-使用归档命令保存当前目录引用的全部原始快照：
+使用归档命令保存当前目录和官方页面引用的全部原始证据：
 
 ```text
 cargo run --release --locked -- evidence archive --output dist/evidence
 ```
 
-输出是包含 `snapshots/<sha256>.json` 的目录，保留准确原始字节，不是压缩文件。
-归档按摘要去重，包含记录证据与 `last_sync.snapshot_ids` 引用的快照，不复制 `.cache/http/` 收据。
-命令核对大小、JSON、SHA-256 和目录字段指针；已有相同文件可重复使用，损坏或缺少的来源文件会使命令失败。
+输出是包含 `snapshots/<sha256>.json` 与 `documents/<sha256>.bin` 的目录，保留准确原始字节。
+归档按摘要去重，包含记录证据、`last_sync.snapshot_ids` 引用的快照和官方页面已保存的内容，不复制 `.cache/http/` 收据。
+命令核对大小、JSON 或 UTF-8 格式、SHA-256、目录字段指针和页面提取重放结果；已有相同文件可重复使用，损坏或缺少的来源文件会使命令失败。
 保存对应的 Git 数据版本和这个目录后，可在克隆中恢复并离线核对：
 
 ```text
@@ -130,13 +149,13 @@ cargo run --release --locked -- evidence restore --input /path/to/evidence
 cargo run --release --locked -- validate --evidence
 ```
 
-恢复写入当前数据根目录的 `.cache/snapshots/`，两个命令都不访问上游。
-归档覆盖的是当前来源目录引用的快照，独立发现报告的列表响应需要随报告另行保存。
+恢复写入当前数据根目录的 `.cache/snapshots/` 与 `.cache/documents/`，两个命令都不访问上游。
+归档覆盖当前来源目录与官方页面引用的证据，独立发现报告的列表响应需要随报告另行保存。
 长期存储、访问范围和清理策略仍由维护者决定；删除缓存前应先确认需要保留的证据已归档。
 
 ## 修改格式与实现
 
-修改记录、声明、身份、领域视图、关系、规则或发现类型后，运行 `schema` 并提交对应 schema 变更。
+修改记录、声明、身份、领域视图、关系、规则、发现或官方文档类型后，运行 `schema` 并提交对应 schema 变更。
 输入 YAML 限制为单文档、UTF-8 和 JSON 兼容值，拒绝重复键、非字符串键、显式标签、锚点、别名、merge key、非有限数字及超限输入。
 目录、声明、身份和配置等输入结构拒绝未知字段，避免字段拼错后被静默忽略。
 
@@ -172,6 +191,7 @@ uv 部署使用 `uv sync --frozen`，CI 另用 `uv lock --check` 检查锁文件
 | models.dev | 保留 [`licenses/models.dev-MIT.txt`](../licenses/models.dev-MIT.txt)；记录内的模型许可与外链资产另行判断 |
 | Hugging Face、ModelScope | 保留模型仓库许可与来源证据；不把单个模型许可推广到整个平台目录 |
 | OpenRouter | 保存接口声明与来源，批量再分发范围仍待确认 |
+| 官方页面提取 | Git 保存来源 URL、定位与短摘录，完整响应在本地缓存；采集成功不等于取得完整正文再分发许可 |
 | 人工文档声明 | 保留官方 URL、定位和核查时间；`accepted` 表示证据审查结果 |
 | 认证来源与原始缓存 | 根据账户条款和来源要求确认保存、分享与再分发范围 |
 

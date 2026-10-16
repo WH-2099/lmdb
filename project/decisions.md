@@ -3,7 +3,7 @@
 [返回项目跟踪](README.md) · [实现说明](../docs/data-model.md) · [研究档案](../research/2026-10-15/README.md)
 
 更新日期：2026-10-16。
-项目已实现 Rust CLI、来源数据与语义查询，研究档案中的候选方案保留为历史依据。
+项目已实现 Rust CLI、来源数据、语义查询与官方页面字段核对，研究档案中的候选方案保留为历史依据。
 以下记录区分用户方向、已采用的实现选择和仍需验证的工作。
 
 ## 用户方向
@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | D01 | 先进行广泛调研，再进入实现 | 初始报告留在 `research/2026-10-15/`，当前阶段交付 CLI 与首批数据 |
 | D02 | 长期覆盖各类模型，先模型层，再扩展平台 | 公开目录、跨任务精选样本与专业模型条件声明；平台事实保留独立作用域 |
-| D03 | YAML、Git 审查与版本维护 | 来源目录、人工声明、身份和发现配置保存为 YAML，查询与导出 JSON 为派生产物 |
+| D03 | YAML、Git 审查与版本维护 | 来源目录、人工声明、身份、页面提取结果和采集配置保存为 YAML，查询与导出 JSON 为派生产物 |
 | D04 | 核心优先 Rust，独立脚本优先现代 Python | 当前直接用 Rust 完成采集、校验和导出，尚无 Python 包装层 |
 | D05 | Python 依赖、锁文件与 legacy 导出一致 | 独立 Python 任务出现后遵守 `pyproject.toml`、`uv.lock`、`requirements.txt` 约定 |
 | D06 | 项目跟踪与研究目录分开，持续维护树形索引 | `project/` 保存现状，`research/` 保留研究，`docs/` 解释实现与维护 |
@@ -26,20 +26,23 @@
 | I03 | 来源记录 ID 使用 `<source>:<kind>:<upstream_id>` | 来源记录数与人工审查的模型身份数分别统计；同名不构成身份依据 |
 | I04 | 模型身份和接口绑定保存在独立的身份文件中 | 模型身份只收纳模型记录，接口只绑定服务记录；按记录查询规则时仅使用该记录的显式绑定 |
 | I05 | 导入字段保留 JSON 原值和绝对 JSON Pointer | 缺失不转为否定，平台限制和价格保留来源作用域 |
-| I06 | 默认公开同步 models.dev、HF、ModelScope 和 OpenRouter | HF 与 ModelScope 使用精选清单；`discover` 先产生有数量上限的候选报告，经审查后再加入清单；认证来源需显式来源选择和启用参数 |
-| I07 | 原始 JSON 放在 `.cache/snapshots/`，以 SHA-256 命名，不进入 Git | `evidence archive` 和 `evidence restore` 复制当前目录引用的精确快照，核对摘要、JSON 与字段证据；普通校验不需要缓存 |
-| I08 | 按来源完成校验后原子更新，来源之间可部分成功 | 失败来源保留旧文件；整个命令报告失败并返回非零状态 |
+| I06 | 默认公开同步 models.dev、HF、ModelScope、OpenRouter 和 `official` 五个来源 | HF 与 ModelScope 使用精选清单，官方页面使用显式页面配置；`discover` 先输出候选供审查；认证来源需显式选择和启用 |
+| I07 | 原始响应按 SHA-256 保存，API JSON 位于 `.cache/snapshots/`，UTF-8 页面字节位于 `.cache/documents/` | `evidence archive` 和 `evidence restore` 同时复制 `.json` 与 `.bin`，核对字段证据并重放完整页面提取；原始缓存不进入 Git |
+| I08 | API 目录按来源完成校验后原子更新，来源之间可部分成功 | 失败目录来源保留旧文件；官方页面保存逐页错误；整个命令报告失败并返回非零状态 |
 | I09 | 保留本轮遗漏记录与未变化记录的旧证据，并保存最近成功同步清单 | `returned_ids` 与 `missing_ids` 描述本次返回情况；暂时缺席不代表删除或退役，证据时间不等于最近同步时间 |
 | I10 | 人工声明按独立作用域求值，保留条件、审查状态和文档证据 | `rules` 区分条件不匹配、缺少上下文、已知结论与冲突；当前证据均为 `reported`，求值不会升级为推理实测 |
-| I11 | JSON Schema 从 Rust 类型生成，CLI 另做语义校验 | 目录、声明、身份、领域字段、关系、规则和来源发现配置均有 schema；schema 一致性、结构校验和本地证据核对分别提供命令 |
-| I12 | 导出确定性 JSON，查询和统计由 CLI 提供 | 导出包含原始记录、`profiles`、`identities` 和 `relationships`；当前消费入口包括 `query`、`inspect`、`identities`、`relations` 和 `rules` |
+| I11 | 12 个 JSON Schema 从 Rust 类型生成，CLI 另做语义校验 | 包含官方页面配置、文档目录和文档对照；schema 一致性、结构校验和本地证据核对分别提供命令 |
+| I12 | 导出确定性 JSON，查询和统计由 CLI 提供 | 导出保留原始记录、领域视图、身份和关系，并加入 `official_sources`、`documents` 与 `document_comparisons` |
 | I13 | 从已知来源字段派生有类型的领域字段 | 任务保留来源分类，模态、上限、参数、能力、谱系和价格保留 `fact` 与原始快照指针；未知标签与价格条件继续保留，缺失字段不命中过滤条件 |
 | I14 | 从显式字段派生 `serves`、`references` 和 `derived_from` | 每条关系保留证据与目标是否已收录；仓库引用和父模型关系不会触发身份合并或能力继承 |
-| I15 | 12 个来源的范围、认证约定和条款状态集中记录 | `sources` 读取 `config/sources.yaml`；该描述不覆盖可执行端点，也不把认证来源纳入公开发现 |
+| I15 | 13 个来源的范围、认证约定和条款状态集中记录，其中 5 个为公开来源 | `sources` 读取 `config/sources.yaml`；该描述不覆盖可执行端点，也不把认证来源纳入公开发现 |
 | I16 | 专业模型条件精确到模型变体、表示或 checkpoint | 动作 tokenizer、机器人动作、蛋白质结构和医学分割均保留作者声明的范围；仓库内多个权重文件的专长通过条件分别表达 |
+| I17 | 官方页面通过 `documents sync/list/check` 采集、查看和对照，页面仅绑定明确的模型记录 | 页面日期与模型发布日期分别记录；提取结果保留原文定位、精度和文字条件，不覆盖 API 事实或人工规则 |
+| I18 | 官方字段只与精确绑定记录的同名事实对照 | 近似值、条件和失败后保留的旧内容保留各自状态；差异不自动裁定来源正误，最近失败保留错误和可用旧内容 |
 
 上述行为的具体含义见[数据模型](../docs/data-model.md)、[领域字段](../docs/domain-fields.md)、[模型关系](../docs/relationships.md)、[条件查询](../docs/rule-queries.md)与[维护流程](../docs/maintenance.md)。
 候选扩展流程见[公开候选发现](../docs/discovery.md)，专业模型的证据边界见[专业模型声明](../docs/specialized-models.md)。
+页面选择、提取和对照口径见[官方页面与字段核对](../docs/official-documents.md)。
 认证适配器已经具备请求、分页和映射实现，但本轮未进行真实认证采集。
 自动导入事实属于来源声明，不能因校验通过而升级为经过推理验证的模型能力。
 

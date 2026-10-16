@@ -3,7 +3,7 @@
 [返回项目跟踪](README.md) · [项目首页](../README.md) · [决定记录](decisions.md)
 
 更新日期：2026-10-16。
-当前阶段：Rust CLI、来源目录、语义查询与证据维护已实现，并通过本轮本地回归。
+当前阶段：官方页面采集与字段对照已接入 Rust CLI，并通过本轮本地回归。
 初始研究记录保留在[研究档案](../research/2026-10-15/README.md)，当前使用方法见[维护流程](../docs/maintenance.md)。
 
 ## 已完成的研究基线
@@ -18,9 +18,9 @@
 ## 当前实现范围
 
 - [x] 直接用 Rust 实现采集、YAML 存储、结构与语义校验、查询、统计和 JSON 导出。
-- [x] 默认公开来源包括 models.dev、Hugging Face、ModelScope 与 OpenRouter。
+- [x] 默认公开来源包括 models.dev、Hugging Face、ModelScope、OpenRouter 与 `official`。
 - [x] HF 与 ModelScope 按配置清单获取模型详情。
-- [x] 汇总 12 个来源的覆盖范围、认证约定、条款状态和文档入口。
+- [x] 汇总 13 个来源的覆盖范围、认证约定、条款状态和文档入口，其中 5 个为公开来源。
 - [x] 为 HF 与 ModelScope 提供有规则和总量上限的公开发现，先输出候选报告，再由维护者审查是否加入种子。
 - [x] 为导入字段保留原始 JSON 值、快照摘要和 JSON Pointer。
 - [x] 将任务、模态、规格、能力、谱系和价格投影为有类型的字段，并保留来源字段与证据位置。
@@ -30,15 +30,18 @@
 - [x] 保存人工审查的条件声明与来源冲突，并提供独立校验。
 - [x] 根据调用方上下文执行条件匹配，区分已知、未知、冲突与没有适用规则。
 - [x] 为机器人、蛋白质结构预测和医学分割补充带变体或 checkpoint 边界的专业模型声明。
-- [x] 从 Rust 类型生成目录、声明、身份、领域字段、关系、规则及来源发现配置的 JSON Schema。
+- [x] 从 Rust 类型生成 12 个 JSON Schema，覆盖目录、语义视图、来源发现和官方文档。
 - [x] 保留未变化记录的旧证据和本轮来源遗漏的历史记录，并记录最近成功同步的返回及缺席清单。
-- [x] 归档和恢复目录引用的精确原始快照，恢复后核对摘要与字段证据。
+- [x] 通过 `documents sync/list/check` 采集官方页面、查看声明并与显式绑定模型的同名原始事实对照。
+- [x] 保留页面元信息、原文定位、精度、条件、失败及可用旧内容，对照结果独立于 API 事实。
+- [x] 归档和恢复 API JSON 与 UTF-8 页面 `.bin`，核对摘要、字段证据与完整提取结果。
 - [x] 为认证来源实现请求说明、映射和分页，默认禁用。
 - [x] 为输入边界、字段证据、分页、HTTP 缓存与失败保留行为提供回归测试。
 
 这里的完成项描述已有代码与文档，不代表所有来源已在线验证或实现长期稳定运行。
 领域字段和使用限制见[领域字段](../docs/domain-fields.md)、[模型关系](../docs/relationships.md)与[条件查询](../docs/rule-queries.md)。
 新增样本的审查依据见[公开候选发现](../docs/discovery.md)和[专业模型声明](../docs/specialized-models.md)。
+官方材料的范围和对照边界见[官方页面与字段核对](../docs/official-documents.md)。
 
 ## 当前数据范围
 
@@ -58,6 +61,9 @@
 225 条记录有任务领域字段，129 条记录有 safetensors 参数总量字段，字段覆盖以 `stats.typed_coverage` 为准。
 本轮公开发现执行 8 条规则、处理 125 个列表条目，得到 118 个候选且无失败规则，结果保存在[发现报告](../reports/discovery/2026-10-16.json)。
 这些候选需要逐项审查，数量不表示平台或任务的完整覆盖。
+官方页面配置覆盖 12 个厂商的 27 个精选页面，当前 25 页保存了内容，19 页提取出 79 条模型字段声明。
+两页采集失败并保存错误：OpenAI 发布博客返回 HTTP 403，Anthropic system card 入口返回 HTTP 307。
+页面声明与 34 条人工条件声明分别保存，页面成功返回也不保证能提取模型字段。
 所有人工证据仍为 `reported`，条件匹配与身份校验不构成模型推理实测。
 后续数据量使用 `stats` 查看，以上数字仅对应本次记录的本地状态。
 模型记录与服务记录均带来源，合计数量不能作为跨来源去重后的模型数。
@@ -69,20 +75,22 @@
 | --- | --- | --- |
 | 代码与回归 | `cargo fmt --check`、`cargo clippy --locked --all-targets -- -D warnings`、`cargo test --locked` | 当前实现符合格式、静态检查和已写回归场景 |
 | 格式一致性 | `cargo run --release --locked -- schema --check` | 已保存 schema 与当前类型一致 |
-| 本地注册表 | `cargo run --release --locked -- validate` | 目录、领域字段、声明、身份、关系及来源发现配置通过结构及语义检查 |
-| 原始证据 | `cargo run --release --locked -- validate --evidence` | 缓存摘要和导入字段定位匹配 |
-| 证据归档恢复 | `cargo run --release --locked -- evidence archive --output PATH`、`cargo run --release --locked -- evidence restore --input PATH` | 精确快照可离线复制，恢复后的快照与目录字段匹配 |
+| 本地注册表 | `cargo run --release --locked -- validate` | 目录、语义视图、来源配置及官方页面绑定和提取结构通过检查 |
+| 原始证据 | `cargo run --release --locked -- validate --evidence` | 缓存摘要与字段定位匹配，官方页面完整提取结果可重放 |
+| 证据归档恢复 | `cargo run --release --locked -- evidence archive --output PATH`、`cargo run --release --locked -- evidence restore --input PATH` | API JSON 与页面 `.bin` 可离线复制，并核对字段与提取结果 |
 | 导出与检索 | `cargo run --release --locked -- export`、`cargo run --release --locked -- query`、`cargo run --release --locked -- inspect RECORD_ID` | 原始记录、领域字段、身份和关系可被本地消费 |
 | 身份与关系 | `cargo run --release --locked -- identities`、`cargo run --release --locked -- relations` | 显式绑定和来源关系可单独审查 |
 | 条件求值 | `cargo run --release --locked -- rules --record RECORD_ID --context '{}'` | 已绑定作用域中的候选保留适用性、未知状态和冲突 |
 | 来源与候选 | `cargo run --release --locked -- sources`、`cargo run --release --locked -- discover --source huggingface,modelscope` | 来源契约可查，候选发现受配置边界约束并保留执行状态 |
+| 官方页面 | `cargo run --release --locked -- documents sync`、`cargo run --release --locked -- documents list`、`cargo run --release --locked -- documents check` | 采集状态、提取声明和字段对照可分别核查 |
 | 公开来源 | `cargo run --release --locked -- sync --source NAME` | 指定来源在本次环境下可获取并写入有效目录 |
 
 验收结果应记录实际命令和运行情况，不用测试存在代替测试通过。
 2026-10-16 已通过 `cargo fmt --check`、全目标 clippy 严格检查与 `cargo test --locked`。
-本轮共 86 项测试通过，其中 78 项库测试、3 项基础 CLI 测试与 5 项语义 CLI 测试。
-`schema --check` 与 `validate --evidence` 通过，证据校验覆盖 10,373 条记录、24 组身份与 34 条声明，JSON 导出已生成。
-在没有缓存的新克隆和清空的环境变量中，从归档恢复 325 份原始快照后完成证据校验，导出 JSON 与原工作区逐字节一致。
+本轮共 120 项测试通过，其中 108 项库测试、3 项基础 CLI 测试、4 项文档 CLI 测试与 5 项语义 CLI 测试。
+12 个 schema 的 `schema --check` 与 `validate --evidence` 通过，证据校验覆盖 10,373 条记录、24 组身份、34 条人工声明及保存的官方页面提取，JSON 导出完成。
+在无缓存的新克隆中，`documents sync --vendor qwen` 成功同步 3 页，其余 24 页保留原记录。
+另以原跟踪数据、空缓存和空环境变量恢复 350 份证据，其中 325 份为 API JSON、25 份为页面字节，证据校验通过，导出与原工作区逐字节一致。
 2026-10-15 的结果保留在工作日志中；以上结论对应本轮本地验证。
 证据校验依赖未入 Git 的原始响应，普通克隆缺少历史缓存时可完成普通校验与导出，也可从归档恢复已有精确快照。
 重新同步上游不能保证恢复历史响应，归档覆盖当前目录引用的快照，长期保管仍需确定存放位置与保留策略。
@@ -109,3 +117,4 @@
 | 2026-10-15 | 完成第一轮来源、同类项目、接口特例与技术栈调研 | 保留研究时的事实与未决项 |
 | 2026-10-15 | 建立 Rust CLI、来源适配器、YAML 记录与人工条件声明，补齐使用和维护文档 | 四个公开来源采集和 10,306 条记录证据核对完成，41 项测试通过；认证来源、长期更新和再分发范围仍待验证 |
 | 2026-10-16 | 补充领域字段、身份、关系、条件求值、同步清单、快照归档恢复和公开候选发现，加入专业模型声明 | 当前 10,373 条目录记录、24 组身份、34 条人工声明；格式、静态检查、86 项测试、schema 与全量缓存证据校验通过，JSON 导出完成 |
+| 2026-10-16 | 接入官方页面采集、提取与字段对照，扩展证据归档和回放 | 27 页中 25 页保存内容，19 页提取 79 条声明，2 页保留采集错误；120 项测试、12 个 schema、证据校验与导出通过 |
