@@ -1,16 +1,17 @@
 # 数据模型与证据
 
-[项目首页](../README.md) · [维护流程](maintenance.md) · [条件声明](assertions.md)
+[项目首页](../README.md) · [领域字段](domain-fields.md) · [身份与关系](relationships.md) · [规则查询](rule-queries.md) · [维护流程](maintenance.md)
 
-当前格式为 `schema_version: 1`，类型定义位于 [`src/model.rs`](../src/model.rs) 和 [`src/assertion.rs`](../src/assertion.rs)。
-Rust 类型生成 `schemas/catalog.schema.json` 与 `schemas/assertions.schema.json`。
+当前格式为 `schema_version: 1`，原始目录和声明的类型定义位于 [`src/model.rs`](../src/model.rs) 与 [`src/assertion.rs`](../src/assertion.rs)。
+领域视图、身份、关系和规则分别由 `domain`、`identity`、`relations` 与 `rules` 模块定义。
+Rust 类型生成目录、声明、身份、profile、关系、规则、来源约定、发现配置与发现报告共 9 个 JSON Schema。
 CLI 通过类型解析与语义检查执行校验，JSON Schema 为编辑器和其他消费方提供结构说明。
 仅运行通用 JSON Schema 校验不能替代 CLI 的引用、单位、日期与冲突检查。
 
 ## 来源目录
 
 每个来源保存为 `data/catalogs/<source>.yaml`，文件名必须与文件内的 `source` 一致。
-一个 `Catalog` 包含版本、来源键、快照列表 `snapshots` 和记录列表 `records`。
+一个 `Catalog` 包含版本、来源键、快照列表 `snapshots`、记录列表 `records` 和可选的最近同步清单 `last_sync`。
 
 | 对象 | 字段 | 含义 |
 | --- | --- | --- |
@@ -21,6 +22,7 @@ CLI 通过类型解析与语义检查执行校验，JSON Schema 为编辑器和�
 | `Fact` | `value`、`pointer`、可选 `unit` | 上游 JSON 原值、完整 JSON Pointer 和明确的计量单位 |
 | `Snapshot` | `schema_version`、`id`、`source`、`url` | 快照身份、来源和实际请求 URL |
 | `Snapshot` | `retrieved_at`、`sha256`、可选 `upstream_revision` | 获取时间、原始字节摘要和已知上游修订 |
+| `SyncManifest` | `completed_at`、`returned_ids`、`missing_ids`、`snapshot_ids` | 最近成功同步时间、本轮返回 ID、保留但缺席的 ID、本轮采集快照 |
 
 `id` 使用 `<source>:<kind>:<upstream_id>`。
 例如 `huggingface:model:Qwen/Qwen3-8B` 与 `modelscope:model:Qwen/Qwen3-8B` 是两个来源记录。
@@ -31,8 +33,9 @@ CLI 通过类型解析与语义检查执行校验，JSON Schema 为编辑器和�
 `kind: service` 表示目录或平台作用域内的提供条目，可能包含平台限额、价格、别名或访问范围。
 认证适配器当前统一使用服务分类；其中 Artificial Analysis 是聚合目录，这个分类不表示它提供推理服务。
 当前只有 models.dev 的 `canonical_model_id` 会生成显式 `model` 引用。
-OpenRouter 的 `hugging_face_id` 等字段作为事实保留，不自动建立跨来源关联。
-HF 的量化、adapter、合并和微调关系也保留来源原值，不据此继承能力或许可证。
+OpenRouter 的 `hugging_face_id` 等显式声明可派生为 `references` 关系，但引用关系不证明模型身份相同。
+HF 和 ModelScope 的 `base_models` 可派生为 `derived_from`，原始派生类型在有明确声明时另行保留。
+关系不会传播能力、接口限制或许可证，详见[身份与关系](relationships.md)。
 
 ## 字段与原始响应
 
@@ -52,6 +55,23 @@ JSON Pointer 指向快照根对象下的绝对位置，采用 `/` 分段，并�
 缓存文件不提交到 Git；YAML 保存其身份、请求 URL 和证据定位。
 快照摘要用于核对字节一致性，不能证明来源内容本身正确。
 
+## 领域视图、身份与关系
+
+`DomainMetadata` 从已知事实派生任务、模态、token 限制、参数、能力、谱系和价格结构。
+派生值携带 `fact` 与 `pointer`，结合记录的 `origin.snapshot` 可以回到原始响应；原始 `facts` 继续保存完整来源值。
+任务与模态保留来源标签，仅对已知标签补充规范分类，未识别标签不会被删掉。
+价格视图区分金额、计费单位、数量、条件和未分类字段，不从缺失单位猜测总价。
+具体映射与计量边界见[领域字段](domain-fields.md)。
+
+`data/identities/core.yaml` 保存经审查的模型身份和接口绑定，每个集合都附文档证据。
+模型身份只能包含精确的模型记录 ID，同一记录只能属于一个模型身份；接口绑定只能指向服务记录。
+名称相似、共享 URL、服务引用与派生关系都不会自动加入身份集合。
+`query --identity` 可查直接模型成员及其通过 `record.model` 明确关联的服务，便于查找提供方。
+`identities --record` 和 `rules --record` 仍只使用记录的直接成员或接口绑定，服务查找不会使模型规则或其他接口规则被继承。
+
+导出的每条关系包含 `from`、`to`、`kind`、来源证据与 `target_present`。
+`target_present: false` 表示目标模型记录当前不在本库，保留这条上游引用有助于后续审查覆盖缺口。
+
 ## 同步后的记录与时间
 
 同步以来源为单位合并新目录。
@@ -60,11 +80,14 @@ JSON Pointer 指向快照根对象下的绝对位置，采用 `/` 分段，并�
 字段变化时替换该记录，并关联新快照。
 
 本轮没有返回的旧记录继续保留，目录因此包含历史保留项。
-当前没有由缺席自动推导退役、删除或最近可用时间的机制。
+`last_sync.returned_ids` 与 `missing_ids` 明确区分本轮返回和本轮缺席的保留记录。
+这两个列表覆盖当前来源的全部记录，`snapshot_ids` 保存本轮采集证据；它们独立于旧事实的证据时间。
+缺席不会自动推导为退役、删除或不可调用。
 同一来源文件可能引用多次获取的快照，不能视作某一时刻完整一致的上游目录。
 `retrieved_at` 是所引用快照的获取时间，不表示事实生效时间、最近同步时间或最近成功核查时间。
-快照列表只保留当前记录仍引用的元信息，本地缓存可能同时保留未被当前记录引用的响应。
+快照列表保留当前记录和最近同步清单引用的元信息，本地缓存可能同时保留未被当前目录引用的响应。
 Git 历史能保存旧记录版本，但只有同时保留对应原始响应，才能重放旧证据。
+`evidence archive` 与 `evidence restore` 提供准确原始字节的目录归档和恢复，支持配合同一版本的 YAML 离线重放。
 
 ## 人工条件声明
 
@@ -72,10 +95,11 @@ Git 历史能保存旧记录版本，但只有同时保留对应原始响应，�
 声明包含主体 `scope`、属性、原生 JSON 值、支持状态、条件、审查结果及来源定位。
 详细语义与样本见[条件声明文档](assertions.md)。
 
-`scope.id` 是外部模型或接口的说明性标识，当前不要求绑定某个目录 `Record.id`。
-声明不会自动覆盖来源字段，也不会因模型名称相似而自动附着到目录记录。
-条件当前支持 `eq` 和 `in`，共同限定适用范围。
-校验器只检查其结构，没有根据请求执行条件、推导能力或解决冲突的规则引擎。
+`scope.id` 是模型或接口的说明性标识，允许存在尚未绑定目录记录的独立声明。
+`rules --record` 只从显式身份或接口绑定选择作用域，声明不会覆盖来源字段。
+条件支持 `eq` 和 `in`，使用 `--context` 提供的原生 JSON 值共同限定适用范围。
+求值结果区分匹配、不匹配和条件未知，再按作用域与属性返回已知、未知、冲突或没有适用规则的结果。
+缺少上下文或声明不能推导为不支持，冲突候选与证据始终保留，详见[规则查询](rule-queries.md)。
 `review: accepted` 表示接受所引用文档的声明；当前证据类型仅为 `reported`，不表示实际模型行为已经验证。
 `review: conflicted` 要求 `status: unknown` 和 `value: null`，保留冲突供复核。
 
@@ -83,13 +107,14 @@ Git 历史能保存旧记录版本，但只有同时保留对应原始响应，�
 
 | 操作 | 检查范围 |
 | --- | --- |
-| `validate` | YAML 输入边界、类型、格式版本、唯一 ID、来源一致性、模型引用、快照引用、指针语法、token 单位、人工声明与证据引用 |
+| `validate` | YAML 输入边界、类型、格式版本、唯一 ID、来源一致性、模型与快照引用、指针语法、领域字段与单位、同步清单、人工声明、身份与关系、来源和发现配置 |
 | `validate --evidence` | 上述检查，加上本地原始响应的 SHA-256、记录对象定位及字段值与指针目标的一致性 |
 | `schema --check` | 已提交 JSON Schema 与当前 Rust 类型生成结果是否一致 |
 | `export` | 校验本地注册表，再输出按 ID 排序的 JSON 视图 |
 
 证据校验不重新请求网页，不验证人工摘录与网页当前正文，也不保证来源字段语义正确。
 从干净克隆执行普通校验和导出不需要缓存；证据校验需要所有仍被引用的原始 JSON。
-导出对象包含 `schema_version`、`models`、`services`、`snapshots` 和 `assertion_sets`。
+导出对象包含 `schema_version`、`models`、`services`、`snapshots`、`syncs`、`assertion_sets`、`profiles`、`identities` 和 `relationships`。
+`profiles` 按记录 ID 索引，`syncs` 按来源键保存最近同步清单；规则结果由 `rules` 按调用上下文单独生成。
 导出保留事实、来源指针、条件和冲突，不将它们压平成一个能力布尔值。
 相同输入数据生成相同内容；JSON 是 YAML 的派生产物，维护时应修改源记录。

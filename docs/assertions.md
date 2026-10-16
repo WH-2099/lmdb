@@ -1,9 +1,10 @@
 # 人工审查的条件声明
 
-[返回项目](../README.md) · [首批数据](../data/assertions/core.yaml) · [类型与校验](../src/assertion.rs)
+[返回项目](../README.md) · [首批数据](../data/assertions/core.yaml) · [专业模型](specialized-models.md) · [规则查询](rule-queries.md) · [类型与校验](../src/assertion.rs)
 
-`data/assertions/core.yaml` 保存已阅读官方材料后整理的条件声明。
-首批包含 25 条声明、18 个来源，其中 23 条已接受，2 条保留来源冲突。
+`data/assertions/` 保存已阅读官方材料后整理的条件声明。
+`core.yaml` 保留首批 25 条声明与 18 个来源；`specialized.yaml` 新增 4 个专业模型的 9 条声明。
+截至 2026-10-16，共 34 条声明，其中 32 条已接受，2 条保留来源冲突。
 所有证据均为 `reported`，没有进行模型推理调用。
 这些记录补充自动导入的目录数据；它们的来源和作用域分别保留。
 
@@ -28,6 +29,8 @@ YAML 使用 JSON 兼容值，字符串显式加引号，日期采用字符串形
 本库为接口使用的说明性 ID 并不意味着上游存在同名 HTTP 路径。
 这些 ID 用于准确引用当前声明的主体，不能根据名称相似、大小写或标点自动合并不同主体。
 跨平台对应关系需要独立证据。
+[`data/identities/core.yaml`](../data/identities/core.yaml) 把已核查的模型记录与模型作用域、服务记录与接口作用域显式绑定，`rules --record` 只沿这些直接绑定选择声明。
+服务的模型引用和派生关系不会带入其他作用域的规则；没有绑定的记录返回空的规则集合。
 
 `property` 是此库的属性路径，并不自动等于请求字段路径或 JSON Pointer。
 属性名中的 `default`、`max`、`required` 等词有不同意义，应连同作用域、单位和注释阅读。
@@ -50,12 +53,17 @@ YAML 使用 JSON 兼容值，字符串显式加引号，日期采用字符串形
 
 条件列表中的各项共同限定声明的适用范围。
 `eq` 表示与给出的 JSON 值相等，`in` 表示属于给出的非空数组。
+比较保留 JSON 类型，数字 `0` 与字符串 `"0"` 不相等。
 条件缺失或无法确认时，消费方不能直接应用这条声明。
 条件列表为空只表示在已写明的作用域内没有附加条件，不表示可以扩展到其他接口或型号。
-本轮校验条件结构，不提供规则执行器，也不自动解析外部请求或推导匹配结果。
+`rules --context` 接收以条件路径为字面键的 JSON 对象，例如 `{"artifact.checkpoint":"MedSAM2_US_Heart.pt"}`。
+条件求值返回 `matched`、`not_matched` 或 `undetermined`，缺少的路径在结果中列明。
+同一作用域与属性的候选一起求值，未知条件保持 `unknown`，明确矛盾保持 `conflicted`，全部不匹配则返回 `no_applicable_rule`。
+这些结果都不能简化为 `unsupported`；只有明确声明的不支持状态才表达不支持。
+指定接口作用域后，`context.interface` 与它矛盾会报错，避免套用另一接口的上下文。
 研究报告中讨论过的 `conditional` 在当前格式中通过 `conditions` 与具体 `status` 组合表达。
 
-## 首批属性的范围
+## 属性的范围
 
 | 属性或样本 | 必须保留的解释 |
 |---|---|
@@ -73,10 +81,15 @@ YAML 使用 JSON 兼容值，字符串显式加引号，日期采用字符串形
 | ESMC `output.attentions` | 带具体运行实现和 attention 配置的限制，不是所有实现都不能返回 attention |
 | `classification.head.pretrained` | ESMC 的 token/sequence 分类头，不是已有的 masked language model 头 |
 | `workflow.inference_state.required` | SAM2 视频预测工作流维护状态，不表示 `init_state` 需要一个预先存在的状态 |
+| FAST `artifact.role` | `action_tokenizer` 表示动作序列 tokenizer；`robotics` 任务归类本身不能证明机器人控制策略能力 |
+| GR00T `input.representations`、`output.action.representation` | 输入表示和连续动作向量来自作者模型卡；动作维度随机器人本体变化，不补写固定维度或 SDK 必填字段 |
+| ESMFold2 蛋白输入与结构输出 | 保存氨基酸序列、可选 MSA 和结构输出；可选 MSA 不扩展到 ESMFold2-Fast |
+| MedSAM2 `segmentation.specialization` | 心脏超声、MRI 肝脏病灶和 CT 病灶分别受 `artifact.checkpoint` 条件约束 |
 | Mistral 离线转写时长冲突 | `voxtral-mini-latest` 是按核查日期记录的滚动别名，不能当作不可变模型版本 |
 
 本轮的两条冲突分别是 Gemini structured output 与工具的型号范围，以及 Mistral 离线转写时长。
 具体官方 URL、章节和原始说法保存在声明的证据与注释中。
+专业样本的命令、固定修订来源与作用域见[专业模型](specialized-models.md)，条件求值示例见[规则查询](rule-queries.md)。
 更多研究上下文见[限制报告](../research/2026-10-15/sources/constraints.md)和[专业模型报告](../research/2026-10-15/sources/specialized-models.md)。
 
 ## 校验边界与维护
