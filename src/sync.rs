@@ -4,6 +4,7 @@ use anyhow::{Context, Result, bail, ensure};
 use futures_util::{StreamExt, TryStreamExt, stream};
 use reqwest::header::{HeaderMap, HeaderValue};
 use serde_json::Value;
+use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 
 use crate::{
     adapters::{gated, modelsdev, public},
@@ -46,7 +47,8 @@ pub async fn run(root: &Path, requested: &[String], authenticated: bool) -> Resu
                 .iter()
                 .position(|catalog| catalog.source == source);
             let old = index.map(|index| registry.catalogs[index].clone());
-            let merged = merge_catalog(old, incoming)?;
+            let completed_at = OffsetDateTime::now_utc().format(&Rfc3339)?;
+            let merged = merge_catalog(old, incoming, &completed_at)?;
             Registry {
                 catalogs: vec![merged.clone()],
                 assertions: vec![],
@@ -111,6 +113,7 @@ async fn fetch_catalog(fetcher: &Fetcher, root: &Path, source: &str) -> Result<C
     let mut catalog = Catalog {
         schema_version: SCHEMA_VERSION,
         source: source.into(),
+        last_sync: None,
         snapshots: vec![],
         records: vec![],
     };

@@ -1,0 +1,53 @@
+schema_version: 1
+max_results: 200
+rules:
+  - id: hf-autonlab
+    source: huggingface
+    author: AutonLab
+    sort: createdAt
+    limit: 20
+
+  - id: hf-facebook-segmentation
+    source: huggingface
+    author: facebook
+    pipeline_tag: image-segmentation
+    sort: createdAt
+    limit: 20
+
+  - id: hf-nvidia-robotics
+    source: huggingface
+    author: nvidia
+    pipeline_tag: robotics
+    sort: createdAt
+    limit: 20
+
+  - id: hf-biohub
+    source: huggingface
+    author: biohub
+    sort: createdAt
+    limit: 20
+
+  - id: hf-prithvi
+    source: huggingface
+    author: ibm-nasa-geospatial
+    sort: createdAt
+    limit: 20
+
+  - id: hf-granite-geospatial
+    source: huggingface
+    author: ibm-granite
+    search: geospatial
+    sort: createdAt
+    limit: 20
+
+  - id: ms-qwen
+    source: modelscope
+    owner: Qwen
+    sort: last_modified
+    limit: 20
+
+  - id: ms-wan
+    source: modelscope
+    owner: Wan-AI
+    sort: last_modified
+    limit: 20

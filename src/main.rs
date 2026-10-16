@@ -1,14 +1,19 @@
 use std::{collections::BTreeMap, fs, path::PathBuf};
 
 use anyhow::{Context, Result, ensure};
-use clap::{Parser, Subcommand, ValueEnum};
+use clap::{Args, Parser, Subcommand, ValueEnum};
 use model_metadata::{
-    assertion::{AssertionSet, Review},
-    model::{Catalog, RecordKind},
-    registry, store, sync,
+    assertion::{AssertionSet, Review, Scope, ScopeKind},
+    discovery,
+    domain::{self, DomainMetadata},
+    evidence,
+    identity::{self, IdentitySet},
+    model::{Catalog, Record, RecordKind},
+    registry::{self, Registry},
+    relations, rules, store, sync,
 };
 use serde::Serialize;
-use serde_json::json;
+use serde_json::{Value, json};
 
 #[derive(Parser)]
 #[command(version, about = "Model metadata with field-level source evidence")]
@@ -21,7 +26,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
-    /// List public sources and sources that require an explicit credential opt-in.
+    /// List source coverage, authentication and terms metadata.
     Sources,
     /// Fetch selected sources; defaults to all public sources.
     Sync {
@@ -30,28 +35,59 @@ enum Command {
         #[arg(long)]
         authenticated: bool,
     },
-    /// Validate YAML and references; optionally replay cached raw evidence.
+    /// Discover bounded public candidates for review before adding seeds.
+    Discover {
+        #[arg(long, value_delimiter = ',')]
+        source: Vec<String>,
+        #[arg(long, default_value = "dist/discovery.json")]
+        output: PathBuf,
+    },
+    /// Validate catalogs, typed fields and identities; optionally replay raw evidence.
     Validate {
         #[arg(long)]
         evidence: bool,
     },
-    /// Export validated catalogs and assertions to deterministic JSON.
+    /// Export raw records, typed profiles, identities and relationships.
     Export {
         #[arg(long, default_value = "dist/registry.json")]
         output: PathBuf,
     },
-    /// Count source records, tasks and curated assertions.
+    /// Count source records, typed coverage, relationships and assertions.
     Stats,
-    /// Find records by ID or name; output includes each field's evidence pointer.
-    Query {
-        #[arg(default_value = "")]
-        text: String,
+    /// Find records by name and explicit metadata; missing facts do not match filters.
+    Query(Query),
+    /// Inspect one record, its typed fields, explicit bindings and rule candidates.
+    Inspect { record: String },
+    /// List curated identities, optionally restricted to one record.
+    Identities {
         #[arg(long)]
-        source: Option<String>,
-        #[arg(long, value_enum)]
-        kind: Option<Kind>,
+        record: Option<String>,
+    },
+    /// List explicit source relationships, optionally touching one record.
+    Relations {
+        #[arg(long)]
+        record: Option<String>,
         #[arg(long, default_value_t = 20)]
         limit: usize,
+    },
+    /// Evaluate documented conditions while preserving unknowns and conflicts.
+    Rules {
+        #[arg(long)]
+        record: Option<String>,
+        #[arg(long, requires = "scope_kind")]
+        scope: Option<String>,
+        #[arg(long, value_enum, requires = "scope")]
+        scope_kind: Option<RuleScope>,
+        #[arg(long)]
+        property: Option<String>,
+        /// JSON object with literal condition paths as keys.
+        #[arg(long, default_value = "{}")]
+        context: String,
+    },
+    /// Copy and verify exact referenced snapshots without contacting upstream APIs.
+    Evidence {
+        #[command(subcommand)]
+        command: EvidenceCommand,
     },
     /// Generate JSON Schemas or check committed schemas for drift.
     Schema {
@@ -60,38 +96,103 @@ enum Command {
     },
 }
 
+#[derive(Args)]
+struct Query {
+    #[arg(default_value = "")]
+    text: String,
+    #[arg(long)]
+    source: Option<String>,
+    #[arg(long, value_enum)]
+    kind: Option<Kind>,
+    #[arg(long)]
+    task: Option<String>,
+    #[arg(long)]
+    input: Option<String>,
+    #[arg(long)]
+    output: Option<String>,
+    #[arg(long)]
+    min_context: Option<u64>,
+    #[arg(long, value_enum)]
+    capability: Option<Capability>,
+    /// Match curated model members and services explicitly linked to those models.
+    #[arg(long)]
+    identity: Option<String>,
+    #[arg(long, default_value_t = 20)]
+    limit: usize,
+}
+
 #[derive(Clone, Copy, ValueEnum)]
 enum Kind {
     Model,
     Service,
 }
 
+#[derive(Clone, Copy, ValueEnum)]
+enum RuleScope {
+    Model,
+    Interface,
+}
+
+#[derive(Clone, Copy, ValueEnum)]
+enum Capability {
+    Reasoning,
+    Thinking,
+    ToolCall,
+    StructuredOutput,
+    OpenWeights,
+    Attachment,
+    TemperatureControl,
+}
+
+#[derive(Subcommand)]
+enum EvidenceCommand {
+    Archive {
+        #[arg(long)]
+        output: PathBuf,
+    },
+    Restore {
+        #[arg(long)]
+        input: PathBuf,
+    },
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let cli = Cli::parse();
     match cli.command {
-        Command::Sources => print_json(
-            &json!({"public": sync::PUBLIC_SOURCES, "authenticated": sync::AUTHENTICATED_SOURCES}),
-        )?,
+        Command::Sources => print_json(&discovery::load_sources(&cli.root)?)?,
         Command::Sync {
             source,
             authenticated,
         } => sync::run(&cli.root, &source, authenticated).await?,
+        Command::Discover { source, output } => {
+            let report = discovery::run(&cli.root, &source, &output).await?;
+            print_json(&report)?;
+            ensure!(
+                !report.has_failures(),
+                "discovery had failures; completed results are saved in {}",
+                cli.root.join(output).display()
+            );
+        }
         Command::Schema { check } => {
-            let settings = schemars::generate::SchemaSettings::draft2020_12();
             for (name, schema) in [
+                ("catalog", schemars::schema_for!(Catalog)),
+                ("assertions", schemars::schema_for!(AssertionSet)),
+                ("identities", schemars::schema_for!(IdentitySet)),
+                ("profile", schemars::schema_for!(DomainMetadata)),
                 (
-                    "catalog",
-                    settings
-                        .clone()
-                        .into_generator()
-                        .into_root_schema_for::<Catalog>(),
+                    "relationships",
+                    schemars::schema_for!(Vec<relations::Relation>),
+                ),
+                ("rules", schemars::schema_for!(Vec<rules::RuleGroup>)),
+                ("sources", schemars::schema_for!(discovery::SourceFile)),
+                (
+                    "discovery-config",
+                    schemars::schema_for!(discovery::DiscoveryConfig),
                 ),
                 (
-                    "assertions",
-                    settings
-                        .into_generator()
-                        .into_root_schema_for::<AssertionSet>(),
+                    "discovery-report",
+                    schemars::schema_for!(discovery::DiscoveryReport),
                 ),
             ] {
                 let path = cli.root.join("schemas").join(format!("{name}.schema.json"));
@@ -119,74 +220,323 @@ async fn main() -> Result<()> {
             registry.validate(
                 matches!(command, Command::Validate { evidence: true }).then_some(cache.as_path()),
             )?;
+            let identities = identity::load(&cli.root)?;
+            identities.validate(&registry)?;
             match command {
-                Command::Validate { evidence } => println!(
-                    "Validated {} records and {} assertions{}",
-                    registry.records().count(),
-                    registry
-                        .assertions
-                        .iter()
-                        .map(|set| set.assertions.len())
-                        .sum::<usize>(),
-                    if evidence {
-                        " with cached evidence"
-                    } else {
-                        ""
+                Command::Validate { evidence } => {
+                    if cli.root.join("config/sources.yaml").try_exists()? {
+                        discovery::load_sources(&cli.root)?;
                     }
-                ),
+                    if cli.root.join("config/discovery.yaml").try_exists()? {
+                        discovery::load_config(&cli.root)?;
+                    }
+                    relations::derive(&registry)?;
+                    println!(
+                        "Validated {} records, {} identities and {} assertions{}",
+                        registry.records().count(),
+                        identities.models.len() + identities.interfaces.len(),
+                        registry
+                            .assertions
+                            .iter()
+                            .map(|set| set.assertions.len())
+                            .sum::<usize>(),
+                        if evidence {
+                            " with cached evidence"
+                        } else {
+                            ""
+                        }
+                    );
+                }
                 Command::Export { output } => {
+                    let mut value = registry.export();
+                    let profiles = registry
+                        .records()
+                        .map(|r| Ok((r.id.as_str(), domain::project(r)?)))
+                        .collect::<Result<BTreeMap<_, _>>>()?;
+                    value["profiles"] = serde_json::to_value(profiles)?;
+                    value["identities"] = serde_json::to_value(identities)?;
+                    value["relationships"] = serde_json::to_value(relations::derive(&registry)?)?;
                     let path = cli.root.join(output);
-                    store::write_bytes(&path, &json_bytes(&registry.export())?)?;
+                    store::write_bytes(&path, &json_bytes(&value)?)?;
                     println!("{}", path.display());
                 }
-                Command::Stats => {
-                    let mut sources = BTreeMap::new();
-                    let mut tasks = BTreeMap::<String, usize>::new();
-                    for catalog in &registry.catalogs {
-                        sources.insert(&catalog.source, json!({"models": catalog.records.iter().filter(|r| r.kind == RecordKind::Model).count(), "services": catalog.records.iter().filter(|r| r.kind == RecordKind::Service).count(), "snapshots": catalog.snapshots.len()}));
+                Command::Stats => stats(&registry, &identities)?,
+                Command::Query(query) => {
+                    if let Some(id) = &query.identity {
+                        ensure!(
+                            identities.models.iter().any(|model| model.id == *id),
+                            "unknown model identity: {id}"
+                        );
                     }
-                    for record in registry.records() {
-                        for key in ["pipeline_tag", "task", "type"] {
-                            if let Some(task) =
-                                record.facts.get(key).and_then(|fact| fact.value.as_str())
-                            {
-                                *tasks.entry(task.to_owned()).or_default() += 1;
-                            }
-                        }
-                    }
-                    print_json(
-                        &json!({"sources": sources, "task_facts": tasks, "assertions": registry.assertions.iter().map(|set| set.assertions.len()).sum::<usize>(), "conflicts": registry.assertions.iter().flat_map(|set| &set.assertions).filter(|a| a.review == Review::Conflicted).count()}),
-                    )?;
-                }
-                Command::Query {
-                    text,
-                    source,
-                    kind,
-                    limit,
-                } => {
-                    let text = text.to_lowercase();
-                    let kind = kind.map(|kind| match kind {
+                    let text = query.text.to_lowercase();
+                    let kind = query.kind.map(|kind| match kind {
                         Kind::Model => RecordKind::Model,
                         Kind::Service => RecordKind::Service,
                     });
-                    let mut records: Vec<_> = registry
-                        .records()
+                    let mut records = Vec::new();
+                    for record in registry.records() {
+                        if query
+                            .source
+                            .as_ref()
+                            .is_none_or(|source| record.source == *source)
+                            && kind.is_none_or(|kind| record.kind == kind)
+                            && (record.id.to_lowercase().contains(&text)
+                                || record.name.to_lowercase().contains(&text))
+                            && query.identity.as_ref().is_none_or(|id| {
+                                identities
+                                    .model_for_record(record.model.as_deref().unwrap_or(&record.id))
+                                    .is_some_and(|model| model.id == *id)
+                            })
+                            && query.matches(&domain::project(record)?)
+                        {
+                            records.push(record);
+                        }
+                    }
+                    records.sort_by(|a, b| a.id.cmp(&b.id));
+                    records.truncate(query.limit);
+                    print_json(&records)?;
+                }
+                Command::Inspect { record } => {
+                    let found = find_record(&registry, &record)?;
+                    let scopes = identities.scopes_for_record(&record);
+                    let groups = if scopes.is_empty() {
+                        vec![]
+                    } else {
+                        rules::query(&registry, &scopes, None, &BTreeMap::new())?
+                    };
+                    let catalog = registry
+                        .catalogs
+                        .iter()
+                        .find(|catalog| catalog.source == found.source)
+                        .expect("record belongs to a catalog");
+                    let observed = catalog
+                        .last_sync
+                        .as_ref()
+                        .map(|last| last.returned_ids.contains(&record));
+                    let relationships: Vec<_> = relations::derive(&registry)?
+                        .into_iter()
+                        .filter(|r| r.from == record || r.to == record)
+                        .collect();
+                    print_json(
+                        &json!({"record":found,"profile":domain::project(found)?,"identities":selected_identities(identities,Some(&record)),"relationships":relationships,"sync":{"completed_at":catalog.last_sync.as_ref().map(|s|&s.completed_at),"observed_in_last_sync":observed},"rules":{"scopes":scopes,"groups":groups}}),
+                    )?;
+                }
+                Command::Identities { record } => {
+                    if let Some(id) = &record {
+                        find_record(&registry, id)?;
+                    }
+                    print_json(&selected_identities(identities, record.as_deref()))?;
+                }
+                Command::Relations { record, limit } => {
+                    if let Some(id) = &record {
+                        find_record(&registry, id)?;
+                    }
+                    let mut relationships: Vec<_> = relations::derive(&registry)?
+                        .into_iter()
                         .filter(|r| {
-                            source.as_ref().is_none_or(|s| r.source == *s)
-                                && kind.is_none_or(|kind| r.kind == kind)
-                                && (r.id.to_lowercase().contains(&text)
-                                    || r.name.to_lowercase().contains(&text))
+                            record
+                                .as_ref()
+                                .is_none_or(|id| r.from == *id || r.to == *id)
                         })
                         .collect();
-                    records.sort_by(|a, b| a.id.cmp(&b.id));
-                    records.truncate(limit);
-                    print_json(&records)?;
+                    let total = relationships.len();
+                    relationships.truncate(limit);
+                    print_json(&json!({"total":total,"relationships":relationships}))?;
+                }
+                Command::Rules {
+                    record,
+                    scope,
+                    scope_kind,
+                    property,
+                    context,
+                } => {
+                    let context: BTreeMap<String, Value> = serde_json::from_str(&context).context(
+                        "context must be a JSON object with literal condition paths as keys",
+                    )?;
+                    let mut scopes = if let Some(id) = &record {
+                        find_record(&registry, id)?;
+                        identities.scopes_for_record(id)
+                    } else {
+                        vec![]
+                    };
+                    if let Some(id) = scope {
+                        let scope = Scope {
+                            id,
+                            kind: match scope_kind.expect("clap requires scope_kind") {
+                                RuleScope::Model => ScopeKind::Model,
+                                RuleScope::Interface => ScopeKind::Interface,
+                            },
+                        };
+                        if record.is_some() {
+                            ensure!(
+                                scopes.contains(&scope),
+                                "record is not explicitly bound to the requested scope"
+                            );
+                        } else {
+                            ensure!(
+                                registry
+                                    .assertions
+                                    .iter()
+                                    .flat_map(|set| &set.assertions)
+                                    .any(|a| a.scope == scope)
+                                    || identities
+                                        .models
+                                        .iter()
+                                        .any(|i| scope.kind == ScopeKind::Model && i.id == scope.id)
+                                    || identities
+                                        .interfaces
+                                        .iter()
+                                        .any(|i| scope.kind == ScopeKind::Interface
+                                            && i.id == scope.id),
+                                "unknown rule scope: {}",
+                                scope.id
+                            );
+                        }
+                        scopes = vec![scope];
+                    }
+                    if let Some(interface) = context.get("interface") {
+                        ensure!(
+                            scopes
+                                .iter()
+                                .filter(|scope| scope.kind == ScopeKind::Interface)
+                                .all(|scope| interface.as_str() == Some(scope.id.as_str())),
+                            "context.interface conflicts with a selected interface scope; use --scope to select the intended interface"
+                        );
+                    }
+                    let groups = if record.is_some() && scopes.is_empty() {
+                        vec![]
+                    } else {
+                        rules::query(&registry, &scopes, property.as_deref(), &context)?
+                    };
+                    print_json(
+                        &json!({"record":record,"scopes":scopes,"context":context,"groups":groups}),
+                    )?;
+                }
+                Command::Evidence { command } => {
+                    let written = match command {
+                        EvidenceCommand::Archive { output } => {
+                            evidence::archive(&registry, &cache, &cli.root.join(output))?
+                        }
+                        EvidenceCommand::Restore { input } => {
+                            evidence::restore(&registry, &cli.root.join(input), &cache)?
+                        }
+                    };
+                    println!("Verified referenced snapshots; wrote {written} files");
                 }
                 _ => unreachable!(),
             }
         }
     }
     Ok(())
+}
+
+impl Query {
+    fn matches(&self, profile: &DomainMetadata) -> bool {
+        let modality =
+            |wanted: &Option<String>,
+             actual: &Option<domain::Derived<Vec<domain::ModalityLabel>>>| {
+                wanted.as_ref().is_none_or(|wanted| {
+                    actual.as_ref().is_some_and(|labels| {
+                        labels.value.iter().any(|label| {
+                            label.source_label == *wanted
+                                || label.canonical.is_some_and(|value| json!(value) == *wanted)
+                        })
+                    })
+                })
+            };
+        let capability = self.capability.map(|wanted| match wanted {
+            Capability::Reasoning => &profile.capabilities.reasoning,
+            Capability::Thinking => &profile.capabilities.thinking,
+            Capability::ToolCall => &profile.capabilities.tool_call,
+            Capability::StructuredOutput => &profile.capabilities.structured_output,
+            Capability::OpenWeights => &profile.capabilities.open_weights,
+            Capability::Attachment => &profile.capabilities.attachment,
+            Capability::TemperatureControl => &profile.capabilities.temperature_control,
+        });
+        self.task.as_ref().is_none_or(|wanted| {
+            profile.tasks.as_ref().is_some_and(|tasks| {
+                tasks.labels.iter().any(|label| {
+                    label.value.source_label == *wanted
+                        || label
+                            .value
+                            .family
+                            .is_some_and(|value| json!(value) == *wanted)
+                })
+            })
+        }) && modality(&self.input, &profile.modalities.input)
+            && modality(&self.output, &profile.modalities.output)
+            && self.min_context.is_none_or(|min| {
+                profile
+                    .limits
+                    .context_window
+                    .as_ref()
+                    .is_some_and(|limit| limit.value >= min)
+            })
+            && capability.is_none_or(|fact| fact.as_ref().is_some_and(|fact| fact.value))
+    }
+}
+
+fn find_record<'a>(registry: &'a Registry, id: &str) -> Result<&'a Record> {
+    registry
+        .records()
+        .find(|record| record.id == id)
+        .with_context(|| format!("unknown record: {id}"))
+}
+
+fn selected_identities(mut identities: IdentitySet, record: Option<&str>) -> IdentitySet {
+    if let Some(record) = record {
+        identities
+            .models
+            .retain(|group| group.records.iter().any(|id| id == record));
+        identities
+            .interfaces
+            .retain(|group| group.records.iter().any(|id| id == record));
+        identities.sources.retain(|id, _| {
+            identities
+                .models
+                .iter()
+                .chain(&identities.interfaces)
+                .flat_map(|group| &group.evidence)
+                .any(|e| e.source == *id)
+        });
+    }
+    identities
+}
+
+fn stats(registry: &Registry, identities: &IdentitySet) -> Result<()> {
+    let mut sources = BTreeMap::new();
+    let mut tasks = BTreeMap::<String, usize>::new();
+    let mut coverage = BTreeMap::<&str, usize>::new();
+    for catalog in &registry.catalogs {
+        sources.insert(&catalog.source, json!({"models":catalog.records.iter().filter(|r|r.kind == RecordKind::Model).count(),"services":catalog.records.iter().filter(|r|r.kind == RecordKind::Service).count(),"snapshots":catalog.snapshots.len(),"last_sync":catalog.last_sync.as_ref().map(|s|json!({"completed_at":s.completed_at,"returned":s.returned_ids.len(),"missing":s.missing_ids.len()}))}));
+    }
+    for record in registry.records() {
+        let profile = domain::project(record)?;
+        if let Some(labels) = &profile.tasks {
+            for label in &labels.labels {
+                *tasks
+                    .entry(format!("{}:{}", labels.source, label.value.source_label))
+                    .or_default() += 1;
+            }
+        }
+        for (field, present) in [
+            ("task", profile.tasks.is_some()),
+            ("input_modalities", profile.modalities.input.is_some()),
+            ("output_modalities", profile.modalities.output.is_some()),
+            ("context_window", profile.limits.context_window.is_some()),
+            ("parameters", profile.parameters.safetensors_total.is_some()),
+            ("pricing", profile.pricing.is_some()),
+        ] {
+            *coverage.entry(field).or_default() += usize::from(present);
+        }
+    }
+    let mut relationships = BTreeMap::new();
+    for relation in relations::derive(registry)? {
+        *relationships.entry(relation.kind).or_insert(0usize) += 1;
+    }
+    print_json(
+        &json!({"sources":sources,"task_facts":tasks,"typed_coverage":coverage,"identities":{"models":identities.models.len(),"model_records":identities.models.iter().map(|i|i.records.len()).sum::<usize>(),"interfaces":identities.interfaces.len(),"service_bindings":identities.interfaces.iter().map(|i|i.records.len()).sum::<usize>()},"relationships":relationships,"assertions":registry.assertions.iter().map(|s|s.assertions.len()).sum::<usize>(),"conflicts":registry.assertions.iter().flat_map(|s|&s.assertions).filter(|a|a.review == Review::Conflicted).count()}),
+    )
 }
 
 fn json_bytes(value: &impl Serialize) -> Result<Vec<u8>> {

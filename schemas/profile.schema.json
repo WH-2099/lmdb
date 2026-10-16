@@ -1,0 +1,692 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DomainMetadata",
+  "type": "object",
+  "properties": {
+    "capabilities": {
+      "$ref": "#/$defs/Capabilities"
+    },
+    "limits": {
+      "$ref": "#/$defs/TokenLimits"
+    },
+    "lineage": {
+      "$ref": "#/$defs/Lineage"
+    },
+    "modalities": {
+      "$ref": "#/$defs/Modalities"
+    },
+    "parameters": {
+      "$ref": "#/$defs/Parameters"
+    },
+    "pricing": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PriceSchedule"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tasks": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TaskLabels"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "modalities",
+    "limits",
+    "parameters",
+    "capabilities",
+    "lineage"
+  ],
+  "$defs": {
+    "Capabilities": {
+      "type": "object",
+      "properties": {
+        "attachment": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived5"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "open_weights": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived5"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reasoning": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived5"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "structured_output": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived5"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "supported_parameters": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived6"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "temperature_control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived5"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "thinking": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived5"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool_call": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived5"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Derived": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/TaskLabel"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
+    "Derived2": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ModalityLabel"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
+    "Derived3": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
+    "Derived4": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
+    "Derived5": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
+    "Derived6": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
+    "Derived7": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
+    "Derived8": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/PriceRate"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
+    "Derived9": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
+    "Lineage": {
+      "type": "object",
+      "properties": {
+        "base_model_relation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived7"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "base_models": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived6"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Modalities": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "output": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Modality": {
+      "type": "string",
+      "enum": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "embedding"
+      ]
+    },
+    "ModalityLabel": {
+      "type": "object",
+      "properties": {
+        "canonical": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Modality"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_label": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "source_label"
+      ]
+    },
+    "Parameters": {
+      "type": "object",
+      "properties": {
+        "by_dtype": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived4"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "safetensors_total": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PriceAmount": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "const": "known"
+            },
+            "usd": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "usd"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "raw": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "const": "unavailable"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "raw"
+          ]
+        }
+      ]
+    },
+    "PriceBasis": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0
+        },
+        "unit": {
+          "$ref": "#/$defs/PriceUnit"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "unit",
+        "quantity"
+      ]
+    },
+    "PriceComponent": {
+      "type": "string",
+      "enum": [
+        "input",
+        "output",
+        "cache_read",
+        "cache_write",
+        "cache_write_one_hour",
+        "reasoning",
+        "input_audio",
+        "output_audio",
+        "cached_input_audio",
+        "input_image",
+        "output_image",
+        "image_token",
+        "request",
+        "web_search"
+      ]
+    },
+    "PriceRate": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/PriceAmount"
+        },
+        "basis": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PriceBasis"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "component": {
+          "$ref": "#/$defs/PriceComponent"
+        },
+        "key": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "component",
+        "amount"
+      ]
+    },
+    "PriceSchedule": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "description": "Base rates alone are not a quote when conditions or unclassified fields exist.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Derived8"
+          }
+        },
+        "conditions": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/Derived9"
+          }
+        },
+        "unclassified": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/Derived9"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "base",
+        "conditions",
+        "unclassified"
+      ]
+    },
+    "PriceUnit": {
+      "type": "string",
+      "enum": [
+        "token",
+        "audio_token",
+        "image_token",
+        "image",
+        "request",
+        "search"
+      ]
+    },
+    "TaskFamily": {
+      "type": "string",
+      "enum": [
+        "text_generation",
+        "embedding",
+        "reranking",
+        "image_generation",
+        "video_generation",
+        "speech_recognition",
+        "text_to_speech",
+        "segmentation",
+        "time_series",
+        "robotics"
+      ]
+    },
+    "TaskLabel": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TaskFamily"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_label": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "source_label"
+      ]
+    },
+    "TaskLabels": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Derived"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "taxonomy": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "taxonomy",
+        "labels"
+      ]
+    },
+    "TokenLimits": {
+      "type": "object",
+      "properties": {
+        "context_window": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_input_tokens": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "max_output_tokens": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "top_provider_context_window": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

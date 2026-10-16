@@ -8,7 +8,7 @@ use anyhow::{Context, Result, bail, ensure};
 use futures_util::StreamExt;
 use reqwest::{
     Client, StatusCode, Url,
-    header::{ETAG, HeaderMap, IF_MODIFIED_SINCE, IF_NONE_MATCH, LAST_MODIFIED, RETRY_AFTER},
+    header::{ETAG, HeaderMap, IF_MODIFIED_SINCE, IF_NONE_MATCH, LAST_MODIFIED, LINK, RETRY_AFTER},
 };
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -37,6 +37,8 @@ struct Receipt {
     snapshot: Snapshot,
     etag: Option<String>,
     last_modified: Option<String>,
+    #[serde(default)]
+    link: Option<String>,
 }
 
 impl Fetcher {
@@ -58,6 +60,17 @@ impl Fetcher {
         url: &str,
         headers: HeaderMap,
     ) -> Result<(Snapshot, Value)> {
+        let (snapshot, value, _) = self.get_json_with_link(source, url, headers).await?;
+        Ok((snapshot, value))
+    }
+
+    /// Return the next-page URL from the HTTP Link header, including cached responses.
+    pub async fn get_json_with_link(
+        &self,
+        source: &str,
+        url: &str,
+        headers: HeaderMap,
+    ) -> Result<(Snapshot, Value, Option<String>)> {
         let parsed = Url::parse(url).context("invalid request URL")?;
         ensure!(
             matches!(parsed.scheme(), "http" | "https") && parsed.has_host(),
@@ -117,7 +130,7 @@ impl Fetcher {
                 .with_context(|| format!("request failed for {url}"))?;
             let status = response.status();
             if status == StatusCode::NOT_MODIFIED {
-                let receipt =
+                let mut receipt =
                     receipt.context("unexpected HTTP 304 without a public cache receipt")?;
                 let path = self
                     .cache_root
@@ -131,7 +144,13 @@ impl Fetcher {
                 );
                 let value = serde_json::from_slice(&bytes)
                     .with_context(|| format!("invalid cached JSON for {url}"))?;
-                return Ok((receipt.snapshot, value));
+                receipt.link = link_header(response.headers())?.or(receipt.link);
+                let next = next_link(receipt.link.as_deref())?;
+                receipt.etag = header_text(response.headers(), ETAG).or(receipt.etag);
+                receipt.last_modified =
+                    header_text(response.headers(), LAST_MODIFIED).or(receipt.last_modified);
+                write_bytes(&receipt_path, &serde_json::to_vec(&receipt)?)?;
+                return Ok((receipt.snapshot, value, next));
             }
             if status == StatusCode::TOO_MANY_REQUESTS || status.is_server_error() {
                 ensure!(
@@ -159,6 +178,8 @@ impl Fetcher {
             );
             let etag = header_text(response.headers(), ETAG);
             let last_modified = header_text(response.headers(), LAST_MODIFIED);
+            let link = link_header(response.headers())?;
+            let next = next_link(link.as_deref())?;
             let mut stream = response.bytes_stream();
             let mut bytes = Vec::new();
             while let Some(chunk) = stream.next().await {
@@ -195,10 +216,11 @@ impl Fetcher {
                         snapshot: snapshot.clone(),
                         etag,
                         last_modified,
+                        link,
                     })?,
                 )?;
             }
-            return Ok((snapshot, value));
+            return Ok((snapshot, value, next));
         }
         unreachable!("the final failed attempt returns an error")
     }
@@ -213,6 +235,128 @@ fn header_text(headers: &HeaderMap, name: reqwest::header::HeaderName) -> Option
         .get(name)
         .and_then(|value| value.to_str().ok())
         .map(str::to_owned)
+}
+
+fn link_header(headers: &HeaderMap) -> Result<Option<String>> {
+    let links = headers
+        .get_all(LINK)
+        .iter()
+        .map(|value| value.to_str().context("invalid Link header"))
+        .collect::<Result<Vec<_>>>()?;
+    Ok((!links.is_empty()).then(|| links.join(", ")))
+}
+
+fn next_link(header: Option<&str>) -> Result<Option<String>> {
+    let Some(header) = header else {
+        return Ok(None);
+    };
+    let bytes = header.as_bytes();
+    let mut cursor = 0;
+    let mut next = None;
+    while cursor < bytes.len() {
+        skip_link_space(bytes, &mut cursor);
+        ensure!(bytes.get(cursor) == Some(&b'<'), "invalid Link target");
+        cursor += 1;
+        let start = cursor;
+        while cursor < bytes.len() && bytes[cursor] != b'>' {
+            cursor += 1;
+        }
+        ensure!(
+            cursor < bytes.len() && cursor > start,
+            "invalid Link target"
+        );
+        let target = &header[start..cursor];
+        ensure!(
+            !target
+                .bytes()
+                .any(|byte| byte.is_ascii_whitespace() || byte.is_ascii_control()),
+            "invalid whitespace in Link target"
+        );
+        cursor += 1;
+        let mut relation = None;
+        loop {
+            skip_link_space(bytes, &mut cursor);
+            match bytes.get(cursor) {
+                None | Some(b',') => break,
+                Some(b';') => cursor += 1,
+                _ => bail!("invalid Link parameter separator"),
+            }
+            skip_link_space(bytes, &mut cursor);
+            let start = cursor;
+            while bytes.get(cursor).is_some_and(|byte| {
+                byte.is_ascii_alphanumeric() || b"!#$%&'*+-.^_`|~".contains(byte)
+            }) {
+                cursor += 1;
+            }
+            ensure!(cursor > start, "missing Link parameter name");
+            let name = &header[start..cursor];
+            skip_link_space(bytes, &mut cursor);
+            let value = if bytes.get(cursor) == Some(&b'=') {
+                cursor += 1;
+                skip_link_space(bytes, &mut cursor);
+                Some(link_parameter(bytes, &mut cursor)?)
+            } else {
+                None
+            };
+            if name.eq_ignore_ascii_case("rel") {
+                ensure!(relation.is_none(), "duplicate Link rel parameter");
+                relation = Some(value.context("Link rel has no value")?);
+            }
+        }
+        if relation.is_some_and(|value| value.split_ascii_whitespace().any(|rel| rel == "next")) {
+            ensure!(next.is_none(), "multiple next links");
+            next = Some(target.to_owned());
+        }
+        if cursor < bytes.len() {
+            cursor += 1;
+            skip_link_space(bytes, &mut cursor);
+            ensure!(cursor < bytes.len(), "trailing comma in Link header");
+        }
+    }
+    Ok(next)
+}
+
+fn skip_link_space(bytes: &[u8], cursor: &mut usize) {
+    while bytes
+        .get(*cursor)
+        .is_some_and(|byte| matches!(byte, b' ' | b'\t'))
+    {
+        *cursor += 1;
+    }
+}
+
+fn link_parameter(bytes: &[u8], cursor: &mut usize) -> Result<String> {
+    let mut value = Vec::new();
+    if bytes.get(*cursor) == Some(&b'"') {
+        *cursor += 1;
+        loop {
+            let byte = *bytes
+                .get(*cursor)
+                .context("unterminated Link quoted value")?;
+            *cursor += 1;
+            match byte {
+                b'"' => break,
+                b'\\' => {
+                    let escaped = *bytes.get(*cursor).context("unterminated Link escape")?;
+                    ensure!(!escaped.is_ascii_control(), "invalid Link escape");
+                    value.push(escaped);
+                    *cursor += 1;
+                }
+                byte if !byte.is_ascii_control() => value.push(byte),
+                _ => bail!("invalid control character in Link value"),
+            }
+        }
+    } else {
+        while bytes
+            .get(*cursor)
+            .is_some_and(|byte| byte.is_ascii_alphanumeric() || b"!#$%&'*+-.^_`|~".contains(byte))
+        {
+            value.push(bytes[*cursor]);
+            *cursor += 1;
+        }
+        ensure!(!value.is_empty(), "missing Link parameter value");
+    }
+    String::from_utf8(value).context("Link parameter is not UTF-8")
 }
 
 fn retry_delay(
@@ -305,6 +449,107 @@ mod tests {
             "HTTP/1.1 {status}\r\nConnection: close\r\nContent-Length: {}\r\n{headers}\r\n{body}",
             body.len()
         )
+    }
+
+    #[test]
+    fn link_pagination_preserves_commas_quotes_and_relations() {
+        let header = r#"<https://example.test/models?cursor=a,b>; title="two, \"quoted\" values"; rel="prev next", <https://example.test/first>; rel=first"#;
+        assert_eq!(
+            next_link(Some(header)).unwrap().as_deref(),
+            Some("https://example.test/models?cursor=a,b")
+        );
+        assert_eq!(next_link(None).unwrap(), None);
+        assert_eq!(
+            next_link(Some("<https://example.test/prev>; rel=prev")).unwrap(),
+            None
+        );
+        for header in [
+            "https://example.test/next; rel=next",
+            "<https://example.test/next>; rel=\"next",
+            "<https://example.test/next>; rel=next,",
+            "<https://example.test/next>; rel=next; rel=prev",
+            "<https://example.test/a>; rel=next, <https://example.test/b>; rel=next",
+            "<https://example.test/space here>; rel=next",
+        ] {
+            assert!(next_link(Some(header)).is_err(), "accepted {header}");
+        }
+    }
+
+    #[tokio::test]
+    async fn cached_link_pagination_survives_not_modified() {
+        let (url, worker) = server(vec![
+            response(
+                "200 OK",
+                "ETag: \"page\"\r\nLink: </previous>; rel=prev\r\nLink: </models?cursor=a,b>; rel=next\r\n",
+                "[]",
+            ),
+            response("304 Not Modified", "", ""),
+        ]);
+        let cache = tempfile::tempdir().unwrap();
+        let fetcher = Fetcher::new(cache.path()).unwrap();
+        let first = fetcher
+            .get_json_with_link("fixture", &url, HeaderMap::new())
+            .await
+            .unwrap();
+        assert_eq!(first.2.as_deref(), Some("/models?cursor=a,b"));
+        let cached = fetcher
+            .get_json_with_link("fixture", &url, HeaderMap::new())
+            .await
+            .unwrap();
+        assert_eq!(cached, first);
+        assert!(worker.join().unwrap()[1].contains("if-none-match: \"page\""));
+    }
+
+    #[tokio::test]
+    async fn not_modified_refreshes_pagination_and_cache_validators() {
+        let (url, worker) = server(vec![
+            response(
+                "200 OK",
+                "ETag: \"old\"\r\nLast-Modified: Thu, 15 Oct 2026 01:00:00 GMT\r\nLink: </models?cursor=old>; rel=next\r\n",
+                "[]",
+            ),
+            response(
+                "304 Not Modified",
+                "ETag: \"new\"\r\nLast-Modified: Fri, 16 Oct 2026 01:00:00 GMT\r\nLink: </models?cursor=new>; rel=next\r\n",
+                "",
+            ),
+            response("304 Not Modified", "Link: invalid\r\n", ""),
+            response("304 Not Modified", "", ""),
+        ]);
+        let cache = tempfile::tempdir().unwrap();
+        let fetcher = Fetcher::new(cache.path()).unwrap();
+        let first = fetcher
+            .get_json_with_link("fixture", &url, HeaderMap::new())
+            .await
+            .unwrap();
+        let refreshed = fetcher
+            .get_json_with_link("fixture", &url, HeaderMap::new())
+            .await
+            .unwrap();
+        assert_eq!(refreshed.0, first.0);
+        assert_eq!(refreshed.1, first.1);
+        assert_eq!(refreshed.2.as_deref(), Some("/models?cursor=new"));
+        assert!(
+            fetcher
+                .get_json_with_link("fixture", &url, HeaderMap::new())
+                .await
+                .unwrap_err()
+                .to_string()
+                .contains("invalid Link")
+        );
+        assert_eq!(
+            fetcher
+                .get_json_with_link("fixture", &url, HeaderMap::new())
+                .await
+                .unwrap(),
+            refreshed
+        );
+        let requests = worker.join().unwrap();
+        assert!(requests[1].contains("if-none-match: \"old\""));
+        for request in &requests[2..] {
+            assert!(request.contains("if-none-match: \"new\""));
+            assert!(request.contains("if-modified-since: Fri, 16 Oct 2026 01:00:00 GMT"));
+        }
     }
 
     #[tokio::test]

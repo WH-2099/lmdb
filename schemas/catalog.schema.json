@@ -3,6 +3,16 @@
   "title": "Catalog",
   "type": "object",
   "properties": {
+    "last_sync": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SyncManifest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "records": {
       "type": "array",
       "items": {
@@ -165,6 +175,39 @@
         "url",
         "retrieved_at",
         "sha256"
+      ]
+    },
+    "SyncManifest": {
+      "type": "object",
+      "properties": {
+        "completed_at": {
+          "type": "string"
+        },
+        "missing_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "returned_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "snapshot_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "completed_at",
+        "returned_ids",
+        "missing_ids",
+        "snapshot_ids"
       ]
     }
   }

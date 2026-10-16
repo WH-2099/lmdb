@@ -37,6 +37,7 @@ fn seed(root: &Path) -> Result<Catalog> {
     let mut catalog = Catalog {
         schema_version: 1,
         source: "modelsdev".into(),
+        last_sync: None,
         snapshots: vec![],
         records: vec![],
     };

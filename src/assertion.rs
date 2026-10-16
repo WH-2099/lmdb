@@ -104,17 +104,7 @@ pub fn validate(set: &AssertionSet) -> Result<()> {
         set.schema_version == 1,
         "unsupported assertion schema version"
     );
-    for (id, source) in &set.sources {
-        ensure!(!id.trim().is_empty(), "source id must not be blank");
-        let url = reqwest::Url::parse(&source.url)
-            .with_context(|| format!("source {id}: invalid URL"))?;
-        ensure!(
-            url.scheme() == "https" && url.host_str().is_some(),
-            "source {id}: URL must use HTTPS and have a host"
-        );
-        validate_date(&source.checked_on)
-            .with_context(|| format!("source {id}: invalid checked_on"))?;
-    }
+    validate_sources(&set.sources)?;
 
     let mut ids = BTreeSet::new();
     for assertion in &set.assertions {
@@ -171,23 +161,43 @@ pub fn validate(set: &AssertionSet) -> Result<()> {
                 );
             }
         }
+        validate_evidence(&assertion.evidence, &set.sources)
+            .with_context(|| format!("assertion {id}"))?;
+    }
+    Ok(())
+}
+
+pub fn validate_sources(sources: &BTreeMap<String, DocumentSource>) -> Result<()> {
+    for (id, source) in sources {
+        ensure!(!id.trim().is_empty(), "source id must not be blank");
+        let url = reqwest::Url::parse(&source.url)
+            .with_context(|| format!("source {id}: invalid URL"))?;
         ensure!(
-            !assertion.evidence.is_empty(),
-            "assertion {id}: evidence is required"
+            url.scheme() == "https" && url.host_str().is_some(),
+            "source {id}: URL must use HTTPS and have a host"
         );
-        for evidence in &assertion.evidence {
-            ensure!(
-                set.sources.contains_key(&evidence.source),
-                "assertion {id}: unknown evidence source {}",
-                evidence.source
-            );
-            ensure!(
-                !evidence.locator.trim().is_empty(),
-                "assertion {id}: evidence locator must not be blank"
-            );
-            validate_date(&evidence.checked_on)
-                .with_context(|| format!("assertion {id}: invalid evidence checked_on"))?;
-        }
+        validate_date(&source.checked_on)
+            .with_context(|| format!("source {id}: invalid checked_on"))?;
+    }
+    Ok(())
+}
+
+pub fn validate_evidence(
+    evidence: &[Evidence],
+    sources: &BTreeMap<String, DocumentSource>,
+) -> Result<()> {
+    ensure!(!evidence.is_empty(), "evidence is required");
+    for item in evidence {
+        ensure!(
+            sources.contains_key(&item.source),
+            "unknown evidence source {}",
+            item.source
+        );
+        ensure!(
+            !item.locator.trim().is_empty(),
+            "evidence locator must not be blank"
+        );
+        validate_date(&item.checked_on).context("invalid evidence checked_on")?;
     }
     Ok(())
 }
@@ -262,6 +272,7 @@ mod tests {
         assert!(
             validate(&set)
                 .unwrap_err()
+                .root_cause()
                 .to_string()
                 .contains("unknown evidence source")
         );

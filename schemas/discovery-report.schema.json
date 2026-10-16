@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DiscoveryReport",
+  "type": "object",
+  "properties": {
+    "candidates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Candidate"
+      }
+    },
+    "finished_at": {
+      "type": "string"
+    },
+    "max_results": {
+      "type": "integer",
+      "format": "uint",
+      "minimum": 0
+    },
+    "processed_results": {
+      "type": "integer",
+      "format": "uint",
+      "minimum": 0
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RuleReport"
+      }
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0
+    },
+    "snapshots": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Snapshot"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "started_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "started_at",
+    "finished_at",
+    "sources",
+    "max_results",
+    "processed_results",
+    "rules",
+    "snapshots",
+    "candidates"
+  ],
+  "$defs": {
+    "Candidate": {
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DiscoveryEvidence"
+          }
+        },
+        "matched_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "upstream_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "upstream_id",
+        "url",
+        "matched_rules",
+        "evidence"
+      ]
+    },
+    "DiscoveryEvidence": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "type": "string"
+        },
+        "rule_id": {
+          "type": "string"
+        },
+        "snapshot": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rule_id",
+        "snapshot",
+        "pointer"
+      ]
+    },
+    "RuleReport": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "existing_results": {
+          "type": "integer",
+          "format": "uint",
+          "minimum": 0
+        },
+        "id": {
+          "type": "string"
+        },
+        "processed_results": {
+          "type": "integer",
+          "format": "uint",
+          "minimum": 0
+        },
+        "query_url": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/RuleStatus"
+        },
+        "total_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "id",
+        "source",
+        "query_url",
+        "status",
+        "processed_results",
+        "existing_results"
+      ]
+    },
+    "RuleStatus": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "limited",
+        "failed",
+        "skipped"
+      ]
+    },
+    "Snapshot": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "upstream_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "id",
+        "source",
+        "url",
+        "retrieved_at",
+        "sha256"
+      ]
+    }
+  }
+}

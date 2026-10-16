@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Array_of_Relation",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/Relation"
+  },
+  "$defs": {
+    "Relation": {
+      "type": "object",
+      "properties": {
+        "declared_derivation": {
+          "description": "The explicit source declaration; names and typed tags do not supply this value.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RelationEvidence"
+          }
+        },
+        "from": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/RelationKind"
+        },
+        "target_present": {
+          "type": "boolean"
+        },
+        "to": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to",
+        "kind",
+        "evidence",
+        "target_present"
+      ]
+    },
+    "RelationEvidence": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "description": "JSON Pointer to the specific source value, including an array index when needed.",
+          "type": "string"
+        },
+        "record": {
+          "type": "string"
+        },
+        "snapshot": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "record",
+        "fact",
+        "snapshot",
+        "pointer"
+      ]
+    },
+    "RelationKind": {
+      "type": "string",
+      "enum": [
+        "serves",
+        "references",
+        "derived_from"
+      ]
+    }
+  }
+}

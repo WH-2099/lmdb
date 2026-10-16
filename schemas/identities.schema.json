@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IdentitySet",
+  "type": "object",
+  "properties": {
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Identity"
+      }
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Identity"
+      }
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "uint32",
+      "maximum": 1,
+      "minimum": 1
+    },
+    "sources": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/DocumentSource"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sources",
+    "models",
+    "interfaces"
+  ],
+  "$defs": {
+    "DocumentSource": {
+      "type": "object",
+      "properties": {
+        "checked_on": {
+          "type": "string"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "checked_on"
+      ]
+    },
+    "Evidence": {
+      "type": "object",
+      "properties": {
+        "checked_on": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/EvidenceKind"
+        },
+        "locator": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "locator",
+        "checked_on",
+        "kind"
+      ]
+    },
+    "EvidenceKind": {
+      "type": "string",
+      "enum": [
+        "reported"
+      ]
+    },
+    "Identity": {
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "records",
+        "evidence"
+      ]
+    }
+  }
+}

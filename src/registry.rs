@@ -6,9 +6,10 @@ use std::path::Path;
 use anyhow::{Context, Result, ensure};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
+use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 
 use crate::assertion::{self, AssertionSet};
-use crate::model::{Catalog, Record, RecordKind, SCHEMA_VERSION};
+use crate::model::{Catalog, Record, RecordKind, SCHEMA_VERSION, SyncManifest};
 use crate::store;
 
 pub struct Registry {
@@ -60,6 +61,7 @@ impl Registry {
             .collect::<BTreeSet<_>>();
         let mut raw_snapshots = BTreeMap::<String, Value>::new();
         let mut snapshot_ids = BTreeSet::new();
+        let mut sources = BTreeSet::new();
         for catalog in &self.catalogs {
             ensure!(
                 catalog.schema_version == SCHEMA_VERSION,
@@ -72,6 +74,11 @@ impl Registry {
                         .bytes()
                         .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || b == b'-'),
                 "invalid source: {}",
+                catalog.source
+            );
+            ensure!(
+                sources.insert(&catalog.source),
+                "duplicate catalog source: {}",
                 catalog.source
             );
             let mut snapshots = BTreeMap::new();
@@ -113,11 +120,8 @@ impl Registry {
                     "snapshot {}: URL must use HTTPS without credentials",
                     snapshot.id
                 );
-                time::OffsetDateTime::parse(
-                    &snapshot.retrieved_at,
-                    &time::format_description::well_known::Rfc3339,
-                )
-                .with_context(|| format!("snapshot {}: invalid retrieved_at", snapshot.id))?;
+                OffsetDateTime::parse(&snapshot.retrieved_at, &Rfc3339)
+                    .with_context(|| format!("snapshot {}: invalid retrieved_at", snapshot.id))?;
                 if let Some(cache) = cache_root
                     && !raw_snapshots.contains_key(&snapshot.sha256)
                 {
@@ -140,6 +144,7 @@ impl Registry {
                 snapshots.insert(snapshot.id.as_str(), snapshot);
             }
             for record in &catalog.records {
+                crate::domain::project(record)?;
                 let id = &record.id;
                 ensure!(
                     record.schema_version == SCHEMA_VERSION,
@@ -211,6 +216,61 @@ impl Registry {
                     }
                 }
             }
+            if let Some(sync) = &catalog.last_sync {
+                OffsetDateTime::parse(&sync.completed_at, &Rfc3339)
+                    .with_context(|| format!("{}: invalid sync completed_at", catalog.source))?;
+                ensure!(
+                    !sync.returned_ids.is_empty(),
+                    "{}: sync returned_ids must not be empty",
+                    catalog.source
+                );
+                ensure!(
+                    !sync.snapshot_ids.is_empty(),
+                    "{}: sync snapshot_ids must not be empty",
+                    catalog.source
+                );
+                for (name, values) in [
+                    ("returned_ids", &sync.returned_ids),
+                    ("missing_ids", &sync.missing_ids),
+                    ("snapshot_ids", &sync.snapshot_ids),
+                ] {
+                    ensure!(
+                        values.windows(2).all(|pair| pair[0] < pair[1]),
+                        "{}: sync {name} must be sorted and unique",
+                        catalog.source
+                    );
+                }
+                let record_ids = catalog
+                    .records
+                    .iter()
+                    .map(|record| record.id.as_str())
+                    .collect::<BTreeSet<_>>();
+                let returned_ids = sync
+                    .returned_ids
+                    .iter()
+                    .map(String::as_str)
+                    .collect::<BTreeSet<_>>();
+                ensure!(
+                    returned_ids.is_subset(&record_ids),
+                    "{}: sync returned_ids contains an unknown record",
+                    catalog.source
+                );
+                ensure!(
+                    sync.missing_ids
+                        .iter()
+                        .map(String::as_str)
+                        .eq(record_ids.difference(&returned_ids).copied()),
+                    "{}: sync missing_ids must contain exactly the records not returned",
+                    catalog.source
+                );
+                for id in &sync.snapshot_ids {
+                    ensure!(
+                        snapshots.contains_key(id.as_str()),
+                        "{}: sync references unknown snapshot {id}",
+                        catalog.source
+                    );
+                }
+            }
         }
         let mut assertion_ids = BTreeSet::new();
         for set in &self.assertions {
@@ -237,11 +297,17 @@ impl Registry {
             .flat_map(|catalog| &catalog.snapshots)
             .map(|snapshot| (&snapshot.id, snapshot))
             .collect::<BTreeMap<_, _>>();
+        let syncs = self
+            .catalogs
+            .iter()
+            .map(|catalog| (&catalog.source, &catalog.last_sync))
+            .collect::<BTreeMap<_, _>>();
         json!({
             "schema_version": SCHEMA_VERSION,
             "models": records.values().filter(|record| record.kind == RecordKind::Model).collect::<Vec<_>>(),
             "services": records.values().filter(|record| record.kind == RecordKind::Service).collect::<Vec<_>>(),
             "snapshots": snapshots.into_values().collect::<Vec<_>>(),
+            "syncs": syncs,
             "assertion_sets": self.assertions,
         })
     }
@@ -260,7 +326,12 @@ fn valid_pointer(pointer: &str) -> bool {
     true
 }
 
-pub fn merge_catalog(old: Option<Catalog>, incoming: Catalog) -> Result<Catalog> {
+pub fn merge_catalog(
+    old: Option<Catalog>,
+    incoming: Catalog,
+    completed_at: &str,
+) -> Result<Catalog> {
+    OffsetDateTime::parse(completed_at, &Rfc3339).context("invalid sync completed_at")?;
     ensure!(
         incoming.schema_version == SCHEMA_VERSION,
         "unsupported incoming catalog version"
@@ -315,14 +386,26 @@ pub fn merge_catalog(old: Option<Catalog>, incoming: Catalog) -> Result<Catalog>
     let referenced = records
         .values()
         .map(|record| record.origin.snapshot.as_str())
+        .chain(incoming_snapshots.iter().map(String::as_str))
         .collect::<BTreeSet<_>>();
     for id in &referenced {
         ensure!(snapshots.contains_key(*id), "unknown merged snapshot: {id}");
     }
     snapshots.retain(|id, _| referenced.contains(id.as_str()));
+    let missing_ids = records
+        .keys()
+        .filter(|id| !incoming_ids.contains(*id))
+        .cloned()
+        .collect();
     Ok(Catalog {
         schema_version: SCHEMA_VERSION,
         source: incoming.source,
+        last_sync: Some(SyncManifest {
+            completed_at: completed_at.into(),
+            returned_ids: incoming_ids.into_iter().collect(),
+            missing_ids,
+            snapshot_ids: incoming_snapshots.into_iter().collect(),
+        }),
         snapshots: snapshots.into_values().collect(),
         records: records.into_values().collect(),
     })
@@ -347,6 +430,9 @@ mod tests {
     use super::*;
     use crate::model::{Fact, Origin, Snapshot};
 
+    const FIRST_SYNC: &str = "2026-10-15T01:00:00Z";
+    const NEXT_SYNC: &str = "2026-10-16T01:00:00Z";
+
     fn catalog(raw: &[u8]) -> Catalog {
         let sha256 = format!("{:x}", Sha256::digest(raw));
         let snapshot = Snapshot {
@@ -361,6 +447,7 @@ mod tests {
         Catalog {
             schema_version: 1,
             source: "test".into(),
+            last_sync: None,
             records: vec![Record {
                 schema_version: 1,
                 kind: RecordKind::Model,
@@ -395,32 +482,162 @@ mod tests {
 
     #[test]
     fn merge_preserves_unchanged_evidence_and_missing_records() -> Result<()> {
-        let mut old = catalog(br#"{"data":[{"context":42}]}"#);
+        let old_raw = br#"{"data":[{"context":42}]}"#;
+        let incoming_raw = br#"{"data":[{}, {"context":42}]}"#;
+        let mut old = catalog(old_raw);
         let mut missing = old.records[0].clone();
         missing.id = "test:model:missing".into();
         missing.upstream_id = "missing".into();
         old.records.push(missing);
-        let mut incoming = catalog(br#"{"data":[{}, {"context":42}]}"#);
+        let mut incoming = catalog(incoming_raw);
         incoming.records[0].origin.pointer = "/data/1".into();
         incoming.records[0]
             .facts
             .get_mut("context_window")
             .unwrap()
             .pointer = "/data/1/context".into();
-        assert_eq!(merge_catalog(Some(old.clone()), incoming)?, old);
+        let merged = merge_catalog(Some(old.clone()), incoming.clone(), FIRST_SYNC)?;
+        assert_eq!(merged.records, old.records);
+        assert_eq!(merged.snapshots.len(), 2);
+        let sync = merged.last_sync.as_ref().unwrap();
+        assert_eq!(sync.completed_at, FIRST_SYNC);
+        assert_eq!(sync.returned_ids, ["test:model:a"]);
+        assert_eq!(sync.missing_ids, ["test:model:missing"]);
+        assert_eq!(sync.snapshot_ids, [incoming.snapshots[0].id.clone()]);
+        let cache = tempfile::tempdir()?;
+        for (catalog, raw) in [
+            (&old, old_raw.as_slice()),
+            (&incoming, incoming_raw.as_slice()),
+        ] {
+            store::write_bytes(
+                &cache
+                    .path()
+                    .join("snapshots")
+                    .join(format!("{}.json", catalog.snapshots[0].sha256)),
+                raw,
+            )?;
+        }
+        registry(merged.clone()).validate(Some(cache.path()))?;
+        let repeated = merge_catalog(Some(merged.clone()), incoming, NEXT_SYNC)?;
+        let mut expected = merged;
+        expected.last_sync.as_mut().unwrap().completed_at = NEXT_SYNC.into();
+        assert_eq!(repeated, expected);
+        let latest = catalog(br#"{"data":[{"context":42}],"updated":true}"#);
+        let latest_snapshot = latest.snapshots[0].clone();
+        let latest = merge_catalog(Some(repeated), latest, NEXT_SYNC)?;
+        assert_eq!(latest.records, old.records);
+        assert_eq!(latest.snapshots.len(), 2);
+        assert!(latest.snapshots.contains(&old.snapshots[0]));
+        assert!(latest.snapshots.contains(&latest_snapshot));
+
         let mut changed = catalog(br#"{"data":[{"context":50}]}"#);
         changed.records[0]
             .facts
             .get_mut("context_window")
             .unwrap()
             .value = json!(50);
-        let merged = merge_catalog(Some(old.clone()), changed.clone())?;
+        let merged = merge_catalog(Some(old.clone()), changed.clone(), NEXT_SYNC)?;
         assert_eq!(merged.records[0], changed.records[0]);
         assert_eq!(merged.records[1], old.records[1]);
         assert_eq!(merged.snapshots.len(), 2);
-        let mut repeated = old.clone();
+        Ok(())
+    }
+
+    #[test]
+    fn repeat_sync_updates_only_the_manifest_and_restored_ids_leave_missing() -> Result<()> {
+        let incoming = catalog(br#"{"data":[{"context":42}]}"#);
+        let first = merge_catalog(None, incoming.clone(), FIRST_SYNC)?;
+        let mut repeated = incoming;
         repeated.snapshots[0].retrieved_at = "2026-10-16T00:00:00Z".into();
-        assert_eq!(merge_catalog(Some(old.clone()), repeated)?, old);
+        let next = merge_catalog(Some(first.clone()), repeated, NEXT_SYNC)?;
+        assert_eq!(next.records, first.records);
+        assert_eq!(next.snapshots, first.snapshots);
+        let mut expected = first;
+        expected.last_sync.as_mut().unwrap().completed_at = NEXT_SYNC.into();
+        assert_eq!(next, expected);
+
+        let mut returned = catalog(br#"{"data":[{"context":42}]}"#);
+        let mut second = returned.records[0].clone();
+        second.id = "test:model:b".into();
+        second.upstream_id = "b".into();
+        returned.records.push(second);
+        let next = merge_catalog(Some(next), returned, NEXT_SYNC)?;
+        assert_eq!(
+            next.last_sync.as_ref().unwrap().returned_ids,
+            ["test:model:a", "test:model:b"]
+        );
+        let missing = merge_catalog(
+            Some(next),
+            catalog(br#"{"data":[{"context":42}]}"#),
+            NEXT_SYNC,
+        )?;
+        assert_eq!(
+            missing.last_sync.as_ref().unwrap().missing_ids,
+            ["test:model:b"]
+        );
+        let returned = merge_catalog(
+            Some(missing.clone()),
+            next_without_sync(&missing),
+            NEXT_SYNC,
+        )?;
+        assert!(returned.last_sync.as_ref().unwrap().missing_ids.is_empty());
+        assert_eq!(returned.records, missing.records);
+        Ok(())
+    }
+
+    fn next_without_sync(catalog: &Catalog) -> Catalog {
+        let mut incoming = catalog.clone();
+        incoming.last_sync = None;
+        incoming
+    }
+
+    #[test]
+    fn sync_manifest_requires_an_exact_record_partition_and_known_snapshots() -> Result<()> {
+        let mut old = catalog(br#"{"data":[{"context":42}]}"#);
+        let mut missing = old.records[0].clone();
+        missing.id = "test:model:missing".into();
+        missing.upstream_id = "missing".into();
+        old.records.push(missing);
+        let synced = merge_catalog(
+            Some(old),
+            catalog(br#"{"data":[{"context":42}]}"#),
+            FIRST_SYNC,
+        )?;
+        registry(synced.clone()).validate(None)?;
+        let snapshot = synced.snapshots[0].id.as_str();
+        for (field, value) in [
+            ("completed_at", json!("2026-13-01T00:00:00Z")),
+            ("returned_ids", json!([])),
+            ("returned_ids", json!(["test:model:unknown"])),
+            ("returned_ids", json!(["test:model:a", "test:model:a"])),
+            (
+                "returned_ids",
+                json!(["test:model:missing", "test:model:a"]),
+            ),
+            ("missing_ids", json!([])),
+            ("missing_ids", json!(["test:model:a"])),
+            ("missing_ids", json!(["test:model:unknown"])),
+            (
+                "missing_ids",
+                json!(["test:model:missing", "test:model:missing"]),
+            ),
+            ("snapshot_ids", json!([])),
+            ("snapshot_ids", json!(["test:unknown"])),
+            ("snapshot_ids", json!([snapshot, snapshot])),
+        ] {
+            let mut value_catalog = serde_json::to_value(&synced)?;
+            value_catalog["last_sync"][field] = value;
+            let invalid = serde_json::from_value(value_catalog)?;
+            assert!(
+                registry(invalid).validate(None).is_err(),
+                "accepted invalid {field}"
+            );
+        }
+        assert_eq!(
+            registry(synced.clone()).export()["syncs"]["test"],
+            serde_json::to_value(&synced.last_sync)?
+        );
+        assert!(registry(next_without_sync(&synced)).export()["syncs"]["test"].is_null());
         Ok(())
     }
 
@@ -429,11 +646,12 @@ mod tests {
         let original = catalog(b"{}");
         let mut duplicate = original.clone();
         duplicate.records.push(duplicate.records[0].clone());
-        assert!(merge_catalog(None, duplicate.clone()).is_err());
+        assert!(merge_catalog(None, duplicate.clone(), FIRST_SYNC).is_err());
         assert!(registry(duplicate).validate(None).is_err());
         let mut empty = original.clone();
         empty.records.clear();
-        assert!(merge_catalog(Some(original.clone()), empty).is_err());
+        assert!(merge_catalog(Some(original.clone()), empty, FIRST_SYNC).is_err());
+        assert!(merge_catalog(None, original.clone(), "not-a-date").is_err());
         let mut dangling = original.clone();
         dangling.records[0].origin.snapshot = "missing".into();
         assert!(registry(dangling).validate(None).is_err());

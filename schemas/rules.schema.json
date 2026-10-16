@@ -1,0 +1,327 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Array_of_RuleGroup",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/RuleGroup"
+  },
+  "$defs": {
+    "Assertion": {
+      "type": "object",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Condition"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "property": {
+          "type": "string"
+        },
+        "review": {
+          "$ref": "#/$defs/Review"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "scope",
+        "property",
+        "value",
+        "status",
+        "conditions",
+        "review",
+        "evidence"
+      ]
+    },
+    "Condition": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "$ref": "#/$defs/Operator"
+        },
+        "path": {
+          "type": "string"
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "op",
+        "value"
+      ]
+    },
+    "ConditionMatch": {
+      "type": "object",
+      "properties": {
+        "missing_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "state": {
+          "$ref": "#/$defs/MatchState"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "missing_paths"
+      ]
+    },
+    "DocumentSource": {
+      "type": "object",
+      "properties": {
+        "checked_on": {
+          "type": "string"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "checked_on"
+      ]
+    },
+    "Evidence": {
+      "type": "object",
+      "properties": {
+        "checked_on": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/EvidenceKind"
+        },
+        "locator": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "locator",
+        "checked_on",
+        "kind"
+      ]
+    },
+    "EvidenceKind": {
+      "type": "string",
+      "enum": [
+        "reported"
+      ]
+    },
+    "MatchState": {
+      "type": "string",
+      "enum": [
+        "matched",
+        "not_matched",
+        "undetermined"
+      ]
+    },
+    "Operator": {
+      "type": "string",
+      "enum": [
+        "eq",
+        "in"
+      ]
+    },
+    "Review": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "conflicted"
+      ]
+    },
+    "RuleCandidate": {
+      "type": "object",
+      "properties": {
+        "assertion": {
+          "$ref": "#/$defs/Assertion"
+        },
+        "condition_match": {
+          "$ref": "#/$defs/ConditionMatch"
+        },
+        "sources": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/DocumentSource"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "assertion",
+        "condition_match",
+        "sources"
+      ]
+    },
+    "RuleGroup": {
+      "type": "object",
+      "properties": {
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RuleCandidate"
+          }
+        },
+        "property": {
+          "type": "string"
+        },
+        "resolution": {
+          "$ref": "#/$defs/RuleResolution"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "property",
+        "candidates",
+        "resolution"
+      ]
+    },
+    "RuleResolution": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "known"
+            },
+            "status": {
+              "$ref": "#/$defs/Status"
+            },
+            "unit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "value": true
+          },
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "status",
+            "value"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "conflicted"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "state"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "unknown"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "state"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "no_applicable_rule"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "state"
+          ]
+        }
+      ]
+    },
+    "Scope": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/ScopeKind"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "id"
+      ]
+    },
+    "ScopeKind": {
+      "type": "string",
+      "enum": [
+        "model",
+        "interface"
+      ]
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "supported",
+        "unsupported",
+        "unknown",
+        "not_applicable"
+      ]
+    }
+  }
+}

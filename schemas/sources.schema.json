@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SourceFile",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SourceDefinition"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sources"
+  ],
+  "$defs": {
+    "Access": {
+      "type": "string",
+      "enum": [
+        "public",
+        "authenticated_opt_in"
+      ]
+    },
+    "AuthContract": {
+      "type": "object",
+      "properties": {
+        "credential_env": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "header_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "header_prefix": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mode": {
+          "$ref": "#/$defs/AuthMode"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "mode"
+      ]
+    },
+    "AuthMode": {
+      "type": "string",
+      "enum": [
+        "anonymous",
+        "explicit_opt_in"
+      ]
+    },
+    "Coverage": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/CoverageScope"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "description"
+      ]
+    },
+    "CoverageScope": {
+      "type": "string",
+      "enum": [
+        "upstream_catalog",
+        "selected_repositories"
+      ]
+    },
+    "SourceDefinition": {
+      "type": "object",
+      "properties": {
+        "access": {
+          "$ref": "#/$defs/Access"
+        },
+        "auth_contract": {
+          "$ref": "#/$defs/AuthContract"
+        },
+        "coverage": {
+          "$ref": "#/$defs/Coverage"
+        },
+        "data_license": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "docs_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "terms_status": {
+          "$ref": "#/$defs/TermsStatus"
+        },
+        "terms_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "access",
+        "coverage",
+        "auth_contract",
+        "terms_status",
+        "terms_urls",
+        "docs_urls"
+      ]
+    },
+    "TermsStatus": {
+      "type": "string",
+      "enum": [
+        "documented",
+        "unverified"
+      ]
+    }
+  }
+}

@@ -183,6 +183,7 @@ mod tests {
         Catalog {
             schema_version: SCHEMA_VERSION,
             source: source.into(),
+            last_sync: None,
             snapshots: Vec::new(),
             records: vec![Record {
                 schema_version: SCHEMA_VERSION,

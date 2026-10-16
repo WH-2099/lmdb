@@ -60,9 +60,20 @@ pub struct Snapshot {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct SyncManifest {
+    pub completed_at: String,
+    pub returned_ids: Vec<String>,
+    pub missing_ids: Vec<String>,
+    pub snapshot_ids: Vec<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct Catalog {
     pub schema_version: u32,
     pub source: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub last_sync: Option<SyncManifest>,
     pub snapshots: Vec<Snapshot>,
     pub records: Vec<Record>,
 }

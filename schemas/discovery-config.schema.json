@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DiscoveryConfig",
+  "type": "object",
+  "properties": {
+    "max_results": {
+      "type": "integer",
+      "format": "uint",
+      "minimum": 0
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DiscoveryRule"
+      }
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "max_results",
+    "rules"
+  ],
+  "$defs": {
+    "DiscoveryRule": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "author": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer",
+              "format": "uint",
+              "minimum": 0
+            },
+            "pipeline_tag": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "search": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sort": {
+              "$ref": "#/$defs/HfSort"
+            },
+            "source": {
+              "type": "string",
+              "const": "huggingface"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "id",
+            "author",
+            "sort",
+            "limit"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer",
+              "format": "uint",
+              "minimum": 0
+            },
+            "owner": {
+              "type": "string"
+            },
+            "search": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sort": {
+              "$ref": "#/$defs/MsSort"
+            },
+            "source": {
+              "type": "string",
+              "const": "modelscope"
+            },
+            "task": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "source",
+            "id",
+            "owner",
+            "sort",
+            "limit"
+          ]
+        }
+      ]
+    },
+    "HfSort": {
+      "type": "string",
+      "enum": [
+        "createdAt",
+        "lastModified",
+        "downloads"
+      ]
+    },
+    "MsSort": {
+      "type": "string",
+      "enum": [
+        "default",
+        "downloads",
+        "likes",
+        "last_modified"
+      ]
+    }
+  }
+}

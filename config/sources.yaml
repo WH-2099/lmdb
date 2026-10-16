@@ -1,0 +1,178 @@
+schema_version: 1
+sources:
+  - id: modelsdev
+    access: public
+    coverage:
+      scope: upstream_catalog
+      description: models.dev 发布的模型目录与服务目录，保留上游明确给出的模型关联。
+    auth_contract:
+      mode: anonymous
+    terms_status: documented
+    data_license: MIT
+    terms_urls:
+      - https://github.com/anomalyco/models.dev/blob/dev/LICENSE
+    docs_urls:
+      - https://github.com/anomalyco/models.dev/blob/dev/README.md
+
+  - id: huggingface
+    access: public
+    coverage:
+      scope: selected_repositories
+      description: config/huggingface-models.txt 中人工选定的公开模型仓库详情，不表示完整 Hub 目录。
+    auth_contract:
+      mode: anonymous
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://huggingface.co/docs/hub/api
+      - https://huggingface.co/docs/hub/en/model-cards
+
+  - id: modelscope
+    access: public
+    coverage:
+      scope: selected_repositories
+      description: config/modelscope-models.txt 中人工选定的 ModelScope 国内站公开模型仓库详情，不表示完整平台目录。
+    auth_contract:
+      mode: anonymous
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://github.com/modelscope/modelscope_hub/blob/main/src/modelscope_hub/_openapi.py
+      - https://github.com/modelscope/modelscope/blob/v1.24.1/modelscope/hub/api.py
+
+  - id: openrouter
+    access: public
+    coverage:
+      scope: upstream_catalog
+      description: OpenRouter 公开 models 目录中的可路由模型条目及平台声明，不表示模型开发者的完整产品目录。
+    auth_contract:
+      mode: anonymous
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://openrouter.ai/docs/api/api-reference/models/list-all-models-and-their-properties
+      - https://openrouter.ai/docs/guides/overview/models
+
+  - id: artificialanalysis
+    access: authenticated_opt_in
+    coverage:
+      scope: upstream_catalog
+      description: Artificial Analysis 语言模型评测目录的免费字段集合，省略评测分数；目录条目不表示该站提供模型推理服务。
+    auth_contract:
+      mode: explicit_opt_in
+      credential_env: ARTIFICIAL_ANALYSIS_API_KEY
+      header_name: x-api-key
+      header_prefix: ""
+      notes: 默认禁用，仅在显式启用后使用免费字段集合接口。
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://artificialanalysis.ai/api/v2/openapi
+
+  - id: openai
+    access: authenticated_opt_in
+    coverage:
+      scope: upstream_catalog
+      description: OpenAI 模型列表在当前凭据可见范围内返回的条目，保留其所有者与生命周期声明。
+    auth_contract:
+      mode: explicit_opt_in
+      credential_env: OPENAI_API_KEY
+      header_name: authorization
+      header_prefix: "Bearer "
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://developers.openai.com/api/reference/resources/models/methods/list
+
+  - id: anthropic
+    access: authenticated_opt_in
+    coverage:
+      scope: upstream_catalog
+      description: Anthropic 默认模型列表在当前凭据可见范围内返回的条目；默认生命周期范围不含已退役型号。
+    auth_contract:
+      mode: explicit_opt_in
+      credential_env: ANTHROPIC_API_KEY
+      header_name: x-api-key
+      header_prefix: ""
+      notes: 请求另需固定版本头 anthropic-version，其当前值为 2023-06-01。
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://platform.claude.com/docs/en/api/models/list
+
+  - id: gemini
+    access: authenticated_opt_in
+    coverage:
+      scope: upstream_catalog
+      description: Gemini API 模型列表在当前凭据可见范围内返回的条目，保留 models/ 前缀、版本和支持的方法。
+    auth_contract:
+      mode: explicit_opt_in
+      credential_env: GEMINI_API_KEY
+      header_name: x-goog-api-key
+      header_prefix: ""
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://ai.google.dev/api/models
+
+  - id: deepseek
+    access: authenticated_opt_in
+    coverage:
+      scope: upstream_catalog
+      description: DeepSeek 模型列表在当前凭据可见范围内返回的条目及接口能力声明。
+    auth_contract:
+      mode: explicit_opt_in
+      credential_env: DEEPSEEK_API_KEY
+      header_name: authorization
+      header_prefix: "Bearer "
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://api-docs.deepseek.com/api/list-models/
+
+  - id: cohere
+    access: authenticated_opt_in
+    coverage:
+      scope: upstream_catalog
+      description: Cohere 模型列表在当前凭据可见范围内返回的条目，包含兼容端点、特征和弃用状态。
+    auth_contract:
+      mode: explicit_opt_in
+      credential_env: COHERE_API_KEY
+      header_name: authorization
+      header_prefix: "Bearer "
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://docs.cohere.com/reference/list-models
+
+  - id: fal
+    access: authenticated_opt_in
+    coverage:
+      scope: upstream_catalog
+      description: fal 模型端点目录中的条目，保留完整 endpoint ID、分类和状态，不等同于独立模型身份。
+    auth_contract:
+      mode: explicit_opt_in
+      credential_env: FAL_KEY
+      header_name: authorization
+      header_prefix: "Key "
+      notes: 官方目录说明称认证可选且可提高限额，但同页自动生成请求头段标为必填；公开目录方式尚未验证，当前保留默认禁用的凭据路径。
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://fal.ai/docs/platform-apis/v1/models
+
+  - id: replicate
+    access: authenticated_opt_in
+    coverage:
+      scope: upstream_catalog
+      description: Replicate 公开模型目录及最新版本声明，使用 owner/name 标识平台条目。
+    auth_contract:
+      mode: explicit_opt_in
+      credential_env: REPLICATE_API_TOKEN
+      header_name: authorization
+      header_prefix: "Bearer "
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://replicate.com/docs/reference/http#models.list
+      - https://replicate.com/docs/reference/http#models.get

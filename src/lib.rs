@@ -1,7 +1,13 @@
 pub mod adapters;
 pub mod assertion;
+pub mod discovery;
+pub mod domain;
+pub mod evidence;
 pub mod http;
+pub mod identity;
 pub mod model;
 pub mod registry;
+pub mod relations;
+pub mod rules;
 pub mod store;
 pub mod sync;

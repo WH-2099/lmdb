@@ -475,6 +475,7 @@ mod tests {
                 catalogs: vec![Catalog {
                     schema_version: SCHEMA_VERSION,
                     source: source.into(),
+                    last_sync: None,
                     snapshots: vec![snapshot],
                     records,
                 }],
