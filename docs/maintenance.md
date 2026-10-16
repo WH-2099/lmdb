@@ -18,31 +18,36 @@
 | `cargo run --release --locked -- sync --source modelsdev,openrouter` | 仅更新指定来源，`--source` 也可重复提供 |
 | `cargo run --release --locked -- sync --source official` | 更新配置中的官方页面 |
 | `cargo run --release --locked -- documents sync --vendor qwen` | 只更新指定厂商的官方页面 |
+| `cargo run --release --locked -- documents reparse` | 从本地原始页面离线重新提取段落和字段，保留原获取时间与采集错误 |
 | `cargo run --release --locked -- documents list --record huggingface:model:Qwen/Qwen3-8B` | 查看模型明确绑定的页面、声明、警告和失败 |
 | `cargo run --release --locked -- documents check --record huggingface:model:Qwen/Qwen3-8B` | 离线比较页面声明与同一记录的目录事实 |
+| `cargo run --release --locked -- documents resolve huggingface:model:Qwen/Qwen3-8B` | 查看按来源优先级选择的字段及其候选、限制和冲突 |
 | `cargo run --release --locked -- discover --source huggingface,modelscope --output dist/discovery.json` | 将有数量上限的公开候选保存为报告，供种子审查 |
 | `cargo run --release --locked -- validate` | 离线检查目录、领域字段、声明、身份、关系、官方页面和配置 |
 | `cargo run --release --locked -- validate --evidence` | 核对目录原值并从页面原文重放完整提取结果 |
 | `cargo run --release --locked -- stats` | 输出来源、最近同步、字段覆盖、身份、关系、声明与页面统计 |
 | `cargo run --release --locked -- query Qwen --source huggingface --kind model --limit 10` | 在 ID 与名称中匹配文本，并按来源和类型筛选 |
 | `cargo run --release --locked -- query --task robotics --kind model` | 根据领域任务标签筛选模型记录 |
-| `cargo run --release --locked -- inspect huggingface:model:nvidia/GR00T-N1.7-3B` | 查看原始记录、profile、绑定、关系、同步状态、规则候选与官方页面比较 |
+| `cargo run --release --locked -- inspect huggingface:model:nvidia/GR00T-N1.7-3B` | 查看原始记录、profile、绑定、关系、同步状态、规则候选、官方页面与选定元数据 |
 | `cargo run --release --locked -- identities --record huggingface:model:BAAI/bge-m3` | 查看记录的直接身份成员或接口绑定 |
 | `cargo run --release --locked -- relations --record huggingface:model:BAAI/bge-m3 --limit 10` | 查看涉及此记录的显式关系 |
 | `cargo run --release --locked -- rules --record huggingface:model:physical-intelligence/fast --property artifact.role` | 求值记录直接绑定作用域中的指定属性 |
 | `cargo run --release --locked -- evidence archive --output dist/evidence` | 归档当前目录引用的原始快照并核对证据 |
 | `cargo run --release --locked -- evidence restore --input dist/evidence` | 从归档目录恢复并核对证据 |
 | `cargo run --release --locked -- export --output dist/registry.json` | 生成 JSON；省略 `--output` 时使用同一路径 |
-| `cargo run --release --locked -- schema` | 从 Rust 类型生成 12 个 JSON Schema 文件 |
+| `cargo run --release --locked -- schema` | 从 Rust 类型生成 13 个 JSON Schema 文件 |
 | `cargo run --release --locked -- schema --check` | 检查 schema 是否与当前类型一致 |
 
 `sources`、`stats`、`query`、`inspect`、`identities`、`relations`、`rules` 和 `documents` 的子命令输出便于其他工具读取的 JSON。
 `query` 的文本可省略，默认最多返回 20 条记录，结果包含事实和证据指针。
 查询按不区分大小写的子字符串匹配 ID 和名称，来源筛选使用精确来源键。
 结果按 ID 排序；字段筛选支持 `--task`、`--input`、`--output`、`--min-context`、`--capability` 与 `--identity`。
-任务和模态可按来源标签或已映射的规范标签匹配，缺失字段不会命中筛选。
+任务继续按目录来源标签或已映射的规范标签匹配。
+模型的输入、输出、最小上下文和能力过滤，在该字段有官方 `model` 声明时使用 `resolved_metadata` 的选定值，未选定时不命中，也不回退到目录值。
+没有对应官方模型声明时沿用目录 profile，模态仍支持来源标签和规范标签；服务记录使用自己的目录事实。
 `--capability` 可选 `reasoning`、`thinking`、`tool-call`、`structured-output`、`open-weights`、`attachment` 或 `temperature-control`，只匹配明确为真的字段。
 `--min-context` 使用 token 数，详细字段口径见[领域字段](domain-fields.md)。
+查询仍返回带原始事实的记录，使用 `inspect` 或 `documents resolve` 可以核对选定值、来源和选择理由。
 
 `query --identity BAAI/bge-m3 --kind service` 查找通过 `record.model` 明确指向该身份成员的提供方记录。
 `identities --record` 与 `rules --record` 只采用直接绑定，前述提供方查找不会传播模型或接口规则。
@@ -107,6 +112,31 @@ cargo run --release --locked -- export
 字段差异不会自动改写 API 目录事实；需要核对模型版本、单位、适用条件和双方定位。
 页面条件目前保存为文字说明，不能直接当作 `rules` 的 `eq` / `in` 条件执行。
 
+`documents list` 还展示选定原文段落以及架构、训练、语言、许可、硬件等结构化声明。
+每页最多 6 段，每段最多 2,000 个字符，合计最多 6,000 个字符；超限段落整段跳过并留下警告。
+正文保留原有措辞和内部空白，段落中的 `records` 为空时表示页面或模型家族范围，不应扩成具体模型事实。
+
+`documents resolve RECORD_ID` 在模型卡、模型详情页和文档、发布博客、目录事实之间依次选择字段。
+最高等级的可用候选值冲突时保留 `conflict`，只有条件、近似值或旧内容时保留 `qualified`，均不回退到较低等级。
+同级存在可用的精确无条件值时可以选定，全部候选仍在输出中，完整状态说明见[数据模型](data-model.md#按来源优先级选择模型字段)。
+只有 `model` 作用域的官方声明能在同一显式模型身份的成员间共享，目录事实、接口或未指定作用域声明不参与这种共享，服务使用自身事实。
+缺省声明作用域是 `unspecified`，接口声明中的 `id` 是 HTTPS 文档引用，与 `rules` 使用的接口身份分别维护。
+`inspect` 增加 `resolved_metadata`，导出中的同名映射只包含模型记录；原目录事实和 profile 继续保留各自来源。
+
+提取器修改后，可在现有缓存上离线更新文档结果：
+
+```text
+cargo run --release --locked -- documents reparse
+cargo run --release --locked -- documents resolve huggingface:model:Qwen/Qwen3-8B
+cargo run --release --locked -- validate --evidence
+git diff -- data/documents
+```
+
+`reparse` 核对缓存摘要并重建所有已保存内容的提取结果，保留 `checked_at`、快照时间和最近采集错误。
+它不请求上游，只有错误而没有内容的页面仍保留原错误。
+全部页面处理和校验成功后才写入 YAML，缓存缺失或损坏时原文档文件继续保留。
+修改页面 URL、格式或绑定后需重新同步；离线重新提取不把旧响应改绑到新的来源定义。
+
 ## 网络与凭据
 
 HTTP 客户端复用连接，设置请求超时和响应体上限，拒绝 HTTP 重定向。
@@ -124,12 +154,12 @@ HTTP 客户端复用连接，设置请求超时和响应体上限，拒绝 HTTP 
 ## 缓存与证据保存
 
 `.cache/snapshots/<sha256>.json` 保存目录原始 JSON，`.cache/documents/<sha256>.bin` 保存官方页面原始字节，`.cache/http/` 保存公开请求的条件缓存收据。
-这些缓存目录和 `dist/` 均被 Git 忽略，页面 YAML 只保存元数据、短摘录、定位和字段声明。
+这些缓存目录和 `dist/` 均被 Git 忽略，页面 YAML 保存元数据、选定段落、短摘录、定位和结构化声明。
 认证响应同样可能包含账户范围内的数据，不应直接发布整个缓存目录。
 
 普通 `validate` 从 YAML 检查结构与引用，不读取缓存，也不会请求上游。
 `validate --evidence` 读取每个被引用的目录快照，核对摘要、记录位置与事实值。
-对官方页面，它从原始 UTF-8 响应重新执行提取，核对完整结果，包括元数据、链接、声明、警告和定位。
+对官方页面，它从原始 UTF-8 响应重新执行提取，核对完整结果，包括元数据、链接、段落、声明、作用域、警告和定位。
 目录适配器不会在证据校验中重新采集，人工声明也不会联网复核；通过校验不证明模型实际支持某个功能。
 干净克隆可以执行普通校验和导出，但缺少历史原始响应时无法完成证据校验。
 重新同步只能取得当前响应，无法保证恢复已经变化的历史快照。
@@ -155,7 +185,8 @@ cargo run --release --locked -- validate --evidence
 
 ## 修改格式与实现
 
-修改记录、声明、身份、领域视图、关系、规则、发现或官方文档类型后，运行 `schema` 并提交对应 schema 变更。
+修改记录、声明、身份、领域视图、关系、规则、发现、官方文档或字段选择结果类型后，运行 `schema` 并检查对应 schema 变更。
+提取器版本变化后先用 `documents reparse` 更新本地已有内容，再检查段落范围、声明作用域和选定字段。
 输入 YAML 限制为单文档、UTF-8 和 JSON 兼容值，拒绝重复键、非字符串键、显式标签、锚点、别名、merge key、非有限数字及超限输入。
 目录、声明、身份和配置等输入结构拒绝未知字段，避免字段拼错后被静默忽略。
 
@@ -191,7 +222,7 @@ uv 部署使用 `uv sync --frozen`，CI 另用 `uv lock --check` 检查锁文件
 | models.dev | 保留 [`licenses/models.dev-MIT.txt`](../licenses/models.dev-MIT.txt)；记录内的模型许可与外链资产另行判断 |
 | Hugging Face、ModelScope | 保留模型仓库许可与来源证据；不把单个模型许可推广到整个平台目录 |
 | OpenRouter | 保存接口声明与来源，批量再分发范围仍待确认 |
-| 官方页面提取 | Git 保存来源 URL、定位与短摘录，完整响应在本地缓存；采集成功不等于取得完整正文再分发许可 |
+| 官方页面提取 | Git 保存来源 URL、定位、选定段落与结构化声明，完整响应在本地缓存；按实际保存内容核对再分发范围 |
 | 人工文档声明 | 保留官方 URL、定位和核查时间；`accepted` 表示证据审查结果 |
 | 认证来源与原始缓存 | 根据账户条款和来源要求确认保存、分享与再分发范围 |
 

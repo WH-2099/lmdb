@@ -4,8 +4,8 @@
 
 当前格式为 `schema_version: 1`，原始目录和声明的类型定义位于 [`src/model.rs`](../src/model.rs) 与 [`src/assertion.rs`](../src/assertion.rs)。
 领域视图、身份、关系和规则分别由 `domain`、`identity`、`relations` 与 `rules` 模块定义。
-官方页面配置、提取结果与字段对照由 [`documents`](../src/documents/mod.rs) 模块定义。
-Rust 类型生成目录、声明、身份、profile、关系、规则、来源约定、发现配置、发现报告、官方页面配置、文档目录与文档对照共 12 个 JSON Schema。
+官方页面配置、提取结果、字段对照与按来源优先级选择的元数据由 [`documents`](../src/documents/mod.rs) 模块定义。
+Rust 类型生成目录、声明、身份、profile、关系、规则、来源约定、发现配置、发现报告、官方页面配置、文档目录、文档对照与字段选择结果共 13 个 JSON Schema。
 CLI 通过类型解析与语义检查执行校验，JSON Schema 为编辑器和其他消费方提供结构说明。
 仅运行通用 JSON Schema 校验不能替代 CLI 的引用、单位、日期与冲突检查。
 
@@ -60,6 +60,7 @@ JSON Pointer 指向快照根对象下的绝对位置，采用 `/` 分段，并�
 
 `DomainMetadata` 从已知事实派生任务、模态、token 限制、参数、能力、谱系和价格结构。
 派生值携带 `fact` 与 `pointer`，结合记录的 `origin.snapshot` 可以回到原始响应；原始 `facts` 继续保存完整来源值。
+`profiles` 保留这一目录事实视图，官方声明参与的字段选择另存为下文的 `resolved_metadata`。
 任务与模态保留来源标签，仅对已知标签补充规范分类，未识别标签不会被删掉。
 价格视图区分金额、计费单位、数量、条件和未分类字段，不从缺失单位猜测总价。
 具体映射与计量边界见[领域字段](domain-fields.md)。
@@ -106,15 +107,16 @@ Git 历史能保存旧记录版本，但只有同时保留对应原始响应，�
 | `DocumentCatalog` | `schema_version`、`documents` | 保存于 `data/documents/official.yaml` 的文档目录 |
 | `PageDocument` | `source`、`checked_at`、可选 `error`、可选 `content` | 页面配置、最近检查时间、该次错误与可用内容 |
 | `PageContent` | `snapshot`、`content_type`、`extraction` | 原始响应身份、响应内容类型与提取结果 |
-| `Extraction` | `extractor_version`、`title`、`published_at`、`canonical_url`、`links`、`claims`、`warnings` | 提取器版本、页面元信息、官方链接、模型声明及提取警告 |
+| `Extraction` | `extractor_version`、`title`、`published_at`、`canonical_url`、`links`、`passages`、`claims`、`warnings` | 提取器版本、页面元信息、官方链接、选定原文、结构化声明及提取警告 |
 | `LocatedValue` | `value`、`evidence` | 带来源定位的页面元信息字符串 |
 | `OfficialLink` | `url`、`label`、`evidence` | 指向同一厂商允许范围的链接、页面标签及原始链接定位 |
-| `Claim` | `record`、`property`、`value`、可选 `unit`、`precision`、`conditions`、`evidence` | 绑定模型、属性、JSON 值、单位、精度、文字条件和证据定位 |
+| `Claim` | `record`、`property`、`value`、可选 `unit`、`precision`、`scope`、`conditions`、`evidence` | 绑定记录、属性、JSON 值、单位、精度、适用作用域、文字条件和证据定位 |
+| `Passage` | `topic`、`heading`、`records`、`text`、`evidence` | 选定段落的主题、可选标题、明确主体、原文和证据位置 |
 | `PageEvidence` | `locator`、`excerpt` | 提取位置与至多 240 个字符的证据片段 |
 
 `kind` 区分 `release_blog`、`model_card`、`model_page` 和 `documentation`，`format` 支持 `html` 与 `markdown`。
 解析器保存 UTF-8 原始响应，Markdown 正文先渲染为 DOM，再由对应页面的规则提取字段。
-提取范围由已实现的页面规则限定，只有标题、日期或链接的页面也可以保存为文档结果，并附上没有提取模型字段的警告。
+提取范围由已实现的页面规则限定，只有标题、日期或链接的页面也可以保存为文档结果；没有声明或选定段落时附提取警告。
 标题、版本、章节或表格无法明确对应目标模型时，相关规则可以保留警告或省略声明。
 页面抓取成功与模型字段提取成功因此是不同状态。
 
@@ -124,12 +126,24 @@ Git 历史能保存旧记录版本，但只有同时保留对应原始响应，�
 模型发布日期需要正文中的明确模型字段和独立的 `Claim`，声明仍受该页的模型绑定限制。
 `canonical_url` 保存页面声明的规范地址，不改变配置中的请求 URL 或模型身份。
 
+`passages` 保存已选段落的原有措辞和内部空白，只去掉外层空白；`evidence.excerpt` 仍是供快速查看的短摘录。
+段落主题包括概述、能力、限制、可用性、训练、评估、使用和许可，`records` 为空时表示页面或模型家族层面的说明。
+有明确主体的段落只能引用该页面已绑定的模型记录，段落正文不会自动转成无条件模型能力。
+每页最多保存 6 段，每段最多 2,000 个字符，合计最多 6,000 个字符。
+超过上限的整段被跳过并留下警告，相同正文去重，完整响应继续保存在原始缓存中。
+专用提取规则还保存架构、训练阶段、语言、许可、硬件与使用配置等结构化字段，原值形状、单位、条件和定位随声明保留。
+训练硬件、训练算术精度、部署需求和接口条款各自保留适用范围。
+
+声明的 `scope.kind` 分为 `model`、`interface` 和 `unspecified`，接口作用域的 `id` 是 HTTPS 文档引用，与人工规则使用的接口身份 ID 分别解释。
+缺少 `scope` 的旧声明按 `unspecified` 处理，只有明确的 `model` 声明可以参与模型字段选择。
+接口限制即使绑定到模型记录，也保留接口作用域，不会升级为模型本体属性。
+
 `precision: exact` 表示提取值按来源的明确写法保存，`approximate` 保留缩写或概数的精度限制。
 例如按 `K`、`M` 或 `B` 缩放得到的数值仍可标为 `approximate`，不能仅凭换算后的整数宣称精确一致。
 部分页面也直接保留带缩写的字符串值与 `unit: tokens`，因此文档声明的值形状需连同精度一起解释。
 `conditions` 是该页提取出的文字条件列表，用于保留模型变体、推理模式、上下文扩展或其他适用前提。
 它与人工声明中的 `eq`、`in` 条件结构分别存储，当前文档对照不会执行这些文字条件。
-提取结果保存在独立文档目录中，后续审查可以据此修订数据；抓取和对照本身不覆盖 API 目录的 `facts`、领域视图或人工规则。
+提取结果保存在独立文档目录中，派生的字段选择保留全部候选；API 目录的 `facts`、领域视图和人工规则继续保存各自证据。
 
 HTML 证据通常使用 `css:` 定位，Markdown 正文使用 `markdown-rendered-css:` 定位渲染后的节点。
 属性证据可带 `@content` 或 `@href`，文章 JSON-LD 日期带 `#json-pointer=`，Markdown frontmatter 可使用 `markdown-bytes:` 字节范围。
@@ -143,7 +157,10 @@ HTML 证据通常使用 `css:` 定位，Markdown 正文使用 `markdown-rendered
 每次检查保存 `checked_at`；获取或提取失败时保存 `error`，并在页面配置相同的情况下保留上次可用的 `content`。
 首次失败可以只有错误而没有内容，成功页面和失败状态一同写入文档目录，存在本次所选页面失败时命令返回非零状态。
 `checked_at` 因此不等于内容获取时间，保留内容的时间应读取 `content.snapshot.retrieved_at`。
-配置或提取器版本变化后，已有结果必须重新同步，校验会检查保存配置的一致性与提取器版本。
+`documents reparse` 从已保存且摘要匹配的原始响应离线重建提取结果，保留 `checked_at`、快照获取时间和既有错误。
+它不会补采失败页面，也不会把旧内容标记为新一次成功获取。
+所有页面重新提取和校验完成后才写入文档目录；缺失缓存、损坏字节或解析失败会保留原文件。
+提取器升级可以使用 `reparse` 更新已有内容，页面来源定义改变则需要重新同步，校验会检查配置一致性与提取器版本。
 
 `documents list` 展示配置、页面元信息、声明和错误，`documents check` 从保存的声明生成字段对照。
 每条 `Comparison` 保留页面 ID、模型记录 ID、属性、完整官方声明、官方快照、目录事实及其 `catalog_origin`。
@@ -158,7 +175,7 @@ HTML 证据通常使用 `css:` 定位，Markdown 正文使用 `markdown-rendered
 | `difference` | 满足直接比较条件，但两边来源声明值不同；结果不裁定哪一方正确 |
 | `missing_catalog_fact` | 可直接比较的官方声明在该精确目录记录中没有同名原始字段 |
 | `conditional` | 官方声明带文字条件，先保留其适用前提 |
-| `not_comparable` | 内容来自失败检查后保留的旧版本、值为近似、属性没有比较规则，或类型、单位、日期精度等不满足规则 |
+| `not_comparable` | 作用域为接口或未指定、内容来自失败检查后保留的旧版本、值为近似、属性没有比较规则，或类型、单位、日期精度等不满足规则 |
 
 带条件的声明优先返回 `conditional`，若页面最近检查失败，同时保留 `official_stale: true` 和错误信息。
 其余近似值和旧内容不会得到精确一致或差异结论。
@@ -167,12 +184,50 @@ HTML 证据通常使用 `css:` 定位，Markdown 正文使用 `markdown-rendered
 `parameter_count` 仅与明确的同名参数总量字段比较，缺少该字段时返回 `not_comparable`，不以 safetensors 或 dtype 计数替代。
 `difference` 不会自动新增人工冲突声明，`missing_catalog_fact` 也不能推导为不支持。
 
+## 按来源优先级选择模型字段
+
+`documents resolve RECORD_ID` 生成 `ResolvedMetadata`，按字段保留原始候选及选择结果，具体实现见 [`resolve.rs`](../src/documents/resolve.rs)。
+它读取当前记录的目录事实，以及直接绑定或通过已审查模型身份成员关联的 `model` 作用域官方声明。
+身份共享仅适用于同一显式模型身份中的模型成员，不沿名称、仓库引用、父模型关系或服务托管关系扩展。
+其他身份成员的目录事实不会参与当前记录的字段选择，共享声明仍保留原始 `claim.record` 和证据。
+直接绑定的 `interface` 与 `unspecified` 声明单独放在 `scoped_claims`，也不会共享给同一身份的其他记录。
+服务记录只采用自己的目录事实。
+
+| 来源 | 优先级 |
+| --- | ---: |
+| 模型卡 `model_card`、模型详情页 `model_page`、文档 `documentation` | 2 |
+| 发布博客 `release_blog` | 1 |
+| 当前记录的目录事实 | 0 |
+
+每个字段先确定候选中的最高优先级，再检查这一等级内哪些值具有明确精度、无文字条件、没有最近抓取错误，并满足已定义的属性类型和单位约束。
+获取日期、候选顺序或重复证据不会改变来源优先级。
+
+| `fields[property].status` | 含义 |
+| --- | --- |
+| `selected` | 最高等级存在可用值，且同级可用候选按该属性规则一致；`selected` 是 `candidates` 中从零开始的索引 |
+| `qualified` | 最高等级的官方候选需要条件、仅给出近似值、保留旧内容，或同级值的单位、日期精度等无法直接比较，因此没有选定值 |
+| `conflict` | 最高等级中可直接比较的候选值不一致，保留全部证据且不选定值 |
+| `unavailable` | 没有可用的目录值，也没有可供选择的官方候选 |
+
+最高等级只有带限制的候选时，不回退到博客或目录中的较低等级值。
+同级另有可用的精确无条件值时仍可选定，带限制的候选继续保留在 `candidates`。
+字段不存在时没有对应结果，不能把缺失解释为不支持。
+每个候选保留目录 `origin` 与 `Fact`，或页面种类、快照、完整声明、旧内容标记和错误。
+已有比较规则的属性沿用其值与单位约束；其他结构化字段接受非 `null` JSON 值，并按单位与原生 JSON 值比较。
+这类数组的成员顺序影响相等判断，术语也不会自动归一。
+这套选择规则表达本项目的证据优先级，不证明被选值已经通过推理实测。
+
+模型查询的输入、输出、最小上下文和能力过滤，在对应字段有官方 `model` 声明时使用已选定值，未选定的字段不命中过滤条件，也不回退到目录值。
+没有对应官方模型声明时使用目录 profile，保留原有来源标签和规范标签匹配。
+任务过滤继续使用目录任务分类，服务查询继续使用服务自身的事实。
+查询返回原始记录，选定值及其理由可通过 `inspect` 的 `resolved_metadata` 或 `documents resolve` 查看。
+
 ## 官方文档原始证据
 
 页面快照沿用 `Snapshot`，其来源为 `official-<vendor>`，ID 为 `official-<vendor>:<sha256>`。
 HTML 与 Markdown 原始字节保存在 `.cache/documents/<sha256>.bin`，与 API 响应的 `.cache/snapshots/<sha256>.json` 分别保存。
 文档证据校验先核对 SHA-256、UTF-8 和 8 MiB 大小上限，再重跑同一提取器并比较完整 `Extraction`。
-因此校验覆盖页面元信息、链接、声明、条件、精度、警告和定位是否可由保留响应重现。
+因此校验覆盖页面元信息、链接、选定段落、结构化声明、作用域、条件、精度、警告和定位是否可由保留响应重现。
 回放成功说明提取可复现，不能证明官方声明正确或模型实际行为符合描述。
 
 `evidence archive` 与 `evidence restore` 同时处理 API 原始 JSON 和已保存文档引用的原始字节。
@@ -203,12 +258,15 @@ HTML 与 Markdown 原始字节保存在 `.cache/documents/<sha256>.bin`，与 AP
 | `schema --check` | 已提交 JSON Schema 与当前 Rust 类型生成结果是否一致 |
 | `export` | 校验本地注册表，再输出按 ID 排序的 JSON 视图 |
 | `documents check` | 按精确记录与属性对照已保存官方声明和目录事实，保留条件、精度、旧内容状态及两边证据 |
+| `documents resolve RECORD_ID` | 按来源优先级选择字段，保留身份关联、作用域、全部候选及冲突或限制 |
+| `documents reparse` | 从本地原始页面重新提取，保持获取时间和采集错误，校验完成后更新文档 YAML |
 
 证据校验不重新请求网页，人工条件声明中的文档摘录仍需人工核对，字段语义与真实模型行为也需要独立审查。
 从干净克隆执行普通校验和导出不需要缓存；证据校验需要所有仍被引用的 API 原始 JSON 与官方页面原始字节。
-导出对象包含 `schema_version`、`models`、`services`、`snapshots`、`syncs`、`assertion_sets`、`profiles`、`identities`、`relationships`、`official_sources`、`documents` 和 `document_comparisons`。
+导出对象包含 `schema_version`、`models`、`services`、`snapshots`、`syncs`、`assertion_sets`、`profiles`、`identities`、`relationships`、`official_sources`、`documents`、`document_comparisons` 和 `resolved_metadata`。
 `profiles` 按记录 ID 索引，`syncs` 按来源键保存最近同步清单；规则结果由 `rules` 按调用上下文单独生成。
 `official_sources` 保存配置中的页面来源，`documents` 保存抓取结果、失败状态及嵌套页面快照，`document_comparisons` 保存本次按目录事实派生的对照结果。
 官方页面快照位于各文档的 `content.snapshot`，顶层 `snapshots` 继续保存 API 目录快照。
+`resolved_metadata` 仅按模型记录 ID 索引，保存选定字段、候选、限制与冲突；服务事实保留在原服务记录和其 profile 中。
 导出保留事实、来源指针、条件和冲突，不将它们压平成一个能力布尔值。
 相同输入数据生成相同内容；JSON 是 YAML 的派生产物，维护时应修改源记录。

@@ -3,8 +3,8 @@
 用于收集、整理和维护模型结构化元数据的 Rust CLI 项目，覆盖语言、多模态、检索及其他模型类型。
 YAML 保存来源目录、人工身份映射与条件声明，JSON 提供保留来源证据的结构化视图。
 任务、模态、限制、参数、能力和价格从原始事实派生为有类型的领域视图（profile），支持字段筛选、显式关系查询和条件求值。
-每个导入字段保留来源快照与 JSON Pointer，原始事实仍是核对来源声明的依据。
-官方发布博客、模型卡和详情页另存带原文定位的声明，可与目录字段交叉核对。
+每个目录导入字段保留来源快照与 JSON Pointer，便于回溯原始响应。
+官方发布博客、模型卡和详情页保存完整选定段落与带作用域的声明，可交叉核对目录字段并按来源优先级选择模型元数据。
 当前格式为 `schema_version: 1`，仍处于早期维护阶段。
 
 ## 开始使用
@@ -32,7 +32,7 @@ cargo run --release --locked -- export --output dist/registry.json
 cargo run --release --locked -- sync
 cargo run --release --locked -- sync --source modelsdev,openrouter
 cargo run --release --locked -- sync --source official
-cargo run --release --locked -- documents check --record huggingface:model:Qwen/Qwen3-8B
+cargo run --release --locked -- documents resolve huggingface:model:Qwen/Qwen3-8B
 cargo run --release --locked -- sync --source huggingface --source modelscope
 cargo run --release --locked -- validate --evidence
 cargo run --release --locked -- schema --check
@@ -43,7 +43,8 @@ Hugging Face 和 ModelScope 只同步配置中明确列出的模型；`discover`
 `sources` 读取 `config/sources.yaml` 中 13 个来源的覆盖范围、认证约定和条款状态，列出约定时不读取凭据。
 认证来源需要同时指定 `--source NAME` 与 `--authenticated`，本轮未进行真实认证采集。
 目录同步逐来源保存成功结果；失败来源保留旧目录，命令最终以非零状态报告失败。
-官方页面按页记录失败；同一来源定义下保留的旧内容会显式标记过期，详见[官方页面与字段核对](docs/official-documents.md)。
+官方页面按页记录失败；同一来源定义下保留的旧内容会显式标记过期。
+`documents reparse` 可从缓存原文离线更新提取结果，`documents resolve RECORD_ID` 展示来源选择、限定条件与冲突，详见[官方页面与字段核对](docs/official-documents.md)。
 
 普通 `validate` 不需要原始响应。
 `validate --evidence` 需要本地 `.cache/snapshots/` 的目录原始 JSON，以及 `.cache/documents/` 的官方页面原文；普通克隆不包含这些文件。
@@ -74,10 +75,13 @@ Hugging Face 和 ModelScope 只同步配置中明确列出的模型；`discover`
 | Hugging Face、ModelScope | 精选仓库的身份、任务、谱系、许可及版本信息 |
 | OpenRouter | 平台目录中的模态、限制、参数与价格原值 |
 | 领域视图（profile） | 任务与模态标签、限制、参数、能力和价格结构，每个派生值保留事实定位 |
-| 官方页面 | 选定 12 个厂商的 27 个页面，保存 URL、页面元数据、官方链接、带模型绑定的字段声明和比较结果 |
+| 官方页面 | 选定 12 个厂商的 27 个页面，保存原文段落、页面元数据、链接、带作用域的声明、比较与字段选择结果 |
 | 人工条件声明 | 官方文档中的角色、功能组合、音视频、检索及专业模型限制，条件求值保留未知和冲突 |
 | 身份与关系 | 精确成员映射、接口绑定，以及有来源证据的服务、引用和派生关系 |
 | 认证适配器 | 请求说明、字段映射和分页实现，使用合成响应验证，在线访问仍待验证 |
+
+模型的输入输出、上下文和能力筛选可使用已选官方字段，限定或冲突字段保留状态，服务仍使用自己的平台事实。
+原始 `facts` 与 `profile` 保留目录声明，`resolved_metadata` 单独呈现字段选择与全部候选。
 
 记录 ID 包含来源和类型，同一模型在不同来源出现时会有多个记录。
 统计数字表示来源记录数，不能视为跨来源去重后的模型总量。
@@ -97,7 +101,7 @@ FAST 的 `robotics` 任务标签表示领域归类，其角色应连同声明读
 | [领域字段](docs/domain-fields.md) | profile、任务标签、计量单位、价格和字段筛选 |
 | [身份与关系](docs/relationships.md) | 精确成员、接口绑定、显式关系和缺失目标 |
 | [规则查询](docs/rule-queries.md) | 三值条件匹配、请求上下文、未知与冲突 |
-| [官方页面与字段核对](docs/official-documents.md) | 发布博客、模型卡、详情页采集与原文重放、声明差异 |
+| [官方页面与字段核对](docs/official-documents.md) | 完整段落、字段作用域、来源优先级、离线重解析与证据 |
 | [候选发现](docs/discovery.md) | 匿名发现规则、预算、报告和种子审查 |
 | [专业模型](docs/specialized-models.md) | 机器人、蛋白结构、医疗分割与 tokenizer 的具体样本 |
 | [维护流程](docs/maintenance.md) | 命令、更新、校验、缓存、依赖与来源许可 |
@@ -118,7 +122,7 @@ lmdb/
 ├── data/
 │   ├── catalogs/            每个来源一个 YAML 目录
 │   ├── assertions/          人工审查的条件声明
-│   ├── documents/           官方页面元数据、短摘录与声明
+│   ├── documents/           官方页面元数据、选定段落与声明
 │   └── identities/          模型身份与接口绑定证据
 ├── schemas/                 由 Rust 类型生成的 JSON Schema
 ├── tests/fixtures/          合成响应与回归样本
