@@ -1,0 +1,451 @@
+# Reviewed releases only; aliases and quantized derivatives require separate evidence.
+# Interface bindings describe the source provider client, not account availability.
+schema_version: 1
+sources:
+  bge-m3-card:
+    url: https://huggingface.co/BAAI/bge-m3/blob/5617a9f61b028005a4858fdac845db406aefb181/README.md
+    title: BGE-M3 author model card at 5617a9f61b02
+    checked_on: '2026-10-16'
+  bge-reranker-card:
+    url: https://huggingface.co/BAAI/bge-reranker-v2-m3/blob/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e/README.md
+    title: BGE Reranker v2 M3 author model card at 953dc6f6f85a
+    checked_on: '2026-10-16'
+  chronos-card:
+    url: https://huggingface.co/amazon/chronos-2/blob/29ec3766d36d6f73f0696f85560a422f50e8498c/README.md
+    title: Chronos-2 author model card at 29ec3766d36d
+    checked_on: '2026-10-16'
+  deepseek-r1-card:
+    url: https://huggingface.co/deepseek-ai/DeepSeek-R1/blob/56d4cbbb4d29f4355bab4b9a39ccb717a14ad5ad/README.md
+    title: DeepSeek-R1 author model card at 56d4cbbb4d29
+    checked_on: '2026-10-16'
+  deepseek-v32-card:
+    url: https://huggingface.co/deepseek-ai/DeepSeek-V3.2/blob/a7e62ac04ecb2c0a54d736dc46601c5606cf10a6/README.md
+    title: DeepSeek-V3.2 author model card at a7e62ac04ecb
+    checked_on: '2026-10-16'
+  esmc-card:
+    url: https://huggingface.co/biohub/ESMC-6B/blob/af1602ba7406f521b11bf8f81d52af378cde09e4/README.md
+    title: ESMC 6B author model card at af1602ba7406
+    checked_on: '2026-10-16'
+  esmfold2-card:
+    url: https://huggingface.co/biohub/ESMFold2/blob/69869f737beffec5294845ede23db5fc0b4f509e/README.md
+    title: ESMFold2 author model card at 69869f737bef
+    checked_on: '2026-10-16'
+  fast-card:
+    url: https://huggingface.co/physical-intelligence/fast/blob/ec4d7aa71691cac0b8bed6942be45684db2110f4/README.md
+    title: FAST author repository card at ec4d7aa71691
+    checked_on: '2026-10-16'
+  gemini-2.5-flash:
+    url: https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash
+    title: Gemini 2.5 Flash official model documentation
+    checked_on: '2026-10-16'
+  gemini-2.5-pro:
+    url: https://ai.google.dev/gemini-api/docs/models/gemini-2.5-pro
+    title: Gemini 2.5 Pro official model documentation
+    checked_on: '2026-10-16'
+  gemini-4-argon:
+    url: https://ai.google.dev/gemini-api/docs/models/gemini-4-argon
+    title: Gemini 4 Argon official model documentation
+    checked_on: '2026-10-16'
+  gemma3-4b-card:
+    url: https://huggingface.co/google/gemma-3-4b-it/blob/093f9f388b31de276ce2de164bdc2081324b9767/README.md
+    title: Gemma 3 4B IT author model card at 093f9f388b31
+    checked_on: '2026-10-16'
+  google-generate-content:
+    url: https://ai.google.dev/api/generate-content
+    title: Gemini API generateContent reference
+    checked_on: '2026-10-16'
+  google-sdk:
+    url: https://ai-sdk.dev/providers/ai-sdk-providers/google
+    title: AI SDK Google Generative AI provider documentation
+    checked_on: '2026-10-16'
+  groot17-card:
+    url: https://huggingface.co/nvidia/GR00T-N1.7-3B/blob/2fc962b973bccdd5d8ce4f67cc63b264d6886495/README.md
+    title: GR00T N1.7 3B author model card at 2fc962b973bc
+    checked_on: '2026-10-16'
+  groot17-readme:
+    url: https://github.com/NVIDIA/Isaac-GR00T/blob/dac54b313160c201c450f97df0fd74ebd379c892/README.md
+    title: Isaac GR00T author README at dac54b313160
+    checked_on: '2026-10-16'
+  llama31-8b-card:
+    url: https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct/blob/0e9e39f249a16976918f6564b8830bc894c89659/README.md
+    title: Llama 3.1 8B Instruct author model card at 0e9e39f249a1
+    checked_on: '2026-10-16'
+  llama32-vision-card:
+    url: https://huggingface.co/meta-llama/Llama-3.2-11B-Vision-Instruct/blob/9eb2daaa8597bf192a8b0e73f848f3a102794df5/README.md
+    title: Llama 3.2 11B Vision Instruct author model card at 9eb2daaa8597
+    checked_on: '2026-10-16'
+  llama33-70b-card:
+    url: https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct/blob/6f6073b423013f6a7d4d9f39144961bfbfbc386b/README.md
+    title: Llama 3.3 70B Instruct author model card at 6f6073b42301
+    checked_on: '2026-10-16'
+  llama4-scout-card:
+    url: https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E-Instruct/blob/92f3b1597a195b523d8d9e5700e57e4fbb8f20d3/README.md
+    title: Llama 4 Scout 17B 16E Instruct author model card at 92f3b1597a19
+    checked_on: '2026-10-16'
+  magistral-small-card:
+    url: https://huggingface.co/mistralai/Magistral-Small-2506/blob/ad2fce5b4113139e1877dcadfd826c9262ad8e8c/README.md
+    title: Magistral Small 2506 author model card at ad2fce5b4113
+    checked_on: '2026-10-16'
+  medsam2-card:
+    url: https://huggingface.co/wanglab/MedSAM2/blob/e4a6f35edd7e091619cbc0750f462f1574e23955/README.md
+    title: MedSAM2 author repository card at e4a6f35edd7e
+    checked_on: '2026-10-16'
+  modelsdev-models:
+    url: https://models.dev/models.json?type=all
+    title: models.dev canonical model catalog
+    checked_on: '2026-10-16'
+  modelsdev-services:
+    url: https://models.dev/catalog.json?type=all
+    title: models.dev provider and service catalog
+    checked_on: '2026-10-16'
+  nemotron-embed-card:
+    url: https://huggingface.co/nvidia/llama-nemotron-embed-1b-v2/blob/113abe4acafa848e77ead9c0623205e511932348/README.md
+    title: Llama Nemotron Embed 1B v2 author model card at 113abe4acafa
+    checked_on: '2026-10-16'
+  openvla-card:
+    url: https://huggingface.co/openvla/openvla-7b/blob/47a0ec7fc4ec123775a391911046cf33cf9ed83f/README.md
+    title: OpenVLA 7B author model card at 47a0ec7fc4ec
+    checked_on: '2026-10-16'
+  qwen-image21-card:
+    url: https://huggingface.co/Qwen/Qwen-Image-2.1/blob/d26bb61231c349cf6b7896fa83353113880e1ba3/README.md
+    title: Qwen-Image-2.1 author model card at d26bb61231c3
+    checked_on: '2026-10-16'
+  qwen36-card:
+    url: https://huggingface.co/Qwen/Qwen3.6-35B-A3B/blob/995ad96eacd98c81ed38be0c5b274b04031597b0/README.md
+    title: Qwen3.6 35B-A3B author model card at 995ad96eacd9
+    checked_on: '2026-10-16'
+models:
+- id: BAAI/bge-m3
+  name: BGE-M3
+  records:
+  - huggingface:model:BAAI/bge-m3
+  - modelsdev:model:baai/bge-m3
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /baai~1bge-m3/id
+      and /baai~1bge-m3/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: bge-m3-card
+    locator: Specs / Model table / BAAI/bge-m3
+    checked_on: '2026-10-16'
+    kind: reported
+- id: BAAI/bge-reranker-v2-m3
+  name: BGE Reranker v2 M3
+  records:
+  - huggingface:model:BAAI/bge-reranker-v2-m3
+  - modelsdev:model:baai/bge-reranker-v2-m3
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /baai~1bge-reranker-v2-m3/id
+      and /baai~1bge-reranker-v2-m3/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: bge-reranker-card
+    locator: Model List / BAAI/bge-reranker-v2-m3
+    checked_on: '2026-10-16'
+    kind: reported
+- id: Qwen/Qwen-Image-2.1
+  name: Qwen-Image-2.1
+  records:
+  - huggingface:model:Qwen/Qwen-Image-2.1
+  - modelsdev:model:alibaba/qwen-image-2.1
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /alibaba~1qwen-image-2.1/id
+      and /alibaba~1qwen-image-2.1/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: qwen-image21-card
+    locator: Introduction; Quick Start / Text-to-Image / QwenImage21Pipeline.from_pretrained("Qwen/Qwen-Image-2.1")
+    checked_on: '2026-10-16'
+    kind: reported
+- id: Qwen/Qwen3.6-35B-A3B
+  name: Qwen3.6 35B-A3B
+  records:
+  - huggingface:model:Qwen/Qwen3.6-35B-A3B
+  - modelsdev:model:alibaba/qwen3.6-35b-a3b
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /alibaba~1qwen3.6-35b-a3b/id
+      and /alibaba~1qwen3.6-35b-a3b/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: qwen36-card
+    locator: Qwen3.6-35B-A3B / repository note; Model Overview
+    checked_on: '2026-10-16'
+    kind: reported
+- id: amazon/chronos-2
+  name: Chronos-2
+  records:
+  - huggingface:model:amazon/chronos-2
+  evidence:
+  - source: chronos-card
+    locator: Chronos-2; Running the model locally / Chronos2Pipeline.from_pretrained("amazon/chronos-2")
+    checked_on: '2026-10-16'
+    kind: reported
+- id: biohub/ESMC-6B
+  name: ESMC 6B
+  records:
+  - huggingface:model:biohub/ESMC-6B
+  evidence:
+  - source: esmc-card
+    locator: Model Details / Model Variants / ESMC 6B; Example Usage / biohub/ESMC-6B
+    checked_on: '2026-10-16'
+    kind: reported
+- id: biohub/ESMFold2
+  name: ESMFold2
+  records:
+  - huggingface:model:biohub/ESMFold2
+  evidence:
+  - source: esmfold2-card
+    locator: Model Details; Model Variants / ESMFold2 / exact repository link
+    checked_on: '2026-10-16'
+    kind: reported
+- id: deepseek-ai/DeepSeek-R1
+  name: DeepSeek-R1
+  records:
+  - huggingface:model:deepseek-ai/DeepSeek-R1
+  - modelsdev:model:deepseek/deepseek-r1
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /deepseek~1deepseek-r1/id
+      and /deepseek~1deepseek-r1/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: deepseek-r1-card
+    locator: 3. Model Downloads / DeepSeek-R1 Models / DeepSeek-R1 download link
+    checked_on: '2026-10-16'
+    kind: reported
+- id: deepseek-ai/DeepSeek-V3.2
+  name: DeepSeek-V3.2
+  records:
+  - huggingface:model:deepseek-ai/DeepSeek-V3.2
+  - modelsdev:model:deepseek/deepseek-v3.2
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /deepseek~1deepseek-v3.2/id
+      and /deepseek~1deepseek-v3.2/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: deepseek-v32-card
+    locator: Introduction; Chat Template / AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-V3.2")
+    checked_on: '2026-10-16'
+    kind: reported
+- id: google/gemini-2.5-flash
+  name: Gemini 2.5 Flash
+  records:
+  - modelsdev:model:google/gemini-2.5-flash
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointer /google~1gemini-2.5-flash/id
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: gemini-2.5-flash
+    locator: gemini-2.5-flash / Model code and Versions / Stable
+    checked_on: '2026-10-16'
+    kind: reported
+- id: google/gemini-2.5-pro
+  name: Gemini 2.5 Pro
+  records:
+  - modelsdev:model:google/gemini-2.5-pro
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointer /google~1gemini-2.5-pro/id
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: gemini-2.5-pro
+    locator: gemini-2.5-pro / Model code and Versions / Stable
+    checked_on: '2026-10-16'
+    kind: reported
+- id: google/gemini-4-argon
+  name: Gemini 4 Argon
+  records:
+  - modelsdev:model:google/gemini-4-argon
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointer /google~1gemini-4-argon/id
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: gemini-4-argon
+    locator: gemini-4-argon / Model code and Versions / Stable
+    checked_on: '2026-10-16'
+    kind: reported
+- id: google/gemma-3-4b-it
+  name: Gemma 3 4B IT
+  records:
+  - huggingface:model:google/gemma-3-4b-it
+  - modelsdev:model:google/gemma-3-4b-it
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /google~1gemma-3-4b-it/id
+      and /google~1gemma-3-4b-it/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: gemma3-4b-card
+    locator: Model Information / Usage / Running with the pipeline API / model="google/gemma-3-4b-it"
+    checked_on: '2026-10-16'
+    kind: reported
+- id: meta-llama/Llama-3.1-8B-Instruct
+  name: Llama 3.1 8B Instruct
+  records:
+  - huggingface:model:meta-llama/Llama-3.1-8B-Instruct
+  - modelsdev:model:meta/llama-3.1-8b-instruct
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /meta~1llama-3.1-8b-instruct/id
+      and /meta~1llama-3.1-8b-instruct/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: llama31-8b-card
+    locator: 'Model Information / 8B instruction tuned variant and Model Release Date: July 23, 2024'
+    checked_on: '2026-10-16'
+    kind: reported
+- id: meta-llama/Llama-3.2-11B-Vision-Instruct
+  name: Llama 3.2 11B Vision Instruct
+  records:
+  - huggingface:model:meta-llama/Llama-3.2-11B-Vision-Instruct
+  - modelsdev:model:meta/llama-3.2-11b-vision-instruct
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /meta~1llama-3.2-11b-vision-instruct/id
+      and /meta~1llama-3.2-11b-vision-instruct/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: llama32-vision-card
+    locator: How to use / Use with transformers / model_id="meta-llama/Llama-3.2-11B-Vision-Instruct"
+    checked_on: '2026-10-16'
+    kind: reported
+- id: meta-llama/Llama-3.3-70B-Instruct
+  name: Llama 3.3 70B Instruct
+  records:
+  - huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+  - modelsdev:model:meta/llama-3.3-70b-instruct
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /meta~1llama-3.3-70b-instruct/id
+      and /meta~1llama-3.3-70b-instruct/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: llama33-70b-card
+    locator: How to use / Use with transformers / model_id="meta-llama/Llama-3.3-70B-Instruct"
+    checked_on: '2026-10-16'
+    kind: reported
+- id: meta-llama/Llama-4-Scout-17B-16E-Instruct
+  name: Llama 4 Scout 17B 16E Instruct
+  records:
+  - huggingface:model:meta-llama/Llama-4-Scout-17B-16E-Instruct
+  - modelsdev:model:meta/llama-4-scout-17b-instruct
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /meta~1llama-4-scout-17b-instruct/id
+      and /meta~1llama-4-scout-17b-instruct/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: llama4-scout-card
+    locator: How to use with transformers / model_id="meta-llama/Llama-4-Scout-17B-16E-Instruct"
+    checked_on: '2026-10-16'
+    kind: reported
+- id: mistralai/Magistral-Small-2506
+  name: Magistral Small 2506
+  records:
+  - huggingface:model:mistralai/Magistral-Small-2506
+  - modelsdev:model:mistral/magistral-small-2506
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /mistral~1magistral-small-2506/id
+      and /mistral~1magistral-small-2506/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: magistral-small-card
+    locator: Magistral Small 1.0; Usage / vLLM (recommended) / vllm serve mistralai/Magistral-Small-2506
+    checked_on: '2026-10-16'
+    kind: reported
+- id: nvidia/GR00T-N1.7-3B
+  name: GR00T N1.7 3B
+  records:
+  - huggingface:model:nvidia/GR00T-N1.7-3B
+  evidence:
+  - source: groot17-card
+    locator: Model Overview / Description
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: groot17-readme
+    locator: Model Checkpoints & Embodiment Tags / Checkpoints / nvidia/GR00T-N1.7-3B
+    checked_on: '2026-10-16'
+    kind: reported
+- id: nvidia/llama-nemotron-embed-1b-v2
+  name: Llama Nemotron Embed 1B v2
+  records:
+  - huggingface:model:nvidia/llama-nemotron-embed-1b-v2
+  - modelsdev:model:nvidia/llama-nemotron-embed-1b-v2
+  evidence:
+  - source: modelsdev-models
+    locator: Snapshot modelsdev:3860b93a608ee876709e8ba8e32fcc240634298536d828e01774438dfae27bdf; JSON Pointers /nvidia~1llama-nemotron-embed-1b-v2/id
+      and /nvidia~1llama-nemotron-embed-1b-v2/weights/0/url
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: nemotron-embed-card
+    locator: Installation / Sentence Transformers Usage / SentenceTransformer("nvidia/llama-nemotron-embed-1b-v2")
+    checked_on: '2026-10-16'
+    kind: reported
+- id: openvla/openvla-7b
+  name: OpenVLA 7B
+  records:
+  - huggingface:model:openvla/openvla-7b
+  evidence:
+  - source: openvla-card
+    locator: OpenVLA 7B; Getting Started / AutoModelForVision2Seq.from_pretrained("openvla/openvla-7b")
+    checked_on: '2026-10-16'
+    kind: reported
+- id: physical-intelligence/fast
+  name: FAST action tokenizer
+  records:
+  - huggingface:model:physical-intelligence/fast
+  evidence:
+  - source: fast-card
+    locator: FAST / official repository; Using the Universal Action Tokenizer / AutoProcessor.from_pretrained("physical-intelligence/fast")
+    checked_on: '2026-10-16'
+    kind: reported
+- id: wanglab/MedSAM2
+  name: MedSAM2 checkpoint repository
+  records:
+  - huggingface:model:wanglab/MedSAM2
+  evidence:
+  - source: medsam2-card
+    locator: Model Overview; Available Models; Downloading Models / repo_id="wanglab/MedSAM2"
+    checked_on: '2026-10-16'
+    kind: reported
+interfaces:
+- id: google/gemini-developer.generate-content.v1beta
+  name: Gemini Developer API generateContent v1beta
+  records:
+  - modelsdev:service:google/gemini-2.5-flash
+  - modelsdev:service:google/gemini-2.5-pro
+  evidence:
+  - source: modelsdev-services
+    locator: Snapshot modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; JSON Pointers /providers/google/npm,
+      /providers/google/doc and /providers/google/env/1
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: modelsdev-services
+    locator: Snapshot modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; JSON Pointers /providers/google/models/gemini-2.5-flash/id
+      and /providers/google/models/gemini-2.5-pro/id
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: google-sdk
+    locator: Provider Instance / baseURL; Interactions API / google(...) uses :generateContent and :streamGenerateContent
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: google-generate-content
+    locator: 'Method: models.generateContent / Endpoint / POST https://generativelanguage.googleapis.com/v1beta/{model=models/*}:generateContent'
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: gemini-2.5-flash
+    locator: gemini-2.5-flash / Model code
+    checked_on: '2026-10-16'
+    kind: reported
+  - source: gemini-2.5-pro
+    locator: gemini-2.5-pro / Model code
+    checked_on: '2026-10-16'
+    kind: reported

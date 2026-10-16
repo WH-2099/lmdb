@@ -1,0 +1,187 @@
+schema_version: 1
+sources:
+  esmfold2-card:
+    url: https://huggingface.co/biohub/ESMFold2/blob/69869f737beffec5294845ede23db5fc0b4f509e/README.md
+    title: ESMFold2 author model card at 69869f737bef
+    checked_on: '2026-10-16'
+  fast-card:
+    url: https://huggingface.co/physical-intelligence/fast/blob/ec4d7aa71691cac0b8bed6942be45684db2110f4/README.md
+    title: FAST author repository card at ec4d7aa71691
+    checked_on: '2026-10-16'
+  groot17-card:
+    url: https://huggingface.co/nvidia/GR00T-N1.7-3B/blob/2fc962b973bccdd5d8ce4f67cc63b264d6886495/README.md
+    title: GR00T N1.7 3B author model card at 2fc962b973bc
+    checked_on: '2026-10-16'
+  medsam2-card:
+    url: https://huggingface.co/wanglab/MedSAM2/blob/e4a6f35edd7e091619cbc0750f462f1574e23955/README.md
+    title: MedSAM2 author repository card at e4a6f35edd7e
+    checked_on: '2026-10-16'
+assertions:
+- id: fast-action-tokenizer-role
+  scope:
+    kind: model
+    id: physical-intelligence/fast
+  property: artifact.role
+  value: action_tokenizer
+  status: supported
+  conditions: []
+  review: accepted
+  evidence:
+  - source: fast-card
+    locator: FAST / official repository and action tokenization description
+    checked_on: '2026-10-16'
+    kind: reported
+  notes: Encodes robot action sequences as discrete tokens for autoregressive VLA training.
+- id: groot17-input-representations
+  scope:
+    kind: model
+    id: nvidia/GR00T-N1.7-3B
+  property: input.representations
+  value:
+    vision:
+      channels: [red, green, blue]
+      scalar_type: uint8
+    proprioceptive_state:
+      representation: vector
+      scalar_type: floating_point
+    language_instruction:
+      representation: string
+    embodiment_id:
+      representation: integer
+      identifies: training_embodiment
+  status: supported
+  conditions: []
+  review: accepted
+  evidence:
+  - source: groot17-card
+    locator: Input / Input Type(s), Input Format, Input Parameters
+    checked_on: '2026-10-16'
+    kind: reported
+  notes: Describes the model card's input representations, without asserting SDK field names or required-field rules.
+- id: groot17-action-representation
+  scope:
+    kind: model
+    id: nvidia/GR00T-N1.7-3B
+  property: output.action.representation
+  value:
+    representation: continuous_value_vectors
+    semantics: motor_controls
+    depends_on: robot_embodiment_degrees_of_freedom
+  status: supported
+  conditions: []
+  review: accepted
+  evidence:
+  - source: groot17-card
+    locator: Output / Output Format; Other Properties Related to Output
+    checked_on: '2026-10-16'
+    kind: reported
+  notes: No fixed action dimension, control unit or action horizon is inferred for other robot embodiments.
+- id: esmfold2-amino-acid-input
+  scope:
+    kind: model
+    id: biohub/ESMFold2
+  property: input.protein.amino_acid_sequence
+  value: true
+  status: supported
+  conditions: []
+  review: accepted
+  evidence:
+  - source: esmfold2-card
+    locator: Model Details / protein structure prediction directly from amino acid sequences
+    checked_on: '2026-10-16'
+    kind: reported
+  notes: This capability concerns protein structure prediction and does not imply a general text interface.
+- id: esmfold2-optional-msa
+  scope:
+    kind: model
+    id: biohub/ESMFold2
+  property: input.protein.msa.optional
+  value: true
+  status: supported
+  conditions: []
+  review: accepted
+  evidence:
+  - source: esmfold2-card
+    locator: Model Details / single-sequence or MSA conditioned prediction; Model Variants / ESMFold2 / MSA Conditioning
+    checked_on: '2026-10-16'
+    kind: reported
+  notes: MSA means multiple sequence alignment; the separate ESMFold2-Fast variant is explicitly not MSA conditioned.
+- id: esmfold2-structure-output
+  scope:
+    kind: model
+    id: biohub/ESMFold2
+  property: output.protein_structure.fields
+  value:
+    coordinates:
+      dimensions: 3
+      coverage: all_atom
+      components: [backbone, side_chains]
+    confidence_metrics: [pLDDT, pAE, pTM, iPTM]
+    distogram:
+      optional: true
+  status: supported
+  conditions: []
+  review: accepted
+  evidence:
+  - source: esmfold2-card
+    locator: Model Details / all-atom coordinates, confidence metrics and optional distogram predictions
+    checked_on: '2026-10-16'
+    kind: reported
+  notes: Describes reported output content, not SDK dictionary keys, tensor dimensions or coordinate units.
+- id: medsam2-heart-ultrasound-specialization
+  scope:
+    kind: model
+    id: wanglab/MedSAM2
+  property: segmentation.specialization
+  value:
+    input: ultrasound_video
+    target: heart
+  status: supported
+  conditions:
+  - path: artifact.checkpoint
+    op: eq
+    value: MedSAM2_US_Heart.pt
+  review: accepted
+  evidence:
+  - source: medsam2-card
+    locator: Available Models / MedSAM2_US_Heart.pt
+    checked_on: '2026-10-16'
+    kind: reported
+- id: medsam2-mri-liver-lesion-specialization
+  scope:
+    kind: model
+    id: wanglab/MedSAM2
+  property: segmentation.specialization
+  value:
+    input: mri_scan
+    target: liver_lesion
+  status: supported
+  conditions:
+  - path: artifact.checkpoint
+    op: eq
+    value: MedSAM2_MRI_LiverLesion.pt
+  review: accepted
+  evidence:
+  - source: medsam2-card
+    locator: Available Models / MedSAM2_MRI_LiverLesion.pt
+    checked_on: '2026-10-16'
+    kind: reported
+- id: medsam2-ct-lesion-specialization
+  scope:
+    kind: model
+    id: wanglab/MedSAM2
+  property: segmentation.specialization
+  value:
+    input: ct_scan
+    target: general_lesion
+  status: supported
+  conditions:
+  - path: artifact.checkpoint
+    op: eq
+    value: MedSAM2_CTLesion.pt
+  review: accepted
+  evidence:
+  - source: medsam2-card
+    locator: Available Models / MedSAM2_CTLesion.pt
+    checked_on: '2026-10-16'
+    kind: reported

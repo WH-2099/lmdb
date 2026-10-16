@@ -1,5 +1,689 @@
 schema_version: 1
 source: openrouter
+last_sync:
+  completed_at: "2026-10-16T07:12:38.731712445Z"
+  returned_ids:
+  - openrouter:service:aion-labs/aion-2.0
+  - openrouter:service:aion-labs/aion-3.0
+  - openrouter:service:aion-labs/aion-3.0-mini
+  - openrouter:service:aion-labs/aion-3.5
+  - openrouter:service:aion-labs/aion-3.5-mini
+  - openrouter:service:aion-labs/aion-rp-llama-3.1-8b
+  - openrouter:service:alibaba/happyhorse-1.0
+  - openrouter:service:alibaba/happyhorse-1.1
+  - openrouter:service:alibaba/wan-2.6
+  - openrouter:service:alibaba/wan-2.7
+  - openrouter:service:alibaba/wan-3.0
+  - openrouter:service:alibaba/wan-3.0-prime
+  - openrouter:service:amazon/nova-2-lite-v1
+  - openrouter:service:amazon/nova-lite-v1
+  - openrouter:service:amazon/nova-micro-v1
+  - openrouter:service:amazon/nova-premier-v1
+  - openrouter:service:amazon/nova-pro-v1
+  - openrouter:service:anthracite-org/magnum-v4-72b
+  - openrouter:service:anthropic/claude-fable-5
+  - openrouter:service:anthropic/claude-fable-5.1
+  - openrouter:service:anthropic/claude-fable-5.1:batch
+  - openrouter:service:anthropic/claude-fable-5:batch
+  - openrouter:service:anthropic/claude-haiku-4.5
+  - openrouter:service:anthropic/claude-haiku-4.5:batch
+  - openrouter:service:anthropic/claude-haiku-5.5
+  - openrouter:service:anthropic/claude-haiku-5.5:batch
+  - openrouter:service:anthropic/claude-opus-4.1
+  - openrouter:service:anthropic/claude-opus-4.1:batch
+  - openrouter:service:anthropic/claude-opus-4.5
+  - openrouter:service:anthropic/claude-opus-4.5:batch
+  - openrouter:service:anthropic/claude-opus-4.6
+  - openrouter:service:anthropic/claude-opus-4.6:batch
+  - openrouter:service:anthropic/claude-opus-4.7
+  - openrouter:service:anthropic/claude-opus-4.7:batch
+  - openrouter:service:anthropic/claude-opus-4.8
+  - openrouter:service:anthropic/claude-opus-4.8:batch
+  - openrouter:service:anthropic/claude-opus-5
+  - openrouter:service:anthropic/claude-opus-5.5
+  - openrouter:service:anthropic/claude-opus-5.5:batch
+  - openrouter:service:anthropic/claude-opus-5:batch
+  - openrouter:service:anthropic/claude-sonnet-4.5
+  - openrouter:service:anthropic/claude-sonnet-4.5:batch
+  - openrouter:service:anthropic/claude-sonnet-4.6
+  - openrouter:service:anthropic/claude-sonnet-4.6:batch
+  - openrouter:service:anthropic/claude-sonnet-5
+  - openrouter:service:anthropic/claude-sonnet-5.5
+  - openrouter:service:anthropic/claude-sonnet-5.5:batch
+  - openrouter:service:anthropic/claude-sonnet-5:batch
+  - openrouter:service:arcee-ai/trinity-large-thinking
+  - openrouter:service:assemblyai/universal-3-5-pro
+  - openrouter:service:assemblyai/universal-3-6-pro
+  - openrouter:service:baai/bge-base-en-v1.5
+  - openrouter:service:baai/bge-large-en-v1.5
+  - openrouter:service:baai/bge-m3
+  - openrouter:service:black-forest-labs/flux-3-image
+  - openrouter:service:black-forest-labs/flux-3-image-klein
+  - openrouter:service:black-forest-labs/flux-3-video
+  - openrouter:service:black-forest-labs/flux-video-edit
+  - openrouter:service:black-forest-labs/flux-video-upscale
+  - openrouter:service:black-forest-labs/flux.2-flex
+  - openrouter:service:black-forest-labs/flux.2-klein-4b
+  - openrouter:service:black-forest-labs/flux.2-max
+  - openrouter:service:black-forest-labs/flux.2-pro
+  - openrouter:service:bytedance-seed/seed-1.6
+  - openrouter:service:bytedance-seed/seed-1.6-flash
+  - openrouter:service:bytedance-seed/seed-2-1-turbo
+  - openrouter:service:bytedance-seed/seed-2.0-code
+  - openrouter:service:bytedance-seed/seed-2.0-lite
+  - openrouter:service:bytedance-seed/seed-2.0-mini
+  - openrouter:service:bytedance-seed/seed-audio-1-0
+  - openrouter:service:bytedance-seed/seedream-4.5
+  - openrouter:service:bytedance-seed/seedream-5-0-flash
+  - openrouter:service:bytedance-seed/seedream-5-0-lite
+  - openrouter:service:bytedance-seed/seedream-5-0-pro
+  - openrouter:service:bytedance/seedance-1-5-pro
+  - openrouter:service:bytedance/seedance-2.0
+  - openrouter:service:bytedance/seedance-2.0-fast
+  - openrouter:service:bytedance/seedance-2.0-mini
+  - openrouter:service:bytedance/seedance-2.5
+  - openrouter:service:bytedance/ui-tars-1.5-7b
+  - openrouter:service:canopylabs/orpheus-3b-0.1-ft
+  - openrouter:service:cloudflare/clef
+  - openrouter:service:cloudflare/clef-flash
+  - openrouter:service:cloudflare/clef-omni
+  - openrouter:service:cognitivecomputations/dolphin-mistral-24b-venice-edition
+  - openrouter:service:cohere/command-a
+  - openrouter:service:cohere/command-a-plus
+  - openrouter:service:cohere/command-r-08-2024
+  - openrouter:service:cohere/command-r-plus-08-2024
+  - openrouter:service:cohere/command-r7b-12-2024
+  - openrouter:service:cohere/north-mini-code:free
+  - openrouter:service:cohere/rerank-4-fast
+  - openrouter:service:cohere/rerank-4-pro
+  - openrouter:service:cohere/rerank-v3.5
+  - openrouter:service:deepgram/aura-2
+  - openrouter:service:deepgram/flux-tts
+  - openrouter:service:deepgram/nova-3
+  - openrouter:service:deepseek/deepseek-chat
+  - openrouter:service:deepseek/deepseek-chat-v3-0324
+  - openrouter:service:deepseek/deepseek-chat-v3.1
+  - openrouter:service:deepseek/deepseek-r1
+  - openrouter:service:deepseek/deepseek-r1-0528
+  - openrouter:service:deepseek/deepseek-v3.1-terminus
+  - openrouter:service:deepseek/deepseek-v3.2
+  - openrouter:service:deepseek/deepseek-v3.2-exp
+  - openrouter:service:deepseek/deepseek-v4-flash
+  - openrouter:service:deepseek/deepseek-v4-flash-0731
+  - openrouter:service:deepseek/deepseek-v4-flash-vision-exp
+  - openrouter:service:deepseek/deepseek-v4-pro
+  - openrouter:service:deepseek/deepseek-v4-pro-0813
+  - openrouter:service:deepseek/deepseek-v4.1-flash
+  - openrouter:service:deepseek/deepseek-v4.1-flash:batch
+  - openrouter:service:dots-studio/dots-3-note-preview:free
+  - openrouter:service:elevenlabs/eleven-flash-v2
+  - openrouter:service:elevenlabs/eleven-flash-v2.5
+  - openrouter:service:elevenlabs/eleven-multilingual-v2
+  - openrouter:service:elevenlabs/eleven-turbo-v2
+  - openrouter:service:elevenlabs/eleven-turbo-v2.5
+  - openrouter:service:elevenlabs/eleven-v3
+  - openrouter:service:elevenlabs/eleven-v3-conversational
+  - openrouter:service:elevenlabs/eleven-v4
+  - openrouter:service:elevenlabs/eleven-v4-turbo
+  - openrouter:service:elevenlabs/scribe-v2
+  - openrouter:service:elevenlabs/scribe-v2-medical
+  - openrouter:service:fireworks/ember-1
+  - openrouter:service:fish-audio/drama-3
+  - openrouter:service:fish-audio/s1
+  - openrouter:service:fish-audio/s2-pro
+  - openrouter:service:fish-audio/s2.1-pro
+  - openrouter:service:fish-audio/s2.1-pro-free:free
+  - openrouter:service:fish-audio/transcribe-1
+  - openrouter:service:fish-audio/transcribe-1-pro
+  - openrouter:service:google/chirp-3
+  - openrouter:service:google/gemini-2.5-flash
+  - openrouter:service:google/gemini-2.5-flash-image
+  - openrouter:service:google/gemini-2.5-flash-lite
+  - openrouter:service:google/gemini-2.5-flash-lite:batch
+  - openrouter:service:google/gemini-2.5-flash:batch
+  - openrouter:service:google/gemini-2.5-pro
+  - openrouter:service:google/gemini-2.5-pro-preview
+  - openrouter:service:google/gemini-2.5-pro:batch
+  - openrouter:service:google/gemini-3-flash-preview
+  - openrouter:service:google/gemini-3-flash-preview:batch
+  - openrouter:service:google/gemini-3-pro-image
+  - openrouter:service:google/gemini-3-pro-image-preview
+  - openrouter:service:google/gemini-3.1-flash-image
+  - openrouter:service:google/gemini-3.1-flash-image-preview
+  - openrouter:service:google/gemini-3.1-flash-lite
+  - openrouter:service:google/gemini-3.1-flash-lite-image
+  - openrouter:service:google/gemini-3.1-flash-lite-preview
+  - openrouter:service:google/gemini-3.1-flash-lite:batch
+  - openrouter:service:google/gemini-3.1-flash-tts-preview
+  - openrouter:service:google/gemini-3.1-pro-preview
+  - openrouter:service:google/gemini-3.1-pro-preview-customtools
+  - openrouter:service:google/gemini-3.1-pro-preview:batch
+  - openrouter:service:google/gemini-3.5-flash
+  - openrouter:service:google/gemini-3.5-flash-lite
+  - openrouter:service:google/gemini-3.5-flash-lite:batch
+  - openrouter:service:google/gemini-3.5-flash:batch
+  - openrouter:service:google/gemini-3.5-transcribe
+  - openrouter:service:google/gemini-3.6-flash
+  - openrouter:service:google/gemini-3.6-flash:batch
+  - openrouter:service:google/gemini-3.7-flash
+  - openrouter:service:google/gemini-3.7-flash:batch
+  - openrouter:service:google/gemini-3.8-flash
+  - openrouter:service:google/gemini-3.8-flash-lite-tts
+  - openrouter:service:google/gemini-3.8-flash-tts
+  - openrouter:service:google/gemini-3.8-flash:batch
+  - openrouter:service:google/gemini-4-argon
+  - openrouter:service:google/gemini-4-argon:batch
+  - openrouter:service:google/gemini-embedding-001
+  - openrouter:service:google/gemini-embedding-2
+  - openrouter:service:google/gemini-embedding-2-preview
+  - openrouter:service:google/gemini-embedding-2:batch
+  - openrouter:service:google/gemini-nano-banana-2.1
+  - openrouter:service:google/gemma-2-27b-it
+  - openrouter:service:google/gemma-3-12b-it
+  - openrouter:service:google/gemma-3-27b-it
+  - openrouter:service:google/gemma-3-4b-it
+  - openrouter:service:google/gemma-4-26b-a4b-it
+  - openrouter:service:google/gemma-4-26b-a4b-it:free
+  - openrouter:service:google/gemma-4-31b-it
+  - openrouter:service:google/gemma-4-31b-it:free
+  - openrouter:service:google/lyria-3-clip-preview
+  - openrouter:service:google/lyria-3-pro-preview
+  - openrouter:service:google/veo-3.1
+  - openrouter:service:google/veo-3.1-fast
+  - openrouter:service:google/veo-3.1-lite
+  - openrouter:service:gryphe/mythomax-l2-13b
+  - openrouter:service:hexgrad/kokoro-82m
+  - openrouter:service:heygen/avatar-iv
+  - openrouter:service:heygen/heygen-video-1
+  - openrouter:service:heygen/heygen-voice-1
+  - openrouter:service:heygen/heygen-voice-1-turbo
+  - openrouter:service:ibm-granite/granite-4.0-h-micro
+  - openrouter:service:ibm-granite/granite-4.2-8b
+  - openrouter:service:inception/mercury-2
+  - openrouter:service:inception/mercury-2.5
+  - openrouter:service:inception/mercury-decide
+  - openrouter:service:inception/mercury-decide:free
+  - openrouter:service:inclusionai/ling-3.0-flash
+  - openrouter:service:inclusionai/ling-3.0-flash-vl
+  - openrouter:service:inclusionai/ling-3.1-flash
+  - openrouter:service:inference-net/schematron-v2-small
+  - openrouter:service:inference-net/schematron-v2-turbo
+  - openrouter:service:intfloat/e5-base-v2
+  - openrouter:service:intfloat/e5-large-v2
+  - openrouter:service:intfloat/multilingual-e5-large
+  - openrouter:service:jaredpalmer/kev-4b
+  - openrouter:service:krea/k3-edit
+  - openrouter:service:krea/krea-2-large
+  - openrouter:service:krea/krea-2-medium
+  - openrouter:service:krea/krea-2-medium-turbo
+  - openrouter:service:kwaivgi/kling-v3.0-pro
+  - openrouter:service:kwaivgi/kling-v3.0-std
+  - openrouter:service:kwaivgi/kling-video-o1
+  - openrouter:service:liquid/d1
+  - openrouter:service:liquid/d1-ultra
+  - openrouter:service:liquid/lfm-2.5-2.6b:free
+  - openrouter:service:liquid/lfm-2.5-24b-a2b
+  - openrouter:service:liquid/lfm-2.5-embedding-350m:free
+  - openrouter:service:mancer/weaver
+  - openrouter:service:meituan/longcat-2.0
+  - openrouter:service:meta-llama/llama-3.1-70b-instruct
+  - openrouter:service:meta-llama/llama-3.1-8b-instruct
+  - openrouter:service:meta-llama/llama-3.2-1b-instruct
+  - openrouter:service:meta-llama/llama-3.2-3b-instruct
+  - openrouter:service:meta-llama/llama-3.3-70b-instruct
+  - openrouter:service:meta-llama/llama-4-maverick
+  - openrouter:service:meta-llama/llama-4-scout
+  - openrouter:service:meta-llama/llama-guard-4-12b
+  - openrouter:service:meta/muse-glimmer-30b
+  - openrouter:service:meta/muse-image
+  - openrouter:service:meta/muse-spark-1.1
+  - openrouter:service:meta/muse-spark-1.2
+  - openrouter:service:meta/muse-spark-1.2-contributor
+  - openrouter:service:meta/muse-spark-1.3
+  - openrouter:service:meta/muse-spark-1.3-contributor
+  - openrouter:service:meta/muse-spark-open
+  - openrouter:service:meta/muse-voice-transcribe-1.0
+  - openrouter:service:meta/muse-wonder
+  - openrouter:service:microsoft/mai-image-2.5
+  - openrouter:service:microsoft/mai-image-2.5-pro
+  - openrouter:service:microsoft/mai-image-2.6
+  - openrouter:service:microsoft/mai-image-2.6-flash
+  - openrouter:service:microsoft/mai-transcribe-1.5
+  - openrouter:service:microsoft/mai-transcribe-2
+  - openrouter:service:microsoft/mai-voice-2
+  - openrouter:service:microsoft/mai-voice-2-flash
+  - openrouter:service:microsoft/mai-voice-2.1
+  - openrouter:service:microsoft/mai-voice-2.1-flash
+  - openrouter:service:microsoft/microsoft-decision-1
+  - openrouter:service:microsoft/phi-4
+  - openrouter:service:microsoft/wizardlm-2-8x22b
+  - openrouter:service:minimax/hailuo-2.3
+  - openrouter:service:minimax/hailuo-3
+  - openrouter:service:minimax/hailuo-3-max
+  - openrouter:service:minimax/minimax-01
+  - openrouter:service:minimax/minimax-m1
+  - openrouter:service:minimax/minimax-m2
+  - openrouter:service:minimax/minimax-m2-her
+  - openrouter:service:minimax/minimax-m2.1
+  - openrouter:service:minimax/minimax-m2.5
+  - openrouter:service:minimax/minimax-m2.7
+  - openrouter:service:minimax/minimax-m3
+  - openrouter:service:minimax/speech-2.8-hd
+  - openrouter:service:minimax/speech-2.8-turbo
+  - openrouter:service:mistralai/codestral-2508
+  - openrouter:service:mistralai/codestral-2508:batch
+  - openrouter:service:mistralai/codestral-embed-2505
+  - openrouter:service:mistralai/devstral-2512
+  - openrouter:service:mistralai/ministral-14b-2512
+  - openrouter:service:mistralai/ministral-3b-2512
+  - openrouter:service:mistralai/ministral-8b-2512
+  - openrouter:service:mistralai/ministral-8b-2512:batch
+  - openrouter:service:mistralai/mistral-embed-2312
+  - openrouter:service:mistralai/mistral-large
+  - openrouter:service:mistralai/mistral-large-2407
+  - openrouter:service:mistralai/mistral-large-2512
+  - openrouter:service:mistralai/mistral-large-2512:batch
+  - openrouter:service:mistralai/mistral-large-4-0
+  - openrouter:service:mistralai/mistral-medium-3
+  - openrouter:service:mistralai/mistral-medium-3-5
+  - openrouter:service:mistralai/mistral-medium-3-5:batch
+  - openrouter:service:mistralai/mistral-medium-3.1
+  - openrouter:service:mistralai/mistral-medium-3.1:batch
+  - openrouter:service:mistralai/mistral-nemo
+  - openrouter:service:mistralai/mistral-saba
+  - openrouter:service:mistralai/mistral-small-24b-instruct-2501
+  - openrouter:service:mistralai/mistral-small-2603
+  - openrouter:service:mistralai/mistral-small-2603:batch
+  - openrouter:service:mistralai/mistral-small-3.1-24b-instruct
+  - openrouter:service:mistralai/mistral-small-3.2-24b-instruct
+  - openrouter:service:mistralai/mixtral-8x22b-instruct
+  - openrouter:service:mistralai/voxtral-mini-3b-2507
+  - openrouter:service:mistralai/voxtral-mini-transcribe
+  - openrouter:service:mistralai/voxtral-mini-tts-2603
+  - openrouter:service:mistralai/voxtral-small-24b-2507
+  - openrouter:service:mistralai/voxtral-small-24b-2507-stt
+  - openrouter:service:moondream/moondream3-preview
+  - openrouter:service:moondream/moondream3.1-9b-a2b
+  - openrouter:service:moonshotai/kimi-k2
+  - openrouter:service:moonshotai/kimi-k2-0905
+  - openrouter:service:moonshotai/kimi-k2-thinking
+  - openrouter:service:moonshotai/kimi-k2.5
+  - openrouter:service:moonshotai/kimi-k2.6
+  - openrouter:service:moonshotai/kimi-k2.7-code
+  - openrouter:service:moonshotai/kimi-k3
+  - openrouter:service:moonshotai/kimi-k3:batch
+  - openrouter:service:morph/morph-v3-fast
+  - openrouter:service:morph/morph-v3-large
+  - openrouter:service:nace-ai/drex-v1.5
+  - openrouter:service:nace-ai/drex-v2.0
+  - openrouter:service:nex-agi/nex-n2.5-mini
+  - openrouter:service:nex-agi/nex-n2.5-pro
+  - openrouter:service:nousresearch/hermes-3-llama-3.1-405b
+  - openrouter:service:nousresearch/hermes-3-llama-3.1-70b
+  - openrouter:service:nousresearch/hermes-4-405b
+  - openrouter:service:nvidia/llama-nemotron-embed-vl-1b-v2:free
+  - openrouter:service:nvidia/llama-nemotron-rerank-vl-1b-v2:free
+  - openrouter:service:nvidia/nemotron-3-embed-1b:free
+  - openrouter:service:nvidia/nemotron-3-nano-30b-a3b
+  - openrouter:service:nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free
+  - openrouter:service:nvidia/nemotron-3-super-120b-a12b
+  - openrouter:service:nvidia/nemotron-3-super-120b-a12b:free
+  - openrouter:service:nvidia/nemotron-3-ultra-550b-a55b
+  - openrouter:service:nvidia/nemotron-3-ultra-550b-a55b:free
+  - openrouter:service:nvidia/nemotron-3.5-asr-streaming-multilingual-0.6b
+  - openrouter:service:nvidia/nemotron-3.5-content-safety
+  - openrouter:service:nvidia/nemotron-3.5-content-safety:free
+  - openrouter:service:nvidia/nemotron-3.5-lightning
+  - openrouter:service:nvidia/nemotron-3.5-lightning:free
+  - openrouter:service:nvidia/nemotron-3.5-super-vl
+  - openrouter:service:nvidia/nemotron-3.5-super-vl:free
+  - openrouter:service:nvidia/parakeet-tdt-0.6b-v3
+  - openrouter:service:nvidia/switchyard
+  - openrouter:service:openai/gpt-3.5-turbo
+  - openrouter:service:openai/gpt-3.5-turbo-0613
+  - openrouter:service:openai/gpt-3.5-turbo-16k
+  - openrouter:service:openai/gpt-3.5-turbo-instruct
+  - openrouter:service:openai/gpt-3.5-turbo:batch
+  - openrouter:service:openai/gpt-4
+  - openrouter:service:openai/gpt-4-turbo
+  - openrouter:service:openai/gpt-4-turbo:batch
+  - openrouter:service:openai/gpt-4.1
+  - openrouter:service:openai/gpt-4.1-mini
+  - openrouter:service:openai/gpt-4.1-mini:batch
+  - openrouter:service:openai/gpt-4.1-nano
+  - openrouter:service:openai/gpt-4.1-nano:batch
+  - openrouter:service:openai/gpt-4.1:batch
+  - openrouter:service:openai/gpt-4o
+  - openrouter:service:openai/gpt-4o-2024-05-13
+  - openrouter:service:openai/gpt-4o-2024-08-06
+  - openrouter:service:openai/gpt-4o-2024-11-20
+  - openrouter:service:openai/gpt-4o-mini
+  - openrouter:service:openai/gpt-4o-mini-2024-07-18
+  - openrouter:service:openai/gpt-4o-mini-transcribe
+  - openrouter:service:openai/gpt-4o-mini:batch
+  - openrouter:service:openai/gpt-4o-transcribe
+  - openrouter:service:openai/gpt-4o:batch
+  - openrouter:service:openai/gpt-5
+  - openrouter:service:openai/gpt-5-image
+  - openrouter:service:openai/gpt-5-image-mini
+  - openrouter:service:openai/gpt-5-mini
+  - openrouter:service:openai/gpt-5-mini:batch
+  - openrouter:service:openai/gpt-5-nano
+  - openrouter:service:openai/gpt-5-nano:batch
+  - openrouter:service:openai/gpt-5-pro
+  - openrouter:service:openai/gpt-5-pro:batch
+  - openrouter:service:openai/gpt-5.1
+  - openrouter:service:openai/gpt-5.1-codex
+  - openrouter:service:openai/gpt-5.1-codex-max
+  - openrouter:service:openai/gpt-5.1-codex-mini
+  - openrouter:service:openai/gpt-5.1:batch
+  - openrouter:service:openai/gpt-5.2
+  - openrouter:service:openai/gpt-5.2-chat
+  - openrouter:service:openai/gpt-5.2-codex
+  - openrouter:service:openai/gpt-5.2-pro
+  - openrouter:service:openai/gpt-5.2-pro:batch
+  - openrouter:service:openai/gpt-5.2:batch
+  - openrouter:service:openai/gpt-5.3-codex
+  - openrouter:service:openai/gpt-5.4
+  - openrouter:service:openai/gpt-5.4-image-2
+  - openrouter:service:openai/gpt-5.4-mini
+  - openrouter:service:openai/gpt-5.4-mini:batch
+  - openrouter:service:openai/gpt-5.4-nano
+  - openrouter:service:openai/gpt-5.4-nano:batch
+  - openrouter:service:openai/gpt-5.4-pro
+  - openrouter:service:openai/gpt-5.4-pro:batch
+  - openrouter:service:openai/gpt-5.4:batch
+  - openrouter:service:openai/gpt-5.5
+  - openrouter:service:openai/gpt-5.5-pro
+  - openrouter:service:openai/gpt-5.5-pro:batch
+  - openrouter:service:openai/gpt-5.5:batch
+  - openrouter:service:openai/gpt-5.6-luna
+  - openrouter:service:openai/gpt-5.6-luna-pro
+  - openrouter:service:openai/gpt-5.6-luna-pro:batch
+  - openrouter:service:openai/gpt-5.6-luna:batch
+  - openrouter:service:openai/gpt-5.6-sol
+  - openrouter:service:openai/gpt-5.6-sol-pro
+  - openrouter:service:openai/gpt-5.6-sol-pro:batch
+  - openrouter:service:openai/gpt-5.6-sol:batch
+  - openrouter:service:openai/gpt-5.6-terra
+  - openrouter:service:openai/gpt-5.6-terra-pro
+  - openrouter:service:openai/gpt-5.6-terra-pro:batch
+  - openrouter:service:openai/gpt-5.6-terra:batch
+  - openrouter:service:openai/gpt-5:batch
+  - openrouter:service:openai/gpt-6-astra
+  - openrouter:service:openai/gpt-6-astra-pro
+  - openrouter:service:openai/gpt-6-astra-pro:batch
+  - openrouter:service:openai/gpt-6-astra:batch
+  - openrouter:service:openai/gpt-6-luna
+  - openrouter:service:openai/gpt-6-luna-decisions
+  - openrouter:service:openai/gpt-6-luna-pro
+  - openrouter:service:openai/gpt-6-luna-pro:batch
+  - openrouter:service:openai/gpt-6-luna:batch
+  - openrouter:service:openai/gpt-6-sol
+  - openrouter:service:openai/gpt-6-sol-pro
+  - openrouter:service:openai/gpt-6-sol-pro:batch
+  - openrouter:service:openai/gpt-6-sol:batch
+  - openrouter:service:openai/gpt-6.1-sol
+  - openrouter:service:openai/gpt-6.1-sol-pro
+  - openrouter:service:openai/gpt-6.1-sol-pro:batch
+  - openrouter:service:openai/gpt-6.1-sol:batch
+  - openrouter:service:openai/gpt-audio
+  - openrouter:service:openai/gpt-audio-mini
+  - openrouter:service:openai/gpt-chat-latest
+  - openrouter:service:openai/gpt-image-1
+  - openrouter:service:openai/gpt-image-1-mini
+  - openrouter:service:openai/gpt-image-2
+  - openrouter:service:openai/gpt-image-2.5-flare
+  - openrouter:service:openai/gpt-image-2.5-sunburst
+  - openrouter:service:openai/gpt-oss-120b
+  - openrouter:service:openai/gpt-oss-120b:batch
+  - openrouter:service:openai/gpt-oss-20b
+  - openrouter:service:openai/gpt-oss-20b:batch
+  - openrouter:service:openai/gpt-oss-safeguard-20b
+  - openrouter:service:openai/gpt-transcribe
+  - openrouter:service:openai/o1
+  - openrouter:service:openai/o1-pro
+  - openrouter:service:openai/o3
+  - openrouter:service:openai/o3-mini
+  - openrouter:service:openai/o3-mini-high
+  - openrouter:service:openai/o3-mini:batch
+  - openrouter:service:openai/o3-pro
+  - openrouter:service:openai/o3:batch
+  - openrouter:service:openai/o4-mini
+  - openrouter:service:openai/o4-mini-high
+  - openrouter:service:openai/o4-mini:batch
+  - openrouter:service:openai/text-embedding-3-large
+  - openrouter:service:openai/text-embedding-3-large:batch
+  - openrouter:service:openai/text-embedding-3-small
+  - openrouter:service:openai/text-embedding-3-small:batch
+  - openrouter:service:openai/text-embedding-ada-002
+  - openrouter:service:openai/text-embedding-ada-002:batch
+  - openrouter:service:openai/whisper-1
+  - openrouter:service:openai/whisper-large-v3
+  - openrouter:service:openai/whisper-large-v3-turbo
+  - openrouter:service:openrouter/auto
+  - openrouter:service:openrouter/auto-beta
+  - openrouter:service:openrouter/bodybuilder
+  - openrouter:service:openrouter/free
+  - openrouter:service:openrouter/fusion
+  - openrouter:service:openrouter/pareto-code
+  - openrouter:service:perceptron/perceptron-mk1
+  - openrouter:service:perceptron/perceptron-mk1.5
+  - openrouter:service:perplexity/pplx-decider-v1.1-27b
+  - openrouter:service:perplexity/pplx-embed-v1-0.6b
+  - openrouter:service:perplexity/pplx-embed-v1-4b
+  - openrouter:service:perplexity/sonar
+  - openrouter:service:perplexity/sonar-deep-research
+  - openrouter:service:perplexity/sonar-pro
+  - openrouter:service:perplexity/sonar-pro-search
+  - openrouter:service:perplexity/sonar-reasoning-pro
+  - openrouter:service:poolside/laguna-s-2.1
+  - openrouter:service:poolside/laguna-s-2.1:free
+  - openrouter:service:poolside/laguna-xs-2.1
+  - openrouter:service:poolside/laguna-xs-2.1:free
+  - openrouter:service:prism-ml/ternary-bonsai-2-27b
+  - openrouter:service:qwen/qwen-2.5-72b-instruct
+  - openrouter:service:qwen/qwen-2.5-7b-instruct
+  - openrouter:service:qwen/qwen-2.5-coder-32b-instruct
+  - openrouter:service:qwen/qwen-audio-3.0-tts-flash
+  - openrouter:service:qwen/qwen-audio-3.0-tts-plus
+  - openrouter:service:qwen/qwen-image-3
+  - openrouter:service:qwen/qwen-image-3-pro
+  - openrouter:service:qwen/qwen-plus
+  - openrouter:service:qwen/qwen2.5-vl-72b-instruct
+  - openrouter:service:qwen/qwen3-14b
+  - openrouter:service:qwen/qwen3-235b-a22b-2507
+  - openrouter:service:qwen/qwen3-235b-a22b-thinking-2507
+  - openrouter:service:qwen/qwen3-30b-a3b
+  - openrouter:service:qwen/qwen3-30b-a3b-instruct-2507
+  - openrouter:service:qwen/qwen3-32b
+  - openrouter:service:qwen/qwen3-asr-0.6b
+  - openrouter:service:qwen/qwen3-asr-1.7b
+  - openrouter:service:qwen/qwen3-coder
+  - openrouter:service:qwen/qwen3-coder-30b-a3b-instruct
+  - openrouter:service:qwen/qwen3-coder-flash
+  - openrouter:service:qwen/qwen3-coder-next
+  - openrouter:service:qwen/qwen3-embedding-4b
+  - openrouter:service:qwen/qwen3-embedding-8b
+  - openrouter:service:qwen/qwen3-next-80b-a3b-instruct
+  - openrouter:service:qwen/qwen3-next-80b-a3b-thinking
+  - openrouter:service:qwen/qwen3-reranker-8b
+  - openrouter:service:qwen/qwen3-vl-235b-a22b-instruct
+  - openrouter:service:qwen/qwen3-vl-30b-a3b-instruct
+  - openrouter:service:qwen/qwen3-vl-30b-a3b-thinking
+  - openrouter:service:qwen/qwen3-vl-8b-instruct
+  - openrouter:service:qwen/qwen3.5-122b-a10b
+  - openrouter:service:qwen/qwen3.5-27b
+  - openrouter:service:qwen/qwen3.5-35b-a3b
+  - openrouter:service:qwen/qwen3.5-397b-a17b
+  - openrouter:service:qwen/qwen3.5-9b
+  - openrouter:service:qwen/qwen3.5-flash-02-23
+  - openrouter:service:qwen/qwen3.5-plus-02-15
+  - openrouter:service:qwen/qwen3.5-plus-20260420
+  - openrouter:service:qwen/qwen3.6-27b
+  - openrouter:service:qwen/qwen3.6-35b-a3b
+  - openrouter:service:qwen/qwen3.6-flash
+  - openrouter:service:qwen/qwen3.6-plus
+  - openrouter:service:qwen/qwen3.7-flash
+  - openrouter:service:qwen/qwen3.7-max
+  - openrouter:service:qwen/qwen3.7-plus
+  - openrouter:service:qwen/qwen3.8-2.4t-a95b
+  - openrouter:service:qwen/qwen3.8-27b
+  - openrouter:service:qwen/qwen3.8-flash
+  - openrouter:service:qwen/qwen3.8-max-0902
+  - openrouter:service:qwen/qwen3.8-max-prime
+  - openrouter:service:qwen/qwen3.8-omni-flash
+  - openrouter:service:recraft/recraft-v3
+  - openrouter:service:recraft/recraft-v4
+  - openrouter:service:recraft/recraft-v4-pro
+  - openrouter:service:recraft/recraft-v4-pro-vector
+  - openrouter:service:recraft/recraft-v4-styles
+  - openrouter:service:recraft/recraft-v4-styles-pro
+  - openrouter:service:recraft/recraft-v4-styles-pro-vector
+  - openrouter:service:recraft/recraft-v4-styles-vector
+  - openrouter:service:recraft/recraft-v4-vector
+  - openrouter:service:recraft/recraft-v4.1
+  - openrouter:service:recraft/recraft-v4.1-flash
+  - openrouter:service:recraft/recraft-v4.1-pro
+  - openrouter:service:recraft/recraft-v4.1-pro-vector
+  - openrouter:service:recraft/recraft-v4.1-utility
+  - openrouter:service:recraft/recraft-v4.1-utility-pro
+  - openrouter:service:recraft/recraft-v4.1-vector
+  - openrouter:service:rekaai/reka-edge
+  - openrouter:service:rekaai/reka-flash-3
+  - openrouter:service:relace/relace-apply-3
+  - openrouter:service:relace/relace-search
+  - openrouter:service:respan/span-01
+  - openrouter:service:respan/span-01-lite
+  - openrouter:service:respan/span-01-lite:free
+  - openrouter:service:respan/span-02
+  - openrouter:service:runway/aleph-2
+  - openrouter:service:runway/gen-4.5
+  - openrouter:service:sakana/fugu-max
+  - openrouter:service:sakana/fugu-ultra
+  - openrouter:service:sakana/fugu-ultra-v2
+  - openrouter:service:sakana/sakana-namazu
+  - openrouter:service:sao10k/l3-lunaris-8b
+  - openrouter:service:sao10k/l3.1-euryale-70b
+  - openrouter:service:sao10k/l3.3-euryale-70b
+  - openrouter:service:scaledown/classify-1
+  - openrouter:service:scaledown/extract
+  - openrouter:service:scaledown/summarize
+  - openrouter:service:sentence-transformers/all-minilm-l12-v2
+  - openrouter:service:sentence-transformers/all-minilm-l6-v2
+  - openrouter:service:sentence-transformers/all-mpnet-base-v2
+  - openrouter:service:sentence-transformers/multi-qa-mpnet-base-dot-v1
+  - openrouter:service:sentence-transformers/paraphrase-minilm-l6-v2
+  - openrouter:service:sesame/csm-1b
+  - openrouter:service:sourceful/riverflow-v2-fast
+  - openrouter:service:sourceful/riverflow-v2-pro
+  - openrouter:service:sourceful/riverflow-v2.5-fast
+  - openrouter:service:sourceful/riverflow-v2.5-pro
+  - openrouter:service:stepfun/step-3.5-flash
+  - openrouter:service:stepfun/step-3.7-flash
+  - openrouter:service:stepfun/step-5-preview
+  - openrouter:service:tencent/hunyuan-a13b-instruct
+  - openrouter:service:tencent/hy-image-v3.5-preview
+  - openrouter:service:tencent/hy-mt2-1.8b
+  - openrouter:service:tencent/hy-mt2-30b-a3b
+  - openrouter:service:tencent/hy-mt2-7b
+  - openrouter:service:tencent/hy3
+  - openrouter:service:tencent/hy3-preview
+  - openrouter:service:tencent/hy4-preview
+  - openrouter:service:thedrummer/cydonia-24b-v4.1
+  - openrouter:service:thedrummer/skyfall-36b-v2
+  - openrouter:service:thedrummer/unslopnemo-12b
+  - openrouter:service:thenlper/gte-base
+  - openrouter:service:thenlper/gte-large
+  - openrouter:service:thinkingmachines/inkling
+  - openrouter:service:thinkingmachines/inkling-small
+  - openrouter:service:thinkingmachines/inkling-small:free
+  - openrouter:service:thinkingmachines/inkling:free
+  - openrouter:service:togethercomputer/tev1-4b-experimental
+  - openrouter:service:typesafe/jev-1.13
+  - openrouter:service:typesafe/jev-1.14
+  - openrouter:service:typesafe/jev-router
+  - openrouter:service:unbiased/pareto-26.9
+  - openrouter:service:undi95/remm-slerp-l2-13b
+  - openrouter:service:upstage/solar-decide
+  - openrouter:service:upstage/solar-decide-flash
+  - openrouter:service:upstage/solar-mini4
+  - openrouter:service:upstage/solar-pro-3
+  - openrouter:service:upstage/solar-pro4
+  - openrouter:service:voyageai/rerank-2.5
+  - openrouter:service:voyageai/rerank-2.5-lite
+  - openrouter:service:voyageai/rerank-3
+  - openrouter:service:voyageai/rerank-3-lite
+  - openrouter:service:voyageai/voyage-4
+  - openrouter:service:voyageai/voyage-4-large
+  - openrouter:service:voyageai/voyage-4-lite
+  - openrouter:service:voyageai/voyage-code-4
+  - openrouter:service:voyageai/voyage-multimodal-3.5
+  - openrouter:service:writer/palmyra-x5
+  - openrouter:service:x-ai/grok-4.20
+  - openrouter:service:x-ai/grok-4.20-multi-agent
+  - openrouter:service:x-ai/grok-4.3
+  - openrouter:service:x-ai/grok-4.3:batch
+  - openrouter:service:x-ai/grok-4.5
+  - openrouter:service:x-ai/grok-4.6
+  - openrouter:service:x-ai/grok-4.7
+  - openrouter:service:x-ai/grok-build-0.1
+  - openrouter:service:x-ai/grok-imagine-image-2.0
+  - openrouter:service:x-ai/grok-imagine-image-quality
+  - openrouter:service:x-ai/grok-imagine-video
+  - openrouter:service:x-ai/grok-imagine-video-1.5
+  - openrouter:service:x-ai/grok-imagine-video-1.5-lite
+  - openrouter:service:x-ai/grok-stt-1.0
+  - openrouter:service:x-ai/grok-voice-tts-1.0
+  - openrouter:service:xiaomi/mimo-v2.5
+  - openrouter:service:xiaomi/mimo-v2.5-pro
+  - openrouter:service:xiaomi/mimo-v2.6-flash
+  - openrouter:service:xiaomi/mimo-v2.6-pro
+  - openrouter:service:xiaomi/mimo-v2.6-pro-ultraspeed
+  - openrouter:service:z-ai/glm-4.5
+  - openrouter:service:z-ai/glm-4.5-air
+  - openrouter:service:z-ai/glm-4.5v
+  - openrouter:service:z-ai/glm-4.6
+  - openrouter:service:z-ai/glm-4.6v
+  - openrouter:service:z-ai/glm-4.7
+  - openrouter:service:z-ai/glm-4.7-flash
+  - openrouter:service:z-ai/glm-5
+  - openrouter:service:z-ai/glm-5-turbo
+  - openrouter:service:z-ai/glm-5.1
+  - openrouter:service:z-ai/glm-5.2
+  - openrouter:service:z-ai/glm-5.3
+  - openrouter:service:z-ai/glm-5.3-flash
+  - openrouter:service:z-ai/glm-5.3-flash:batch
+  - openrouter:service:z-ai/glm-5.3-flashx
+  - openrouter:service:z-ai/glm-5.3-prime
+  - openrouter:service:z-ai/glm-5.3:batch
+  - openrouter:service:z-ai/glm-5v-turbo
+  - openrouter:service:~anthropic/claude-fable-latest
+  - openrouter:service:~anthropic/claude-haiku-latest
+  - openrouter:service:~anthropic/claude-opus-latest
+  - openrouter:service:~anthropic/claude-sonnet-latest
+  - openrouter:service:~deepseek/deepseek-flash-latest
+  - openrouter:service:~deepseek/deepseek-pro-latest
+  - openrouter:service:~deepseek/deepseek-v4-flash-latest
+  - openrouter:service:~google/gemini-flash-latest
+  - openrouter:service:~google/gemini-pro-latest
+  - openrouter:service:~moonshotai/kimi-latest
+  - openrouter:service:~openai/gpt-astra-latest
+  - openrouter:service:~openai/gpt-luna-latest
+  - openrouter:service:~openai/gpt-mini-latest
+  - openrouter:service:~openai/gpt-sol-latest
+  - openrouter:service:~openai/gpt-terra-latest
+  - openrouter:service:~perplexity/pplx-decider-latest
+  - openrouter:service:~typesafe/jev-latest
+  - openrouter:service:~unbiased/pareto-latest
+  - openrouter:service:~x-ai/grok-latest
+  - openrouter:service:~z-ai/glm-flash-latest
+  - openrouter:service:~z-ai/glm-latest
+  missing_ids:
+  - openrouter:service:anthropic/claude-sonnet-4
+  - openrouter:service:unbiased/pareto-26.10-preview
+  snapshot_ids:
+  - openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
 snapshots:
 - schema_version: 1
   id: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
@@ -7,6 +691,12 @@ snapshots:
   url: https://openrouter.ai/api/v1/models?output_modalities=all&limit=1000
   retrieved_at: "2026-10-15T08:22:11.250994267Z"
   sha256: 809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
+- schema_version: 1
+  id: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+  source: openrouter
+  url: https://openrouter.ai/api/v1/models?output_modalities=all&limit=1000
+  retrieved_at: "2026-10-16T07:12:38.608731314Z"
+  sha256: c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
 records:
 - schema_version: 1
   kind: service
@@ -3944,6 +4634,64 @@ records:
       unit: tokens
 - schema_version: 1
   kind: service
+  id: openrouter:service:black-forest-labs/flux-3-image-klein
+  source: openrouter
+  upstream_id: black-forest-labs/flux-3-image-klein
+  name: "Black Forest Labs: FLUX 3 Image Klein"
+  origin:
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/6
+  facts:
+    canonical_slug:
+      value: black-forest-labs/flux-3-image-klein-20261015
+      pointer: /data/6/canonical_slug
+    catalog_created_at:
+      value: 1792083863
+      pointer: /data/6/created
+      unit: unix_seconds
+    context_window:
+      value: 46864
+      pointer: /data/6/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/6/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/6/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/6/top_provider/is_moderated
+    max_output_tokens:
+      value: 42177
+      pointer: /data/6/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - image
+      pointer: /data/6/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        image_output: "0.00000191616766467066"
+        image_token: "0.00000191616766467066"
+        prompt: "0"
+      pointer: /data/6/pricing
+    supported_parameters:
+      value:
+      - seed
+      pointer: /data/6/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/6/architecture/tokenizer
+    top_provider_context_window:
+      value: 46864
+      pointer: /data/6/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
   id: openrouter:service:black-forest-labs/flux-3-video
   source: openrouter
   upstream_id: black-forest-labs/flux-3-video
@@ -5640,56 +6388,56 @@ records:
   upstream_id: cloudflare/clef-flash
   name: "Cloudflare: Clef Flash"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/44
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/53
   facts:
     canonical_slug:
       value: cloudflare/clef-flash
-      pointer: /data/44/canonical_slug
+      pointer: /data/53/canonical_slug
     catalog_created_at:
       value: 1790870973
-      pointer: /data/44/created
+      pointer: /data/53/created
       unit: unix_seconds
     context_window:
-      value: 65536
-      pointer: /data/44/context_length
+      value: 24576
+      pointer: /data/53/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/44/default_parameters
+      pointer: /data/53/default_parameters
     hugging_face_id:
       value: Cloudflare/clef-flash
-      pointer: /data/44/hugging_face_id
+      pointer: /data/53/hugging_face_id
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/44/architecture/input_modalities
+      pointer: /data/53/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/44/top_provider/is_moderated
+      pointer: /data/53/top_provider/is_moderated
     max_output_tokens:
       value: 14745
-      pointer: /data/44/top_provider/max_completion_tokens
+      pointer: /data/53/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - decisions
-      pointer: /data/44/architecture/output_modalities
+      pointer: /data/53/architecture/output_modalities
     pricing:
       value:
         completion: "0"
         prompt: "0.000000021"
-      pointer: /data/44/pricing
+      pointer: /data/53/pricing
     supported_parameters:
       value: []
-      pointer: /data/44/supported_parameters
+      pointer: /data/53/supported_parameters
     tokenizer:
       value: Qwen
-      pointer: /data/44/architecture/tokenizer
+      pointer: /data/53/architecture/tokenizer
     top_provider_context_window:
       value: 16384
-      pointer: /data/44/top_provider/context_length
+      pointer: /data/53/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -6734,49 +7482,49 @@ records:
   upstream_id: deepseek/deepseek-chat
   name: "DeepSeek: DeepSeek V3"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/620
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/627
   facts:
     canonical_slug:
       value: deepseek/deepseek-chat-v3
-      pointer: /data/620/canonical_slug
+      pointer: /data/627/canonical_slug
     catalog_created_at:
       value: 1735241320
-      pointer: /data/620/created
+      pointer: /data/627/created
       unit: unix_seconds
     context_window:
       value: 163840
-      pointer: /data/620/context_length
+      pointer: /data/627/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/620/default_parameters
+      pointer: /data/627/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V3
-      pointer: /data/620/hugging_face_id
+      pointer: /data/627/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/620/architecture/input_modalities
+      pointer: /data/627/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/620/top_provider/is_moderated
+      pointer: /data/627/top_provider/is_moderated
     knowledge_cutoff:
       value: "2024-07-31"
-      pointer: /data/620/knowledge_cutoff
+      pointer: /data/627/knowledge_cutoff
     max_output_tokens:
-      value: 16384
-      pointer: /data/620/top_provider/max_completion_tokens
+      value: 16000
+      pointer: /data/627/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/620/architecture/output_modalities
+      pointer: /data/627/architecture/output_modalities
     pricing:
       value:
-        completion: "0.00000089"
-        prompt: "0.00000032"
-      pointer: /data/620/pricing
+        completion: "0.0000010287"
+        prompt: "0.0000002574"
+      pointer: /data/627/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -6794,13 +7542,13 @@ records:
       - tools
       - top_k
       - top_p
-      pointer: /data/620/supported_parameters
+      pointer: /data/627/supported_parameters
     tokenizer:
       value: DeepSeek
-      pointer: /data/620/architecture/tokenizer
+      pointer: /data/627/architecture/tokenizer
     top_provider_context_window:
-      value: 163840
-      pointer: /data/620/top_provider/context_length
+      value: 128000
+      pointer: /data/627/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -7452,47 +8200,47 @@ records:
   upstream_id: deepseek/deepseek-v4-flash-0731
   name: "DeepSeek: DeepSeek V4 Flash 0731"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/195
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/203
   facts:
     canonical_slug:
       value: deepseek/deepseek-v4-flash-20260731
-      pointer: /data/195/canonical_slug
+      pointer: /data/203/canonical_slug
     catalog_created_at:
       value: 1785478908
-      pointer: /data/195/created
+      pointer: /data/203/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/195/context_length
+      pointer: /data/203/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/195/default_parameters
+      pointer: /data/203/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V4-Flash-0731
-      pointer: /data/195/hugging_face_id
+      pointer: /data/203/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/195/architecture/input_modalities
+      pointer: /data/203/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/195/top_provider/is_moderated
+      pointer: /data/203/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/195/top_provider/max_completion_tokens
+      pointer: /data/203/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/195/architecture/output_modalities
+      pointer: /data/203/architecture/output_modalities
     pricing:
       value:
         completion: "0.00000064"
-        input_cache_read: "0.000000016"
-        prompt: "0.000000016"
-      pointer: /data/195/pricing
+        input_cache_read: "0.0000000094"
+        prompt: "0.0000000094"
+      pointer: /data/203/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -7517,16 +8265,16 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/195/supported_parameters
+      pointer: /data/203/supported_parameters
     supported_voices:
       value: []
-      pointer: /data/195/supported_voices
+      pointer: /data/203/supported_voices
     tokenizer:
       value: DeepSeek
-      pointer: /data/195/architecture/tokenizer
+      pointer: /data/203/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/195/top_provider/context_length
+      pointer: /data/203/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -7695,47 +8443,47 @@ records:
   upstream_id: deepseek/deepseek-v4-pro-0813
   name: "DeepSeek: DeepSeek V4 Pro 0813"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/179
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/187
   facts:
     canonical_slug:
       value: deepseek/deepseek-v4-pro-20260813
-      pointer: /data/179/canonical_slug
+      pointer: /data/187/canonical_slug
     catalog_created_at:
       value: 1786549364
-      pointer: /data/179/created
+      pointer: /data/187/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/179/context_length
+      pointer: /data/187/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 1
-      pointer: /data/179/default_parameters
+      pointer: /data/187/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V4-Pro-0813
-      pointer: /data/179/hugging_face_id
+      pointer: /data/187/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/179/architecture/input_modalities
+      pointer: /data/187/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/179/top_provider/is_moderated
+      pointer: /data/187/top_provider/is_moderated
     max_output_tokens:
       value: 393216
-      pointer: /data/179/top_provider/max_completion_tokens
+      pointer: /data/187/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/179/architecture/output_modalities
+      pointer: /data/187/architecture/output_modalities
     pricing:
       value:
-        completion: "0.00000396"
-        input_cache_read: "0.000000044"
+        completion: "0.00000198"
+        input_cache_read: "0.000000022"
         overrides:
         - completion: "0.00000198"
           input_cache_read: "0.000000022"
@@ -7798,8 +8546,8 @@ records:
           - friday
           utc_end: 0
           utc_start: 1000
-        prompt: "0.00000132"
-      pointer: /data/179/pricing
+        prompt: "0.00000066"
+      pointer: /data/187/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -7822,13 +8570,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/179/supported_parameters
+      pointer: /data/187/supported_parameters
     tokenizer:
       value: DeepSeek
-      pointer: /data/179/architecture/tokenizer
+      pointer: /data/187/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/179/top_provider/context_length
+      pointer: /data/187/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -7837,48 +8585,48 @@ records:
   upstream_id: deepseek/deepseek-v4.1-flash
   name: "DeepSeek: DeepSeek V4.1 Flash"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/115
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/123
   facts:
     canonical_slug:
       value: deepseek/deepseek-v4.1-flash-20260910
-      pointer: /data/115/canonical_slug
+      pointer: /data/123/canonical_slug
     catalog_created_at:
       value: 1789021285
-      pointer: /data/115/created
+      pointer: /data/123/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/115/context_length
+      pointer: /data/123/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/115/default_parameters
+      pointer: /data/123/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V4.1-Flash
-      pointer: /data/115/hugging_face_id
+      pointer: /data/123/hugging_face_id
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/115/architecture/input_modalities
+      pointer: /data/123/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/115/top_provider/is_moderated
+      pointer: /data/123/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/115/top_provider/max_completion_tokens
+      pointer: /data/123/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/115/architecture/output_modalities
+      pointer: /data/123/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000000891"
+        completion: "0.000000684"
         input_cache_read: "0.0000000054"
-        prompt: "0.00000001368"
-      pointer: /data/115/pricing
+        prompt: "0.000000018"
+      pointer: /data/123/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -7901,13 +8649,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/115/supported_parameters
+      pointer: /data/123/supported_parameters
     tokenizer:
       value: DeepSeek
-      pointer: /data/115/architecture/tokenizer
+      pointer: /data/123/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/115/top_provider/context_length
+      pointer: /data/123/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -11931,23 +12679,23 @@ records:
   upstream_id: google/gemini-3.8-flash
   name: "Google: Gemini 3.8 Flash"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/132
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/140
   facts:
     canonical_slug:
       value: google/gemini-3.8-flash-20260902
-      pointer: /data/132/canonical_slug
+      pointer: /data/140/canonical_slug
     catalog_created_at:
       value: 1788362056
-      pointer: /data/132/created
+      pointer: /data/140/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/132/context_length
+      pointer: /data/140/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/132/default_parameters
+      pointer: /data/140/default_parameters
     input_modalities:
       value:
       - text
@@ -11955,30 +12703,30 @@ records:
       - video
       - file
       - audio
-      pointer: /data/132/architecture/input_modalities
+      pointer: /data/140/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/132/top_provider/is_moderated
+      pointer: /data/140/top_provider/is_moderated
     max_output_tokens:
       value: 65536
-      pointer: /data/132/top_provider/max_completion_tokens
+      pointer: /data/140/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/132/architecture/output_modalities
+      pointer: /data/140/architecture/output_modalities
     pricing:
       value:
-        audio: "0.00000075"
-        completion: "0.00000375"
-        image: "0.00000075"
-        input_audio_cache: "0.000000075"
-        input_cache_read: "0.000000075"
+        audio: "0.000000825"
+        completion: "0.000004125"
+        image: "0.000000825"
+        input_audio_cache: "0.0000000825"
+        input_cache_read: "0.0000000825"
         input_cache_write: "0.0000000416666666666667"
-        internal_reasoning: "0.00000375"
-        prompt: "0.00000075"
+        internal_reasoning: "0.000004125"
+        prompt: "0.000000825"
         web_search: "0.014"
-      pointer: /data/132/pricing
+      pointer: /data/140/pricing
     supported_parameters:
       value:
       - include_reasoning
@@ -11993,13 +12741,13 @@ records:
       - tool_choice
       - tools
       - top_p
-      pointer: /data/132/supported_parameters
+      pointer: /data/140/supported_parameters
     tokenizer:
       value: Gemini
-      pointer: /data/132/architecture/tokenizer
+      pointer: /data/140/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/132/top_provider/context_length
+      pointer: /data/140/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -13056,52 +13804,52 @@ records:
   upstream_id: google/gemma-4-26b-a4b-it
   name: "Google: Gemma 4 26B A4B "
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/376
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/384
   facts:
     canonical_slug:
       value: google/gemma-4-26b-a4b-it-20260403
-      pointer: /data/376/canonical_slug
+      pointer: /data/384/canonical_slug
     catalog_created_at:
       value: 1775227989
-      pointer: /data/376/created
+      pointer: /data/384/created
       unit: unix_seconds
     context_window:
       value: 262144
-      pointer: /data/376/context_length
+      pointer: /data/384/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_k: 64
         top_p: 0.95
-      pointer: /data/376/default_parameters
+      pointer: /data/384/default_parameters
     hugging_face_id:
       value: google/gemma-4-26B-A4B-it
-      pointer: /data/376/hugging_face_id
+      pointer: /data/384/hugging_face_id
     input_modalities:
       value:
       - image
       - text
       - video
-      pointer: /data/376/architecture/input_modalities
+      pointer: /data/384/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/376/top_provider/is_moderated
+      pointer: /data/384/top_provider/is_moderated
     max_output_tokens:
       value: 235929
-      pointer: /data/376/top_provider/max_completion_tokens
+      pointer: /data/384/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/376/architecture/output_modalities
+      pointer: /data/384/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000003"
-        input_cache_read: "0.00000005"
-        prompt: "0.00000009"
-      pointer: /data/376/pricing
+        completion: "0.000000255"
+        input_cache_read: "0.0000000425"
+        prompt: "0.0000000765"
+      pointer: /data/384/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -13123,13 +13871,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/376/supported_parameters
+      pointer: /data/384/supported_parameters
     tokenizer:
       value: Gemma
-      pointer: /data/376/architecture/tokenizer
+      pointer: /data/384/architecture/tokenizer
     top_provider_context_window:
       value: 262144
-      pointer: /data/376/top_provider/context_length
+      pointer: /data/384/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -15138,6 +15886,64 @@ records:
       unit: tokens
 - schema_version: 1
   kind: service
+  id: openrouter:service:krea/k3-edit
+  source: openrouter
+  upstream_id: krea/k3-edit
+  name: "Krea: K3 Edit"
+  origin:
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/2
+  facts:
+    canonical_slug:
+      value: krea/k3-edit-20260914
+      pointer: /data/2/canonical_slug
+    catalog_created_at:
+      value: 1792103728
+      pointer: /data/2/created
+      unit: unix_seconds
+    context_window:
+      value: 65536
+      pointer: /data/2/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/2/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/2/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/2/top_provider/is_moderated
+    max_output_tokens:
+      value: 58982
+      pointer: /data/2/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - image
+      pointer: /data/2/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        image: "0.02"
+        image_output: "0.00000718562874251497"
+        image_token: "0.00000718562874251497"
+        prompt: "0"
+      pointer: /data/2/pricing
+    supported_parameters:
+      value: []
+      pointer: /data/2/supported_parameters
+    tokenizer:
+      value: Media
+      pointer: /data/2/architecture/tokenizer
+    top_provider_context_window:
+      value: 65536
+      pointer: /data/2/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
   id: openrouter:service:krea/krea-2-large
   source: openrouter
   upstream_id: krea/krea-2-large
@@ -15494,53 +16300,110 @@ records:
   upstream_id: liquid/d1
   name: "LiquidAI: d1"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/43
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/52
   facts:
     canonical_slug:
       value: liquid/d1-20260930
-      pointer: /data/43/canonical_slug
+      pointer: /data/52/canonical_slug
     catalog_created_at:
       value: 1790878711
-      pointer: /data/43/created
+      pointer: /data/52/created
       unit: unix_seconds
     context_window:
       value: 65536
-      pointer: /data/43/context_length
+      pointer: /data/52/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/43/default_parameters
+      pointer: /data/52/default_parameters
     input_modalities:
       value:
       - text
-      pointer: /data/43/architecture/input_modalities
+      - image
+      pointer: /data/52/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/43/top_provider/is_moderated
+      pointer: /data/52/top_provider/is_moderated
     max_output_tokens:
       value: 58982
-      pointer: /data/43/top_provider/max_completion_tokens
+      pointer: /data/52/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - decisions
-      pointer: /data/43/architecture/output_modalities
+      pointer: /data/52/architecture/output_modalities
     pricing:
       value:
         completion: "0"
         input_cache_read: "0.00000002"
         prompt: "0.00000002"
-      pointer: /data/43/pricing
+      pointer: /data/52/pricing
     supported_parameters:
       value: []
-      pointer: /data/43/supported_parameters
+      pointer: /data/52/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/43/architecture/tokenizer
+      pointer: /data/52/architecture/tokenizer
     top_provider_context_window:
       value: 65536
-      pointer: /data/43/top_provider/context_length
+      pointer: /data/52/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:liquid/d1-ultra
+  source: openrouter
+  upstream_id: liquid/d1-ultra
+  name: "LiquidAI: d1-ultra"
+  origin:
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/1
+  facts:
+    canonical_slug:
+      value: liquid/d1-ultra-20261015
+      pointer: /data/1/canonical_slug
+    catalog_created_at:
+      value: 1792108354
+      pointer: /data/1/created
+      unit: unix_seconds
+    context_window:
+      value: 32768
+      pointer: /data/1/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/1/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/1/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/1/top_provider/is_moderated
+    max_output_tokens:
+      value: 29491
+      pointer: /data/1/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - decisions
+      pointer: /data/1/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        input_cache_read: "0.000000042"
+        prompt: "0.000000042"
+      pointer: /data/1/pricing
+    supported_parameters:
+      value: []
+      pointer: /data/1/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/1/architecture/tokenizer
+    top_provider_context_window:
+      value: 32768
+      pointer: /data/1/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -17017,6 +17880,88 @@ records:
     top_provider_context_window:
       value: 1048576
       pointer: /data/130/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:meta/muse-spark-open
+  source: openrouter
+  upstream_id: meta/muse-spark-open
+  name: "Meta: Muse Spark Open"
+  origin:
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/5
+  facts:
+    canonical_slug:
+      value: meta/muse-spark-open-20261015
+      pointer: /data/5/canonical_slug
+    catalog_created_at:
+      value: 1792087069
+      pointer: /data/5/created
+      unit: unix_seconds
+    context_window:
+      value: 1048576
+      pointer: /data/5/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/5/default_parameters
+    hugging_face_id:
+      value: meta-models/Muse-Spark-Open-816B-A42B
+      pointer: /data/5/hugging_face_id
+    input_modalities:
+      value:
+      - text
+      - image
+      - video
+      - file
+      - audio
+      pointer: /data/5/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/5/top_provider/is_moderated
+    max_output_tokens:
+      value: 943718
+      pointer: /data/5/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/5/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0.00000425"
+        input_cache_read: "0.00000015"
+        prompt: "0.00000125"
+      pointer: /data/5/pricing
+    supported_parameters:
+      value:
+      - frequency_penalty
+      - include_reasoning
+      - logit_bias
+      - logprobs
+      - max_tokens
+      - min_p
+      - presence_penalty
+      - reasoning
+      - reasoning_effort
+      - repetition_penalty
+      - response_format
+      - seed
+      - stop
+      - structured_outputs
+      - temperature
+      - tool_choice
+      - tools
+      - top_k
+      - top_logprobs
+      - top_p
+      pointer: /data/5/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/5/architecture/tokenizer
+    top_provider_context_window:
+      value: 1048576
+      pointer: /data/5/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -20960,51 +21905,51 @@ records:
   upstream_id: mistralai/mistral-small-3.2-24b-instruct
   name: "Mistral: Mistral Small 3.2 24B"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/568
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/576
   facts:
     canonical_slug:
       value: mistralai/mistral-small-3.2-24b-instruct-2506
-      pointer: /data/568/canonical_slug
+      pointer: /data/576/canonical_slug
     catalog_created_at:
       value: 1750443016
-      pointer: /data/568/created
+      pointer: /data/576/created
       unit: unix_seconds
     context_window:
       value: 256000
-      pointer: /data/568/context_length
+      pointer: /data/576/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 0.3
-      pointer: /data/568/default_parameters
+      pointer: /data/576/default_parameters
     hugging_face_id:
       value: mistralai/Mistral-Small-3.2-24B-Instruct-2506
-      pointer: /data/568/hugging_face_id
+      pointer: /data/576/hugging_face_id
     input_modalities:
       value:
       - image
       - text
-      pointer: /data/568/architecture/input_modalities
+      pointer: /data/576/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/568/top_provider/is_moderated
+      pointer: /data/576/top_provider/is_moderated
     knowledge_cutoff:
       value: "2023-10-31"
-      pointer: /data/568/knowledge_cutoff
+      pointer: /data/576/knowledge_cutoff
     max_output_tokens:
       value: 16384
-      pointer: /data/568/top_provider/max_completion_tokens
+      pointer: /data/576/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/568/architecture/output_modalities
+      pointer: /data/576/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000002"
-        prompt: "0.000000075"
-      pointer: /data/568/pricing
+        completion: "0.00000025"
+        prompt: "0.00000009375"
+      pointer: /data/576/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -21024,13 +21969,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/568/supported_parameters
+      pointer: /data/576/supported_parameters
     tokenizer:
       value: Mistral
-      pointer: /data/568/architecture/tokenizer
+      pointer: /data/576/architecture/tokenizer
     top_provider_context_window:
-      value: 128000
-      pointer: /data/568/top_provider/context_length
+      value: 256000
+      pointer: /data/576/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -21444,6 +22389,138 @@ records:
     top_provider_context_window:
       value: 0
       pointer: /data/164/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:moondream/moondream3-preview
+  source: openrouter
+  upstream_id: moondream/moondream3-preview
+  name: "Moondream: Moondream 3 Preview"
+  origin:
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/3
+  facts:
+    canonical_slug:
+      value: moondream/moondream3-preview-20261013
+      pointer: /data/3/canonical_slug
+    catalog_created_at:
+      value: 1792102385
+      pointer: /data/3/created
+      unit: unix_seconds
+    context_window:
+      value: 32000
+      pointer: /data/3/context_length
+      unit: tokens
+    default_parameters:
+      value:
+        temperature: 0.2
+        top_p: 0.9
+      pointer: /data/3/default_parameters
+    hugging_face_id:
+      value: moondream/moondream3-preview
+      pointer: /data/3/hugging_face_id
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/3/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/3/top_provider/is_moderated
+    max_output_tokens:
+      value: 4096
+      pointer: /data/3/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/3/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0.0000025"
+        prompt: "0.0000003"
+      pointer: /data/3/pricing
+    supported_parameters:
+      value:
+      - include_reasoning
+      - max_completion_tokens
+      - max_tokens
+      - reasoning
+      - temperature
+      - top_p
+      pointer: /data/3/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/3/architecture/tokenizer
+    top_provider_context_window:
+      value: 32000
+      pointer: /data/3/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:moondream/moondream3.1-9b-a2b
+  source: openrouter
+  upstream_id: moondream/moondream3.1-9b-a2b
+  name: "Moondream: Moondream 3.1"
+  origin:
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/4
+  facts:
+    canonical_slug:
+      value: moondream/moondream3.1-9b-a2b-20261013
+      pointer: /data/4/canonical_slug
+    catalog_created_at:
+      value: 1792102373
+      pointer: /data/4/created
+      unit: unix_seconds
+    context_window:
+      value: 32000
+      pointer: /data/4/context_length
+      unit: tokens
+    default_parameters:
+      value:
+        temperature: 0.2
+        top_p: 0.9
+      pointer: /data/4/default_parameters
+    hugging_face_id:
+      value: moondream/moondream3.1-9B-A2B
+      pointer: /data/4/hugging_face_id
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/4/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/4/top_provider/is_moderated
+    max_output_tokens:
+      value: 4096
+      pointer: /data/4/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/4/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0.0000025"
+        prompt: "0.0000003"
+      pointer: /data/4/pricing
+    supported_parameters:
+      value:
+      - include_reasoning
+      - max_completion_tokens
+      - max_tokens
+      - reasoning
+      - temperature
+      - top_p
+      pointer: /data/4/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/4/architecture/tokenizer
+    top_provider_context_window:
+      value: 32000
+      pointer: /data/4/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -21931,19 +23008,19 @@ records:
   upstream_id: moonshotai/kimi-k3
   name: "MoonshotAI: Kimi K3"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/236
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/244
   facts:
     canonical_slug:
       value: moonshotai/kimi-k3-20260715
-      pointer: /data/236/canonical_slug
+      pointer: /data/244/canonical_slug
     catalog_created_at:
       value: 1784215858
-      pointer: /data/236/created
+      pointer: /data/244/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/236/context_length
+      pointer: /data/244/context_length
       unit: tokens
     default_parameters:
       value:
@@ -21953,33 +23030,33 @@ records:
         temperature: null
         top_k: null
         top_p: 0.95
-      pointer: /data/236/default_parameters
+      pointer: /data/244/default_parameters
     hugging_face_id:
       value: moonshotai/Kimi-K3
-      pointer: /data/236/hugging_face_id
+      pointer: /data/244/hugging_face_id
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/236/architecture/input_modalities
+      pointer: /data/244/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/236/top_provider/is_moderated
+      pointer: /data/244/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/236/top_provider/max_completion_tokens
+      pointer: /data/244/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/236/architecture/output_modalities
+      pointer: /data/244/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000015"
-        input_cache_read: "0.00000028"
-        prompt: "0.00000045"
-      pointer: /data/236/pricing
+        completion: "0.000011588"
+        input_cache_read: "0.00000021"
+        prompt: "0.000000304"
+      pointer: /data/244/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -22002,13 +23079,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/236/supported_parameters
+      pointer: /data/244/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/236/architecture/tokenizer
+      pointer: /data/244/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/236/top_provider/context_length
+      pointer: /data/244/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -22639,68 +23716,71 @@ records:
   upstream_id: nousresearch/hermes-4-405b
   name: "Nous: Hermes 4 405B"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/534
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/542
   facts:
     canonical_slug:
       value: nousresearch/hermes-4-405b
-      pointer: /data/534/canonical_slug
+      pointer: /data/542/canonical_slug
     catalog_created_at:
       value: 1756235463
-      pointer: /data/534/created
+      pointer: /data/542/created
       unit: unix_seconds
     context_window:
       value: 131072
-      pointer: /data/534/context_length
+      pointer: /data/542/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/534/default_parameters
+      pointer: /data/542/default_parameters
     hugging_face_id:
       value: NousResearch/Hermes-4-405B
-      pointer: /data/534/hugging_face_id
+      pointer: /data/542/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/534/architecture/input_modalities
+      pointer: /data/542/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/534/top_provider/is_moderated
+      pointer: /data/542/top_provider/is_moderated
     knowledge_cutoff:
       value: "2024-08-31"
-      pointer: /data/534/knowledge_cutoff
+      pointer: /data/542/knowledge_cutoff
     max_output_tokens:
       value: 117964
-      pointer: /data/534/top_provider/max_completion_tokens
+      pointer: /data/542/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/534/architecture/output_modalities
+      pointer: /data/542/architecture/output_modalities
     pricing:
       value:
         completion: "0.000003"
         prompt: "0.000001"
-      pointer: /data/534/pricing
+      pointer: /data/542/pricing
     supported_parameters:
       value:
       - frequency_penalty
       - include_reasoning
+      - logprobs
       - max_tokens
       - presence_penalty
       - reasoning
       - repetition_penalty
       - response_format
+      - structured_outputs
       - temperature
       - top_k
+      - top_logprobs
       - top_p
-      pointer: /data/534/supported_parameters
+      pointer: /data/542/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/534/architecture/tokenizer
+      pointer: /data/542/architecture/tokenizer
     top_provider_context_window:
       value: 131072
-      pointer: /data/534/top_provider/context_length
+      pointer: /data/542/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -23692,6 +24772,154 @@ records:
     top_provider_context_window:
       value: 1000000
       pointer: /data/184/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:nvidia/nemotron-3.5-super-vl
+  source: openrouter
+  upstream_id: nvidia/nemotron-3.5-super-vl
+  name: "NVIDIA: Nemotron 3.5 Super VL"
+  origin:
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/7
+  facts:
+    canonical_slug:
+      value: nvidia/nemotron-3.5-super-vl-20261015
+      pointer: /data/7/canonical_slug
+    catalog_created_at:
+      value: 1792076662
+      pointer: /data/7/created
+      unit: unix_seconds
+    context_window:
+      value: 1048576
+      pointer: /data/7/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/7/default_parameters
+    hugging_face_id:
+      value: nvidia/NVIDIA-Nemotron-3.5-Super-VL
+      pointer: /data/7/hugging_face_id
+    input_modalities:
+      value:
+      - text
+      - image
+      - video
+      pointer: /data/7/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/7/top_provider/is_moderated
+    max_output_tokens:
+      value: 235929
+      pointer: /data/7/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/7/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0.0000005"
+        input_cache_read: "0.00000002"
+        prompt: "0.00000015"
+      pointer: /data/7/pricing
+    supported_parameters:
+      value:
+      - frequency_penalty
+      - include_reasoning
+      - logit_bias
+      - logprobs
+      - max_tokens
+      - min_p
+      - presence_penalty
+      - reasoning
+      - repetition_penalty
+      - response_format
+      - seed
+      - stop
+      - structured_outputs
+      - temperature
+      - tool_choice
+      - tools
+      - top_k
+      - top_logprobs
+      - top_p
+      pointer: /data/7/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/7/architecture/tokenizer
+    top_provider_context_window:
+      value: 262144
+      pointer: /data/7/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:nvidia/nemotron-3.5-super-vl:free
+  source: openrouter
+  upstream_id: nvidia/nemotron-3.5-super-vl:free
+  name: "NVIDIA: Nemotron 3.5 Super VL (free)"
+  origin:
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/8
+  facts:
+    canonical_slug:
+      value: nvidia/nemotron-3.5-super-vl-20261015
+      pointer: /data/8/canonical_slug
+    catalog_created_at:
+      value: 1792076662
+      pointer: /data/8/created
+      unit: unix_seconds
+    context_window:
+      value: 1000000
+      pointer: /data/8/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/8/default_parameters
+    hugging_face_id:
+      value: nvidia/NVIDIA-Nemotron-3.5-Super-VL
+      pointer: /data/8/hugging_face_id
+    input_modalities:
+      value:
+      - text
+      - image
+      - video
+      pointer: /data/8/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/8/top_provider/is_moderated
+    max_output_tokens:
+      value: 131072
+      pointer: /data/8/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/8/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        prompt: "0"
+      pointer: /data/8/pricing
+    supported_parameters:
+      value:
+      - include_reasoning
+      - max_tokens
+      - reasoning
+      - response_format
+      - seed
+      - structured_outputs
+      - temperature
+      - tool_choice
+      - tools
+      - top_p
+      pointer: /data/8/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/8/architecture/tokenizer
+    top_provider_context_window:
+      value: 1000000
+      pointer: /data/8/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -35994,58 +37222,58 @@ records:
   upstream_id: qwen/qwen3-embedding-8b
   name: "Qwen: Qwen3 Embedding 8B"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/508
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/516
   facts:
     canonical_slug:
       value: qwen/qwen3-embedding-8b
-      pointer: /data/508/canonical_slug
+      pointer: /data/516/canonical_slug
     catalog_created_at:
       value: 1761680622
-      pointer: /data/508/created
+      pointer: /data/516/created
       unit: unix_seconds
     context_window:
-      value: 32768
-      pointer: /data/508/context_length
+      value: 40960
+      pointer: /data/516/context_length
       unit: tokens
     default_parameters:
       value:
         frequency_penalty: null
         temperature: null
         top_p: null
-      pointer: /data/508/default_parameters
+      pointer: /data/516/default_parameters
     hugging_face_id:
       value: Qwen/Qwen3-Embedding-8B
-      pointer: /data/508/hugging_face_id
+      pointer: /data/516/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/508/architecture/input_modalities
+      pointer: /data/516/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/508/top_provider/is_moderated
+      pointer: /data/516/top_provider/is_moderated
     max_output_tokens:
-      value: 28800
-      pointer: /data/508/top_provider/max_completion_tokens
+      value: 32000
+      pointer: /data/516/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - embeddings
-      pointer: /data/508/architecture/output_modalities
+      pointer: /data/516/architecture/output_modalities
     pricing:
       value:
         completion: "0"
         prompt: "0.00000001"
-      pointer: /data/508/pricing
+      pointer: /data/516/pricing
     supported_parameters:
       value: []
-      pointer: /data/508/supported_parameters
+      pointer: /data/516/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/508/architecture/tokenizer
+      pointer: /data/516/architecture/tokenizer
     top_provider_context_window:
-      value: 32000
-      pointer: /data/508/top_provider/context_length
+      value: 40960
+      pointer: /data/516/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -36054,50 +37282,49 @@ records:
   upstream_id: qwen/qwen3-next-80b-a3b-instruct
   name: "Qwen: Qwen3 Next 80B A3B Instruct"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/532
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/540
   facts:
     canonical_slug:
       value: qwen/qwen3-next-80b-a3b-instruct-2509
-      pointer: /data/532/canonical_slug
+      pointer: /data/540/canonical_slug
     catalog_created_at:
       value: 1757612213
-      pointer: /data/532/created
+      pointer: /data/540/created
       unit: unix_seconds
     context_window:
       value: 262144
-      pointer: /data/532/context_length
+      pointer: /data/540/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/532/default_parameters
+      pointer: /data/540/default_parameters
     hugging_face_id:
       value: Qwen/Qwen3-Next-80B-A3B-Instruct
-      pointer: /data/532/hugging_face_id
+      pointer: /data/540/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/532/architecture/input_modalities
+      pointer: /data/540/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/532/top_provider/is_moderated
+      pointer: /data/540/top_provider/is_moderated
     knowledge_cutoff:
       value: "2025-09-30"
-      pointer: /data/532/knowledge_cutoff
+      pointer: /data/540/knowledge_cutoff
     max_output_tokens:
-      value: 235929
-      pointer: /data/532/top_provider/max_completion_tokens
+      value: 16384
+      pointer: /data/540/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/532/architecture/output_modalities
+      pointer: /data/540/architecture/output_modalities
     pricing:
       value:
         completion: "0.0000011"
-        input_cache_read: "0.00000007"
-        prompt: "0.0000001"
-      pointer: /data/532/pricing
+        prompt: "0.00000009"
+      pointer: /data/540/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -36117,13 +37344,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/532/supported_parameters
+      pointer: /data/540/supported_parameters
     tokenizer:
       value: Qwen3
-      pointer: /data/532/architecture/tokenizer
+      pointer: /data/540/architecture/tokenizer
     top_provider_context_window:
       value: 262144
-      pointer: /data/532/top_provider/context_length
+      pointer: /data/540/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -37249,19 +38476,19 @@ records:
   upstream_id: qwen/qwen3.6-27b
   name: "Qwen: Qwen3.6 27B"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/343
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/351
   facts:
     canonical_slug:
       value: qwen/qwen3.6-27b-20260422
-      pointer: /data/343/canonical_slug
+      pointer: /data/351/canonical_slug
     catalog_created_at:
       value: 1777255064
-      pointer: /data/343/created
+      pointer: /data/351/created
       unit: unix_seconds
     context_window:
       value: 262144
-      pointer: /data/343/context_length
+      pointer: /data/351/context_length
       unit: tokens
     default_parameters:
       value:
@@ -37271,32 +38498,33 @@ records:
         temperature: null
         top_k: null
         top_p: null
-      pointer: /data/343/default_parameters
+      pointer: /data/351/default_parameters
     hugging_face_id:
       value: Qwen/Qwen3.6-27B
-      pointer: /data/343/hugging_face_id
+      pointer: /data/351/hugging_face_id
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/343/architecture/input_modalities
+      pointer: /data/351/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/343/top_provider/is_moderated
+      pointer: /data/351/top_provider/is_moderated
     max_output_tokens:
-      value: 81920
-      pointer: /data/343/top_provider/max_completion_tokens
+      value: 65536
+      pointer: /data/351/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/343/architecture/output_modalities
+      pointer: /data/351/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000032"
-        prompt: "0.00000032"
-      pointer: /data/343/pricing
+        completion: "0.000002"
+        input_cache_read: "0.000000025"
+        prompt: "0.00000025"
+      pointer: /data/351/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -37318,13 +38546,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/343/supported_parameters
+      pointer: /data/351/supported_parameters
     tokenizer:
       value: Qwen3
-      pointer: /data/343/architecture/tokenizer
+      pointer: /data/351/architecture/tokenizer
     top_provider_context_window:
       value: 262144
-      pointer: /data/343/top_provider/context_length
+      pointer: /data/351/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -39682,6 +40910,61 @@ records:
       unit: tokens
 - schema_version: 1
   kind: service
+  id: openrouter:service:respan/span-02
+  source: openrouter
+  upstream_id: respan/span-02
+  name: "Respan: Span-02"
+  origin:
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/0
+  facts:
+    canonical_slug:
+      value: respan/span-02-20261015
+      pointer: /data/0/canonical_slug
+    catalog_created_at:
+      value: 1792108973
+      pointer: /data/0/created
+      unit: unix_seconds
+    context_window:
+      value: 131072
+      pointer: /data/0/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/0/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/0/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/0/top_provider/is_moderated
+    max_output_tokens:
+      value: 117964
+      pointer: /data/0/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - decisions
+      pointer: /data/0/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        prompt: "0.00000001"
+      pointer: /data/0/pricing
+    supported_parameters:
+      value: []
+      pointer: /data/0/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/0/architecture/tokenizer
+    top_provider_context_window:
+      value: 131072
+      pointer: /data/0/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
   id: openrouter:service:runway/aleph-2
   source: openrouter
   upstream_id: runway/aleph-2
@@ -41264,19 +42547,19 @@ records:
   upstream_id: stepfun/step-5-preview
   name: "StepFun: Step 5 Preview"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/19
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/28
   facts:
     canonical_slug:
       value: stepfun/step-5-preview-20261008
-      pointer: /data/19/canonical_slug
+      pointer: /data/28/canonical_slug
     catalog_created_at:
       value: 1791462849
-      pointer: /data/19/created
+      pointer: /data/28/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/19/context_length
+      pointer: /data/28/context_length
       unit: tokens
     default_parameters:
       value:
@@ -41286,33 +42569,33 @@ records:
         temperature: null
         top_k: null
         top_p: null
-      pointer: /data/19/default_parameters
+      pointer: /data/28/default_parameters
     hugging_face_id:
       value: stepfun-ai/Step-5-Preview
-      pointer: /data/19/hugging_face_id
+      pointer: /data/28/hugging_face_id
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/19/architecture/input_modalities
+      pointer: /data/28/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/19/top_provider/is_moderated
+      pointer: /data/28/top_provider/is_moderated
     max_output_tokens:
       value: 64000
-      pointer: /data/19/top_provider/max_completion_tokens
+      pointer: /data/28/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/19/architecture/output_modalities
+      pointer: /data/28/architecture/output_modalities
     pricing:
       value:
         completion: "0.0000027"
-        input_cache_read: "0.00000005"
+        input_cache_read: "0.0000001"
         prompt: "0.000001"
-      pointer: /data/19/pricing
+      pointer: /data/28/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -41335,13 +42618,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/19/supported_parameters
+      pointer: /data/28/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/19/architecture/tokenizer
+      pointer: /data/28/architecture/tokenizer
     top_provider_context_window:
       value: 1000000
-      pointer: /data/19/top_provider/context_length
+      pointer: /data/28/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -46209,19 +47492,19 @@ records:
   upstream_id: z-ai/glm-5.2
   name: "Z.ai: GLM 5.2"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/274
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/282
   facts:
     canonical_slug:
       value: z-ai/glm-5.2-20260616
-      pointer: /data/274/canonical_slug
+      pointer: /data/282/canonical_slug
     catalog_created_at:
       value: 1781631930
-      pointer: /data/274/created
+      pointer: /data/282/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/274/context_length
+      pointer: /data/282/context_length
       unit: tokens
     default_parameters:
       value:
@@ -46231,31 +47514,31 @@ records:
         temperature: 1
         top_k: null
         top_p: 0.95
-      pointer: /data/274/default_parameters
+      pointer: /data/282/default_parameters
     hugging_face_id:
       value: zai-org/GLM-5.2
-      pointer: /data/274/hugging_face_id
+      pointer: /data/282/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/274/architecture/input_modalities
+      pointer: /data/282/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/274/top_provider/is_moderated
+      pointer: /data/282/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/274/top_provider/max_completion_tokens
+      pointer: /data/282/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/274/architecture/output_modalities
+      pointer: /data/282/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000007"
-        input_cache_read: "0.0000000278"
-        prompt: "0.0000000288"
-      pointer: /data/274/pricing
+        completion: "0.00000242"
+        input_cache_read: "0.00000014"
+        prompt: "0.00000062"
+      pointer: /data/282/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -46279,13 +47562,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/274/supported_parameters
+      pointer: /data/282/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/274/architecture/tokenizer
+      pointer: /data/282/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/274/top_provider/context_length
+      pointer: /data/282/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -46294,49 +47577,49 @@ records:
   upstream_id: z-ai/glm-5.3
   name: "Z.ai: GLM 5.3"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/158
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/166
   facts:
     canonical_slug:
       value: z-ai/glm-5.3-20260816
-      pointer: /data/158/canonical_slug
+      pointer: /data/166/canonical_slug
     catalog_created_at:
       value: 1787086655
-      pointer: /data/158/created
+      pointer: /data/166/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/158/context_length
+      pointer: /data/166/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 0.95
-      pointer: /data/158/default_parameters
+      pointer: /data/166/default_parameters
     hugging_face_id:
       value: zai-org/GLM-5.3
-      pointer: /data/158/hugging_face_id
+      pointer: /data/166/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/158/architecture/input_modalities
+      pointer: /data/166/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/158/top_provider/is_moderated
+      pointer: /data/166/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/158/top_provider/max_completion_tokens
+      pointer: /data/166/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/158/architecture/output_modalities
+      pointer: /data/166/architecture/output_modalities
     pricing:
       value:
         completion: "0.0000048"
-        input_cache_read: "0.000000029"
-        prompt: "0.00000003"
-      pointer: /data/158/pricing
+        input_cache_read: "0.000000078"
+        prompt: "0.000000079"
+      pointer: /data/166/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -46360,13 +47643,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/158/supported_parameters
+      pointer: /data/166/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/158/architecture/tokenizer
+      pointer: /data/166/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/158/top_provider/context_length
+      pointer: /data/166/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -46375,51 +47658,51 @@ records:
   upstream_id: z-ai/glm-5.3-flash
   name: "Z.ai: GLM 5.3 Flash"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/143
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/151
   facts:
     canonical_slug:
       value: z-ai/glm-5.3-flash-20260826
-      pointer: /data/143/canonical_slug
+      pointer: /data/151/canonical_slug
     catalog_created_at:
       value: 1787752741
-      pointer: /data/143/created
+      pointer: /data/151/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/143/context_length
+      pointer: /data/151/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 0.95
-      pointer: /data/143/default_parameters
+      pointer: /data/151/default_parameters
     hugging_face_id:
       value: zai-org/GLM-5.3-Flash
-      pointer: /data/143/hugging_face_id
+      pointer: /data/151/hugging_face_id
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/143/architecture/input_modalities
+      pointer: /data/151/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/143/top_provider/is_moderated
+      pointer: /data/151/top_provider/is_moderated
     max_output_tokens:
-      value: 943717
-      pointer: /data/143/top_provider/max_completion_tokens
+      value: 943718
+      pointer: /data/151/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/143/architecture/output_modalities
+      pointer: /data/151/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000005"
-        input_cache_read: "0.00000003"
-        prompt: "0.00000015"
-      pointer: /data/143/pricing
+        completion: "0.000001125"
+        input_cache_read: "0.000000009"
+        prompt: "0.00000001584"
+      pointer: /data/151/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -46443,13 +47726,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/143/supported_parameters
+      pointer: /data/151/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/143/architecture/tokenizer
+      pointer: /data/151/architecture/tokenizer
     top_provider_context_window:
-      value: 1048575
-      pointer: /data/143/top_provider/context_length
+      value: 1048576
+      pointer: /data/151/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -46458,56 +47741,57 @@ records:
   upstream_id: z-ai/glm-5.3-flash:batch
   name: "Z.ai: GLM 5.3 Flash (batch)"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/144
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/152
   facts:
     canonical_slug:
       value: z-ai/glm-5.3-flash-20260826
-      pointer: /data/144/canonical_slug
+      pointer: /data/152/canonical_slug
     catalog_created_at:
       value: 1787752741
-      pointer: /data/144/created
+      pointer: /data/152/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/144/context_length
+      pointer: /data/152/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 0.95
-      pointer: /data/144/default_parameters
+      pointer: /data/152/default_parameters
     hugging_face_id:
       value: zai-org/GLM-5.3-Flash
-      pointer: /data/144/hugging_face_id
+      pointer: /data/152/hugging_face_id
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/144/architecture/input_modalities
+      pointer: /data/152/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/144/top_provider/is_moderated
+      pointer: /data/152/top_provider/is_moderated
     max_output_tokens:
       value: 131072
-      pointer: /data/144/top_provider/max_completion_tokens
+      pointer: /data/152/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/144/architecture/output_modalities
+      pointer: /data/152/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000002"
-        input_cache_read: "0.000000012"
-        prompt: "0.00000006"
-      pointer: /data/144/pricing
+        completion: "0.00000018"
+        input_cache_read: "0.00000001"
+        prompt: "0.00000005"
+      pointer: /data/152/pricing
     supported_parameters:
       value:
       - frequency_penalty
       - include_reasoning
       - logit_bias
+      - logprobs
       - max_tokens
       - min_p
       - presence_penalty
@@ -46522,14 +47806,15 @@ records:
       - tool_choice
       - tools
       - top_k
+      - top_logprobs
       - top_p
-      pointer: /data/144/supported_parameters
+      pointer: /data/152/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/144/architecture/tokenizer
+      pointer: /data/152/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/144/top_provider/context_length
+      pointer: /data/152/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -47130,45 +48415,45 @@ records:
   upstream_id: ~deepseek/deepseek-flash-latest
   name: "DeepSeek: DeepSeek Flash Latest"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/103
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/111
   facts:
     canonical_slug:
       value: ~deepseek/deepseek-flash-latest
-      pointer: /data/103/canonical_slug
+      pointer: /data/111/canonical_slug
     catalog_created_at:
       value: 1789399150
-      pointer: /data/103/created
+      pointer: /data/111/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/103/context_length
+      pointer: /data/111/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/103/default_parameters
+      pointer: /data/111/default_parameters
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/103/architecture/input_modalities
+      pointer: /data/111/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/103/top_provider/is_moderated
+      pointer: /data/111/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/103/top_provider/max_completion_tokens
+      pointer: /data/111/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/103/architecture/output_modalities
+      pointer: /data/111/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000000891"
+        completion: "0.000000684"
         input_cache_read: "0.0000000054"
-        prompt: "0.00000001368"
-      pointer: /data/103/pricing
+        prompt: "0.000000018"
+      pointer: /data/111/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -47191,13 +48476,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/103/supported_parameters
+      pointer: /data/111/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/103/architecture/tokenizer
+      pointer: /data/111/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/103/top_provider/context_length
+      pointer: /data/111/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -47206,46 +48491,46 @@ records:
   upstream_id: ~deepseek/deepseek-pro-latest
   name: "DeepSeek: DeepSeek Pro Latest"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/102
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/110
   facts:
     canonical_slug:
       value: ~deepseek/deepseek-pro-latest
-      pointer: /data/102/canonical_slug
+      pointer: /data/110/canonical_slug
     catalog_created_at:
       value: 1789399174
-      pointer: /data/102/created
+      pointer: /data/110/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/102/context_length
+      pointer: /data/110/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 1
-      pointer: /data/102/default_parameters
+      pointer: /data/110/default_parameters
     input_modalities:
       value:
       - text
-      pointer: /data/102/architecture/input_modalities
+      pointer: /data/110/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/102/top_provider/is_moderated
+      pointer: /data/110/top_provider/is_moderated
     max_output_tokens:
-      value: 393216
-      pointer: /data/102/top_provider/max_completion_tokens
+      value: 943718
+      pointer: /data/110/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/102/architecture/output_modalities
+      pointer: /data/110/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000008"
-        input_cache_read: "0.00000023"
-        prompt: "0.000000225"
-      pointer: /data/102/pricing
+        completion: "0.000005"
+        input_cache_read: "0.000000249"
+        prompt: "0.00000025"
+      pointer: /data/110/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -47268,13 +48553,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/102/supported_parameters
+      pointer: /data/110/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/102/architecture/tokenizer
+      pointer: /data/110/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/102/top_provider/context_length
+      pointer: /data/110/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -47283,44 +48568,44 @@ records:
   upstream_id: ~deepseek/deepseek-v4-flash-latest
   name: "DeepSeek: DeepSeek V4 Flash Latest"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/194
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/202
   facts:
     canonical_slug:
       value: ~deepseek/deepseek-v4-flash-latest
-      pointer: /data/194/canonical_slug
+      pointer: /data/202/canonical_slug
     catalog_created_at:
       value: 1785606009
-      pointer: /data/194/created
+      pointer: /data/202/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/194/context_length
+      pointer: /data/202/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/194/default_parameters
+      pointer: /data/202/default_parameters
     input_modalities:
       value:
       - text
-      pointer: /data/194/architecture/input_modalities
+      pointer: /data/202/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/194/top_provider/is_moderated
+      pointer: /data/202/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/194/top_provider/max_completion_tokens
+      pointer: /data/202/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/194/architecture/output_modalities
+      pointer: /data/202/architecture/output_modalities
     pricing:
       value:
         completion: "0.000000576"
-        input_cache_read: "0.0000000108"
-        prompt: "0.0000000144"
-      pointer: /data/194/pricing
+        input_cache_read: "0.00000000846"
+        prompt: "0.00000000846"
+      pointer: /data/202/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -47345,16 +48630,16 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/194/supported_parameters
+      pointer: /data/202/supported_parameters
     supported_voices:
       value: []
-      pointer: /data/194/supported_voices
+      pointer: /data/202/supported_voices
     tokenizer:
       value: Router
-      pointer: /data/194/architecture/tokenizer
+      pointer: /data/202/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/194/top_provider/context_length
+      pointer: /data/202/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -47523,19 +48808,19 @@ records:
   upstream_id: ~moonshotai/kimi-latest
   name: "MoonshotAI: Kimi Latest"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/337
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/345
   facts:
     canonical_slug:
       value: ~moonshotai/kimi-latest
-      pointer: /data/337/canonical_slug
+      pointer: /data/345/canonical_slug
     catalog_created_at:
       value: 1777318428
-      pointer: /data/337/created
+      pointer: /data/345/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/337/context_length
+      pointer: /data/345/context_length
       unit: tokens
     default_parameters:
       value:
@@ -47545,30 +48830,30 @@ records:
         temperature: null
         top_k: null
         top_p: 0.95
-      pointer: /data/337/default_parameters
+      pointer: /data/345/default_parameters
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/337/architecture/input_modalities
+      pointer: /data/345/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/337/top_provider/is_moderated
+      pointer: /data/345/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/337/top_provider/max_completion_tokens
+      pointer: /data/345/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/337/architecture/output_modalities
+      pointer: /data/345/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000024"
-        input_cache_read: "0.00000028"
-        prompt: "0.00000029"
-      pointer: /data/337/pricing
+        completion: "0.000028"
+        input_cache_read: "0.000000284"
+        prompt: "0.000000294"
+      pointer: /data/345/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -47591,13 +48876,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/337/supported_parameters
+      pointer: /data/345/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/337/architecture/tokenizer
+      pointer: /data/345/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/337/top_provider/context_length
+      pointer: /data/345/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -48253,48 +49538,48 @@ records:
   upstream_id: ~z-ai/glm-flash-latest
   name: "Z.ai: GLM Flash Latest"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/140
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/148
   facts:
     canonical_slug:
       value: ~z-ai/glm-flash-latest
-      pointer: /data/140/canonical_slug
+      pointer: /data/148/canonical_slug
     catalog_created_at:
       value: 1787817633
-      pointer: /data/140/created
+      pointer: /data/148/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/140/context_length
+      pointer: /data/148/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 0.95
-      pointer: /data/140/default_parameters
+      pointer: /data/148/default_parameters
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/140/architecture/input_modalities
+      pointer: /data/148/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/140/top_provider/is_moderated
+      pointer: /data/148/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/140/top_provider/max_completion_tokens
+      pointer: /data/148/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/140/architecture/output_modalities
+      pointer: /data/148/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000009"
-        input_cache_read: "0.00000001125"
-        prompt: "0.000000036"
-      pointer: /data/140/pricing
+        completion: "0.000001125"
+        input_cache_read: "0.000000009"
+        prompt: "0.00000001584"
+      pointer: /data/148/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -48318,13 +49603,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/140/supported_parameters
+      pointer: /data/148/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/140/architecture/tokenizer
+      pointer: /data/148/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/140/top_provider/context_length
+      pointer: /data/148/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -48333,46 +49618,46 @@ records:
   upstream_id: ~z-ai/glm-latest
   name: "Z.ai: GLM Latest"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/156
+    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+    pointer: /data/164
   facts:
     canonical_slug:
       value: ~z-ai/glm-latest
-      pointer: /data/156/canonical_slug
+      pointer: /data/164/canonical_slug
     catalog_created_at:
       value: 1787151053
-      pointer: /data/156/created
+      pointer: /data/164/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/156/context_length
+      pointer: /data/164/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 0.95
-      pointer: /data/156/default_parameters
+      pointer: /data/164/default_parameters
     input_modalities:
       value:
       - text
-      pointer: /data/156/architecture/input_modalities
+      pointer: /data/164/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/156/top_provider/is_moderated
+      pointer: /data/164/top_provider/is_moderated
     max_output_tokens:
       value: 131072
-      pointer: /data/156/top_provider/max_completion_tokens
+      pointer: /data/164/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/156/architecture/output_modalities
+      pointer: /data/164/architecture/output_modalities
     pricing:
       value:
         completion: "0.0000044"
-        input_cache_read: "0.0000000223"
-        prompt: "0.000000024"
-      pointer: /data/156/pricing
+        input_cache_read: "0.0000000565"
+        prompt: "0.0000000608"
+      pointer: /data/164/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -48396,11 +49681,11 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/156/supported_parameters
+      pointer: /data/164/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/156/architecture/tokenizer
+      pointer: /data/164/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/156/top_provider/context_length
+      pointer: /data/164/top_provider/context_length
       unit: tokens

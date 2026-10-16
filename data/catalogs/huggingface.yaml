@@ -1,6 +1,325 @@
 schema_version: 1
 source: huggingface
+last_sync:
+  completed_at: "2026-10-16T07:13:53.811999247Z"
+  returned_ids:
+  - huggingface:model:Alibaba-NLP/gme-Qwen2-VL-2B-Instruct
+  - huggingface:model:Alibaba-NLP/gte-multilingual-base
+  - huggingface:model:Alibaba-NLP/gte-multilingual-reranker-base
+  - huggingface:model:BAAI/BGE-VL-large
+  - huggingface:model:BAAI/bge-code-v1
+  - huggingface:model:BAAI/bge-m3
+  - huggingface:model:BAAI/bge-reranker-v2-m3
+  - huggingface:model:CohereLabs/Cohere-embed-multilingual-v3.0
+  - huggingface:model:CohereLabs/command-a-plus-05-2026-bf16
+  - huggingface:model:CohereLabs/command-a-vision-07-2025
+  - huggingface:model:FunAudioLLM/Fun-ASR-Nano-2512
+  - huggingface:model:FunAudioLLM/Fun-CosyVoice3-0.5B-2512
+  - huggingface:model:FunAudioLLM/SenseVoiceSmall
+  - huggingface:model:HuggingFaceTB/SmolLM3-3B
+  - huggingface:model:HuggingFaceTB/SmolVLM2-500M-Video-Instruct
+  - huggingface:model:IDEA-Research/grounding-dino-base
+  - huggingface:model:InstaDeepAI/nucleotide-transformer-v2-500m-multi-species
+  - huggingface:model:Lightricks/LTX-2.5
+  - huggingface:model:MiniMaxAI/MiniMax-H3
+  - huggingface:model:MiniMaxAI/MiniMax-M3
+  - huggingface:model:MiniMaxAI/MiniMax-VL-01
+  - huggingface:model:Prior-Labs/TabPFN-v2-clf
+  - huggingface:model:Prior-Labs/TabPFN-v2-reg
+  - huggingface:model:Qwen/Qwen-Image-2.1
+  - huggingface:model:Qwen/Qwen-Image-Edit-2511
+  - huggingface:model:Qwen/Qwen-Image-Layered
+  - huggingface:model:Qwen/Qwen2.5-Coder-7B-Instruct
+  - huggingface:model:Qwen/Qwen2.5-VL-7B-Instruct
+  - huggingface:model:Qwen/Qwen3-8B
+  - huggingface:model:Qwen/Qwen3-Embedding-0.6B
+  - huggingface:model:Qwen/Qwen3-Reranker-4B
+  - huggingface:model:Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice
+  - huggingface:model:Qwen/Qwen3-VL-8B-Instruct
+  - huggingface:model:Qwen/Qwen3.6-35B-A3B
+  - huggingface:model:Qwen/Qwen3.8-27B
+  - huggingface:model:Qwen/Qwen3.8-Flash-Next
+  - huggingface:model:Wan-AI/Wan2.2-Animate-14B
+  - huggingface:model:Wan-AI/Wan2.2-I2V-A14B
+  - huggingface:model:Wan-AI/Wan2.2-S2V-14B
+  - huggingface:model:Wan-AI/Wan2.2-T2V-A14B
+  - huggingface:model:allenai/Molmo2-8B
+  - huggingface:model:allenai/OLMoE-1B-7B-0125-Instruct
+  - huggingface:model:allenai/Olmo-3-7B-Think
+  - huggingface:model:allenai/Olmo-3.1-32B-Instruct
+  - huggingface:model:allenai/olmOCR-2-7B-1025
+  - huggingface:model:allenai/wildguard
+  - huggingface:model:amazon/chronos-2
+  - huggingface:model:amazon/chronos-bolt-small
+  - huggingface:model:amazon/chronos-t5-small
+  - huggingface:model:apple/DepthPro
+  - huggingface:model:biohub/ESMC-300M
+  - huggingface:model:biohub/ESMC-6B
+  - huggingface:model:biohub/ESMFold2
+  - huggingface:model:black-forest-labs/FLUX.1-Kontext-dev
+  - huggingface:model:black-forest-labs/FLUX.1-schnell
+  - huggingface:model:black-forest-labs/FLUX.2-dev
+  - huggingface:model:black-forest-labs/FLUX.2-klein-4B
+  - huggingface:model:deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct
+  - huggingface:model:deepseek-ai/DeepSeek-OCR-2
+  - huggingface:model:deepseek-ai/DeepSeek-Prover-V2-7B
+  - huggingface:model:deepseek-ai/DeepSeek-R1
+  - huggingface:model:deepseek-ai/DeepSeek-V3.2
+  - huggingface:model:deepseek-ai/DeepSeek-V4-Pro-0813
+  - huggingface:model:deepseek-ai/DeepSeek-V4.1-Flash
+  - huggingface:model:deepseek-ai/deepseek-vl2-tiny
+  - huggingface:model:depth-anything/Depth-Anything-V2-Small-hf
+  - huggingface:model:facebook/VGGT-1B
+  - huggingface:model:facebook/detr-resnet-50
+  - huggingface:model:facebook/dinov2-base
+  - huggingface:model:facebook/dinov3-vitl16-pretrain-lvd1689m
+  - huggingface:model:facebook/esm2_t33_650M_UR50D
+  - huggingface:model:facebook/musicgen-medium
+  - huggingface:model:facebook/sam2.1-hiera-large
+  - huggingface:model:facebook/sam3
+  - huggingface:model:facebook/vjepa2-vitl-fpc64-256
+  - huggingface:model:fishaudio/s2-pro
+  - huggingface:model:google/diffusiongemma-26B-A4B-it
+  - huggingface:model:google/embeddinggemma-300m
+  - huggingface:model:google/flan-t5-base
+  - huggingface:model:google/gemma-3-4b-it
+  - huggingface:model:google/gemma-4-26B-A4B-it
+  - huggingface:model:google/gemma-4-E2B-it
+  - huggingface:model:google/owlv2-base-patch16-ensemble
+  - huggingface:model:google/siglip2-base-patch16-naflex
+  - huggingface:model:google/timesfm-2.0-500m-pytorch
+  - huggingface:model:google/timesfm-2.5-200m-pytorch
+  - huggingface:model:hexgrad/Kokoro-82M
+  - huggingface:model:ibm-granite/granite-4.2-8b
+  - huggingface:model:ibm-granite/granite-docling-258M
+  - huggingface:model:ibm-granite/granite-embedding-311m-multilingual-r2
+  - huggingface:model:ibm-granite/granite-guardian-4.1-8b
+  - huggingface:model:ibm-granite/granite-vision-4.1-4b
+  - huggingface:model:ibm-nasa-geospatial/Prithvi-EO-2.0-300M
+  - huggingface:model:ibm-nasa-geospatial/Prithvi-WxC-1.0-2300M
+  - huggingface:model:intfloat/e5-mistral-7b-instruct
+  - huggingface:model:intfloat/multilingual-e5-large
+  - huggingface:model:jinaai/jina-code-embeddings-0.5b
+  - huggingface:model:jinaai/jina-colbert-v2
+  - huggingface:model:jinaai/jina-embeddings-v5-omni-small
+  - huggingface:model:jinaai/jina-reranker-v3.5
+  - huggingface:model:meta-llama/Llama-3.1-8B-Instruct
+  - huggingface:model:meta-llama/Llama-3.2-11B-Vision-Instruct
+  - huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+  - huggingface:model:meta-llama/Llama-4-Scout-17B-16E-Instruct
+  - huggingface:model:meta-llama/Llama-Guard-4-12B
+  - huggingface:model:meta-llama/Llama-Prompt-Guard-2-86M
+  - huggingface:model:microsoft/Florence-2-large
+  - huggingface:model:microsoft/Phi-3.5-vision-instruct
+  - huggingface:model:microsoft/Phi-4-mini-instruct
+  - huggingface:model:microsoft/TRELLIS.2-4B
+  - huggingface:model:microsoft/VibeVoice-ASR
+  - huggingface:model:microsoft/phi-4
+  - huggingface:model:microsoft/table-transformer-detection
+  - huggingface:model:microsoft/table-transformer-structure-recognition
+  - huggingface:model:mistralai/Devstral-Small-2-24B-Instruct-2512
+  - huggingface:model:mistralai/Magistral-Small-2506
+  - huggingface:model:mistralai/Mistral-7B-Instruct-v0.3
+  - huggingface:model:mistralai/Mistral-Medium-3.5-128B
+  - huggingface:model:mistralai/Mistral-Small-4-119B-2603
+  - huggingface:model:mistralai/Shieldstral-1.0-3B
+  - huggingface:model:moonshotai/Kimi-K2.7-Code
+  - huggingface:model:moonshotai/Kimi-K3
+  - huggingface:model:moonshotai/Kimi-VL-A3B-Instruct
+  - huggingface:model:nvidia/Cosmos-Reason2-2B
+  - huggingface:model:nvidia/GR00T-N1.7-3B
+  - huggingface:model:nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16
+  - huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+  - huggingface:model:nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16
+  - huggingface:model:nvidia/bigvgan_v2_22khz_80band_256x
+  - huggingface:model:nvidia/llama-nemotron-embed-1b-v2
+  - huggingface:model:nvidia/llama-nemotron-rerank-1b-v2
+  - huggingface:model:nvidia/nemotron-3.5-asr-streaming-0.6b
+  - huggingface:model:nvidia/parakeet-tdt-0.6b-v3
+  - huggingface:model:nvidia/segformer-b0-finetuned-ade-512-512
+  - huggingface:model:openai/clip-vit-base-patch32
+  - huggingface:model:openai/whisper-large-v3-turbo
+  - huggingface:model:openvla/openvla-7b
+  - huggingface:model:physical-intelligence/fast
+  - huggingface:model:stabilityai/TripoSR
+  - huggingface:model:stabilityai/stable-audio-open-1.0
+  - huggingface:model:stabilityai/stable-cascade
+  - huggingface:model:stabilityai/stable-diffusion-3.5-large
+  - huggingface:model:stabilityai/stable-video-diffusion-img2vid-xt
+  - huggingface:model:stabilityai/stable-virtual-camera
+  - huggingface:model:tiiuae/Falcon-H1-7B-Instruct
+  - huggingface:model:tiiuae/Falcon-H1R-7B
+  - huggingface:model:wanglab/MedSAM2
+  - huggingface:model:zai-org/GLM-4.6V-Flash
+  - huggingface:model:zai-org/GLM-5.3
+  - huggingface:model:zai-org/GLM-5.3-Flash
+  - huggingface:model:zai-org/GLM-OCR
+  missing_ids: []
+  snapshot_ids:
+  - huggingface:0010b80b4eeb8e1e4e177dd9811e978f3c77f5049c4ee586d56962ae640bc5bf
+  - huggingface:00cee681d2b21c518389c993e6076f2a13c904094daa0bf88cca8bda2b2d5e2b
+  - huggingface:04b27666311df55f7657c602c7a6fdeab8b33647f0c7072d28c1268caf33ea30
+  - huggingface:06276d2016816d980a8e2393227f6cbb27a7ef40251baf1f384de86a6141a31d
+  - huggingface:071682b2c160eef50b5bf3e7666679b3f3a0824682ddb2d873a78221b2c5e98d
+  - huggingface:09ffe48203546108bd5633deebafe4137482e8ba53e4a53cfa83524096fa2d80
+  - huggingface:0c4393eab0cd3cc4737cfacfd07ba755697d3ce76e24c9699339d0c227108d75
+  - huggingface:0d30111d04ad14c0a54be270f7c386c99ccc00daa891a45f0b08c854259cc83f
+  - huggingface:0dc3758fd18f2c5396ec755cbdbb26c630e32d2f2de1432ee0e5a0b1bbef4303
+  - huggingface:0ff663377cddd60a500adcfcf4dbdd50fe3dcd023223a596311c759a41f863e5
+  - huggingface:106230263a28c96368ac77da21610763f8b447c379c0df92296b297cc0c1c83b
+  - huggingface:11181e5f1162c14323857084b503ac48742cd992e8163ce9838abb3bdd7d9aa8
+  - huggingface:118ca3ac7c153e641ff22ead6c756bbe880d70844dfb3a23d732f22c9cc4d168
+  - huggingface:16fc760937f89faf027b1406da293623690cae106b1032027708c1ea4e0664ae
+  - huggingface:1b19fe8730f06b57b231ea0ebccde4155d1dff43671658d75d11f91f99d0d2fe
+  - huggingface:1d73df939bad20651578eb6fd4c77df22845e93766783101708d8cae6c91afb9
+  - huggingface:1e28e585f1f84c6be005a04de56deb23813d755cabe58ef4eca7bccd576db45c
+  - huggingface:1fe2c8c4265c220f45516632b7ae87ba5d0cfeb75d04e8e92bca90337a423fb8
+  - huggingface:24d36eeeac96618f1f45100bf1f4eca57c82abb8290186805b87195466de631b
+  - huggingface:253ecc78dda6218692567d29eb601c646eef8b918b068b6e80e2e0fa9ea29442
+  - huggingface:26a8f1ef31f5fe61b1dc4b8a978e8d6910c5ee649f83fe8aa084bc1b628d1700
+  - huggingface:2a10a258c53b356fce0fe1c8b83ccac1e4d4adf1c71218215d3f1160b1d64305
+  - huggingface:2c062c12205aecbf81d10cb7d6a6f1f2283aabab290c670244fb590b13dfff9a
+  - huggingface:2ef5f78f25b66b34ff69b5e6e51940173b257961329391a6a69328a5fa65dcca
+  - huggingface:2f1e7aa81ca360d21a3fb164239735916212c3e6c271b25b1c01a005a1e9d70d
+  - huggingface:3004b49b03bf7b4db2f0f73b35f8b0385f1b6dd944790a05c80eb5d044bf4998
+  - huggingface:304f319bfa7fe626d96dc598bfb8400a04252ee59e2d4bb4d50026c0c2dc89f4
+  - huggingface:3064990589a7ed85a937a4cc12ea411a362337c00bc951c020e022ecaaceee31
+  - huggingface:31d2f8536c2fc6b45e8216ad48b56055de197e8b4698d645b0f0108ec57b95f5
+  - huggingface:34265bc5d853b7f2852643a4c82e32974517af9bc35a7c1c42b8bea941280af7
+  - huggingface:35a70582e129fd4a7bee468ceca2c7b6479a9ec83a547da794d93638f2ffcc9a
+  - huggingface:369ce5ad0cc3a718c220031eff80f0cdb9ab689d5dd0c3b1cfc28743e2ce257f
+  - huggingface:37415dd48723551c1d9f88b1a3b1a53324fd38013f4d2b361c7ccf0a6de0e27d
+  - huggingface:376d7f22e7de010244ba4f7dda62043bdfc1a097ae7db1dcde258afe9e44a594
+  - huggingface:37e2ead6c06174681a79052b057aeeef7d2d996b94ccd664bb60deac40ab3c33
+  - huggingface:395740d0d17a6955a4e9a6cbc9447e6f184e7e5260ebca947d605c3bb2b7bb13
+  - huggingface:3ce91c325df6b0521f124557d1fad02c7caa93936d6f2316e318a7e29e8dc090
+  - huggingface:3d9ae2f668a27301a01df590506826ea7339ff85eafd64eeecbda968c6237917
+  - huggingface:3e9b83bc7d35a3d69f1b797bd8ac00e8d7e8c80f4b9b82b51a2ce145221da061
+  - huggingface:431ed4815d1cd19fdfb5e40db2a7409ad84c3593518537332ffd187f897e82b1
+  - huggingface:45e7969b2ed9e70aa58baf1bb15d4035bf7cbe3a81d8c256429fe35a2782c915
+  - huggingface:46984419d4a64eced77ad9b28adff5802bbb6f626c67b4ac20355d775a3fa740
+  - huggingface:46e4b61b55b792210b8bd33da1daae4972eb410cb44c6776ce2424aa93d79418
+  - huggingface:481ed9d44e2696f3e7a268d24c3d15378e54ee50876dd4123a32a0b2cd79fb7c
+  - huggingface:48c3e233ac990973365fe29dcdfc99d8716a1ce309aff66f149cb739887c0650
+  - huggingface:49913eb29847b6cd1350573eb0e8d1e79d5ac8a067ea1d6c4b8ab046ee2bc9f3
+  - huggingface:4b53de1af396c0c61875f5e829bafc7c30b7e33cf42b26d40c1a106bf7abe454
+  - huggingface:4e7e11a19765775431ca20f9c8ede47abc8f86f395113c08e231d37e534d9167
+  - huggingface:540a253d3d351517971233a61e3d5ad6a22461fcd7c9e30e2a930f7cb0d439cd
+  - huggingface:582f169a3f602bafaff4b6971d3f0faa3609c2410293cf74261c1a444e9471a6
+  - huggingface:5cf83db58aab2a64b78f1a8c65623fb3cd811ce4e1b5fc95f42d6e5164282544
+  - huggingface:5d55a9a2e50049183756697ca8f0c80b71bb2e4002efee5bddfbf0c2cdb16dd8
+  - huggingface:6102ebef7e01926b9d47c604cf4e288ff9917e785caaf914a5b70dbc9974b6fd
+  - huggingface:612f80e295b6359022c23c82672950c648c99e6d1af017164acc37f2c208fd7b
+  - huggingface:6243934d6c0a82bf82161543bd5a65d285437046be3f801570f0f578f562a580
+  - huggingface:6391df1ee71ffbd5dfa535945f497dfa864f221b22886d0feec409db7f7bb12a
+  - huggingface:64f40b699ec05822d7124eb886f79fc3cb2114d32a240da014a05360d3536f78
+  - huggingface:6517f52da81e04ac7a9454f27af232f465a54dd1854c6da5bc7bd154ec8b6c5f
+  - huggingface:65bccd8927f63a27d5a5641d5deda65e9d4520d24ef8c8a84d84ab8a821c7b26
+  - huggingface:66433bc497ae1970f73d97f664aca3467e03b4040279a507edfe04f87574b38d
+  - huggingface:67ddbeaccc86c5004b7932927063a65245d348eec197332820abb6a4a4f56228
+  - huggingface:681c72a237f270238b96df1c9d581a4fa807913c666dc0b8c9eb00df3be5ece9
+  - huggingface:68518663591fce2b00dd5a30d9f11e91d4ddaba3f01d826852508c5bf778e655
+  - huggingface:69496da5ac680c472ee1647aa45c51db951a63c1362264f2a7b217b32dfe8a21
+  - huggingface:6b5e94cee006bbdbf9d8eec14cd50eb9d8d56ca37e47a4f909328f579f52abee
+  - huggingface:6b887bd09d9ced2ed5ff6da92a0d55b6ef74e96c2706323cfa8f976ecbeac5e1
+  - huggingface:6dc6a54d1a155d0c960596aecaa77ad08503c4ebbba67cd941f329626fc466c7
+  - huggingface:6f18a563971246e1144ecc302c61d777bd20bacaff6bbcc07611458d4bc37417
+  - huggingface:6f88511b8cf769772088015a404a88f88556c72f288f02e960bd2f06ec60763d
+  - huggingface:6f9746e4cdebc0d141e201005e3085c7287e7abaddee4df2d51dec5e23d54e3c
+  - huggingface:70c9f84de9c6ba95a69b2ec2fc9545cbf466e208f8e76844bc7547865ce46bc7
+  - huggingface:71f810c11c905e08eecd0797162b0db6f5d4c55cf0fc71bb921bacd2e545539e
+  - huggingface:78238080f78eaaea9bd15044611a0df4fb87df788550010ba9f1ab83c72bd385
+  - huggingface:78a6d4649edb05708406a45c36d772cefcd7097b2912bdc8d0388fb12fc76f95
+  - huggingface:78ce2c7d68963163c67d7b6489c138737cec8cb0c5454db409cac48e83833be4
+  - huggingface:79bb3c262b2d019654b9f501a7686ca7f587f57de271a005fd0ca4c2fd2a9f9b
+  - huggingface:7ade34d990dc530a7672d467192568035368f5f3a0fe839a88a7ac6f6a20dad0
+  - huggingface:7ca574853e1a3877ecbce18a63a710efd80c401e591e2370929a6fde11daebef
+  - huggingface:7cc09fc8bdd43b4331fd41a4596105d14460c41e9dd6fd4f7d9aa227dd0f4b7f
+  - huggingface:7fac21180024310b4e7ff8f79db90353fc9d2b07fdd464a6c475cbf8a3a8264e
+  - huggingface:805f6e62a4e7926ffb1705a6f2e247b10418725d6f773d5b01a9e65d8c3b61e0
+  - huggingface:82d7888bf942d516940207172a3dc908abe0a4f214462a9b7ad46cb1f947777d
+  - huggingface:82e34d05d99efe4ee37d53e15512611b1f6cd1c0aef1ece51e8e1df606ae0ba4
+  - huggingface:8662dbd0613ad6ad88bcf79a75602f56f28c9288ec3b495139967975f2f51d49
+  - huggingface:89e9c3dd520a5442b243e448bd0219188a670986c4223a7fc9bea7bdf1665dec
+  - huggingface:8d7deaaa776b4be96a5ae7277c3a1eaca2fd1ec40d7e0f33fcfdfbeb3264e57d
+  - huggingface:8e78012931ce0f6f84c7e6256d94cccf059982e811512990c8ed1bc9a25a4a63
+  - huggingface:8fb511e2a179f5d045ef0ae955adc41d4088ec6fd56aed9cfd762f4d9fadd3be
+  - huggingface:93e08bf0c218a0587b0c670cbd2e423d04e50db249ba8fa61ce77e571790a40e
+  - huggingface:94b2d014f1f2937c8ffa4bd5e3fd92315d056d1611756852dd542055f9deec76
+  - huggingface:9573aa23cf1a024d8bed50fcd6d0bb61b428fa12a36805dba45103550cba1288
+  - huggingface:95f2d96650ad2c363aaae2a3c87b6fcd23d0173bd37fb6bd2023729e5d08283b
+  - huggingface:98332133782f1ec5710973cb3b4966fdc3fb63bef93afdd543e906540db732a3
+  - huggingface:9f5e9199ce16eaa326dad9b4f94697015daeac4e513aee51d6dcd9f7286858b1
+  - huggingface:a256e8219c8a92ad631557288220487a0042a132cadcdf684d55b7073b8a1415
+  - huggingface:a44b34a40836b4b6b0c3d977396c78b1a4fe87046f8343c48b6b2b34f85d2d40
+  - huggingface:a4a6a08dd04be550cb04acfd96d9b14ab6db78227ebb27652456bf8a82be09cc
+  - huggingface:a6149b800751517183b0ef4bdf46d76dbf58357fd49dbfc15b6d8a1a7c91fc66
+  - huggingface:a66d2acb6c5417d77f21f05ca97acf98dd4bfc5a0841e40d67cb3a9e7961c9c2
+  - huggingface:a9e283a468337da7982cac2a1449e90ce149d7420f83d3c674951304852ab0b1
+  - huggingface:aad4bfbce6fc83b45d17ad1e7691dd38055b483929696a7ccff1e0fe01147fe5
+  - huggingface:aaf2721afc4de7fe13cca4e799ffa26a160f78db7bc9130c05d96c080dbca7b8
+  - huggingface:ad1da550357df1a973f4e2834461beb13c59cfaaf582c82064801e39aa898c21
+  - huggingface:aeec1d9911c932ef726cefdd9b0fd78cb106b4ebabde694c8437ff28adebc8ff
+  - huggingface:af48441af2bec2da04763650457fe1abf8b0b0826989cc56588f8b0771b69f18
+  - huggingface:af6b2c676f58cd77c56f56d08d6b880fc88a70be716bd962125a97264df4403c
+  - huggingface:b1c64fc753f1e26bc4d791e84f45a051f5c346695a46fb44fb6c03517cc74f40
+  - huggingface:b1f91fc06412ab3700e81e50588953ee4edd2ed13b73957543d0a39580e65abb
+  - huggingface:b38319ce5fab8b0aedd5c5561c811f02d2b0e5b13511b07069e0be50f1c4e059
+  - huggingface:b41af8e67029aadf56fe178e9221a876c6f7fd1c469d090e216f4d33b6e899ab
+  - huggingface:b55a43e71bca83455bf080e26d80cf51783d20cde5f0c3c089f08f1f531c0d3c
+  - huggingface:b7d7d35708b6a054ebb56ba03c7b17f1e822b7581e5d38c65ef7261ee63dae06
+  - huggingface:b81dd54fb74201d83c697f3716df87812fdaaa1d1be78678a2b1e9592f9573a7
+  - huggingface:be6e1b3bb71fda4008219aa95076b9158d09b6092cc42ef236d1f70fa65cb2fa
+  - huggingface:bfc7520bdd5417d7e8630e021aace6cb0cf0dcb7cd90a866ffaa7fe4541e6d35
+  - huggingface:bfdd3bddb59f28b61273f926a5b2efd29feb22dc4392eaf6926bfa389b4e8d66
+  - huggingface:c33d7abe4f623ea076c2ddca65f9d70ce51c984aef4c2ee24451f42143a9ff32
+  - huggingface:c3aa331da870eb2495988c021cbf1d95ed499a1ed34026f111b4e4952fa0582b
+  - huggingface:c63bca27291b46a9548a5a2d14e335e7b3cc9470280d276b86793d89b96b2bdc
+  - huggingface:c6ece5d3bd1dbeb5b4d54d3cdc9dbe1bcfe92bf2613faa33bef760b799a9dc6d
+  - huggingface:cc9acd840b75f36e24c399f8fdadbc877d4a78425158095007bb1f6c4eefc3b2
+  - huggingface:ce4b8cbac53a122f370098022c9ac74377839a28a9659ab8c960803e8149afdb
+  - huggingface:cfa784dca3fd709b38cbbfbbd8e3b6a311a4f5ab3ac61699d2a52727f9a03540
+  - huggingface:d2ecde2e29a896bd044c610c056c3c63248e6cfc01fb655e920c570ed465a34a
+  - huggingface:d4de723cb1519beeae5e6425b639cbb6dc16cac822497a7c379bbcdcda6f8e44
+  - huggingface:d82a9e93c76c8d39f39eac97af5a42109e7c9271b79707cd72025d996034a5b3
+  - huggingface:d8bdef0f7f22583d1724d1af8ed2bad111f214d9b75c818c40c30eea0b581748
+  - huggingface:d94031d45c7f712971015bd8979828b58e151b665033a8facddc98a9976c3592
+  - huggingface:d98dc74cbf5fe33b6dab4997bb9fcac2762ed29fe94b5a567413585bb65efa7d
+  - huggingface:da927ff6d73a6fb42abcc4422caf7a0e83b1a579ae9b2a83ef1dc5efe4c3e873
+  - huggingface:dc8506d983816521a2eb3ead8fd1b6eeee4c6ede0d01e3d5bc1ffc2cd799b2d2
+  - huggingface:ddbc5be2af18dfae67a62e556aa4f41dd3ce5444805053745fdfcb0d9af27c48
+  - huggingface:df3f98d7d4d40e6f3e0414887e5abd7899980941739e9cbf9a284276a82bc96d
+  - huggingface:e200506c120ebfeca70b0ea082b75cbf2eb4f437eb21f8de29748070662b61e3
+  - huggingface:e2af52f94e68cfad1eb6e4462cfd60b9a0852ae43b49f290961aca5d71cd82fa
+  - huggingface:e4d2fc2a6b0ad08ac6895e1b554bbcecbd6cf2386987a0818e29ed6a6c95bad1
+  - huggingface:e613d09b363ddb26c2262f246d6feb0f2dce92388d1f563dc42e982bd256b095
+  - huggingface:e642ada3b9a126ca15c0f3cb76d81d65209a534af1e49247b00df2861f9238ee
+  - huggingface:e707dd0cbb1d1a34f11948757a6d3500dab1e2e09acce886a5018e3d43e0e821
+  - huggingface:e87743b901b9ca0ea04bcc689735c4db8717c750c19cc2edaf4977b6832bc3af
+  - huggingface:e8d321cfbb6eb01c706246011a7d2e9df6bdfe2222edf702fa604e6db289e3e9
+  - huggingface:ebf5d12639b7966c743d44f93257c2e4e60e030aa7d62502443462f02017653a
+  - huggingface:ee8dd15abcd8e0b855e736afeb50454aa2cb0b7ea5c84d6e749c12de8e398ed5
+  - huggingface:f16a8e8b552592dbec8d5b138abc645ebb62646bd259d7b9040747a55c64f9ae
+  - huggingface:f30496341e7355473910bda1dd4848edfef720c1bdecbb963982f19d7a6c934a
+  - huggingface:f38306487d00196f57892420684b79c7c7fb62b7b2e43c6dd2b2ac29b81fb7f4
+  - huggingface:f7588a0441dfe3b8250d19337f89c6223e21d68784ea432028c2561bac377546
+  - huggingface:fae23b5e053d0f71a85a427192c3fe388f092fe4f75f3c292f430d0945ad64c4
+  - huggingface:fc182026f823fc276777b3e357a71584c884fdab36ce5db18082a95f75a2e755
+  - huggingface:fd2bf4d7d4339ba4c449aa50d4362993a7adc939e4b11a7f7f575595c9f3625d
+  - huggingface:fed6a604dcfcfa385bc92d5d47fd489f545863f9abde0947a15df447c0ff86e6
 snapshots:
+- schema_version: 1
+  id: huggingface:0010b80b4eeb8e1e4e177dd9811e978f3c77f5049c4ee586d56962ae640bc5bf
+  source: huggingface
+  url: https://huggingface.co/api/models/meta-llama/Llama-Prompt-Guard-2-86M
+  retrieved_at: "2026-10-16T07:00:28.117182556Z"
+  sha256: 0010b80b4eeb8e1e4e177dd9811e978f3c77f5049c4ee586d56962ae640bc5bf
+- schema_version: 1
+  id: huggingface:00cee681d2b21c518389c993e6076f2a13c904094daa0bf88cca8bda2b2d5e2b
+  source: huggingface
+  url: https://huggingface.co/api/models/HuggingFaceTB/SmolVLM2-500M-Video-Instruct
+  retrieved_at: "2026-10-16T07:13:45.131631576Z"
+  sha256: 00cee681d2b21c518389c993e6076f2a13c904094daa0bf88cca8bda2b2d5e2b
 - schema_version: 1
   id: huggingface:022b87d7e50b42ed15920a9eb339df67324d891163ee1c78fa31c33268d717a8
   source: huggingface
@@ -14,11 +333,71 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:50.412242442Z"
   sha256: 04b27666311df55f7657c602c7a6fdeab8b33647f0c7072d28c1268caf33ea30
 - schema_version: 1
+  id: huggingface:06276d2016816d980a8e2393227f6cbb27a7ef40251baf1f384de86a6141a31d
+  source: huggingface
+  url: https://huggingface.co/api/models/google/gemma-4-E2B-it
+  retrieved_at: "2026-10-16T07:00:26.461635378Z"
+  sha256: 06276d2016816d980a8e2393227f6cbb27a7ef40251baf1f384de86a6141a31d
+- schema_version: 1
+  id: huggingface:071682b2c160eef50b5bf3e7666679b3f3a0824682ddb2d873a78221b2c5e98d
+  source: huggingface
+  url: https://huggingface.co/api/models/openai/whisper-large-v3-turbo
+  retrieved_at: "2026-10-16T07:00:30.149923372Z"
+  sha256: 071682b2c160eef50b5bf3e7666679b3f3a0824682ddb2d873a78221b2c5e98d
+- schema_version: 1
   id: huggingface:0780a304386568fade5ac42dc35d275fdded1857e39cf06668c10637551e12ba
   source: huggingface
   url: https://huggingface.co/api/models/ibm-granite/granite-4.2-8b
   retrieved_at: "2026-10-15T08:21:52.91623613Z"
   sha256: 0780a304386568fade5ac42dc35d275fdded1857e39cf06668c10637551e12ba
+- schema_version: 1
+  id: huggingface:09ffe48203546108bd5633deebafe4137482e8ba53e4a53cfa83524096fa2d80
+  source: huggingface
+  url: https://huggingface.co/api/models/zai-org/GLM-5.3-Flash
+  retrieved_at: "2026-10-16T07:13:53.634633397Z"
+  sha256: 09ffe48203546108bd5633deebafe4137482e8ba53e4a53cfa83524096fa2d80
+- schema_version: 1
+  id: huggingface:0c4393eab0cd3cc4737cfacfd07ba755697d3ce76e24c9699339d0c227108d75
+  source: huggingface
+  url: https://huggingface.co/api/models/facebook/dinov3-vitl16-pretrain-lvd1689m
+  retrieved_at: "2026-10-16T07:13:48.48958825Z"
+  sha256: 0c4393eab0cd3cc4737cfacfd07ba755697d3ce76e24c9699339d0c227108d75
+- schema_version: 1
+  id: huggingface:0d30111d04ad14c0a54be270f7c386c99ccc00daa891a45f0b08c854259cc83f
+  source: huggingface
+  url: https://huggingface.co/api/models/black-forest-labs/FLUX.1-schnell
+  retrieved_at: "2026-10-16T07:00:24.459486801Z"
+  sha256: 0d30111d04ad14c0a54be270f7c386c99ccc00daa891a45f0b08c854259cc83f
+- schema_version: 1
+  id: huggingface:0dc3758fd18f2c5396ec755cbdbb26c630e32d2f2de1432ee0e5a0b1bbef4303
+  source: huggingface
+  url: https://huggingface.co/api/models/google/embeddinggemma-300m
+  retrieved_at: "2026-10-16T07:00:26.111383684Z"
+  sha256: 0dc3758fd18f2c5396ec755cbdbb26c630e32d2f2de1432ee0e5a0b1bbef4303
+- schema_version: 1
+  id: huggingface:0ff663377cddd60a500adcfcf4dbdd50fe3dcd023223a596311c759a41f863e5
+  source: huggingface
+  url: https://huggingface.co/api/models/moonshotai/Kimi-K3
+  retrieved_at: "2026-10-16T07:00:29.125190493Z"
+  sha256: 0ff663377cddd60a500adcfcf4dbdd50fe3dcd023223a596311c759a41f863e5
+- schema_version: 1
+  id: huggingface:106230263a28c96368ac77da21610763f8b447c379c0df92296b297cc0c1c83b
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen3.8-Flash-Next
+  retrieved_at: "2026-10-16T07:00:23.191904568Z"
+  sha256: 106230263a28c96368ac77da21610763f8b447c379c0df92296b297cc0c1c83b
+- schema_version: 1
+  id: huggingface:11181e5f1162c14323857084b503ac48742cd992e8163ce9838abb3bdd7d9aa8
+  source: huggingface
+  url: https://huggingface.co/api/models/meta-llama/Llama-3.3-70B-Instruct
+  retrieved_at: "2026-10-16T07:13:50.764175291Z"
+  sha256: 11181e5f1162c14323857084b503ac48742cd992e8163ce9838abb3bdd7d9aa8
+- schema_version: 1
+  id: huggingface:118ca3ac7c153e641ff22ead6c756bbe880d70844dfb3a23d732f22c9cc4d168
+  source: huggingface
+  url: https://huggingface.co/api/models/microsoft/phi-4
+  retrieved_at: "2026-10-16T07:00:28.462020852Z"
+  sha256: 118ca3ac7c153e641ff22ead6c756bbe880d70844dfb3a23d732f22c9cc4d168
 - schema_version: 1
   id: huggingface:11ce3eaa30f1873bc88169b1433fbf2bef0d0a605e65e87ea980c24df7a3ea55
   source: huggingface
@@ -44,6 +423,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:53.040415993Z"
   sha256: 15e9015d541c88766144873edb89f3408a8462aa3527c2d76339c413da9884e9
 - schema_version: 1
+  id: huggingface:16fc760937f89faf027b1406da293623690cae106b1032027708c1ea4e0664ae
+  source: huggingface
+  url: https://huggingface.co/api/models/microsoft/table-transformer-detection
+  retrieved_at: "2026-10-16T07:13:51.433568883Z"
+  sha256: 16fc760937f89faf027b1406da293623690cae106b1032027708c1ea4e0664ae
+- schema_version: 1
   id: huggingface:16fdf1885220c94f89401bfd6cfd2537221a5c0a30577ef07b21fa4dbc32ace7
   source: huggingface
   url: https://huggingface.co/api/models/Qwen/Qwen-Image-Layered
@@ -55,6 +440,30 @@ snapshots:
   url: https://huggingface.co/api/models/FunAudioLLM/Fun-ASR-Nano-2512
   retrieved_at: "2026-10-15T08:21:47.876292721Z"
   sha256: 1b0ade2066ed21849d338f1197634ca4478c11bc4fd57273bc2600b8661234d0
+- schema_version: 1
+  id: huggingface:1b19fe8730f06b57b231ea0ebccde4155d1dff43671658d75d11f91f99d0d2fe
+  source: huggingface
+  url: https://huggingface.co/api/models/deepseek-ai/DeepSeek-V3.2
+  retrieved_at: "2026-10-16T07:13:47.991789919Z"
+  sha256: 1b19fe8730f06b57b231ea0ebccde4155d1dff43671658d75d11f91f99d0d2fe
+- schema_version: 1
+  id: huggingface:1d73df939bad20651578eb6fd4c77df22845e93766783101708d8cae6c91afb9
+  source: huggingface
+  url: https://huggingface.co/api/models/allenai/Olmo-3.1-32B-Instruct
+  retrieved_at: "2026-10-16T07:00:23.849685076Z"
+  sha256: 1d73df939bad20651578eb6fd4c77df22845e93766783101708d8cae6c91afb9
+- schema_version: 1
+  id: huggingface:1e28e585f1f84c6be005a04de56deb23813d755cabe58ef4eca7bccd576db45c
+  source: huggingface
+  url: https://huggingface.co/api/models/google/gemma-3-4b-it
+  retrieved_at: "2026-10-16T07:13:49.012180096Z"
+  sha256: 1e28e585f1f84c6be005a04de56deb23813d755cabe58ef4eca7bccd576db45c
+- schema_version: 1
+  id: huggingface:1fe2c8c4265c220f45516632b7ae87ba5d0cfeb75d04e8e92bca90337a423fb8
+  source: huggingface
+  url: https://huggingface.co/api/models/Wan-AI/Wan2.2-Animate-14B
+  retrieved_at: "2026-10-16T07:00:23.006197185Z"
+  sha256: 1fe2c8c4265c220f45516632b7ae87ba5d0cfeb75d04e8e92bca90337a423fb8
 - schema_version: 1
   id: huggingface:206466490789315db5ab898be1c49c018f8a72fcdaef7604b29686ca8f8cebc9
   source: huggingface
@@ -68,6 +477,18 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:56.630865158Z"
   sha256: 238c0a809bb60e72039c294bff362ae5fb350563fff0a07b0e4b099ec88be249
 - schema_version: 1
+  id: huggingface:24d36eeeac96618f1f45100bf1f4eca57c82abb8290186805b87195466de631b
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen3-Reranker-4B
+  retrieved_at: "2026-10-16T07:00:22.626037433Z"
+  sha256: 24d36eeeac96618f1f45100bf1f4eca57c82abb8290186805b87195466de631b
+- schema_version: 1
+  id: huggingface:253ecc78dda6218692567d29eb601c646eef8b918b068b6e80e2e0fa9ea29442
+  source: huggingface
+  url: https://huggingface.co/api/models/amazon/chronos-bolt-small
+  retrieved_at: "2026-10-16T07:00:24.094736867Z"
+  sha256: 253ecc78dda6218692567d29eb601c646eef8b918b068b6e80e2e0fa9ea29442
+- schema_version: 1
   id: huggingface:259246c42f756b3d0f0e45c530772ee3f459890e80cf3624f0e4516c2ee41ed5
   source: huggingface
   url: https://huggingface.co/api/models/MiniMaxAI/MiniMax-M3
@@ -79,6 +500,12 @@ snapshots:
   url: https://huggingface.co/api/models/FunAudioLLM/SenseVoiceSmall
   retrieved_at: "2026-10-15T08:21:48.085455555Z"
   sha256: 25bc1201e7f488a47674da59c4bb366e8bd2947235d542c291bf183de54ea0d3
+- schema_version: 1
+  id: huggingface:26a8f1ef31f5fe61b1dc4b8a978e8d6910c5ee649f83fe8aa084bc1b628d1700
+  source: huggingface
+  url: https://huggingface.co/api/models/hexgrad/Kokoro-82M
+  retrieved_at: "2026-10-16T07:00:26.750789492Z"
+  sha256: 26a8f1ef31f5fe61b1dc4b8a978e8d6910c5ee649f83fe8aa084bc1b628d1700
 - schema_version: 1
   id: huggingface:28aa038ff90925edfdd9d39d1da5d1116d5587ba9b7e966fe21c1076dac47cbe
   source: huggingface
@@ -116,11 +543,71 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:53.186146744Z"
   sha256: 2c062c12205aecbf81d10cb7d6a6f1f2283aabab290c670244fb590b13dfff9a
 - schema_version: 1
+  id: huggingface:2ef5f78f25b66b34ff69b5e6e51940173b257961329391a6a69328a5fa65dcca
+  source: huggingface
+  url: https://huggingface.co/api/models/deepseek-ai/DeepSeek-V4.1-Flash
+  retrieved_at: "2026-10-16T07:00:25.14595021Z"
+  sha256: 2ef5f78f25b66b34ff69b5e6e51940173b257961329391a6a69328a5fa65dcca
+- schema_version: 1
+  id: huggingface:2f1e7aa81ca360d21a3fb164239735916212c3e6c271b25b1c01a005a1e9d70d
+  source: huggingface
+  url: https://huggingface.co/api/models/meta-llama/Llama-3.1-8B-Instruct
+  retrieved_at: "2026-10-16T07:00:27.831846965Z"
+  sha256: 2f1e7aa81ca360d21a3fb164239735916212c3e6c271b25b1c01a005a1e9d70d
+- schema_version: 1
   id: huggingface:3004b49b03bf7b4db2f0f73b35f8b0385f1b6dd944790a05c80eb5d044bf4998
   source: huggingface
   url: https://huggingface.co/api/models/facebook/sam2.1-hiera-large
   retrieved_at: "2026-10-15T08:21:51.904533648Z"
   sha256: 3004b49b03bf7b4db2f0f73b35f8b0385f1b6dd944790a05c80eb5d044bf4998
+- schema_version: 1
+  id: huggingface:304f319bfa7fe626d96dc598bfb8400a04252ee59e2d4bb4d50026c0c2dc89f4
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen2.5-Coder-7B-Instruct
+  retrieved_at: "2026-10-16T07:00:21.840719254Z"
+  sha256: 304f319bfa7fe626d96dc598bfb8400a04252ee59e2d4bb4d50026c0c2dc89f4
+- schema_version: 1
+  id: huggingface:3064990589a7ed85a937a4cc12ea411a362337c00bc951c020e022ecaaceee31
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice
+  retrieved_at: "2026-10-16T07:00:22.150628876Z"
+  sha256: 3064990589a7ed85a937a4cc12ea411a362337c00bc951c020e022ecaaceee31
+- schema_version: 1
+  id: huggingface:31d2f8536c2fc6b45e8216ad48b56055de197e8b4698d645b0f0108ec57b95f5
+  source: huggingface
+  url: https://huggingface.co/api/models/Wan-AI/Wan2.2-S2V-14B
+  retrieved_at: "2026-10-16T07:00:23.526673914Z"
+  sha256: 31d2f8536c2fc6b45e8216ad48b56055de197e8b4698d645b0f0108ec57b95f5
+- schema_version: 1
+  id: huggingface:34265bc5d853b7f2852643a4c82e32974517af9bc35a7c1c42b8bea941280af7
+  source: huggingface
+  url: https://huggingface.co/api/models/biohub/ESMC-6B
+  retrieved_at: "2026-10-16T07:00:24.335216761Z"
+  sha256: 34265bc5d853b7f2852643a4c82e32974517af9bc35a7c1c42b8bea941280af7
+- schema_version: 1
+  id: huggingface:35a70582e129fd4a7bee468ceca2c7b6479a9ec83a547da794d93638f2ffcc9a
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen3-8B
+  retrieved_at: "2026-10-16T07:00:21.895913245Z"
+  sha256: 35a70582e129fd4a7bee468ceca2c7b6479a9ec83a547da794d93638f2ffcc9a
+- schema_version: 1
+  id: huggingface:369ce5ad0cc3a718c220031eff80f0cdb9ab689d5dd0c3b1cfc28743e2ce257f
+  source: huggingface
+  url: https://huggingface.co/api/models/meta-llama/Llama-Guard-4-12B
+  retrieved_at: "2026-10-16T07:00:28.079043167Z"
+  sha256: 369ce5ad0cc3a718c220031eff80f0cdb9ab689d5dd0c3b1cfc28743e2ce257f
+- schema_version: 1
+  id: huggingface:37415dd48723551c1d9f88b1a3b1a53324fd38013f4d2b361c7ccf0a6de0e27d
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen3.8-27B
+  retrieved_at: "2026-10-16T07:13:46.43180332Z"
+  sha256: 37415dd48723551c1d9f88b1a3b1a53324fd38013f4d2b361c7ccf0a6de0e27d
+- schema_version: 1
+  id: huggingface:376d7f22e7de010244ba4f7dda62043bdfc1a097ae7db1dcde258afe9e44a594
+  source: huggingface
+  url: https://huggingface.co/api/models/zai-org/GLM-OCR
+  retrieved_at: "2026-10-16T07:00:31.144047019Z"
+  sha256: 376d7f22e7de010244ba4f7dda62043bdfc1a097ae7db1dcde258afe9e44a594
 - schema_version: 1
   id: huggingface:37e2ead6c06174681a79052b057aeeef7d2d996b94ccd664bb60deac40ab3c33
   source: huggingface
@@ -128,11 +615,23 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:47.585862856Z"
   sha256: 37e2ead6c06174681a79052b057aeeef7d2d996b94ccd664bb60deac40ab3c33
 - schema_version: 1
+  id: huggingface:395740d0d17a6955a4e9a6cbc9447e6f184e7e5260ebca947d605c3bb2b7bb13
+  source: huggingface
+  url: https://huggingface.co/api/models/tiiuae/Falcon-H1-7B-Instruct
+  retrieved_at: "2026-10-15T08:28:19.280499345Z"
+  sha256: 395740d0d17a6955a4e9a6cbc9447e6f184e7e5260ebca947d605c3bb2b7bb13
+- schema_version: 1
   id: huggingface:3a5a5b9f0932862ce8ae9c8b4a8d2040efd8b424b302a6e49354961e77e861c1
   source: huggingface
   url: https://huggingface.co/api/models/biohub/ESMC-300M
   retrieved_at: "2026-10-15T08:21:50.627086361Z"
   sha256: 3a5a5b9f0932862ce8ae9c8b4a8d2040efd8b424b302a6e49354961e77e861c1
+- schema_version: 1
+  id: huggingface:3ce91c325df6b0521f124557d1fad02c7caa93936d6f2316e318a7e29e8dc090
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16
+  retrieved_at: "2026-10-16T07:00:29.393907257Z"
+  sha256: 3ce91c325df6b0521f124557d1fad02c7caa93936d6f2316e318a7e29e8dc090
 - schema_version: 1
   id: huggingface:3d15175a9444cc4f9b040125ff5fb8b5fdcf1be540e3b92557cd2630c805a254
   source: huggingface
@@ -146,6 +645,24 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:56.012989192Z"
   sha256: 3d1bb5ec1481ae5392b935cb74197e11c1fcfeb639e1aaac108ec0e09291176f
 - schema_version: 1
+  id: huggingface:3d9ae2f668a27301a01df590506826ea7339ff85eafd64eeecbda968c6237917
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen-Image-Layered
+  retrieved_at: "2026-10-16T07:00:21.627928907Z"
+  sha256: 3d9ae2f668a27301a01df590506826ea7339ff85eafd64eeecbda968c6237917
+- schema_version: 1
+  id: huggingface:3e9b83bc7d35a3d69f1b797bd8ac00e8d7e8c80f4b9b82b51a2ce145221da061
+  source: huggingface
+  url: https://huggingface.co/api/models/stabilityai/stable-audio-open-1.0
+  retrieved_at: "2026-10-16T07:00:30.418503599Z"
+  sha256: 3e9b83bc7d35a3d69f1b797bd8ac00e8d7e8c80f4b9b82b51a2ce145221da061
+- schema_version: 1
+  id: huggingface:431ed4815d1cd19fdfb5e40db2a7409ad84c3593518537332ffd187f897e82b1
+  source: huggingface
+  url: https://huggingface.co/api/models/black-forest-labs/FLUX.2-klein-4B
+  retrieved_at: "2026-10-16T07:00:24.658572832Z"
+  sha256: 431ed4815d1cd19fdfb5e40db2a7409ad84c3593518537332ffd187f897e82b1
+- schema_version: 1
   id: huggingface:432bac9ae9a7f85ecc61ead00f7b5dd6908e5fb01af20246f9cf806c18f2c390
   source: huggingface
   url: https://huggingface.co/api/models/nvidia/bigvgan_v2_22khz_80band_256x
@@ -157,6 +674,18 @@ snapshots:
   url: https://huggingface.co/api/models/amazon/chronos-2
   retrieved_at: "2026-10-15T08:21:50.375795913Z"
   sha256: 4452ad32bda0bebc63e71842e25fd382a05338851e8d988f0eefee736f8500e8
+- schema_version: 1
+  id: huggingface:45e7969b2ed9e70aa58baf1bb15d4035bf7cbe3a81d8c256429fe35a2782c915
+  source: huggingface
+  url: https://huggingface.co/api/models/Wan-AI/Wan2.2-I2V-A14B
+  retrieved_at: "2026-10-16T07:00:23.274097832Z"
+  sha256: 45e7969b2ed9e70aa58baf1bb15d4035bf7cbe3a81d8c256429fe35a2782c915
+- schema_version: 1
+  id: huggingface:46984419d4a64eced77ad9b28adff5802bbb6f626c67b4ac20355d775a3fa740
+  source: huggingface
+  url: https://huggingface.co/api/models/ibm-granite/granite-guardian-4.1-8b
+  retrieved_at: "2026-10-16T07:00:27.086029321Z"
+  sha256: 46984419d4a64eced77ad9b28adff5802bbb6f626c67b4ac20355d775a3fa740
 - schema_version: 1
   id: huggingface:46af6f5266108b8f79c90fe7d6fc600a7c834da8ee2063217272bb886d7d9e7a
   source: huggingface
@@ -170,17 +699,47 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:52.685544105Z"
   sha256: 46e4b61b55b792210b8bd33da1daae4972eb410cb44c6776ce2424aa93d79418
 - schema_version: 1
+  id: huggingface:481ed9d44e2696f3e7a268d24c3d15378e54ee50876dd4123a32a0b2cd79fb7c
+  source: huggingface
+  url: https://huggingface.co/api/models/allenai/wildguard
+  retrieved_at: "2026-10-16T07:00:23.972342265Z"
+  sha256: 481ed9d44e2696f3e7a268d24c3d15378e54ee50876dd4123a32a0b2cd79fb7c
+- schema_version: 1
+  id: huggingface:48c3e233ac990973365fe29dcdfc99d8716a1ce309aff66f149cb739887c0650
+  source: huggingface
+  url: https://huggingface.co/api/models/google/owlv2-base-patch16-ensemble
+  retrieved_at: "2026-10-16T07:00:26.409286591Z"
+  sha256: 48c3e233ac990973365fe29dcdfc99d8716a1ce309aff66f149cb739887c0650
+- schema_version: 1
   id: huggingface:4952bf4fe526bf1e1ba7728dc403e0f5fc6e956cbd38cbdd1c6fc7d16c11463f
   source: huggingface
   url: https://huggingface.co/api/models/Qwen/Qwen3-8B
   retrieved_at: "2026-10-15T08:21:49.110957769Z"
   sha256: 4952bf4fe526bf1e1ba7728dc403e0f5fc6e956cbd38cbdd1c6fc7d16c11463f
 - schema_version: 1
+  id: huggingface:49913eb29847b6cd1350573eb0e8d1e79d5ac8a067ea1d6c4b8ab046ee2bc9f3
+  source: huggingface
+  url: https://huggingface.co/api/models/deepseek-ai/DeepSeek-OCR-2
+  retrieved_at: "2026-10-16T07:00:24.698986135Z"
+  sha256: 49913eb29847b6cd1350573eb0e8d1e79d5ac8a067ea1d6c4b8ab046ee2bc9f3
+- schema_version: 1
+  id: huggingface:4b53de1af396c0c61875f5e829bafc7c30b7e33cf42b26d40c1a106bf7abe454
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/Cosmos-Reason2-2B
+  retrieved_at: "2026-10-16T07:00:29.573183055Z"
+  sha256: 4b53de1af396c0c61875f5e829bafc7c30b7e33cf42b26d40c1a106bf7abe454
+- schema_version: 1
   id: huggingface:4cee919039cd78dd25373458eca0576cd48369dea4d2297e0fe0c71164261db8
   source: huggingface
   url: https://huggingface.co/api/models/nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16
   retrieved_at: "2026-10-15T08:21:55.508478488Z"
   sha256: 4cee919039cd78dd25373458eca0576cd48369dea4d2297e0fe0c71164261db8
+- schema_version: 1
+  id: huggingface:4e7e11a19765775431ca20f9c8ede47abc8f86f395113c08e231d37e534d9167
+  source: huggingface
+  url: https://huggingface.co/api/models/stabilityai/stable-diffusion-3.5-large
+  retrieved_at: "2026-10-16T07:00:30.437977018Z"
+  sha256: 4e7e11a19765775431ca20f9c8ede47abc8f86f395113c08e231d37e534d9167
 - schema_version: 1
   id: huggingface:4fe7d47888a0fd3d42d6fe623904070b6e504639c7f0f36eb441b814b7e98852
   source: huggingface
@@ -218,6 +777,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:49.647457715Z"
   sha256: 53a93b15233adfeec9397c86df04b3ce7e5ce93d1ee2a2e762c02dd548b5801b
 - schema_version: 1
+  id: huggingface:540a253d3d351517971233a61e3d5ad6a22461fcd7c9e30e2a930f7cb0d439cd
+  source: huggingface
+  url: https://huggingface.co/api/models/ibm-granite/granite-docling-258M
+  retrieved_at: "2026-10-16T07:00:26.754970929Z"
+  sha256: 540a253d3d351517971233a61e3d5ad6a22461fcd7c9e30e2a930f7cb0d439cd
+- schema_version: 1
   id: huggingface:56204f6f502db586dc6f381cf5aa0fb6e8000d13e1b360ee1b7d63c7fe2ee0a0
   source: huggingface
   url: https://huggingface.co/api/models/deepseek-ai/DeepSeek-Prover-V2-7B
@@ -229,6 +794,12 @@ snapshots:
   url: https://huggingface.co/api/models/meta-llama/Llama-Prompt-Guard-2-86M
   retrieved_at: "2026-10-15T08:21:54.322263539Z"
   sha256: 579b50b719cff75e1c170630081c80106961bb22e91ea697c9aa39ff469f8ac4
+- schema_version: 1
+  id: huggingface:582f169a3f602bafaff4b6971d3f0faa3609c2410293cf74261c1a444e9471a6
+  source: huggingface
+  url: https://huggingface.co/api/models/jinaai/jina-code-embeddings-0.5b
+  retrieved_at: "2026-10-16T07:00:27.341014669Z"
+  sha256: 582f169a3f602bafaff4b6971d3f0faa3609c2410293cf74261c1a444e9471a6
 - schema_version: 1
   id: huggingface:59ee0cb90e415a88e4ceb443a61e7dc32926261d214124b6a902a4d549121321
   source: huggingface
@@ -248,6 +819,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:54.068153899Z"
   sha256: 5c74717a7b985c1e787c511a53ec7863309c6f5d55d63435769e6aa1c5aba01a
 - schema_version: 1
+  id: huggingface:5cf83db58aab2a64b78f1a8c65623fb3cd811ce4e1b5fc95f42d6e5164282544
+  source: huggingface
+  url: https://huggingface.co/api/models/facebook/musicgen-medium
+  retrieved_at: "2026-10-16T07:00:25.643823902Z"
+  sha256: 5cf83db58aab2a64b78f1a8c65623fb3cd811ce4e1b5fc95f42d6e5164282544
+- schema_version: 1
   id: huggingface:5d55a9a2e50049183756697ca8f0c80b71bb2e4002efee5bddfbf0c2cdb16dd8
   source: huggingface
   url: https://huggingface.co/api/models/deepseek-ai/deepseek-vl2-tiny
@@ -260,11 +837,29 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:51.978893255Z"
   sha256: 6036817122d1fa5f45faa44f836f4545fbefa2b0a22bc29bfbe563117ff43b18
 - schema_version: 1
+  id: huggingface:6102ebef7e01926b9d47c604cf4e288ff9917e785caaf914a5b70dbc9974b6fd
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/segformer-b0-finetuned-ade-512-512
+  retrieved_at: "2026-10-16T07:13:52.628313681Z"
+  sha256: 6102ebef7e01926b9d47c604cf4e288ff9917e785caaf914a5b70dbc9974b6fd
+- schema_version: 1
+  id: huggingface:612f80e295b6359022c23c82672950c648c99e6d1af017164acc37f2c208fd7b
+  source: huggingface
+  url: https://huggingface.co/api/models/mistralai/Shieldstral-1.0-3B
+  retrieved_at: "2026-10-16T07:00:29.082585249Z"
+  sha256: 612f80e295b6359022c23c82672950c648c99e6d1af017164acc37f2c208fd7b
+- schema_version: 1
   id: huggingface:61e1a880f762e03f7deb8a0cd1410e13ce5ae0a182635665f75dcda31569cd13
   source: huggingface
   url: https://huggingface.co/api/models/nvidia/llama-nemotron-rerank-1b-v2
   retrieved_at: "2026-10-15T08:21:55.87035567Z"
   sha256: 61e1a880f762e03f7deb8a0cd1410e13ce5ae0a182635665f75dcda31569cd13
+- schema_version: 1
+  id: huggingface:6243934d6c0a82bf82161543bd5a65d285437046be3f801570f0f578f562a580
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen3-Embedding-0.6B
+  retrieved_at: "2026-10-16T07:00:21.913354718Z"
+  sha256: 6243934d6c0a82bf82161543bd5a65d285437046be3f801570f0f578f562a580
 - schema_version: 1
   id: huggingface:62b6a87bb1e2d72d7aadf3d66b4ece3f889a0ff8e24ad4da8d9e3220f96fed8b
   source: huggingface
@@ -272,11 +867,36 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:51.725348115Z"
   sha256: 62b6a87bb1e2d72d7aadf3d66b4ece3f889a0ff8e24ad4da8d9e3220f96fed8b
 - schema_version: 1
+  id: huggingface:6391df1ee71ffbd5dfa535945f497dfa864f221b22886d0feec409db7f7bb12a
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/nemotron-3.5-asr-streaming-0.6b
+  retrieved_at: "2026-10-16T07:00:29.880922536Z"
+  sha256: 6391df1ee71ffbd5dfa535945f497dfa864f221b22886d0feec409db7f7bb12a
+- schema_version: 1
+  id: huggingface:64f40b699ec05822d7124eb886f79fc3cb2114d32a240da014a05360d3536f78
+  source: huggingface
+  url: https://huggingface.co/api/models/allenai/olmOCR-2-7B-1025
+  retrieved_at: "2026-10-16T07:00:23.847295783Z"
+  sha256: 64f40b699ec05822d7124eb886f79fc3cb2114d32a240da014a05360d3536f78
+- schema_version: 1
+  id: huggingface:6517f52da81e04ac7a9454f27af232f465a54dd1854c6da5bc7bd154ec8b6c5f
+  source: huggingface
+  url: >-
+    https://huggingface.co/api/models/ibm-granite/granite-embedding-311m-multilingual-r2
+  retrieved_at: "2026-10-16T07:00:26.931031629Z"
+  sha256: 6517f52da81e04ac7a9454f27af232f465a54dd1854c6da5bc7bd154ec8b6c5f
+- schema_version: 1
   id: huggingface:65bccd8927f63a27d5a5641d5deda65e9d4520d24ef8c8a84d84ab8a821c7b26
   source: huggingface
   url: https://huggingface.co/api/models/allenai/OLMoE-1B-7B-0125-Instruct
   retrieved_at: "2026-10-15T08:21:49.911611242Z"
   sha256: 65bccd8927f63a27d5a5641d5deda65e9d4520d24ef8c8a84d84ab8a821c7b26
+- schema_version: 1
+  id: huggingface:66433bc497ae1970f73d97f664aca3467e03b4040279a507edfe04f87574b38d
+  source: huggingface
+  url: https://huggingface.co/api/models/microsoft/Florence-2-large
+  retrieved_at: "2026-10-16T07:13:50.971408134Z"
+  sha256: 66433bc497ae1970f73d97f664aca3467e03b4040279a507edfe04f87574b38d
 - schema_version: 1
   id: huggingface:6673080396849fca1568b212db8082598cd7c7a1faf0ae580b59c4242d68cb21
   source: huggingface
@@ -289,6 +909,12 @@ snapshots:
   url: https://huggingface.co/api/models/CohereLabs/Cohere-embed-multilingual-v3.0
   retrieved_at: "2026-10-15T08:21:47.983274228Z"
   sha256: 67ddbeaccc86c5004b7932927063a65245d348eec197332820abb6a4a4f56228
+- schema_version: 1
+  id: huggingface:681c72a237f270238b96df1c9d581a4fa807913c666dc0b8c9eb00df3be5ece9
+  source: huggingface
+  url: https://huggingface.co/api/models/facebook/detr-resnet-50
+  retrieved_at: "2026-10-16T07:13:48.301580986Z"
+  sha256: 681c72a237f270238b96df1c9d581a4fa807913c666dc0b8c9eb00df3be5ece9
 - schema_version: 1
   id: huggingface:68518663591fce2b00dd5a30d9f11e91d4ddaba3f01d826852508c5bf778e655
   source: huggingface
@@ -303,6 +929,12 @@ snapshots:
     https://huggingface.co/api/models/ibm-granite/granite-embedding-311m-multilingual-r2
   retrieved_at: "2026-10-15T08:21:52.999109957Z"
   sha256: 68d6721ce3bb4bc64c91090c5ef0efc718077dd431b45cd174a8c179725ce389
+- schema_version: 1
+  id: huggingface:69496da5ac680c472ee1647aa45c51db951a63c1362264f2a7b217b32dfe8a21
+  source: huggingface
+  url: https://huggingface.co/api/models/ibm-granite/granite-vision-4.1-4b
+  retrieved_at: "2026-10-16T07:00:27.025153114Z"
+  sha256: 69496da5ac680c472ee1647aa45c51db951a63c1362264f2a7b217b32dfe8a21
 - schema_version: 1
   id: huggingface:69aa88d6af654c061b006847cf8c5e29d82f7d2625d55d08bf108de5638baa0f
   source: huggingface
@@ -322,11 +954,29 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:54.665383081Z"
   sha256: 6a9cd925f60121a3349af4883a5683e2da990c3a300d04fec9b06d3d2e461f17
 - schema_version: 1
+  id: huggingface:6b5e94cee006bbdbf9d8eec14cd50eb9d8d56ca37e47a4f909328f579f52abee
+  source: huggingface
+  url: https://huggingface.co/api/models/biohub/ESMFold2
+  retrieved_at: "2026-10-16T07:13:47.353962121Z"
+  sha256: 6b5e94cee006bbdbf9d8eec14cd50eb9d8d56ca37e47a4f909328f579f52abee
+- schema_version: 1
+  id: huggingface:6b887bd09d9ced2ed5ff6da92a0d55b6ef74e96c2706323cfa8f976ecbeac5e1
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen3.6-35B-A3B
+  retrieved_at: "2026-10-16T07:13:46.173374918Z"
+  sha256: 6b887bd09d9ced2ed5ff6da92a0d55b6ef74e96c2706323cfa8f976ecbeac5e1
+- schema_version: 1
   id: huggingface:6c6011899531323b1f1d6e050c7a3af9065b8e45c4f785745173e981d1acd6ab
   source: huggingface
   url: https://huggingface.co/api/models/jinaai/jina-reranker-v3.5
   retrieved_at: "2026-10-15T08:21:53.90203518Z"
   sha256: 6c6011899531323b1f1d6e050c7a3af9065b8e45c4f785745173e981d1acd6ab
+- schema_version: 1
+  id: huggingface:6dc6a54d1a155d0c960596aecaa77ad08503c4ebbba67cd941f329626fc466c7
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+  retrieved_at: "2026-10-16T07:00:29.407224446Z"
+  sha256: 6dc6a54d1a155d0c960596aecaa77ad08503c4ebbba67cd941f329626fc466c7
 - schema_version: 1
   id: huggingface:6ea82824a7f616585306a3f429302a1d1608c182566cac6b294ddd8fc1ada497
   source: huggingface
@@ -340,17 +990,47 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:55.337794305Z"
   sha256: 6f0de8a20e03cbb591db55b2495e650a11f220702f552ae687a1f7140c6f0fd1
 - schema_version: 1
+  id: huggingface:6f18a563971246e1144ecc302c61d777bd20bacaff6bbcc07611458d4bc37417
+  source: huggingface
+  url: https://huggingface.co/api/models/microsoft/Phi-4-mini-instruct
+  retrieved_at: "2026-10-16T07:00:28.328797366Z"
+  sha256: 6f18a563971246e1144ecc302c61d777bd20bacaff6bbcc07611458d4bc37417
+- schema_version: 1
   id: huggingface:6f5942ad5f68aaad72fae0a95be1c70a290ce9a4a9672f16a11fb8bb9bce5be5
   source: huggingface
   url: https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3
   retrieved_at: "2026-10-15T08:21:47.625543325Z"
   sha256: 6f5942ad5f68aaad72fae0a95be1c70a290ce9a4a9672f16a11fb8bb9bce5be5
 - schema_version: 1
+  id: huggingface:6f88511b8cf769772088015a404a88f88556c72f288f02e960bd2f06ec60763d
+  source: huggingface
+  url: https://huggingface.co/api/models/biohub/ESMC-300M
+  retrieved_at: "2026-10-16T07:00:24.354485889Z"
+  sha256: 6f88511b8cf769772088015a404a88f88556c72f288f02e960bd2f06ec60763d
+- schema_version: 1
+  id: huggingface:6f9746e4cdebc0d141e201005e3085c7287e7abaddee4df2d51dec5e23d54e3c
+  source: huggingface
+  url: https://huggingface.co/api/models/tiiuae/Falcon-H1R-7B
+  retrieved_at: "2026-10-16T07:00:30.800044319Z"
+  sha256: 6f9746e4cdebc0d141e201005e3085c7287e7abaddee4df2d51dec5e23d54e3c
+- schema_version: 1
+  id: huggingface:70c9f84de9c6ba95a69b2ec2fc9545cbf466e208f8e76844bc7547865ce46bc7
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen-Image-Edit-2511
+  retrieved_at: "2026-10-16T07:00:21.609590959Z"
+  sha256: 70c9f84de9c6ba95a69b2ec2fc9545cbf466e208f8e76844bc7547865ce46bc7
+- schema_version: 1
   id: huggingface:71697bd09c8698d9c10b194ad8857c603b584c07b80cef0062231b7a0348b573
   source: huggingface
   url: https://huggingface.co/api/models/hexgrad/Kokoro-82M
   retrieved_at: "2026-10-15T08:21:52.774826517Z"
   sha256: 71697bd09c8698d9c10b194ad8857c603b584c07b80cef0062231b7a0348b573
+- schema_version: 1
+  id: huggingface:71f810c11c905e08eecd0797162b0db6f5d4c55cf0fc71bb921bacd2e545539e
+  source: huggingface
+  url: https://huggingface.co/api/models/MiniMaxAI/MiniMax-M3
+  retrieved_at: "2026-10-16T07:00:21.349216253Z"
+  sha256: 71f810c11c905e08eecd0797162b0db6f5d4c55cf0fc71bb921bacd2e545539e
 - schema_version: 1
   id: huggingface:726b0f3b82b76ff7598ecfa7e94547ba8a04b4b8cbc3e82d630066f06cde24bb
   source: huggingface
@@ -382,11 +1062,35 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:53.179525374Z"
   sha256: 77a9bf080ecc7539c0d29e445ea303a92983bba1a741c6ac9748ba0956cc6ca5
 - schema_version: 1
+  id: huggingface:78238080f78eaaea9bd15044611a0df4fb87df788550010ba9f1ab83c72bd385
+  source: huggingface
+  url: https://huggingface.co/api/models/facebook/sam3
+  retrieved_at: "2026-10-16T07:13:48.748776857Z"
+  sha256: 78238080f78eaaea9bd15044611a0df4fb87df788550010ba9f1ab83c72bd385
+- schema_version: 1
   id: huggingface:78a6d4649edb05708406a45c36d772cefcd7097b2912bdc8d0388fb12fc76f95
   source: huggingface
   url: https://huggingface.co/api/models/BAAI/BGE-VL-large
   retrieved_at: "2026-10-15T08:21:46.926562762Z"
   sha256: 78a6d4649edb05708406a45c36d772cefcd7097b2912bdc8d0388fb12fc76f95
+- schema_version: 1
+  id: huggingface:78ce2c7d68963163c67d7b6489c138737cec8cb0c5454db409cac48e83833be4
+  source: huggingface
+  url: https://huggingface.co/api/models/jinaai/jina-embeddings-v5-omni-small
+  retrieved_at: "2026-10-16T07:00:27.565026015Z"
+  sha256: 78ce2c7d68963163c67d7b6489c138737cec8cb0c5454db409cac48e83833be4
+- schema_version: 1
+  id: huggingface:79bb3c262b2d019654b9f501a7686ca7f587f57de271a005fd0ca4c2fd2a9f9b
+  source: huggingface
+  url: https://huggingface.co/api/models/Lightricks/LTX-2.5
+  retrieved_at: "2026-10-16T07:00:20.97745255Z"
+  sha256: 79bb3c262b2d019654b9f501a7686ca7f587f57de271a005fd0ca4c2fd2a9f9b
+- schema_version: 1
+  id: huggingface:7ade34d990dc530a7672d467192568035368f5f3a0fe839a88a7ac6f6a20dad0
+  source: huggingface
+  url: https://huggingface.co/api/models/google/gemma-4-26B-A4B-it
+  retrieved_at: "2026-10-16T07:13:49.193417803Z"
+  sha256: 7ade34d990dc530a7672d467192568035368f5f3a0fe839a88a7ac6f6a20dad0
 - schema_version: 1
   id: huggingface:7b92c92f5e8a3a35a5836d5cc68d559ec866bc58046cb9d651d57e52b4cc67f9
   source: huggingface
@@ -400,6 +1104,18 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:49.14538323Z"
   sha256: 7c56a82319296a0c27f8f3ddb4c44dcf8113cd6fd9b17cf29fb27b4584e8a195
 - schema_version: 1
+  id: huggingface:7ca574853e1a3877ecbce18a63a710efd80c401e591e2370929a6fde11daebef
+  source: huggingface
+  url: https://huggingface.co/api/models/intfloat/multilingual-e5-large
+  retrieved_at: "2026-10-16T07:13:50.656356575Z"
+  sha256: 7ca574853e1a3877ecbce18a63a710efd80c401e591e2370929a6fde11daebef
+- schema_version: 1
+  id: huggingface:7cc09fc8bdd43b4331fd41a4596105d14460c41e9dd6fd4f7d9aa227dd0f4b7f
+  source: huggingface
+  url: https://huggingface.co/api/models/zai-org/GLM-4.6V-Flash
+  retrieved_at: "2026-10-16T07:13:53.534773159Z"
+  sha256: 7cc09fc8bdd43b4331fd41a4596105d14460c41e9dd6fd4f7d9aa227dd0f4b7f
+- schema_version: 1
   id: huggingface:7eb209e3a5023ef97919f271823b418a7b39e7454cc029945daaaaab65d22269
   source: huggingface
   url: https://huggingface.co/api/models/jinaai/jina-colbert-v2
@@ -411,6 +1127,12 @@ snapshots:
   url: https://huggingface.co/api/models/google/siglip2-base-patch16-naflex
   retrieved_at: "2026-10-15T08:21:52.665263672Z"
   sha256: 7fac21180024310b4e7ff8f79db90353fc9d2b07fdd464a6c475cbf8a3a8264e
+- schema_version: 1
+  id: huggingface:805f6e62a4e7926ffb1705a6f2e247b10418725d6f773d5b01a9e65d8c3b61e0
+  source: huggingface
+  url: https://huggingface.co/api/models/mistralai/Mistral-7B-Instruct-v0.3
+  retrieved_at: "2026-10-16T07:00:28.833291618Z"
+  sha256: 805f6e62a4e7926ffb1705a6f2e247b10418725d6f773d5b01a9e65d8c3b61e0
 - schema_version: 1
   id: huggingface:807f0e0a95c12a4333e3299734a20aaae25b4e5d83d2664f433e58d618c36c85
   source: huggingface
@@ -424,6 +1146,18 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:51.955655386Z"
   sha256: 81defd7cbe2f4e559edceafc807b903112b0d888ed7f3ffbf0d0d09707085f54
 - schema_version: 1
+  id: huggingface:82d7888bf942d516940207172a3dc908abe0a4f214462a9b7ad46cb1f947777d
+  source: huggingface
+  url: https://huggingface.co/api/models/jinaai/jina-colbert-v2
+  retrieved_at: "2026-10-16T07:00:27.445592897Z"
+  sha256: 82d7888bf942d516940207172a3dc908abe0a4f214462a9b7ad46cb1f947777d
+- schema_version: 1
+  id: huggingface:82e34d05d99efe4ee37d53e15512611b1f6cd1c0aef1ece51e8e1df606ae0ba4
+  source: huggingface
+  url: https://huggingface.co/api/models/stabilityai/stable-video-diffusion-img2vid-xt
+  retrieved_at: "2026-10-16T07:00:30.62322755Z"
+  sha256: 82e34d05d99efe4ee37d53e15512611b1f6cd1c0aef1ece51e8e1df606ae0ba4
+- schema_version: 1
   id: huggingface:8377bdee582edbf173b8f8708ec8e5e3eb045cadd20aacacc05f45aa667abcfc
   source: huggingface
   url: https://huggingface.co/api/models/CohereLabs/command-a-plus-05-2026-bf16
@@ -435,6 +1169,12 @@ snapshots:
   url: https://huggingface.co/api/models/ibm-granite/granite-docling-258M
   retrieved_at: "2026-10-15T08:21:52.936282406Z"
   sha256: 84868d9429cdb6aa7ab12ff59bda66d1cf3d8b72b45c0cc345323f93070ec76d
+- schema_version: 1
+  id: huggingface:8662dbd0613ad6ad88bcf79a75602f56f28c9288ec3b495139967975f2f51d49
+  source: huggingface
+  url: https://huggingface.co/api/models/depth-anything/Depth-Anything-V2-Small-hf
+  retrieved_at: "2026-10-16T07:00:25.232250723Z"
+  sha256: 8662dbd0613ad6ad88bcf79a75602f56f28c9288ec3b495139967975f2f51d49
 - schema_version: 1
   id: huggingface:87b06c89bbb6e49fa728e9ca11132d0600d26e50ef4672cb0609602c4cbfa23d
   source: huggingface
@@ -453,6 +1193,24 @@ snapshots:
   url: https://huggingface.co/api/models/google/gemma-4-E2B-it
   retrieved_at: "2026-10-15T08:21:52.515099104Z"
   sha256: 893e337419593b8035885a070e4da1d9e7177f2616722a7cd60dfda0ca8347cb
+- schema_version: 1
+  id: huggingface:89e9c3dd520a5442b243e448bd0219188a670986c4223a7fc9bea7bdf1665dec
+  source: huggingface
+  url: https://huggingface.co/api/models/BAAI/bge-m3
+  retrieved_at: "2026-10-16T07:00:10.792827139Z"
+  sha256: 89e9c3dd520a5442b243e448bd0219188a670986c4223a7fc9bea7bdf1665dec
+- schema_version: 1
+  id: huggingface:8d7deaaa776b4be96a5ae7277c3a1eaca2fd1ec40d7e0f33fcfdfbeb3264e57d
+  source: huggingface
+  url: https://huggingface.co/api/models/deepseek-ai/DeepSeek-R1
+  retrieved_at: "2026-10-16T07:00:24.970003129Z"
+  sha256: 8d7deaaa776b4be96a5ae7277c3a1eaca2fd1ec40d7e0f33fcfdfbeb3264e57d
+- schema_version: 1
+  id: huggingface:8e78012931ce0f6f84c7e6256d94cccf059982e811512990c8ed1bc9a25a4a63
+  source: huggingface
+  url: https://huggingface.co/api/models/stabilityai/stable-virtual-camera
+  retrieved_at: "2026-10-16T07:00:30.681828584Z"
+  sha256: 8e78012931ce0f6f84c7e6256d94cccf059982e811512990c8ed1bc9a25a4a63
 - schema_version: 1
   id: huggingface:8ef7422600b82cfbfd6a19ead094f58d0a0eb28a47945e24fbbd95fc8fbf017b
   source: huggingface
@@ -484,6 +1242,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:49.371173912Z"
   sha256: 927732ba34ae5716e14b0861b5251c67e3ed80b831f6881d196ece4027b7b743
 - schema_version: 1
+  id: huggingface:93e08bf0c218a0587b0c670cbd2e423d04e50db249ba8fa61ce77e571790a40e
+  source: huggingface
+  url: https://huggingface.co/api/models/Wan-AI/Wan2.2-T2V-A14B
+  retrieved_at: "2026-10-16T07:00:23.733439373Z"
+  sha256: 93e08bf0c218a0587b0c670cbd2e423d04e50db249ba8fa61ce77e571790a40e
+- schema_version: 1
   id: huggingface:93faead5c4a932e88d7a7b6d12d3028db72b89eca51f89aded0778ba2a0ff052
   source: huggingface
   url: https://huggingface.co/api/models/jinaai/jina-embeddings-v5-omni-small
@@ -495,6 +1259,24 @@ snapshots:
   url: https://huggingface.co/api/models/google/gemma-3-4b-it
   retrieved_at: "2026-10-15T08:21:52.421621345Z"
   sha256: 940ef3705a7f2cd26c57c4f36f35627c1a1ed768f7c9934ba3522d8985805b29
+- schema_version: 1
+  id: huggingface:94b2d014f1f2937c8ffa4bd5e3fd92315d056d1611756852dd542055f9deec76
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen-Image-2.1
+  retrieved_at: "2026-10-16T07:00:21.619536436Z"
+  sha256: 94b2d014f1f2937c8ffa4bd5e3fd92315d056d1611756852dd542055f9deec76
+- schema_version: 1
+  id: huggingface:9573aa23cf1a024d8bed50fcd6d0bb61b428fa12a36805dba45103550cba1288
+  source: huggingface
+  url: https://huggingface.co/api/models/mistralai/Mistral-Medium-3.5-128B
+  retrieved_at: "2026-10-16T07:00:28.861497299Z"
+  sha256: 9573aa23cf1a024d8bed50fcd6d0bb61b428fa12a36805dba45103550cba1288
+- schema_version: 1
+  id: huggingface:95f2d96650ad2c363aaae2a3c87b6fcd23d0173bd37fb6bd2023729e5d08283b
+  source: huggingface
+  url: https://huggingface.co/api/models/black-forest-labs/FLUX.1-Kontext-dev
+  retrieved_at: "2026-10-16T07:13:47.451485434Z"
+  sha256: 95f2d96650ad2c363aaae2a3c87b6fcd23d0173bd37fb6bd2023729e5d08283b
 - schema_version: 1
   id: huggingface:960779fd569d78c9b55b78dfe01d03e312e47aaf5a0986ca08377a7388339b9b
   source: huggingface
@@ -527,6 +1309,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:54.823970183Z"
   sha256: 9d7d73da4d6f78f6cb8b15923389cb6703ebed7a4ef2aa18628b3869a610263f
 - schema_version: 1
+  id: huggingface:9f5e9199ce16eaa326dad9b4f94697015daeac4e513aee51d6dcd9f7286858b1
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/bigvgan_v2_22khz_80band_256x
+  retrieved_at: "2026-10-16T07:00:29.63373222Z"
+  sha256: 9f5e9199ce16eaa326dad9b4f94697015daeac4e513aee51d6dcd9f7286858b1
+- schema_version: 1
   id: huggingface:9fd6880b1404870e912fe6955a81a30c582faf627ca70cd2eb01dfcbdb63d4cd
   source: huggingface
   url: https://huggingface.co/api/models/stabilityai/stable-diffusion-3.5-large
@@ -538,6 +1326,12 @@ snapshots:
   url: https://huggingface.co/api/models/allenai/Molmo2-8B
   retrieved_at: "2026-10-15T08:21:49.896718762Z"
   sha256: a2004f4b0661a812adbea571d9bfe7a7062289001a5e900e7047b217c38ced2f
+- schema_version: 1
+  id: huggingface:a256e8219c8a92ad631557288220487a0042a132cadcdf684d55b7073b8a1415
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen2.5-VL-7B-Instruct
+  retrieved_at: "2026-10-16T07:00:21.877631831Z"
+  sha256: a256e8219c8a92ad631557288220487a0042a132cadcdf684d55b7073b8a1415
 - schema_version: 1
   id: huggingface:a4162c40205764da28d1cfe70b783122832c0907a1f6af459c991e6a383a0459
   source: huggingface
@@ -551,6 +1345,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:50.42264796Z"
   sha256: a44b34a40836b4b6b0c3d977396c78b1a4fe87046f8343c48b6b2b34f85d2d40
 - schema_version: 1
+  id: huggingface:a4a6a08dd04be550cb04acfd96d9b14ab6db78227ebb27652456bf8a82be09cc
+  source: huggingface
+  url: https://huggingface.co/api/models/facebook/dinov2-base
+  retrieved_at: "2026-10-16T07:00:25.44381371Z"
+  sha256: a4a6a08dd04be550cb04acfd96d9b14ab6db78227ebb27652456bf8a82be09cc
+- schema_version: 1
   id: huggingface:a4c6dc86ec45e1ff7920f1cdf5181357f551a278d7aad6ea7d8adf08f508b215
   source: huggingface
   url: https://huggingface.co/api/models/mistralai/Mistral-7B-Instruct-v0.3
@@ -562,6 +1362,18 @@ snapshots:
   url: https://huggingface.co/api/models/meta-llama/Llama-Guard-4-12B
   retrieved_at: "2026-10-15T08:21:54.207729327Z"
   sha256: a5682703f41b760d0c4a822bd3b8b1487de9a9619b4ca3f6a78e52e562969fc4
+- schema_version: 1
+  id: huggingface:a6149b800751517183b0ef4bdf46d76dbf58357fd49dbfc15b6d8a1a7c91fc66
+  source: huggingface
+  url: https://huggingface.co/api/models/google/diffusiongemma-26B-A4B-it
+  retrieved_at: "2026-10-16T07:00:25.96546974Z"
+  sha256: a6149b800751517183b0ef4bdf46d76dbf58357fd49dbfc15b6d8a1a7c91fc66
+- schema_version: 1
+  id: huggingface:a66d2acb6c5417d77f21f05ca97acf98dd4bfc5a0841e40d67cb3a9e7961c9c2
+  source: huggingface
+  url: https://huggingface.co/api/models/deepseek-ai/DeepSeek-V4-Pro-0813
+  retrieved_at: "2026-10-16T07:00:24.947378103Z"
+  sha256: a66d2acb6c5417d77f21f05ca97acf98dd4bfc5a0841e40d67cb3a9e7961c9c2
 - schema_version: 1
   id: huggingface:a8403e38060189f121cb097083738284540e97a299679b82a73794f052107c3f
   source: huggingface
@@ -575,6 +1387,24 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:50.908375455Z"
   sha256: a9a207b7d29615f7a4b36b284e4938edf67a039a03ed99427576908cb90b2d68
 - schema_version: 1
+  id: huggingface:a9e283a468337da7982cac2a1449e90ce149d7420f83d3c674951304852ab0b1
+  source: huggingface
+  url: https://huggingface.co/api/models/deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct
+  retrieved_at: "2026-10-16T07:00:24.645829208Z"
+  sha256: a9e283a468337da7982cac2a1449e90ce149d7420f83d3c674951304852ab0b1
+- schema_version: 1
+  id: huggingface:aad4bfbce6fc83b45d17ad1e7691dd38055b483929696a7ccff1e0fe01147fe5
+  source: huggingface
+  url: https://huggingface.co/api/models/mistralai/Mistral-Small-4-119B-2603
+  retrieved_at: "2026-10-16T07:00:28.993857162Z"
+  sha256: aad4bfbce6fc83b45d17ad1e7691dd38055b483929696a7ccff1e0fe01147fe5
+- schema_version: 1
+  id: huggingface:aaf2721afc4de7fe13cca4e799ffa26a160f78db7bc9130c05d96c080dbca7b8
+  source: huggingface
+  url: https://huggingface.co/api/models/google/timesfm-2.5-200m-pytorch
+  retrieved_at: "2026-10-16T07:00:26.654235833Z"
+  sha256: aaf2721afc4de7fe13cca4e799ffa26a160f78db7bc9130c05d96c080dbca7b8
+- schema_version: 1
   id: huggingface:ac4484bcef5f2280015a487fcbfc72e993b45c3e0626eef418153844dd7c556d
   source: huggingface
   url: https://huggingface.co/api/models/meta-llama/Llama-4-Scout-17B-16E-Instruct
@@ -587,11 +1417,35 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:54.325664366Z"
   sha256: acc6904bb9beedbbc7e2216f41a8f0f7f4adfc64e66bf8d85a76ffdac1260d13
 - schema_version: 1
+  id: huggingface:ad1da550357df1a973f4e2834461beb13c59cfaaf582c82064801e39aa898c21
+  source: huggingface
+  url: https://huggingface.co/api/models/wanglab/MedSAM2
+  retrieved_at: "2026-10-16T07:13:53.413611989Z"
+  sha256: ad1da550357df1a973f4e2834461beb13c59cfaaf582c82064801e39aa898c21
+- schema_version: 1
   id: huggingface:ae70d9cc3992ed14d6ac878798c894fa54b972815dbda60f9d3107255d5a5557
   source: huggingface
   url: https://huggingface.co/api/models/Qwen/Qwen-Image-2.1
   retrieved_at: "2026-10-15T08:21:48.856000605Z"
   sha256: ae70d9cc3992ed14d6ac878798c894fa54b972815dbda60f9d3107255d5a5557
+- schema_version: 1
+  id: huggingface:aeec1d9911c932ef726cefdd9b0fd78cb106b4ebabde694c8437ff28adebc8ff
+  source: huggingface
+  url: https://huggingface.co/api/models/BAAI/bge-code-v1
+  retrieved_at: "2026-10-15T08:28:10.518906157Z"
+  sha256: aeec1d9911c932ef726cefdd9b0fd78cb106b4ebabde694c8437ff28adebc8ff
+- schema_version: 1
+  id: huggingface:af48441af2bec2da04763650457fe1abf8b0b0826989cc56588f8b0771b69f18
+  source: huggingface
+  url: https://huggingface.co/api/models/jinaai/jina-reranker-v3.5
+  retrieved_at: "2026-10-16T07:00:27.573904382Z"
+  sha256: af48441af2bec2da04763650457fe1abf8b0b0826989cc56588f8b0771b69f18
+- schema_version: 1
+  id: huggingface:af6b2c676f58cd77c56f56d08d6b880fc88a70be716bd962125a97264df4403c
+  source: huggingface
+  url: https://huggingface.co/api/models/mistralai/Magistral-Small-2506
+  retrieved_at: "2026-10-16T07:00:28.731768774Z"
+  sha256: af6b2c676f58cd77c56f56d08d6b880fc88a70be716bd962125a97264df4403c
 - schema_version: 1
   id: huggingface:b015369b4ade8dd45108665b211b6382966fea199d22b76f5d223e58efb172e3
   source: huggingface
@@ -611,6 +1465,19 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:47.545691014Z"
   sha256: b1c64fc753f1e26bc4d791e84f45a051f5c346695a46fb44fb6c03517cc74f40
 - schema_version: 1
+  id: huggingface:b1f91fc06412ab3700e81e50588953ee4edd2ed13b73957543d0a39580e65abb
+  source: huggingface
+  url: >-
+    https://huggingface.co/api/models/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16
+  retrieved_at: "2026-10-16T07:00:29.603124031Z"
+  sha256: b1f91fc06412ab3700e81e50588953ee4edd2ed13b73957543d0a39580e65abb
+- schema_version: 1
+  id: huggingface:b38319ce5fab8b0aedd5c5561c811f02d2b0e5b13511b07069e0be50f1c4e059
+  source: huggingface
+  url: https://huggingface.co/api/models/FunAudioLLM/Fun-ASR-Nano-2512
+  retrieved_at: "2026-10-16T07:00:12.460747873Z"
+  sha256: b38319ce5fab8b0aedd5c5561c811f02d2b0e5b13511b07069e0be50f1c4e059
+- schema_version: 1
   id: huggingface:b3a447c39d203a8ed14c2e7392ec02e9e06b141a30ed54e3b0a53711dc19a2e6
   source: huggingface
   url: https://huggingface.co/api/models/zai-org/GLM-5.3
@@ -622,6 +1489,30 @@ snapshots:
   url: https://huggingface.co/api/models/facebook/detr-resnet-50
   retrieved_at: "2026-10-15T08:21:51.463858966Z"
   sha256: b3fe46af720f41f9db3699a593d6aa1f0a504a115af037266fd22e8effeb5382
+- schema_version: 1
+  id: huggingface:b41af8e67029aadf56fe178e9221a876c6f7fd1c469d090e216f4d33b6e899ab
+  source: huggingface
+  url: https://huggingface.co/api/models/allenai/Molmo2-8B
+  retrieved_at: "2026-10-16T07:00:23.560359539Z"
+  sha256: b41af8e67029aadf56fe178e9221a876c6f7fd1c469d090e216f4d33b6e899ab
+- schema_version: 1
+  id: huggingface:b55a43e71bca83455bf080e26d80cf51783d20cde5f0c3c089f08f1f531c0d3c
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/parakeet-tdt-0.6b-v3
+  retrieved_at: "2026-10-16T07:00:29.956159762Z"
+  sha256: b55a43e71bca83455bf080e26d80cf51783d20cde5f0c3c089f08f1f531c0d3c
+- schema_version: 1
+  id: huggingface:b7d7d35708b6a054ebb56ba03c7b17f1e822b7581e5d38c65ef7261ee63dae06
+  source: huggingface
+  url: https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3
+  retrieved_at: "2026-10-16T07:00:11.857324907Z"
+  sha256: b7d7d35708b6a054ebb56ba03c7b17f1e822b7581e5d38c65ef7261ee63dae06
+- schema_version: 1
+  id: huggingface:b81dd54fb74201d83c697f3716df87812fdaaa1d1be78678a2b1e9592f9573a7
+  source: huggingface
+  url: https://huggingface.co/api/models/mistralai/Devstral-Small-2-24B-Instruct-2512
+  retrieved_at: "2026-10-16T07:00:28.67783131Z"
+  sha256: b81dd54fb74201d83c697f3716df87812fdaaa1d1be78678a2b1e9592f9573a7
 - schema_version: 1
   id: huggingface:b87ee4745e95343b54e6e030985efa8eda241c7117bb614cfaed10bfb91b0bc1
   source: huggingface
@@ -647,11 +1538,29 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:54.834444614Z"
   sha256: be6caf00c731a7793b901bf495e790f15ba07892526bdf72ec2da6f87d9fa4cd
 - schema_version: 1
+  id: huggingface:be6e1b3bb71fda4008219aa95076b9158d09b6092cc42ef236d1f70fa65cb2fa
+  source: huggingface
+  url: https://huggingface.co/api/models/zai-org/GLM-5.3
+  retrieved_at: "2026-10-16T07:13:53.607119149Z"
+  sha256: be6e1b3bb71fda4008219aa95076b9158d09b6092cc42ef236d1f70fa65cb2fa
+- schema_version: 1
   id: huggingface:bf82d5a74f491fe5a8cefe6b324611ea3f219559b041dd28c89466512b19f8d1
   source: huggingface
   url: https://huggingface.co/api/models/Qwen/Qwen3.8-27B
   retrieved_at: "2026-10-15T08:21:49.612366076Z"
   sha256: bf82d5a74f491fe5a8cefe6b324611ea3f219559b041dd28c89466512b19f8d1
+- schema_version: 1
+  id: huggingface:bfc7520bdd5417d7e8630e021aace6cb0cf0dcb7cd90a866ffaa7fe4541e6d35
+  source: huggingface
+  url: https://huggingface.co/api/models/CohereLabs/command-a-vision-07-2025
+  retrieved_at: "2026-10-16T07:00:12.814514263Z"
+  sha256: bfc7520bdd5417d7e8630e021aace6cb0cf0dcb7cd90a866ffaa7fe4541e6d35
+- schema_version: 1
+  id: huggingface:bfdd3bddb59f28b61273f926a5b2efd29feb22dc4392eaf6926bfa389b4e8d66
+  source: huggingface
+  url: https://huggingface.co/api/models/black-forest-labs/FLUX.2-dev
+  retrieved_at: "2026-10-16T07:00:24.589443236Z"
+  sha256: bfdd3bddb59f28b61273f926a5b2efd29feb22dc4392eaf6926bfa389b4e8d66
 - schema_version: 1
   id: huggingface:c08adf67e77f4cd68e4c248945904012f02401b66e8710f803d23738834345a0
   source: huggingface
@@ -671,6 +1580,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:48.535097979Z"
   sha256: c330f05b9395b4198d7b4f4b568ea174e36328368ae9c2370ab26428063cfe2a
 - schema_version: 1
+  id: huggingface:c33d7abe4f623ea076c2ddca65f9d70ce51c984aef4c2ee24451f42143a9ff32
+  source: huggingface
+  url: https://huggingface.co/api/models/microsoft/VibeVoice-ASR
+  retrieved_at: "2026-10-16T07:00:28.3781109Z"
+  sha256: c33d7abe4f623ea076c2ddca65f9d70ce51c984aef4c2ee24451f42143a9ff32
+- schema_version: 1
   id: huggingface:c3aa331da870eb2495988c021cbf1d95ed499a1ed34026f111b4e4952fa0582b
   source: huggingface
   url: https://huggingface.co/api/models/physical-intelligence/fast
@@ -682,6 +1597,12 @@ snapshots:
   url: https://huggingface.co/api/models/tiiuae/Falcon-H1-7B-Instruct
   retrieved_at: "2026-10-15T08:21:56.65616403Z"
   sha256: c4242ed214ac6cf015ae13e4a2f5364e6e007459b7bb0552e0c16f6c26829d8f
+- schema_version: 1
+  id: huggingface:c63bca27291b46a9548a5a2d14e335e7b3cc9470280d276b86793d89b96b2bdc
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/llama-nemotron-rerank-1b-v2
+  retrieved_at: "2026-10-16T07:00:29.852388902Z"
+  sha256: c63bca27291b46a9548a5a2d14e335e7b3cc9470280d276b86793d89b96b2bdc
 - schema_version: 1
   id: huggingface:c6d3ee3b109ff6824ceb84866c53a0d44e01fa5872ed51fd8e1daac5c00c3230
   source: huggingface
@@ -738,6 +1659,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:55.614647354Z"
   sha256: cc85970fdebaddf9bdff17660949f245c9a4645c37641593f033d8c8b3b97c52
 - schema_version: 1
+  id: huggingface:cc9acd840b75f36e24c399f8fdadbc877d4a78425158095007bb1f6c4eefc3b2
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/GR00T-N1.7-3B
+  retrieved_at: "2026-10-16T07:13:52.148944862Z"
+  sha256: cc9acd840b75f36e24c399f8fdadbc877d4a78425158095007bb1f6c4eefc3b2
+- schema_version: 1
   id: huggingface:ccd79fd2c864e0bb2699f94e6bf2c04f4c016ae7f703077e0189e13d06eb67d8
   source: huggingface
   url: https://huggingface.co/api/models/Wan-AI/Wan2.2-I2V-A14B
@@ -756,11 +1683,35 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:49.410166384Z"
   sha256: ce3d74a337db4f47f2741f460f9ccb9091680386df2e06105db3ff85448812ea
 - schema_version: 1
+  id: huggingface:ce4b8cbac53a122f370098022c9ac74377839a28a9659ab8c960803e8149afdb
+  source: huggingface
+  url: https://huggingface.co/api/models/HuggingFaceTB/SmolLM3-3B
+  retrieved_at: "2026-10-16T07:00:13.05487814Z"
+  sha256: ce4b8cbac53a122f370098022c9ac74377839a28a9659ab8c960803e8149afdb
+- schema_version: 1
+  id: huggingface:cfa784dca3fd709b38cbbfbbd8e3b6a311a4f5ab3ac61699d2a52727f9a03540
+  source: huggingface
+  url: https://huggingface.co/api/models/nvidia/llama-nemotron-embed-1b-v2
+  retrieved_at: "2026-10-16T07:13:52.389856927Z"
+  sha256: cfa784dca3fd709b38cbbfbbd8e3b6a311a4f5ab3ac61699d2a52727f9a03540
+- schema_version: 1
   id: huggingface:d0c6a16e71da5fc9f56b51b79660f616266de7b6a6461d0151589c685d484ae2
   source: huggingface
   url: https://huggingface.co/api/models/stabilityai/stable-audio-open-1.0
   retrieved_at: "2026-10-15T08:21:56.406715956Z"
   sha256: d0c6a16e71da5fc9f56b51b79660f616266de7b6a6461d0151589c685d484ae2
+- schema_version: 1
+  id: huggingface:d2ecde2e29a896bd044c610c056c3c63248e6cfc01fb655e920c570ed465a34a
+  source: huggingface
+  url: https://huggingface.co/api/models/moonshotai/Kimi-VL-A3B-Instruct
+  retrieved_at: "2026-10-15T08:28:17.930904389Z"
+  sha256: d2ecde2e29a896bd044c610c056c3c63248e6cfc01fb655e920c570ed465a34a
+- schema_version: 1
+  id: huggingface:d4de723cb1519beeae5e6425b639cbb6dc16cac822497a7c379bbcdcda6f8e44
+  source: huggingface
+  url: https://huggingface.co/api/models/openai/clip-vit-base-patch32
+  retrieved_at: "2026-10-16T07:13:52.676413076Z"
+  sha256: d4de723cb1519beeae5e6425b639cbb6dc16cac822497a7c379bbcdcda6f8e44
 - schema_version: 1
   id: huggingface:d80e4c81e6754c4eba29658e06b5d9f7c60dd992e58ff49567fe6bdea2e77a45
   source: huggingface
@@ -768,17 +1719,54 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:49.652047862Z"
   sha256: d80e4c81e6754c4eba29658e06b5d9f7c60dd992e58ff49567fe6bdea2e77a45
 - schema_version: 1
+  id: huggingface:d82a9e93c76c8d39f39eac97af5a42109e7c9271b79707cd72025d996034a5b3
+  source: huggingface
+  url: >-
+    https://huggingface.co/api/models/microsoft/table-transformer-structure-recognition
+  retrieved_at: "2026-10-16T07:13:51.393552924Z"
+  sha256: d82a9e93c76c8d39f39eac97af5a42109e7c9271b79707cd72025d996034a5b3
+- schema_version: 1
+  id: huggingface:d8bdef0f7f22583d1724d1af8ed2bad111f214d9b75c818c40c30eea0b581748
+  source: huggingface
+  url: https://huggingface.co/api/models/deepseek-ai/DeepSeek-Prover-V2-7B
+  retrieved_at: "2026-10-15T08:28:13.950599636Z"
+  sha256: d8bdef0f7f22583d1724d1af8ed2bad111f214d9b75c818c40c30eea0b581748
+- schema_version: 1
+  id: huggingface:d94031d45c7f712971015bd8979828b58e151b665033a8facddc98a9976c3592
+  source: huggingface
+  url: https://huggingface.co/api/models/amazon/chronos-2
+  retrieved_at: "2026-10-16T07:00:24.084926956Z"
+  sha256: d94031d45c7f712971015bd8979828b58e151b665033a8facddc98a9976c3592
+- schema_version: 1
   id: huggingface:d98dc74cbf5fe33b6dab4997bb9fcac2762ed29fe94b5a567413585bb65efa7d
   source: huggingface
   url: https://huggingface.co/api/models/MiniMaxAI/MiniMax-VL-01
   retrieved_at: "2026-10-15T08:21:48.593790384Z"
   sha256: d98dc74cbf5fe33b6dab4997bb9fcac2762ed29fe94b5a567413585bb65efa7d
 - schema_version: 1
+  id: huggingface:da927ff6d73a6fb42abcc4422caf7a0e83b1a579ae9b2a83ef1dc5efe4c3e873
+  source: huggingface
+  url: https://huggingface.co/api/models/fishaudio/s2-pro
+  retrieved_at: "2026-10-16T07:00:25.905039339Z"
+  sha256: da927ff6d73a6fb42abcc4422caf7a0e83b1a579ae9b2a83ef1dc5efe4c3e873
+- schema_version: 1
   id: huggingface:db949bef85dcbef8e63c09851b29f0e8cc9529a63219185503f2a11650232cbf
   source: huggingface
   url: https://huggingface.co/api/models/Qwen/Qwen3-Reranker-4B
   retrieved_at: "2026-10-15T08:21:49.315362651Z"
   sha256: db949bef85dcbef8e63c09851b29f0e8cc9529a63219185503f2a11650232cbf
+- schema_version: 1
+  id: huggingface:dc8506d983816521a2eb3ead8fd1b6eeee4c6ede0d01e3d5bc1ffc2cd799b2d2
+  source: huggingface
+  url: https://huggingface.co/api/models/allenai/Olmo-3-7B-Think
+  retrieved_at: "2026-10-16T07:00:23.813346542Z"
+  sha256: dc8506d983816521a2eb3ead8fd1b6eeee4c6ede0d01e3d5bc1ffc2cd799b2d2
+- schema_version: 1
+  id: huggingface:ddbc5be2af18dfae67a62e556aa4f41dd3ce5444805053745fdfcb0d9af27c48
+  source: huggingface
+  url: https://huggingface.co/api/models/microsoft/Phi-3.5-vision-instruct
+  retrieved_at: "2026-10-16T07:13:51.030510621Z"
+  sha256: ddbc5be2af18dfae67a62e556aa4f41dd3ce5444805053745fdfcb0d9af27c48
 - schema_version: 1
   id: huggingface:df3f98d7d4d40e6f3e0414887e5abd7899980941739e9cbf9a284276a82bc96d
   source: huggingface
@@ -792,6 +1780,18 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:56.653478402Z"
   sha256: e091ad1fd79912f974041aa8bc4e44b4c8d65506efb8aba54f62c9d0bd7944eb
 - schema_version: 1
+  id: huggingface:e200506c120ebfeca70b0ea082b75cbf2eb4f437eb21f8de29748070662b61e3
+  source: huggingface
+  url: https://huggingface.co/api/models/facebook/esm2_t33_650M_UR50D
+  retrieved_at: "2026-10-16T07:13:48.520171689Z"
+  sha256: e200506c120ebfeca70b0ea082b75cbf2eb4f437eb21f8de29748070662b61e3
+- schema_version: 1
+  id: huggingface:e2af52f94e68cfad1eb6e4462cfd60b9a0852ae43b49f290961aca5d71cd82fa
+  source: huggingface
+  url: https://huggingface.co/api/models/ibm-granite/granite-4.2-8b
+  retrieved_at: "2026-10-16T07:00:26.753141074Z"
+  sha256: e2af52f94e68cfad1eb6e4462cfd60b9a0852ae43b49f290961aca5d71cd82fa
+- schema_version: 1
   id: huggingface:e390795abe60ef6b1605894c2472b6f42ecd7147483dd1b2c4a4ef8a16cbd8e0
   source: huggingface
   url: https://huggingface.co/api/models/openai/whisper-large-v3-turbo
@@ -804,17 +1804,53 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:53.540497946Z"
   sha256: e4d2fc2a6b0ad08ac6895e1b554bbcecbd6cf2386987a0818e29ed6a6c95bad1
 - schema_version: 1
+  id: huggingface:e613d09b363ddb26c2262f246d6feb0f2dce92388d1f563dc42e982bd256b095
+  source: huggingface
+  url: https://huggingface.co/api/models/google/flan-t5-base
+  retrieved_at: "2026-10-16T07:13:49.028499543Z"
+  sha256: e613d09b363ddb26c2262f246d6feb0f2dce92388d1f563dc42e982bd256b095
+- schema_version: 1
+  id: huggingface:e642ada3b9a126ca15c0f3cb76d81d65209a534af1e49247b00df2861f9238ee
+  source: huggingface
+  url: https://huggingface.co/api/models/stabilityai/TripoSR
+  retrieved_at: "2026-10-16T07:00:30.375836677Z"
+  sha256: e642ada3b9a126ca15c0f3cb76d81d65209a534af1e49247b00df2861f9238ee
+- schema_version: 1
+  id: huggingface:e707dd0cbb1d1a34f11948757a6d3500dab1e2e09acce886a5018e3d43e0e821
+  source: huggingface
+  url: https://huggingface.co/api/models/MiniMaxAI/MiniMax-H3
+  retrieved_at: "2026-10-16T07:00:21.351533175Z"
+  sha256: e707dd0cbb1d1a34f11948757a6d3500dab1e2e09acce886a5018e3d43e0e821
+- schema_version: 1
+  id: huggingface:e87743b901b9ca0ea04bcc689735c4db8717c750c19cc2edaf4977b6832bc3af
+  source: huggingface
+  url: https://huggingface.co/api/models/meta-llama/Llama-4-Scout-17B-16E-Instruct
+  retrieved_at: "2026-10-15T08:28:16.717328221Z"
+  sha256: e87743b901b9ca0ea04bcc689735c4db8717c750c19cc2edaf4977b6832bc3af
+- schema_version: 1
   id: huggingface:e880ebe7fa0cc49598a701ea3cf7867021fe62185af949ddeb63408547d95f76
   source: huggingface
   url: https://huggingface.co/api/models/Lightricks/LTX-2.5
   retrieved_at: "2026-10-15T08:21:48.386724285Z"
   sha256: e880ebe7fa0cc49598a701ea3cf7867021fe62185af949ddeb63408547d95f76
 - schema_version: 1
+  id: huggingface:e8d321cfbb6eb01c706246011a7d2e9df6bdfe2222edf702fa604e6db289e3e9
+  source: huggingface
+  url: https://huggingface.co/api/models/facebook/vjepa2-vitl-fpc64-256
+  retrieved_at: "2026-10-16T07:13:48.768703997Z"
+  sha256: e8d321cfbb6eb01c706246011a7d2e9df6bdfe2222edf702fa604e6db289e3e9
+- schema_version: 1
   id: huggingface:ebb851fe1c1029067463e0fcedc67fb91447055151423be17b2401da6cba1f19
   source: huggingface
   url: https://huggingface.co/api/models/facebook/dinov3-vitl16-pretrain-lvd1689m
   retrieved_at: "2026-10-15T08:21:51.889583997Z"
   sha256: ebb851fe1c1029067463e0fcedc67fb91447055151423be17b2401da6cba1f19
+- schema_version: 1
+  id: huggingface:ebf5d12639b7966c743d44f93257c2e4e60e030aa7d62502443462f02017653a
+  source: huggingface
+  url: https://huggingface.co/api/models/microsoft/TRELLIS.2-4B
+  retrieved_at: "2026-10-16T07:00:28.34717372Z"
+  sha256: ebf5d12639b7966c743d44f93257c2e4e60e030aa7d62502443462f02017653a
 - schema_version: 1
   id: huggingface:ebfccd205da1ffc60effb9a4d57654f57d526cb02622500a5652569eab57aaa5
   source: huggingface
@@ -840,11 +1876,29 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:54.573248628Z"
   sha256: f13f3103be14f594d5f57656ee8acb58d24a9ba8a08f6180eb2d02cbad7669e1
 - schema_version: 1
+  id: huggingface:f16a8e8b552592dbec8d5b138abc645ebb62646bd259d7b9040747a55c64f9ae
+  source: huggingface
+  url: https://huggingface.co/api/models/moonshotai/Kimi-K2.7-Code
+  retrieved_at: "2026-10-16T07:13:51.907744073Z"
+  sha256: f16a8e8b552592dbec8d5b138abc645ebb62646bd259d7b9040747a55c64f9ae
+- schema_version: 1
   id: huggingface:f183faf04eb53143ed70fe5f2c4ce340385c660182c27f6964d1a67ca26180bd
   source: huggingface
   url: https://huggingface.co/api/models/zai-org/GLM-4.6V-Flash
   retrieved_at: "2026-10-15T08:21:56.887181544Z"
   sha256: f183faf04eb53143ed70fe5f2c4ce340385c660182c27f6964d1a67ca26180bd
+- schema_version: 1
+  id: huggingface:f30496341e7355473910bda1dd4848edfef720c1bdecbb963982f19d7a6c934a
+  source: huggingface
+  url: https://huggingface.co/api/models/FunAudioLLM/SenseVoiceSmall
+  retrieved_at: "2026-10-16T07:00:12.645153045Z"
+  sha256: f30496341e7355473910bda1dd4848edfef720c1bdecbb963982f19d7a6c934a
+- schema_version: 1
+  id: huggingface:f38306487d00196f57892420684b79c7c7fb62b7b2e43c6dd2b2ac29b81fb7f4
+  source: huggingface
+  url: https://huggingface.co/api/models/FunAudioLLM/Fun-CosyVoice3-0.5B-2512
+  retrieved_at: "2026-10-16T07:00:12.321380804Z"
+  sha256: f38306487d00196f57892420684b79c7c7fb62b7b2e43c6dd2b2ac29b81fb7f4
 - schema_version: 1
   id: huggingface:f44acf30eca5bc330a3bc36704bcf01682c279834e4b8de61e19519a507499f5
   source: huggingface
@@ -864,6 +1918,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:52.495342912Z"
   sha256: f714ad4fe05771ce01b86b50a16d5f17b2a4b36a34b6ecad2789a2816dd79b25
 - schema_version: 1
+  id: huggingface:f7588a0441dfe3b8250d19337f89c6223e21d68784ea432028c2561bac377546
+  source: huggingface
+  url: https://huggingface.co/api/models/IDEA-Research/grounding-dino-base
+  retrieved_at: "2026-10-16T07:00:20.708438125Z"
+  sha256: f7588a0441dfe3b8250d19337f89c6223e21d68784ea432028c2561bac377546
+- schema_version: 1
   id: huggingface:fa7335a756f51f127dd0d9ea86b05bfc9771930cb485b6ce4b8a225c1a084b27
   source: huggingface
   url: https://huggingface.co/api/models/mistralai/Mistral-Small-4-119B-2603
@@ -876,6 +1936,18 @@ snapshots:
   retrieved_at: "2026-10-15T08:21:48.133583136Z"
   sha256: fa9613143c45d018f40cf349b22fdfad3c0775ba88d5095794de690c2559f729
 - schema_version: 1
+  id: huggingface:fae23b5e053d0f71a85a427192c3fe388f092fe4f75f3c292f430d0945ad64c4
+  source: huggingface
+  url: https://huggingface.co/api/models/CohereLabs/command-a-plus-05-2026-bf16
+  retrieved_at: "2026-10-16T07:00:12.1686615Z"
+  sha256: fae23b5e053d0f71a85a427192c3fe388f092fe4f75f3c292f430d0945ad64c4
+- schema_version: 1
+  id: huggingface:fc182026f823fc276777b3e357a71584c884fdab36ce5db18082a95f75a2e755
+  source: huggingface
+  url: https://huggingface.co/api/models/Qwen/Qwen3-VL-8B-Instruct
+  retrieved_at: "2026-10-16T07:00:22.536716441Z"
+  sha256: fc182026f823fc276777b3e357a71584c884fdab36ce5db18082a95f75a2e755
+- schema_version: 1
   id: huggingface:fc63c33b506ee2edc077733ad190d71e0d440b6ac3af283a625c974ff9e26da5
   source: huggingface
   url: https://huggingface.co/api/models/nvidia/Cosmos-Reason2-2B
@@ -887,6 +1959,12 @@ snapshots:
   url: https://huggingface.co/api/models/Prior-Labs/TabPFN-v2-reg
   retrieved_at: "2026-10-15T08:21:48.784856373Z"
   sha256: fd2bf4d7d4339ba4c449aa50d4362993a7adc939e4b11a7f7f575595c9f3625d
+- schema_version: 1
+  id: huggingface:fed6a604dcfcfa385bc92d5d47fd489f545863f9abde0947a15df447c0ff86e6
+  source: huggingface
+  url: https://huggingface.co/api/models/meta-llama/Llama-3.2-11B-Vision-Instruct
+  retrieved_at: "2026-10-16T07:13:50.626146072Z"
+  sha256: fed6a604dcfcfa385bc92d5d47fd489f545863f9abde0947a15df447c0ff86e6
 records:
 - schema_version: 1
   kind: model
@@ -4854,6 +5932,164 @@ records:
       pointer: /pipeline_tag
     updated_at:
       value: "2026-09-16T18:34:59.000Z"
+      pointer: /lastModified
+- schema_version: 1
+  kind: model
+  id: huggingface:model:biohub/ESMC-6B
+  source: huggingface
+  upstream_id: biohub/ESMC-6B
+  name: biohub/ESMC-6B
+  origin:
+    snapshot: huggingface:34265bc5d853b7f2852643a4c82e32974517af9bc35a7c1c42b8bea941280af7
+    pointer: ""
+  facts:
+    architectures:
+      value:
+      - EsmcForMaskedLM
+      pointer: /config/architectures
+    created_at:
+      value: "2026-05-19T23:26:54.000Z"
+      pointer: /createdAt
+    gated:
+      value: false
+      pointer: /gated
+    languages:
+      value: en
+      pointer: /cardData/language
+    library:
+      value: transformers
+      pointer: /library_name
+    license:
+      value:
+      - mit
+      - other
+      pointer: /cardData/license
+    license_link:
+      value: https://github.com/Biohub/esm/blob/main/THIRD_PARTY_NOTICE.md
+      pointer: /cardData/license_link
+    model_type:
+      value: esmc
+      pointer: /config/model_type
+    parameters:
+      value:
+        F32: 6352005184
+      pointer: /safetensors/parameters
+    private:
+      value: false
+      pointer: /private
+    publisher:
+      value: biohub
+      pointer: /author
+    revision:
+      value: af1602ba7406f521b11bf8f81d52af378cde09e4
+      pointer: /sha
+    safetensors_parameter_count:
+      value: 6352005184
+      pointer: /safetensors/total
+      unit: parameters
+    tags:
+      value:
+      - transformers
+      - safetensors
+      - esmc
+      - fill-mask
+      - biology
+      - esm
+      - protein
+      - protein-language-model
+      - protein-embeddings
+      - masked-language-modeling
+      - transfer-learning
+      - variant-effect-prediction
+      - protein-engineering
+      - custom_code
+      - en
+      - license:mit
+      - license:other
+      - endpoints_compatible
+      - region:us
+      pointer: /tags
+    task:
+      value: fill-mask
+      pointer: /pipeline_tag
+    updated_at:
+      value: "2026-09-16T18:35:02.000Z"
+      pointer: /lastModified
+- schema_version: 1
+  kind: model
+  id: huggingface:model:biohub/ESMFold2
+  source: huggingface
+  upstream_id: biohub/ESMFold2
+  name: biohub/ESMFold2
+  origin:
+    snapshot: huggingface:6b5e94cee006bbdbf9d8eec14cd50eb9d8d56ca37e47a4f909328f579f52abee
+    pointer: ""
+  facts:
+    architectures:
+      value:
+      - EsmFold2Model
+      pointer: /config/architectures
+    created_at:
+      value: "2026-05-13T16:59:56.000Z"
+      pointer: /createdAt
+    gated:
+      value: false
+      pointer: /gated
+    languages:
+      value: en
+      pointer: /cardData/language
+    library:
+      value: transformers
+      pointer: /library_name
+    license:
+      value:
+      - mit
+      pointer: /cardData/license
+    license_link:
+      value: https://github.com/Biohub/esm/blob/main/THIRD_PARTY_NOTICE.md
+      pointer: /cardData/license_link
+    model_type:
+      value: esmfold2
+      pointer: /config/model_type
+    parameters:
+      value:
+        F32: 6579755843
+      pointer: /safetensors/parameters
+    private:
+      value: false
+      pointer: /private
+    publisher:
+      value: biohub
+      pointer: /author
+    revision:
+      value: 69869f737beffec5294845ede23db5fc0b4f509e
+      pointer: /sha
+    safetensors_parameter_count:
+      value: 6579755843
+      pointer: /safetensors/total
+      unit: parameters
+    tags:
+      value:
+      - transformers
+      - safetensors
+      - esmfold2
+      - biology
+      - esm
+      - protein
+      - protein-structure-prediction
+      - structure-prediction
+      - protein-design
+      - 3d-structure
+      - confidence-estimation
+      - molecular-dynamics
+      - custom_code
+      - en
+      - license:mit
+      - endpoints_compatible
+      - region:us
+      pointer: /tags
+    updated_at:
+      value: "2026-09-16T18:28:12.000Z"
       pointer: /lastModified
 - schema_version: 1
   kind: model
@@ -10866,6 +12102,60 @@ records:
       pointer: /lastModified
 - schema_version: 1
   kind: model
+  id: huggingface:model:nvidia/GR00T-N1.7-3B
+  source: huggingface
+  upstream_id: nvidia/GR00T-N1.7-3B
+  name: nvidia/GR00T-N1.7-3B
+  origin:
+    snapshot: huggingface:cc9acd840b75f36e24c399f8fdadbc877d4a78425158095007bb1f6c4eefc3b2
+    pointer: ""
+  facts:
+    architectures:
+      value:
+      - Gr00tN1d7
+      pointer: /config/architectures
+    created_at:
+      value: "2026-02-25T00:39:18.000Z"
+      pointer: /createdAt
+    gated:
+      value: false
+      pointer: /gated
+    model_type:
+      value: Gr00tN1d7
+      pointer: /config/model_type
+    parameters:
+      value:
+        BF16: 3455180928
+      pointer: /safetensors/parameters
+    private:
+      value: false
+      pointer: /private
+    publisher:
+      value: nvidia
+      pointer: /author
+    revision:
+      value: 2fc962b973bccdd5d8ce4f67cc63b264d6886495
+      pointer: /sha
+    safetensors_parameter_count:
+      value: 3144016000
+      pointer: /safetensors/total
+      unit: parameters
+    tags:
+      value:
+      - safetensors
+      - Gr00tN1d7
+      - robotics
+      - arxiv:2503.14734
+      - region:us
+      pointer: /tags
+    task:
+      value: robotics
+      pointer: /pipeline_tag
+    updated_at:
+      value: "2026-04-23T19:09:30.000Z"
+      pointer: /lastModified
+- schema_version: 1
+  kind: model
   id: huggingface:model:nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16
   source: huggingface
   upstream_id: nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16
@@ -12689,6 +13979,63 @@ records:
       pointer: /pipeline_tag
     updated_at:
       value: "2026-01-21T06:23:40.000Z"
+      pointer: /lastModified
+- schema_version: 1
+  kind: model
+  id: huggingface:model:wanglab/MedSAM2
+  source: huggingface
+  upstream_id: wanglab/MedSAM2
+  name: wanglab/MedSAM2
+  origin:
+    snapshot: huggingface:ad1da550357df1a973f4e2834461beb13c59cfaaf582c82064801e39aa898c21
+    pointer: ""
+  facts:
+    created_at:
+      value: "2025-04-01T21:06:26.000Z"
+      pointer: /createdAt
+    gated:
+      value: false
+      pointer: /gated
+    languages:
+      value: en
+      pointer: /cardData/language
+    library:
+      value: torch
+      pointer: /library_name
+    license:
+      value: cc-by-sa-4.0
+      pointer: /cardData/license
+    private:
+      value: false
+      pointer: /private
+    publisher:
+      value: wanglab
+      pointer: /author
+    revision:
+      value: e4a6f35edd7e091619cbc0750f462f1574e23955
+      pointer: /sha
+    tags:
+      value:
+      - torch
+      - medical
+      - segmentation
+      - sam
+      - medical-imaging
+      - ct
+      - mri
+      - ultrasound
+      - image-segmentation
+      - en
+      - dataset:medical
+      - arxiv:2504.03600
+      - license:cc-by-sa-4.0
+      - region:us
+      pointer: /tags
+    task:
+      value: image-segmentation
+      pointer: /pipeline_tag
+    updated_at:
+      value: "2025-07-10T23:00:50.000Z"
       pointer: /lastModified
 - schema_version: 1
   kind: model

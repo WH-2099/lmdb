@@ -1,0 +1,1965 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-10-16T07:27:50.440397938Z",
+  "finished_at": "2026-10-16T07:27:58.134814366Z",
+  "sources": [
+    "huggingface",
+    "modelscope"
+  ],
+  "max_results": 200,
+  "processed_results": 125,
+  "rules": [
+    {
+      "id": "hf-autonlab",
+      "source": "huggingface",
+      "query_url": "https://huggingface.co/api/models?author=AutonLab&sort=createdAt&direction=-1&limit=10",
+      "status": "complete",
+      "processed_results": 3,
+      "existing_results": 0
+    },
+    {
+      "id": "hf-facebook-segmentation",
+      "source": "huggingface",
+      "query_url": "https://huggingface.co/api/models?author=facebook&sort=createdAt&direction=-1&limit=10&pipeline_tag=image-segmentation",
+      "status": "limited",
+      "processed_results": 20,
+      "existing_results": 0
+    },
+    {
+      "id": "hf-nvidia-robotics",
+      "source": "huggingface",
+      "query_url": "https://huggingface.co/api/models?author=nvidia&sort=createdAt&direction=-1&limit=10&pipeline_tag=robotics",
+      "status": "limited",
+      "processed_results": 20,
+      "existing_results": 1
+    },
+    {
+      "id": "hf-biohub",
+      "source": "huggingface",
+      "query_url": "https://huggingface.co/api/models?author=biohub&sort=createdAt&direction=-1&limit=10",
+      "status": "limited",
+      "processed_results": 20,
+      "existing_results": 0
+    },
+    {
+      "id": "hf-prithvi",
+      "source": "huggingface",
+      "query_url": "https://huggingface.co/api/models?author=ibm-nasa-geospatial&sort=createdAt&direction=-1&limit=10",
+      "status": "complete",
+      "processed_results": 15,
+      "existing_results": 2
+    },
+    {
+      "id": "hf-granite-geospatial",
+      "source": "huggingface",
+      "query_url": "https://huggingface.co/api/models?author=ibm-granite&sort=createdAt&direction=-1&limit=10&search=geospatial",
+      "status": "complete",
+      "processed_results": 7,
+      "existing_results": 0
+    },
+    {
+      "id": "ms-qwen",
+      "source": "modelscope",
+      "query_url": "https://modelscope.cn/openapi/v1/models?owner=Qwen&sort=last_modified&page_number=1&page_size=10",
+      "status": "limited",
+      "processed_results": 20,
+      "existing_results": 1,
+      "total_count": 471
+    },
+    {
+      "id": "ms-wan",
+      "source": "modelscope",
+      "query_url": "https://modelscope.cn/openapi/v1/models?owner=Wan-AI&sort=last_modified&page_number=1&page_size=10",
+      "status": "limited",
+      "processed_results": 20,
+      "existing_results": 3,
+      "total_count": 30
+    }
+  ],
+  "snapshots": [
+    {
+      "schema_version": 1,
+      "id": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=biohub&sort=createdAt&direction=-1&limit=10",
+      "retrieved_at": "2026-10-16T07:27:52.270162011Z",
+      "sha256": "2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882"
+    },
+    {
+      "schema_version": 1,
+      "id": "huggingface:4cc44db7a50bd45cebfa34bfbeabf4562f1d6c2c0acfe205fb4ec4b17f90bf9a",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=ibm-granite&sort=createdAt&direction=-1&limit=10&search=geospatial",
+      "retrieved_at": "2026-10-16T07:27:53.23334903Z",
+      "sha256": "4cc44db7a50bd45cebfa34bfbeabf4562f1d6c2c0acfe205fb4ec4b17f90bf9a"
+    },
+    {
+      "schema_version": 1,
+      "id": "huggingface:7dbb7ff9dbf29f7343e42c2240b7320994f9110831beba49c571940f596457b0",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=ibm-nasa-geospatial&sort=createdAt&direction=-1&limit=10&cursor=eyJfaWQiOnsiJGx0IjoiNjZlZDg4ZmIyNjY5YzUzY2VjYzM3NzZjIn0sInNlYXJjaFNlcXVlbmNlVG9rZW4iOiJDTjJXbXdJYURsb01adTJJK3lacHhUenN3M2RzSWc1YURHYnRpUHNtYWNVODdNTjNiQT09In0%3D",
+      "retrieved_at": "2026-10-16T07:27:52.992426324Z",
+      "sha256": "7dbb7ff9dbf29f7343e42c2240b7320994f9110831beba49c571940f596457b0"
+    },
+    {
+      "schema_version": 1,
+      "id": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=nvidia&sort=createdAt&direction=-1&limit=10&pipeline_tag=robotics",
+      "retrieved_at": "2026-10-16T07:27:51.785937715Z",
+      "sha256": "8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530"
+    },
+    {
+      "schema_version": 1,
+      "id": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=facebook&sort=createdAt&direction=-1&limit=10&pipeline_tag=image-segmentation",
+      "retrieved_at": "2026-10-16T07:27:51.301984732Z",
+      "sha256": "9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe"
+    },
+    {
+      "schema_version": 1,
+      "id": "huggingface:9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=ibm-nasa-geospatial&sort=createdAt&direction=-1&limit=10",
+      "retrieved_at": "2026-10-16T07:27:52.753386419Z",
+      "sha256": "9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78"
+    },
+    {
+      "schema_version": 1,
+      "id": "huggingface:a1f2a2458bca343d2be4d31ea475fb8820cf12d43289a5e571d736affb8b33a4",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=AutonLab&sort=createdAt&direction=-1&limit=10",
+      "retrieved_at": "2026-10-16T07:27:51.060837866Z",
+      "sha256": "a1f2a2458bca343d2be4d31ea475fb8820cf12d43289a5e571d736affb8b33a4"
+    },
+    {
+      "schema_version": 1,
+      "id": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=facebook&sort=createdAt&direction=-1&limit=10&pipeline_tag=image-segmentation&cursor=eyJfaWQiOnsiJGx0IjoiNjZkZmFlMTkzNGIxNDBmYTY1ZTFhNzdlIn0sInNlYXJjaFNlcXVlbmNlVG9rZW4iOiJDTWlma0FJYURsb01adCt1R1RTeFFQcGw0YWQrSWc1YURHYmZyaGswc1VENlplR25mZz09In0%3D",
+      "retrieved_at": "2026-10-16T07:27:51.54427357Z",
+      "sha256": "c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6"
+    },
+    {
+      "schema_version": 1,
+      "id": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=nvidia&sort=createdAt&direction=-1&limit=10&pipeline_tag=robotics&cursor=eyJfaWQiOnsiJGx0IjoiNjljZWZjZTczMWZiZjRmNjkxNzFlOGE2In0sInNlYXJjaFNlcXVlbmNlVG9rZW4iOiJDTVhUandFYURsb01hYzc4NXpINzlQYVJjZWltSWc1YURHbk8vT2N4Ky9UMmtYSG9wZz09In0%3D",
+      "retrieved_at": "2026-10-16T07:27:52.028147847Z",
+      "sha256": "c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5"
+    },
+    {
+      "schema_version": 1,
+      "id": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+      "source": "huggingface",
+      "url": "https://huggingface.co/api/models?author=biohub&sort=createdAt&direction=-1&limit=10&cursor=eyJfaWQiOnsiJGx0IjoiNmExNTA4YmZkYzI0MDBjYjAzMzQ0ODQ2In0sInNlYXJjaFNlcXVlbmNlVG9rZW4iOiJDSXFHb2dJYURsb01haFVJdjl3a0FNc0RORWhHSWc1YURHb1ZDTC9jSkFETEF6UklSZz09In0%3D",
+      "retrieved_at": "2026-10-16T07:27:52.512977381Z",
+      "sha256": "e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e"
+    },
+    {
+      "schema_version": 1,
+      "id": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+      "source": "modelscope",
+      "url": "https://modelscope.cn/openapi/v1/models?owner=Wan-AI&sort=last_modified&page_size=10&page_number=2",
+      "retrieved_at": "2026-10-16T07:27:58.132500905Z",
+      "sha256": "5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2"
+    },
+    {
+      "schema_version": 1,
+      "id": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+      "source": "modelscope",
+      "url": "https://modelscope.cn/openapi/v1/models?owner=Qwen&sort=last_modified&page_size=10&page_number=2",
+      "retrieved_at": "2026-10-16T07:27:56.252313499Z",
+      "sha256": "8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e"
+    },
+    {
+      "schema_version": 1,
+      "id": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+      "source": "modelscope",
+      "url": "https://modelscope.cn/openapi/v1/models?owner=Qwen&sort=last_modified&page_number=1&page_size=10",
+      "retrieved_at": "2026-10-16T07:27:55.292903639Z",
+      "sha256": "9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2"
+    },
+    {
+      "schema_version": 1,
+      "id": "modelscope:e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b",
+      "source": "modelscope",
+      "url": "https://modelscope.cn/openapi/v1/models?owner=Wan-AI&sort=last_modified&page_number=1&page_size=10",
+      "retrieved_at": "2026-10-16T07:27:57.182425507Z",
+      "sha256": "e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b"
+    }
+  ],
+  "candidates": [
+    {
+      "source": "huggingface",
+      "upstream_id": "AutonLab/MOMENT-1-base",
+      "url": "https://huggingface.co/AutonLab/MOMENT-1-base",
+      "matched_rules": [
+        "hf-autonlab"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-autonlab",
+          "snapshot": "huggingface:a1f2a2458bca343d2be4d31ea475fb8820cf12d43289a5e571d736affb8b33a4",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "AutonLab/MOMENT-1-large",
+      "url": "https://huggingface.co/AutonLab/MOMENT-1-large",
+      "matched_rules": [
+        "hf-autonlab"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-autonlab",
+          "snapshot": "huggingface:a1f2a2458bca343d2be4d31ea475fb8820cf12d43289a5e571d736affb8b33a4",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "AutonLab/MOMENT-1-small",
+      "url": "https://huggingface.co/AutonLab/MOMENT-1-small",
+      "matched_rules": [
+        "hf-autonlab"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-autonlab",
+          "snapshot": "huggingface:a1f2a2458bca343d2be4d31ea475fb8820cf12d43289a5e571d736affb8b33a4",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-300M-hf",
+      "url": "https://huggingface.co/biohub/ESMC-300M-hf",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-600M-hf",
+      "url": "https://huggingface.co/biohub/ESMC-600M-hf",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-hf",
+      "url": "https://huggingface.co/biohub/ESMC-6B-hf",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k128-codebook131072",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k128-codebook131072",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/5"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k128-codebook16384",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k128-codebook16384",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/8"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k128-codebook32768",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k128-codebook32768",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/7"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k128-codebook65536",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k128-codebook65536",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/6"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k128-codebook8192",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k128-codebook8192",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/9"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k256-codebook131072",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k256-codebook131072",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k256-codebook16384",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k256-codebook16384",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/3"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k256-codebook32768",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k256-codebook32768",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k256-codebook65536",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k256-codebook65536",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k256-codebook8192",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k256-codebook8192",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:e55ebd9f9322be52129cbb7a685205b9a8bad2431768a00555a79247832e957e",
+          "pointer": "/4"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k512-codebook131072",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k512-codebook131072",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/5"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k512-codebook16384",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k512-codebook16384",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/8"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k512-codebook32768",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k512-codebook32768",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/7"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k512-codebook65536",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k512-codebook65536",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/6"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMC-6B-sae-layer60-k512-codebook8192",
+      "url": "https://huggingface.co/biohub/ESMC-6B-sae-layer60-k512-codebook8192",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/9"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/ESMFold2-hf",
+      "url": "https://huggingface.co/biohub/ESMFold2-hf",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/4"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "biohub/octopi",
+      "url": "https://huggingface.co/biohub/octopi",
+      "matched_rules": [
+        "hf-biohub"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-biohub",
+          "snapshot": "huggingface:2d111de51f4103d57849bee012733a59d9d771cf1150f17a4a15bf4817046882",
+          "pointer": "/3"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/mask2former-swin-base-IN21k-cityscapes-panoptic",
+      "url": "https://huggingface.co/facebook/mask2former-swin-base-IN21k-cityscapes-panoptic",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/9"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/mask2former-swin-base-IN21k-cityscapes-semantic",
+      "url": "https://huggingface.co/facebook/mask2former-swin-base-IN21k-cityscapes-semantic",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/6"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/mask2former-swin-base-IN21k-coco-instance",
+      "url": "https://huggingface.co/facebook/mask2former-swin-base-IN21k-coco-instance",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/5"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/mask2former-swin-small-cityscapes-semantic",
+      "url": "https://huggingface.co/facebook/mask2former-swin-small-cityscapes-semantic",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/8"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/mask2former-swin-tiny-cityscapes-semantic",
+      "url": "https://huggingface.co/facebook/mask2former-swin-tiny-cityscapes-semantic",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/7"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-0.3b",
+      "url": "https://huggingface.co/facebook/sapiens-seg-0.3b",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/8"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-0.3b-bfloat16",
+      "url": "https://huggingface.co/facebook/sapiens-seg-0.3b-bfloat16",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/5"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-0.3b-torchscript",
+      "url": "https://huggingface.co/facebook/sapiens-seg-0.3b-torchscript",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-0.6b",
+      "url": "https://huggingface.co/facebook/sapiens-seg-0.6b",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/9"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-0.6b-bfloat16",
+      "url": "https://huggingface.co/facebook/sapiens-seg-0.6b-bfloat16",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/6"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-0.6b-torchscript",
+      "url": "https://huggingface.co/facebook/sapiens-seg-0.6b-torchscript",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/3"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-1b",
+      "url": "https://huggingface.co/facebook/sapiens-seg-1b",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-1b-bfloat16",
+      "url": "https://huggingface.co/facebook/sapiens-seg-1b-bfloat16",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/7"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-1b-torchscript",
+      "url": "https://huggingface.co/facebook/sapiens-seg-1b-torchscript",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/4"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens-seg-foreground-1b-torchscript",
+      "url": "https://huggingface.co/facebook/sapiens-seg-foreground-1b-torchscript",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:c0cc51e60c014cf6b01faae9009b71b959e585b22aca72e78e92bae6ed8cdbf6",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens2-matting-1b",
+      "url": "https://huggingface.co/facebook/sapiens2-matting-1b",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens2-seg-0.4b",
+      "url": "https://huggingface.co/facebook/sapiens2-seg-0.4b",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/3"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens2-seg-0.8b",
+      "url": "https://huggingface.co/facebook/sapiens2-seg-0.8b",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens2-seg-1b",
+      "url": "https://huggingface.co/facebook/sapiens2-seg-1b",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "facebook/sapiens2-seg-5b",
+      "url": "https://huggingface.co/facebook/sapiens2-seg-5b",
+      "matched_rules": [
+        "hf-facebook-segmentation"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-facebook-segmentation",
+          "snapshot": "huggingface:9acb4781845ae16c3fb1c6d851008a33e70d38abcf572e91e0f76cb377b69cbe",
+          "pointer": "/4"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-granite/granite-geospatial-biomass",
+      "url": "https://huggingface.co/ibm-granite/granite-geospatial-biomass",
+      "matched_rules": [
+        "hf-granite-geospatial"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-granite-geospatial",
+          "snapshot": "huggingface:4cc44db7a50bd45cebfa34bfbeabf4562f1d6c2c0acfe205fb4ec4b17f90bf9a",
+          "pointer": "/6"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-granite/granite-geospatial-canopyheight",
+      "url": "https://huggingface.co/ibm-granite/granite-geospatial-canopyheight",
+      "matched_rules": [
+        "hf-granite-geospatial"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-granite-geospatial",
+          "snapshot": "huggingface:4cc44db7a50bd45cebfa34bfbeabf4562f1d6c2c0acfe205fb4ec4b17f90bf9a",
+          "pointer": "/4"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-granite/granite-geospatial-land-surface-temperature",
+      "url": "https://huggingface.co/ibm-granite/granite-geospatial-land-surface-temperature",
+      "matched_rules": [
+        "hf-granite-geospatial"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-granite-geospatial",
+          "snapshot": "huggingface:4cc44db7a50bd45cebfa34bfbeabf4562f1d6c2c0acfe205fb4ec4b17f90bf9a",
+          "pointer": "/3"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-granite/granite-geospatial-ocean",
+      "url": "https://huggingface.co/ibm-granite/granite-geospatial-ocean",
+      "matched_rules": [
+        "hf-granite-geospatial"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-granite-geospatial",
+          "snapshot": "huggingface:4cc44db7a50bd45cebfa34bfbeabf4562f1d6c2c0acfe205fb4ec4b17f90bf9a",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-granite/granite-geospatial-uki",
+      "url": "https://huggingface.co/ibm-granite/granite-geospatial-uki",
+      "matched_rules": [
+        "hf-granite-geospatial"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-granite-geospatial",
+          "snapshot": "huggingface:4cc44db7a50bd45cebfa34bfbeabf4562f1d6c2c0acfe205fb4ec4b17f90bf9a",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-granite/granite-geospatial-uki-flooddetection",
+      "url": "https://huggingface.co/ibm-granite/granite-geospatial-uki-flooddetection",
+      "matched_rules": [
+        "hf-granite-geospatial"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-granite-geospatial",
+          "snapshot": "huggingface:4cc44db7a50bd45cebfa34bfbeabf4562f1d6c2c0acfe205fb4ec4b17f90bf9a",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-granite/granite-geospatial-wxc-downscaling",
+      "url": "https://huggingface.co/ibm-granite/granite-geospatial-wxc-downscaling",
+      "matched_rules": [
+        "hf-granite-geospatial"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-granite-geospatial",
+          "snapshot": "huggingface:4cc44db7a50bd45cebfa34bfbeabf4562f1d6c2c0acfe205fb4ec4b17f90bf9a",
+          "pointer": "/5"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-1.0-100M",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-1.0-100M",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:7dbb7ff9dbf29f7343e42c2240b7320994f9110831beba49c571940f596457b0",
+          "pointer": "/3"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-1.0-100M-burn-scar",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-1.0-100M-burn-scar",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:7dbb7ff9dbf29f7343e42c2240b7320994f9110831beba49c571940f596457b0",
+          "pointer": "/4"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-1.0-100M-multi-temporal-crop-classification",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-1.0-100M-multi-temporal-crop-classification",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:7dbb7ff9dbf29f7343e42c2240b7320994f9110831beba49c571940f596457b0",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-1.0-100M-sen1floods11",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-1.0-100M-sen1floods11",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:7dbb7ff9dbf29f7343e42c2240b7320994f9110831beba49c571940f596457b0",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-2.0-100M-TL",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-100M-TL",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-BurnScars",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78",
+          "pointer": "/7"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL-Sen1Floods11",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-300M-TL-Sen1Floods11",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78",
+          "pointer": "/3"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-2.0-600M",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-600M",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78",
+          "pointer": "/4"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-2.0-600M-TL",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-600M-TL",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78",
+          "pointer": "/5"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-EO-2.0-tiny-TL",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-tiny-TL",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-WxC-1.0-2300M-rollout",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-WxC-1.0-2300M-rollout",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:9cfbe6931e097061ed03b6713fcdceb8710629d23b51c4d2385fa12944667f78",
+          "pointer": "/8"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "ibm-nasa-geospatial/Prithvi-WxC-1.0-2300m-gravity-wave-parameterization",
+      "url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-WxC-1.0-2300m-gravity-wave-parameterization",
+      "matched_rules": [
+        "hf-prithvi"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-prithvi",
+          "snapshot": "huggingface:7dbb7ff9dbf29f7343e42c2240b7320994f9110831beba49c571940f596457b0",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/Alpamayo-1.5-10B",
+      "url": "https://huggingface.co/nvidia/Alpamayo-1.5-10B",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+          "pointer": "/7"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/Alpamayo2-Super",
+      "url": "https://huggingface.co/nvidia/Alpamayo2-Super",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/6"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/Arena-Dexsuite-Lift-RL-Newton-Task",
+      "url": "https://huggingface.co/nvidia/Arena-Dexsuite-Lift-RL-Newton-Task",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/9"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/Arena-Franka-Lift-Object-RL-Task",
+      "url": "https://huggingface.co/nvidia/Arena-Franka-Lift-Object-RL-Task",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/GN1.6-Tuned-Arena-GR1-PlaceItemCloseDoor-Task",
+      "url": "https://huggingface.co/nvidia/GN1.6-Tuned-Arena-GR1-PlaceItemCloseDoor-Task",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+          "pointer": "/9"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/GN1x-Tuned-Arena-G1-Static-PickNPlace",
+      "url": "https://huggingface.co/nvidia/GN1x-Tuned-Arena-G1-Static-PickNPlace",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/8"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/GR00T-N1.5-3B_Assemble_Trocar",
+      "url": "https://huggingface.co/nvidia/GR00T-N1.5-3B_Assemble_Trocar",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/5"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/GR00T-N1.7-ApplePnP-V1",
+      "url": "https://huggingface.co/nvidia/GR00T-N1.7-ApplePnP-V1",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/7"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/GR00T-N1.7-DROID",
+      "url": "https://huggingface.co/nvidia/GR00T-N1.7-DROID",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+          "pointer": "/4"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/GR00T-N1.7-LIBERO",
+      "url": "https://huggingface.co/nvidia/GR00T-N1.7-LIBERO",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+          "pointer": "/5"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/GR00T-N1.7-SimplerEnv-Bridge",
+      "url": "https://huggingface.co/nvidia/GR00T-N1.7-SimplerEnv-Bridge",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+          "pointer": "/3"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/GR00T-N1.7-SimplerEnv-Fractal",
+      "url": "https://huggingface.co/nvidia/GR00T-N1.7-SimplerEnv-Fractal",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/SOMA-X",
+      "url": "https://huggingface.co/nvidia/SOMA-X",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+          "pointer": "/6"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/foundationpose",
+      "url": "https://huggingface.co/nvidia/foundationpose",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/g1_locomanip_finetune",
+      "url": "https://huggingface.co/nvidia/g1_locomanip_finetune",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:c944f9b0b263086d2226ccb5a3928e876da3be286d75ca3dad0873a8eb55d3c5",
+          "pointer": "/0"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/gr00t17-lerobot-libero_10-640",
+      "url": "https://huggingface.co/nvidia/gr00t17-lerobot-libero_10-640",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/2"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/gr00t17-lerobot-libero_goal-640",
+      "url": "https://huggingface.co/nvidia/gr00t17-lerobot-libero_goal-640",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/1"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/gr00t17-lerobot-libero_object-640",
+      "url": "https://huggingface.co/nvidia/gr00t17-lerobot-libero_object-640",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/3"
+        }
+      ]
+    },
+    {
+      "source": "huggingface",
+      "upstream_id": "nvidia/gr00t17-lerobot-libero_spatial-640",
+      "url": "https://huggingface.co/nvidia/gr00t17-lerobot-libero_spatial-640",
+      "matched_rules": [
+        "hf-nvidia-robotics"
+      ],
+      "evidence": [
+        {
+          "rule_id": "hf-nvidia-robotics",
+          "snapshot": "huggingface:8ea4119e3f4c1aa635d14ceaddc72f13cde2cb6a60d71aa311ba583b00ef7530",
+          "pointer": "/4"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/QwQ-32B-GGUF",
+      "url": "https://modelscope.cn/models/Qwen/QwQ-32B-GGUF",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+          "pointer": "/data/models/5"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen-Drive-1.0-4B",
+      "url": "https://modelscope.cn/models/Qwen/Qwen-Drive-1.0-4B",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/7"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen-Image-2.1",
+      "url": "https://modelscope.cn/models/Qwen/Qwen-Image-2.1",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/1"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen-Image-2.1-PE-I2I",
+      "url": "https://modelscope.cn/models/Qwen/Qwen-Image-2.1-PE-I2I",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/6"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen-Image-2.1-PE-T2I",
+      "url": "https://modelscope.cn/models/Qwen/Qwen-Image-2.1-PE-T2I",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/5"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen-Image-2.1-Turbo",
+      "url": "https://modelscope.cn/models/Qwen/Qwen-Image-2.1-Turbo",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/0"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen2-0.5B-Instruct-AWQ",
+      "url": "https://modelscope.cn/models/Qwen/Qwen2-0.5B-Instruct-AWQ",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+          "pointer": "/data/models/9"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen2.5-14B-Instruct-GGUF",
+      "url": "https://modelscope.cn/models/Qwen/Qwen2.5-14B-Instruct-GGUF",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+          "pointer": "/data/models/7"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen2.5-32B-Instruct-GGUF",
+      "url": "https://modelscope.cn/models/Qwen/Qwen2.5-32B-Instruct-GGUF",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+          "pointer": "/data/models/6"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3-8B-AWQ",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3-8B-AWQ",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+          "pointer": "/data/models/8"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3-Coder-Next-GGUF",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3-Coder-Next-GGUF",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+          "pointer": "/data/models/4"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3.8-2.4T-A95B",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3.8-2.4T-A95B",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+          "pointer": "/data/models/2"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3.8-2.4T-A95B-FP8",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3.8-2.4T-A95B-FP8",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+          "pointer": "/data/models/3"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3.8-27B-FP8",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3.8-27B-FP8",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:8ae0bfc55c6c3610f3245b720a593c897ba7404ef54faabba2bda1b6f856337e",
+          "pointer": "/data/models/0"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3.8-Flash-Next",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3.8-Flash-Next",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/9"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3.8-Flash-Next-FP8",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3.8-Flash-Next-FP8",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/8"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3Guard-Stream-0.6B",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3Guard-Stream-0.6B",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/3"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3Guard-Stream-4B",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3Guard-Stream-4B",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/2"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Qwen/Qwen3Guard-Stream-8B",
+      "url": "https://modelscope.cn/models/Qwen/Qwen3Guard-Stream-8B",
+      "matched_rules": [
+        "ms-qwen"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-qwen",
+          "snapshot": "modelscope:9f9f795726c5e5adb5f073024ef4cc26ded8f8c5a39207d402f4c819c6fe14f2",
+          "pointer": "/data/models/4"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan-Dancer-14B",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan-Dancer-14B",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b",
+          "pointer": "/data/models/4"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.1-VACE-1.3B-diffusers",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.1-VACE-1.3B-diffusers",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+          "pointer": "/data/models/7"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.1-VACE-14B",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.1-VACE-14B",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+          "pointer": "/data/models/8"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.1-VACE-14B-diffusers",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.1-VACE-14B-diffusers",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+          "pointer": "/data/models/6"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-Animate-14B-Diffusers",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-Animate-14B-Diffusers",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b",
+          "pointer": "/data/models/5"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-Animate-2-14B",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-Animate-2-14B",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b",
+          "pointer": "/data/models/3"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-Animate-2-14B-Diffusers",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-Animate-2-14B-Diffusers",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b",
+          "pointer": "/data/models/1"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-Animate-2-14B-Distilled-Diffusers",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-Animate-2-14B-Distilled-Diffusers",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b",
+          "pointer": "/data/models/0"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-I2V-A14B",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-I2V-A14B",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b",
+          "pointer": "/data/models/6"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-I2V-A14B-BF16",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-I2V-A14B-BF16",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+          "pointer": "/data/models/1"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-I2V-A14B-Diffusers",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-I2V-A14B-Diffusers",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+          "pointer": "/data/models/3"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-S2V-14B",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-S2V-14B",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+          "pointer": "/data/models/2"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-T2V-A14B",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-T2V-A14B",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b",
+          "pointer": "/data/models/8"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-T2V-A14B-BF16",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-T2V-A14B-BF16",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+          "pointer": "/data/models/0"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-T2V-A14B-Diffusers",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-T2V-A14B-Diffusers",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+          "pointer": "/data/models/5"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-TI2V-5B-BF16",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-TI2V-5B-BF16",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:e86d89c01e213907607f6898f7a0ecf30cb37d38f99c3afafbb60c8f6f2b2b3b",
+          "pointer": "/data/models/9"
+        }
+      ]
+    },
+    {
+      "source": "modelscope",
+      "upstream_id": "Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+      "url": "https://modelscope.cn/models/Wan-AI/Wan2.2-TI2V-5B-Diffusers",
+      "matched_rules": [
+        "ms-wan"
+      ],
+      "evidence": [
+        {
+          "rule_id": "ms-wan",
+          "snapshot": "modelscope:5c4f3fd8542e22465db3b12090a1af74578c388b46dcf8a9860f2e515705dcc2",
+          "pointer": "/data/models/4"
+        }
+      ]
+    }
+  ]
+}

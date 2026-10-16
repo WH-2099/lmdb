@@ -37,9 +37,9 @@
     "title": "Method: endpoints.generateContent — Google Cloud Gemini API"
     "checked_on": "2026-10-15"
   "google-generate-content":
-    "url": "https://ai.google.dev/api/generate-content"
+    "url": "https://ai.google.dev/api/generate-content#body.request_body.FIELDS.system_instruction"
     "title": "Generating content — Gemini API"
-    "checked_on": "2026-10-15"
+    "checked_on": "2026-10-16"
   "google-live":
     "url": "https://ai.google.dev/gemini-api/docs/live-api/capabilities"
     "title": "Live API capabilities guide — Gemini API"
@@ -49,9 +49,9 @@
     "title": "Structured outputs — Gemini API"
     "checked_on": "2026-10-15"
   "google-thinking":
-    "url": "https://ai.google.dev/gemini-api/docs/generate-content/thinking"
-    "title": "Gemini thinking — Generate Content API"
-    "checked_on": "2026-10-15"
+    "url": "https://ai.google.dev/gemini-api/docs/generate-content/thinking#set-budget"
+    "title": "Gemini thinking — Generate Content API (Legacy)"
+    "checked_on": "2026-10-16"
   "mistral-audio":
     "url": "https://docs.mistral.ai/studio/audio/overview"
     "title": "Audio — Mistral Docs"
@@ -84,10 +84,11 @@
   "review": "accepted"
   "evidence":
   - "source": "google-generate-content"
-    "locator": "Request body / systemInstruction"
-    "checked_on": "2026-10-15"
+    "locator": "Method: models.generateContent / Request body / systemInstruction"
+    "checked_on": "2026-10-16"
     "kind": "reported"
   "notes": "Applies to systemInstruction.parts, not ordinary contents image parts."
+
 - "id": "cloud-generate-system-image"
   "scope":
     "kind": "interface"
@@ -209,9 +210,10 @@
   "review": "accepted"
   "evidence":
   - "source": "google-thinking"
-    "locator": "Thinking budgets / 2.5 Pro"
-    "checked_on": "2026-10-15"
+    "locator": "Controlling thinking / Thinking budgets / 2.5 Pro / Disable thinking"
+    "checked_on": "2026-10-16"
     "kind": "reported"
+
 - "id": "gemini-flash-thinking-disable"
   "scope":
     "kind": "model"
@@ -229,9 +231,10 @@
   "review": "accepted"
   "evidence":
   - "source": "google-thinking"
-    "locator": "Thinking budgets / 2.5 Flash"
-    "checked_on": "2026-10-15"
+    "locator": "Controlling thinking / Thinking budgets / 2.5 Flash / Disable thinking"
+    "checked_on": "2026-10-16"
     "kind": "reported"
+
 - "id": "cohere-embed-dimensions"
   "scope":
     "kind": "model"

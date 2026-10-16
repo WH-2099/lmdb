@@ -49,6 +49,8 @@ amazon/chronos-bolt-small
 amazon/chronos-t5-small
 apple/DepthPro
 biohub/ESMC-300M
+biohub/ESMC-6B
+biohub/ESMFold2
 black-forest-labs/FLUX.1-Kontext-dev
 black-forest-labs/FLUX.1-schnell
 black-forest-labs/FLUX.2-dev
@@ -120,6 +122,7 @@ moonshotai/Kimi-K2.7-Code
 moonshotai/Kimi-K3
 moonshotai/Kimi-VL-A3B-Instruct
 nvidia/Cosmos-Reason2-2B
+nvidia/GR00T-N1.7-3B
 nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16
 nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
 nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16
@@ -141,6 +144,7 @@ stabilityai/stable-video-diffusion-img2vid-xt
 stabilityai/stable-virtual-camera
 tiiuae/Falcon-H1-7B-Instruct
 tiiuae/Falcon-H1R-7B
+wanglab/MedSAM2
 zai-org/GLM-4.6V-Flash
 zai-org/GLM-5.3
 zai-org/GLM-5.3-Flash

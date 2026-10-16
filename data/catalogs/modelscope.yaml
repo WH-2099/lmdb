@@ -1,5 +1,54 @@
 schema_version: 1
 source: modelscope
+last_sync:
+  completed_at: "2026-10-16T07:12:36.828522622Z"
+  returned_ids:
+  - modelscope:model:BAAI/bge-m3
+  - modelscope:model:BAAI/bge-reranker-v2-m3
+  - modelscope:model:OpenGVLab/InternVL3-8B
+  - modelscope:model:Qwen/Qwen-Image
+  - modelscope:model:Qwen/Qwen-Image-Edit
+  - modelscope:model:Qwen/Qwen2.5-Coder-7B-Instruct
+  - modelscope:model:Qwen/Qwen2.5-Omni-7B
+  - modelscope:model:Qwen/Qwen3-8B
+  - modelscope:model:Qwen/Qwen3-Embedding-0.6B
+  - modelscope:model:Qwen/Qwen3-Reranker-4B
+  - modelscope:model:Qwen/Qwen3-TTS-12Hz-1.7B-Base
+  - modelscope:model:Qwen/Qwen3-VL-8B-Instruct
+  - modelscope:model:Qwen/Qwen3.6-35B-A3B
+  - modelscope:model:Qwen/Qwen3.8-27B
+  - modelscope:model:Wan-AI/Wan2.1-I2V-14B-720P
+  - modelscope:model:Wan-AI/Wan2.1-T2V-14B
+  - modelscope:model:Wan-AI/Wan2.1-VACE-1.3B
+  - modelscope:model:Wan-AI/Wan2.2-Animate-14B
+  - modelscope:model:Wan-AI/Wan2.2-TI2V-5B
+  - modelscope:model:deepseek-ai/DeepSeek-OCR-2
+  - modelscope:model:deepseek-ai/DeepSeek-R1
+  - modelscope:model:deepseek-ai/DeepSeek-V3.2
+  missing_ids: []
+  snapshot_ids:
+  - modelscope:12ac22ea7b2cdcae10328d4393c03a28d37a66b7f5d95d4123560cdd8cff7f0a
+  - modelscope:1dff184d9fbc94bc5de01b9649a6598ed90ccf521e072a9cd35e1bd4085a39fa
+  - modelscope:2b3f2e2db3e71a703dcec486a1ba968a52b8aba2e0c422ab359dd6e9654ed40e
+  - modelscope:3454ab2d4ee0a8fc8500b778d141d0dae37e324d2083c3757e1497c4217ebe18
+  - modelscope:376577c58f112fda3209f8e78c29e27a9734100fb4dcefcd7277b065b1e5e07c
+  - modelscope:40a429d0297f42b547b14229bb8e0f32fe890fc9bd87fff1944ad18f26b7d23f
+  - modelscope:41fb1a6e03529600a1186dd73caabf132303b956f34e2108765c30ae02cf49d4
+  - modelscope:74d0fe07ca2f98eb1d20a4c97870f718f953de7aa9ce3e703b8dc9ee1c9c76f5
+  - modelscope:91ec42b39623ea5d5a29e2640db492e9a5ad6dfb182c1396e96f199493ffa794
+  - modelscope:9ced1a6d8603735f4dde85f95842d95ec3bcc194e8c515d88887a7e4e2c2a515
+  - modelscope:9de38f37dba133cba8aa6a676b689f6f841cdfbb9a3dea51a7444b5c03f011f0
+  - modelscope:a34829cce8a5ada2eecd827dcbc5162b8d55ddcfbb21779a8b976d1cd65a2dab
+  - modelscope:a6cbbf30f42eca583cc0f934d14f831efb28d9db4fb7911d6b2c5dd5c882ec8d
+  - modelscope:ae557951a346e4f9260b71dfa071eb081eecd3c58282f87c40c55eafdbe7d69c
+  - modelscope:c5aea3e50cc77a6f5f96c85b2f092b0071caa38ae1c677c8a44a0d08d241d9bb
+  - modelscope:cce5027aa68b057e5eae853854c9d21c02504aea12e6b29ab127801c707344c3
+  - modelscope:d3db14cd10b1006f61b45030c6a92f8d5533d32980458afdf9464d8eb6ad4282
+  - modelscope:d82e4444c2fb72c4b1f7b8389ce1e2f7302987b1d46289b2b40a21f3eeda2f22
+  - modelscope:e231b1a7430fb28bbb3a7e4179c7a47c1de190b7669cc8ff60b42b9970f8a0ea
+  - modelscope:e27d2dff06fc0fbe157bfc449f61a315e051717514d5f8d69fe20991c37805de
+  - modelscope:eaf633e4c87bba13e76c0cd3f831395b0d6757d43a2cc968ecd4377b11183925
+  - modelscope:fd13f1dd969d22e3d0e6fbde2cb44fa95b4a8a333613e50fb82182ae3bbe5bea
 snapshots:
 - schema_version: 1
   id: modelscope:08c23976e343100209c45d9d353d0b97def2568e149468244d2f6aa5de75b0b1
@@ -8,11 +57,53 @@ snapshots:
   retrieved_at: "2026-10-15T08:22:05.343712922Z"
   sha256: 08c23976e343100209c45d9d353d0b97def2568e149468244d2f6aa5de75b0b1
 - schema_version: 1
+  id: modelscope:12ac22ea7b2cdcae10328d4393c03a28d37a66b7f5d95d4123560cdd8cff7f0a
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-VL-8B-Instruct
+  retrieved_at: "2026-10-16T07:12:31.502204819Z"
+  sha256: 12ac22ea7b2cdcae10328d4393c03a28d37a66b7f5d95d4123560cdd8cff7f0a
+- schema_version: 1
+  id: modelscope:1dff184d9fbc94bc5de01b9649a6598ed90ccf521e072a9cd35e1bd4085a39fa
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.1-VACE-1.3B
+  retrieved_at: "2026-10-16T07:12:33.590145052Z"
+  sha256: 1dff184d9fbc94bc5de01b9649a6598ed90ccf521e072a9cd35e1bd4085a39fa
+- schema_version: 1
+  id: modelscope:2b3f2e2db3e71a703dcec486a1ba968a52b8aba2e0c422ab359dd6e9654ed40e
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.2-Animate-14B
+  retrieved_at: "2026-10-16T07:12:33.792958416Z"
+  sha256: 2b3f2e2db3e71a703dcec486a1ba968a52b8aba2e0c422ab359dd6e9654ed40e
+- schema_version: 1
   id: modelscope:2f37d86f5eecf21959911b72d8c20ec6182bb988b006f34678d4d61b4a26df38
   source: modelscope
   url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-TTS-12Hz-1.7B-Base
   retrieved_at: "2026-10-15T08:22:04.568523964Z"
   sha256: 2f37d86f5eecf21959911b72d8c20ec6182bb988b006f34678d4d61b4a26df38
+- schema_version: 1
+  id: modelscope:3454ab2d4ee0a8fc8500b778d141d0dae37e324d2083c3757e1497c4217ebe18
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-Reranker-4B
+  retrieved_at: "2026-10-16T07:12:30.424627766Z"
+  sha256: 3454ab2d4ee0a8fc8500b778d141d0dae37e324d2083c3757e1497c4217ebe18
+- schema_version: 1
+  id: modelscope:376577c58f112fda3209f8e78c29e27a9734100fb4dcefcd7277b065b1e5e07c
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.1-T2V-14B
+  retrieved_at: "2026-10-16T07:12:32.794790928Z"
+  sha256: 376577c58f112fda3209f8e78c29e27a9734100fb4dcefcd7277b065b1e5e07c
+- schema_version: 1
+  id: modelscope:40a429d0297f42b547b14229bb8e0f32fe890fc9bd87fff1944ad18f26b7d23f
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.1-I2V-14B-720P
+  retrieved_at: "2026-10-16T07:12:32.541897359Z"
+  sha256: 40a429d0297f42b547b14229bb8e0f32fe890fc9bd87fff1944ad18f26b7d23f
+- schema_version: 1
+  id: modelscope:41fb1a6e03529600a1186dd73caabf132303b956f34e2108765c30ae02cf49d4
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen-Image-Edit
+  retrieved_at: "2026-10-16T07:12:29.155360492Z"
+  sha256: 41fb1a6e03529600a1186dd73caabf132303b956f34e2108765c30ae02cf49d4
 - schema_version: 1
   id: modelscope:44867ae7c278e81f167582b57653587f202edeb087a09c65124a5ce5d858cb8c
   source: modelscope
@@ -44,6 +135,12 @@ snapshots:
   retrieved_at: "2026-10-15T08:22:06.014417444Z"
   sha256: 72040b7d8fbd579023d1ae49d99f7d3aac5cd7efbf58f6480115356d5abb9f14
 - schema_version: 1
+  id: modelscope:74d0fe07ca2f98eb1d20a4c97870f718f953de7aa9ce3e703b8dc9ee1c9c76f5
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/deepseek-ai/DeepSeek-V3.2
+  retrieved_at: "2026-10-16T07:12:36.80827546Z"
+  sha256: 74d0fe07ca2f98eb1d20a4c97870f718f953de7aa9ce3e703b8dc9ee1c9c76f5
+- schema_version: 1
   id: modelscope:74eebb693a2aa8babc90ee7a208f7e75c479df2c1a50112610a9d94a78c70202
   source: modelscope
   url: https://modelscope.cn/api/v1/models/deepseek-ai/DeepSeek-V3.2
@@ -68,17 +165,65 @@ snapshots:
   retrieved_at: "2026-10-15T08:22:07.71003861Z"
   sha256: 88a5b88c0c4d019238c20d6682485a38ba9d8f75a04f528c10a19e8212cf5bf0
 - schema_version: 1
+  id: modelscope:91ec42b39623ea5d5a29e2640db492e9a5ad6dfb182c1396e96f199493ffa794
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen2.5-Omni-7B
+  retrieved_at: "2026-10-16T07:12:29.592753097Z"
+  sha256: 91ec42b39623ea5d5a29e2640db492e9a5ad6dfb182c1396e96f199493ffa794
+- schema_version: 1
   id: modelscope:9a8c6107026eb3dfdfa816b69e0f0f40cd3ab06cfafbcf405c59fae45baeead3
   source: modelscope
   url: https://modelscope.cn/api/v1/models/deepseek-ai/DeepSeek-R1
   retrieved_at: "2026-10-15T08:22:09.443340674Z"
   sha256: 9a8c6107026eb3dfdfa816b69e0f0f40cd3ab06cfafbcf405c59fae45baeead3
 - schema_version: 1
+  id: modelscope:9ced1a6d8603735f4dde85f95842d95ec3bcc194e8c515d88887a7e4e2c2a515
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-Embedding-0.6B
+  retrieved_at: "2026-10-16T07:12:30.228670828Z"
+  sha256: 9ced1a6d8603735f4dde85f95842d95ec3bcc194e8c515d88887a7e4e2c2a515
+- schema_version: 1
+  id: modelscope:9de38f37dba133cba8aa6a676b689f6f841cdfbb9a3dea51a7444b5c03f011f0
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-8B
+  retrieved_at: "2026-10-16T07:12:30.256414059Z"
+  sha256: 9de38f37dba133cba8aa6a676b689f6f841cdfbb9a3dea51a7444b5c03f011f0
+- schema_version: 1
+  id: modelscope:a34829cce8a5ada2eecd827dcbc5162b8d55ddcfbb21779a8b976d1cd65a2dab
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3.8-27B
+  retrieved_at: "2026-10-16T07:12:32.488723918Z"
+  sha256: a34829cce8a5ada2eecd827dcbc5162b8d55ddcfbb21779a8b976d1cd65a2dab
+- schema_version: 1
+  id: modelscope:a6cbbf30f42eca583cc0f934d14f831efb28d9db4fb7911d6b2c5dd5c882ec8d
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/OpenGVLab/InternVL3-8B
+  retrieved_at: "2026-10-16T07:12:28.688912725Z"
+  sha256: a6cbbf30f42eca583cc0f934d14f831efb28d9db4fb7911d6b2c5dd5c882ec8d
+- schema_version: 1
   id: modelscope:a81f0f47eedbf29ec523812185bb82a644683fac2d4c7ac954e6e83eb6275a16
   source: modelscope
   url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-8B
   retrieved_at: "2026-10-15T08:22:01.408565251Z"
   sha256: a81f0f47eedbf29ec523812185bb82a644683fac2d4c7ac954e6e83eb6275a16
+- schema_version: 1
+  id: modelscope:ae557951a346e4f9260b71dfa071eb081eecd3c58282f87c40c55eafdbe7d69c
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.2-TI2V-5B
+  retrieved_at: "2026-10-16T07:12:33.609094685Z"
+  sha256: ae557951a346e4f9260b71dfa071eb081eecd3c58282f87c40c55eafdbe7d69c
+- schema_version: 1
+  id: modelscope:c5aea3e50cc77a6f5f96c85b2f092b0071caa38ae1c677c8a44a0d08d241d9bb
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/BAAI/bge-m3
+  retrieved_at: "2026-10-16T07:12:28.391984652Z"
+  sha256: c5aea3e50cc77a6f5f96c85b2f092b0071caa38ae1c677c8a44a0d08d241d9bb
+- schema_version: 1
+  id: modelscope:cce5027aa68b057e5eae853854c9d21c02504aea12e6b29ab127801c707344c3
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3-TTS-12Hz-1.7B-Base
+  retrieved_at: "2026-10-16T07:12:30.999915837Z"
+  sha256: cce5027aa68b057e5eae853854c9d21c02504aea12e6b29ab127801c707344c3
 - schema_version: 1
   id: modelscope:d09450259cdf4c6f3b35d938ce5bde9a2a3fe78330bd6a18b1b1a608c955de72
   source: modelscope
@@ -91,6 +236,18 @@ snapshots:
   url: https://modelscope.cn/api/v1/models/Wan-AI/Wan2.1-T2V-14B
   retrieved_at: "2026-10-15T08:22:06.550058853Z"
   sha256: d32ee51d07cf4586cd3fec7719e20f01150f9e0a685c293797eeda340f68f833
+- schema_version: 1
+  id: modelscope:d3db14cd10b1006f61b45030c6a92f8d5533d32980458afdf9464d8eb6ad4282
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen3.6-35B-A3B
+  retrieved_at: "2026-10-16T07:12:31.498149693Z"
+  sha256: d3db14cd10b1006f61b45030c6a92f8d5533d32980458afdf9464d8eb6ad4282
+- schema_version: 1
+  id: modelscope:d82e4444c2fb72c4b1f7b8389ce1e2f7302987b1d46289b2b40a21f3eeda2f22
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen2.5-Coder-7B-Instruct
+  retrieved_at: "2026-10-16T07:12:29.444815343Z"
+  sha256: d82e4444c2fb72c4b1f7b8389ce1e2f7302987b1d46289b2b40a21f3eeda2f22
 - schema_version: 1
   id: modelscope:d8ebe09e90e231814684f031cddb4f58dfa47fc07c3cdd6e1696455412a76595
   source: modelscope
@@ -110,11 +267,29 @@ snapshots:
   retrieved_at: "2026-10-15T08:22:08.831963364Z"
   sha256: e15adcf911f36fafbb853d454af69d6decdbcdba59df325870f6eb9a58df50a3
 - schema_version: 1
+  id: modelscope:e231b1a7430fb28bbb3a7e4179c7a47c1de190b7669cc8ff60b42b9970f8a0ea
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/deepseek-ai/DeepSeek-R1
+  retrieved_at: "2026-10-16T07:12:35.060185869Z"
+  sha256: e231b1a7430fb28bbb3a7e4179c7a47c1de190b7669cc8ff60b42b9970f8a0ea
+- schema_version: 1
+  id: modelscope:e27d2dff06fc0fbe157bfc449f61a315e051717514d5f8d69fe20991c37805de
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/Qwen/Qwen-Image
+  retrieved_at: "2026-10-16T07:12:28.207442626Z"
+  sha256: e27d2dff06fc0fbe157bfc449f61a315e051717514d5f8d69fe20991c37805de
+- schema_version: 1
   id: modelscope:e62c6b6656f69c1effaa525484cf9646102b7ea988a64746bb66c612f622a5b2
   source: modelscope
   url: https://modelscope.cn/api/v1/models/deepseek-ai/DeepSeek-OCR-2
   retrieved_at: "2026-10-15T08:22:07.91234402Z"
   sha256: e62c6b6656f69c1effaa525484cf9646102b7ea988a64746bb66c612f622a5b2
+- schema_version: 1
+  id: modelscope:eaf633e4c87bba13e76c0cd3f831395b0d6757d43a2cc968ecd4377b11183925
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/deepseek-ai/DeepSeek-OCR-2
+  retrieved_at: "2026-10-16T07:12:33.795763851Z"
+  sha256: eaf633e4c87bba13e76c0cd3f831395b0d6757d43a2cc968ecd4377b11183925
 - schema_version: 1
   id: modelscope:f4472979175cdfa38927bc7d94b1cc78c93d53d21b44cfa0b62cac113437d0e3
   source: modelscope
@@ -133,6 +308,12 @@ snapshots:
   url: https://modelscope.cn/api/v1/models/Qwen/Qwen-Image-Edit
   retrieved_at: "2026-10-15T08:22:03.512781596Z"
   sha256: fcf1148248a6e38117740826e3931fc39effcba3f988bcf9b490d26e39c2548d
+- schema_version: 1
+  id: modelscope:fd13f1dd969d22e3d0e6fbde2cb44fa95b4a8a333613e50fb82182ae3bbe5bea
+  source: modelscope
+  url: https://modelscope.cn/api/v1/models/BAAI/bge-reranker-v2-m3
+  retrieved_at: "2026-10-16T07:12:28.202934696Z"
+  sha256: fd13f1dd969d22e3d0e6fbde2cb44fa95b4a8a333613e50fb82182ae3bbe5bea
 records:
 - schema_version: 1
   kind: model
