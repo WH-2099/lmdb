@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Array_of_Comparison",
+  "type": "array",
+  "items": {
+    "$ref": "#/$defs/Comparison"
+  },
+  "$defs": {
+    "Claim": {
+      "type": "object",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence": {
+          "$ref": "#/$defs/PageEvidence"
+        },
+        "precision": {
+          "$ref": "#/$defs/Precision"
+        },
+        "property": {
+          "type": "string"
+        },
+        "record": {
+          "type": "string"
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "record",
+        "property",
+        "value",
+        "precision",
+        "evidence"
+      ]
+    },
+    "Comparison": {
+      "type": "object",
+      "properties": {
+        "catalog": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "catalog_origin": {
+          "$ref": "#/$defs/Origin"
+        },
+        "document": {
+          "type": "string"
+        },
+        "official": {
+          "$ref": "#/$defs/Claim"
+        },
+        "official_snapshot": {
+          "$ref": "#/$defs/Snapshot"
+        },
+        "official_stale": {
+          "type": "boolean"
+        },
+        "property": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "record": {
+          "type": "string"
+        },
+        "source_error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/ComparisonStatus"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "document",
+        "record",
+        "property",
+        "official",
+        "official_snapshot",
+        "official_stale",
+        "catalog_origin",
+        "status",
+        "reason"
+      ]
+    },
+    "ComparisonStatus": {
+      "type": "string",
+      "enum": [
+        "agreement",
+        "difference",
+        "missing_catalog_fact",
+        "conditional",
+        "not_comparable"
+      ]
+    },
+    "Fact": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "description": "JSON Pointer into the original response, including the record path.",
+          "type": "string"
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "pointer"
+      ]
+    },
+    "Origin": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "type": "string"
+        },
+        "snapshot": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "snapshot",
+        "pointer"
+      ]
+    },
+    "PageEvidence": {
+      "type": "object",
+      "properties": {
+        "excerpt": {
+          "description": "Short whitespace-normalized DOM text or attribute, or a literal Markdown fragment.\nThe complete response and deterministic extraction preserve the original evidence.",
+          "type": "string"
+        },
+        "locator": {
+          "description": "CSS path in original HTML, or rendered Markdown DOM, or explicit Markdown byte range.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "locator",
+        "excerpt"
+      ]
+    },
+    "Precision": {
+      "type": "string",
+      "enum": [
+        "exact",
+        "approximate"
+      ]
+    },
+    "Snapshot": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "upstream_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "id",
+        "source",
+        "url",
+        "retrieved_at",
+        "sha256"
+      ]
+    }
+  }
+}

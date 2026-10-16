@@ -4,7 +4,7 @@ use anyhow::{Context, Result, ensure};
 use clap::{Args, Parser, Subcommand, ValueEnum};
 use model_metadata::{
     assertion::{AssertionSet, Review, Scope, ScopeKind},
-    discovery,
+    discovery, documents,
     domain::{self, DomainMetadata},
     evidence,
     identity::{self, IdentitySet},
@@ -41,6 +41,11 @@ enum Command {
         source: Vec<String>,
         #[arg(long, default_value = "dist/discovery.json")]
         output: PathBuf,
+    },
+    /// Collect official vendor pages and compare their model claims.
+    Documents {
+        #[command(subcommand)]
+        command: DocumentCommand,
     },
     /// Validate catalogs, typed fields and identities; optionally replay raw evidence.
     Validate {
@@ -156,6 +161,27 @@ enum EvidenceCommand {
     },
 }
 
+#[derive(Subcommand)]
+enum DocumentCommand {
+    /// Fetch selected official pages; failures are saved and reported.
+    Sync {
+        #[arg(long)]
+        vendor: Option<String>,
+    },
+    /// List source URLs, metadata, claims and fetch failures.
+    List {
+        #[arg(long)]
+        record: Option<String>,
+        #[arg(long)]
+        vendor: Option<String>,
+    },
+    /// Compare exact model claims with source catalog facts.
+    Check {
+        #[arg(long)]
+        record: Option<String>,
+    },
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let cli = Cli::parse();
@@ -174,9 +200,41 @@ async fn main() -> Result<()> {
                 cli.root.join(output).display()
             );
         }
+        Command::Documents {
+            command: DocumentCommand::Sync { vendor },
+        } => {
+            let catalog = documents::sync(&cli.root, vendor.as_deref()).await?;
+            let selected: Vec<_> = catalog
+                .documents
+                .iter()
+                .filter(|d| vendor.as_ref().is_none_or(|v| d.source.vendor == *v))
+                .collect();
+            let failed: Vec<_> = selected
+                .iter()
+                .filter(|d| d.error.is_some())
+                .map(|d| &d.source.id)
+                .collect();
+            print_json(&json!({"checked":selected.len(),"failed":failed,"documents":selected}))?;
+            ensure!(
+                failed.is_empty(),
+                "official page failures saved in data/documents/official.yaml"
+            );
+        }
         Command::Schema { check } => {
             for (name, schema) in [
                 ("catalog", schemars::schema_for!(Catalog)),
+                (
+                    "official-pages",
+                    schemars::schema_for!(documents::PageConfig),
+                ),
+                (
+                    "documents",
+                    schemars::schema_for!(documents::DocumentCatalog),
+                ),
+                (
+                    "document-comparisons",
+                    schemars::schema_for!(Vec<documents::compare::Comparison>),
+                ),
                 ("assertions", schemars::schema_for!(AssertionSet)),
                 ("identities", schemars::schema_for!(IdentitySet)),
                 ("profile", schemars::schema_for!(DomainMetadata)),
@@ -222,7 +280,55 @@ async fn main() -> Result<()> {
             )?;
             let identities = identity::load(&cli.root)?;
             identities.validate(&registry)?;
+            let document_config = documents::load_config(&cli.root)?;
+            let document_catalog = documents::load(&cli.root)?;
+            documents::validate_configuration(&document_config, &document_catalog, &registry)?;
+            documents::validate(
+                &document_catalog,
+                &registry,
+                matches!(command, Command::Validate { evidence: true }).then_some(cache.as_path()),
+            )?;
             match command {
+                Command::Documents { command } => match command {
+                    DocumentCommand::List { record, vendor } => {
+                        if let Some(id) = &record {
+                            find_record(&registry, id)?;
+                        }
+                        if let Some(vendor) = &vendor {
+                            ensure!(
+                                document_config.pages.iter().any(|p| p.vendor == *vendor),
+                                "unknown official vendor: {vendor}"
+                            );
+                        }
+                        let matches = |source: &documents::PageSource| {
+                            record.as_ref().is_none_or(|id| source.records.contains(id))
+                                && vendor.as_ref().is_none_or(|v| source.vendor == *v)
+                        };
+                        let sources: Vec<_> = document_config
+                            .pages
+                            .iter()
+                            .filter(|s| matches(s))
+                            .collect();
+                        let docs: Vec<_> = document_catalog
+                            .documents
+                            .iter()
+                            .filter(|d| matches(&d.source))
+                            .collect();
+                        print_json(&json!({"sources":sources,"documents":docs}))?;
+                    }
+                    DocumentCommand::Check { record } => {
+                        if let Some(id) = &record {
+                            find_record(&registry, id)?;
+                        }
+                        let comparisons: Vec<_> =
+                            documents::compare::compare(&document_catalog, &registry)?
+                                .into_iter()
+                                .filter(|c| record.as_ref().is_none_or(|id| c.record == *id))
+                                .collect();
+                        print_json(&comparisons)?;
+                    }
+                    DocumentCommand::Sync { .. } => unreachable!(),
+                },
                 Command::Validate { evidence } => {
                     if cli.root.join("config/sources.yaml").try_exists()? {
                         discovery::load_sources(&cli.root)?;
@@ -256,11 +362,16 @@ async fn main() -> Result<()> {
                     value["profiles"] = serde_json::to_value(profiles)?;
                     value["identities"] = serde_json::to_value(identities)?;
                     value["relationships"] = serde_json::to_value(relations::derive(&registry)?)?;
+                    value["official_sources"] = serde_json::to_value(&document_config.pages)?;
+                    value["documents"] = serde_json::to_value(&document_catalog.documents)?;
+                    value["document_comparisons"] = serde_json::to_value(
+                        documents::compare::compare(&document_catalog, &registry)?,
+                    )?;
                     let path = cli.root.join(output);
                     store::write_bytes(&path, &json_bytes(&value)?)?;
                     println!("{}", path.display());
                 }
-                Command::Stats => stats(&registry, &identities)?,
+                Command::Stats => stats(&registry, &identities, &document_catalog)?,
                 Command::Query(query) => {
                     if let Some(id) = &query.identity {
                         ensure!(
@@ -318,7 +429,7 @@ async fn main() -> Result<()> {
                         .filter(|r| r.from == record || r.to == record)
                         .collect();
                     print_json(
-                        &json!({"record":found,"profile":domain::project(found)?,"identities":selected_identities(identities,Some(&record)),"relationships":relationships,"sync":{"completed_at":catalog.last_sync.as_ref().map(|s|&s.completed_at),"observed_in_last_sync":observed},"rules":{"scopes":scopes,"groups":groups}}),
+                        &json!({"record":found,"profile":domain::project(found)?,"identities":selected_identities(identities,Some(&record)),"relationships":relationships,"sync":{"completed_at":catalog.last_sync.as_ref().map(|s|&s.completed_at),"observed_in_last_sync":observed},"rules":{"scopes":scopes,"groups":groups},"official_sources":document_config.pages.iter().filter(|p|p.records.contains(&record)).collect::<Vec<_>>(),"documents":document_catalog.documents.iter().filter(|d|d.source.records.contains(&record)).collect::<Vec<_>>(),"document_comparisons":documents::compare::compare(&document_catalog,&registry)?.into_iter().filter(|c|c.record==record).collect::<Vec<_>>()}),
                     )?;
                 }
                 Command::Identities { record } => {
@@ -415,10 +526,26 @@ async fn main() -> Result<()> {
                 Command::Evidence { command } => {
                     let written = match command {
                         EvidenceCommand::Archive { output } => {
-                            evidence::archive(&registry, &cache, &cli.root.join(output))?
+                            let target = cli.root.join(output);
+                            documents::validate(&document_catalog, &registry, Some(&cache))?;
+                            evidence::archive(&registry, &cache, &target)?
+                                + documents::copy_evidence(
+                                    &document_catalog,
+                                    &registry,
+                                    &cache,
+                                    &target,
+                                )?
                         }
                         EvidenceCommand::Restore { input } => {
-                            evidence::restore(&registry, &cli.root.join(input), &cache)?
+                            let source = cli.root.join(input);
+                            documents::validate(&document_catalog, &registry, Some(&source))?;
+                            evidence::restore(&registry, &source, &cache)?
+                                + documents::copy_evidence(
+                                    &document_catalog,
+                                    &registry,
+                                    &source,
+                                    &cache,
+                                )?
                         }
                     };
                     println!("Verified referenced snapshots; wrote {written} files");
@@ -503,7 +630,11 @@ fn selected_identities(mut identities: IdentitySet, record: Option<&str>) -> Ide
     identities
 }
 
-fn stats(registry: &Registry, identities: &IdentitySet) -> Result<()> {
+fn stats(
+    registry: &Registry,
+    identities: &IdentitySet,
+    documents: &documents::DocumentCatalog,
+) -> Result<()> {
     let mut sources = BTreeMap::new();
     let mut tasks = BTreeMap::<String, usize>::new();
     let mut coverage = BTreeMap::<&str, usize>::new();
@@ -535,7 +666,7 @@ fn stats(registry: &Registry, identities: &IdentitySet) -> Result<()> {
         *relationships.entry(relation.kind).or_insert(0usize) += 1;
     }
     print_json(
-        &json!({"sources":sources,"task_facts":tasks,"typed_coverage":coverage,"identities":{"models":identities.models.len(),"model_records":identities.models.iter().map(|i|i.records.len()).sum::<usize>(),"interfaces":identities.interfaces.len(),"service_bindings":identities.interfaces.iter().map(|i|i.records.len()).sum::<usize>()},"relationships":relationships,"assertions":registry.assertions.iter().map(|s|s.assertions.len()).sum::<usize>(),"conflicts":registry.assertions.iter().flat_map(|s|&s.assertions).filter(|a|a.review == Review::Conflicted).count()}),
+        &json!({"documents":{"pages":documents.documents.len(),"failed":documents.documents.iter().filter(|d|d.error.is_some()).count(),"with_content":documents.documents.iter().filter(|d|d.content.is_some()).count(),"claims":documents.documents.iter().filter_map(|d|d.content.as_ref()).map(|c|c.extraction.claims.len()).sum::<usize>()},"sources":sources,"task_facts":tasks,"typed_coverage":coverage,"identities":{"models":identities.models.len(),"model_records":identities.models.iter().map(|i|i.records.len()).sum::<usize>(),"interfaces":identities.interfaces.len(),"service_bindings":identities.interfaces.iter().map(|i|i.records.len()).sum::<usize>()},"relationships":relationships,"assertions":registry.assertions.iter().map(|s|s.assertions.len()).sum::<usize>(),"conflicts":registry.assertions.iter().flat_map(|s|&s.assertions).filter(|a|a.review == Review::Conflicted).count()}),
     )
 }
 

@@ -14,7 +14,13 @@ use crate::{
     store,
 };
 
-pub const PUBLIC_SOURCES: &[&str] = &["modelsdev", "huggingface", "modelscope", "openrouter"];
+pub const PUBLIC_SOURCES: &[&str] = &[
+    "modelsdev",
+    "huggingface",
+    "modelscope",
+    "openrouter",
+    "official",
+];
 pub const AUTHENTICATED_SOURCES: &[&str] = &[
     "artificialanalysis",
     "openai",
@@ -36,6 +42,12 @@ pub async fn run(root: &Path, requested: &[String], authenticated: bool) -> Resu
     for source in sources {
         eprintln!("{source}: fetching metadata");
         let result = async {
+            if source == "official" {
+                let catalog = crate::documents::sync(root, None).await?;
+                let failures = catalog.documents.iter().filter(|d|d.error.is_some()).count();
+                ensure!(failures == 0, "{failures} official pages failed; details saved in data/documents/official.yaml");
+                return Ok(());
+            }
             let incoming = fetch_catalog(&fetcher, root, source).await?;
             Registry {
                 catalogs: vec![incoming.clone()],

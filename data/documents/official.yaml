@@ -1,0 +1,3808 @@
+schema_version: 1
+documents:
+- source:
+    id: amazon-nova-doc
+    vendor: amazon
+    kind: documentation
+    url: https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html
+    format: html
+    records:
+    - modelsdev:model:amazon/nova-pro
+    - modelsdev:model:amazon/nova-pro-v1
+  checked_at: "2026-10-16T09:15:24.014233523Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-amazon:dec4a782afefbf8865411056691f38a052d47c1a1e82e390ecf482f485c76607
+      source: official-amazon
+      url: https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html
+      retrieved_at: "2026-10-16T09:08:51.53878988Z"
+      sha256: dec4a782afefbf8865411056691f38a052d47c1a1e82e390ecf482f485c76607
+    content_type: text/html
+    extraction:
+      extractor_version: 1
+      title:
+        value: What is Amazon Nova? - Amazon Nova
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > title:nth-child(2)
+          excerpt: What is Amazon Nova? - Amazon Nova
+      published_at: null
+      canonical_url:
+        value: https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(9)@href
+          excerpt: https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html
+      links:
+      - url: https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.md
+        label: View a markdown version of this page
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) > p:nth-child(1) >
+            a:nth-child(1)@href
+          excerpt: what-is-nova.md
+      - url: https://docs.aws.amazon.com/pdfs/nova/latest/userguide/nova-ug.pdf#what-is-nova
+        label: ""
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /pdfs/nova/latest/userguide/nova-ug.pdf#what-is-nova
+      - url: https://docs.aws.amazon.com/index.html
+        label: Documentation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(2) > a:nth-child(1)@href
+          excerpt: /index.html
+      - url: https://docs.aws.amazon.com/nova/index.html
+        label: Amazon Nova
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(2) > a:nth-child(2)@href
+          excerpt: /nova/index.html
+      - url: https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html
+        label: User Guide for Amazon Nova
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(2) > a:nth-child(3)@href
+          excerpt: what-is-nova.html
+      - url: https://docs.aws.amazon.com/nova/latest/nova2-userguide/whats-new.html
+        label: What's new in Amazon Nova 2
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > div:nth-child(4) >
+            div:nth-child(2) > p:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://docs.aws.amazon.com/nova/latest/nova2-userguide/whats-new.html
+      - url: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
+        label: Improve resilience with cross-region inference
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > p:nth-child(9) >
+            em:nth-child(1) > a:nth-child(2)@href
+          excerpt: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
+      - url: https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html
+        label: Supported foundation models in Amazon Bedrock
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > p:nth-child(10) >
+            a:nth-child(1)@href
+          excerpt: https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html
+      - url: >-
+          https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html
+        label: Supported Regions and models for inference profiles
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > p:nth-child(16) >
+            em:nth-child(1) > a:nth-child(2)@href
+          excerpt: >-
+            https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html
+      - url: https://docs.aws.amazon.com/nova/latest/userguide/available-voices.html
+        label: Voices available for Amazon Nova Sonic
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > p:nth-child(20) >
+            em:nth-child(1) > a:nth-child(2)@href
+          excerpt: https://docs.aws.amazon.com/nova/latest/userguide/available-voices.html
+      - url: https://docs.aws.amazon.com/general/latest/gr/docconventions.html
+        label: Document Conventions
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(3) > div:nth-child(1) >
+            a:nth-child(1)@href
+          excerpt: /general/latest/gr/docconventions.html
+      claims:
+      - record: modelsdev:model:amazon/nova-pro
+        property: context_window
+        value: 300000
+        unit: tokens
+        precision: approximate
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) >
+            div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(5) >
+            td:nth-child(3)
+          excerpt: 300k
+      - record: modelsdev:model:amazon/nova-pro
+        property: input_modalities
+        value:
+        - text
+        - image
+        - video
+        precision: exact
+        conditions:
+        - Amazon Bedrock Nova Pro v1
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) >
+            div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3) >
+            td:nth-child(3)
+          excerpt: Text, Image, Video
+      - record: modelsdev:model:amazon/nova-pro
+        property: max_output_tokens
+        value: 10000
+        unit: tokens
+        precision: approximate
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) >
+            div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(6) >
+            td:nth-child(3)
+          excerpt: 10k
+      - record: modelsdev:model:amazon/nova-pro
+        property: output_modalities
+        value:
+        - text
+        precision: exact
+        conditions:
+        - Amazon Bedrock Nova Pro v1
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) >
+            div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(4) >
+            td:nth-child(3)
+          excerpt: Text
+      - record: modelsdev:model:amazon/nova-pro-v1
+        property: context_window
+        value: 300000
+        unit: tokens
+        precision: approximate
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) >
+            div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(5) >
+            td:nth-child(3)
+          excerpt: 300k
+      - record: modelsdev:model:amazon/nova-pro-v1
+        property: input_modalities
+        value:
+        - text
+        - image
+        - video
+        precision: exact
+        conditions:
+        - Amazon Bedrock Nova Pro v1
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) >
+            div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3) >
+            td:nth-child(3)
+          excerpt: Text, Image, Video
+      - record: modelsdev:model:amazon/nova-pro-v1
+        property: max_output_tokens
+        value: 10000
+        unit: tokens
+        precision: approximate
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) >
+            div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(6) >
+            td:nth-child(3)
+          excerpt: 10k
+      - record: modelsdev:model:amazon/nova-pro-v1
+        property: output_modalities
+        value:
+        - text
+        precision: exact
+        conditions:
+        - Amazon Bedrock Nova Pro v1
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(1) >
+            awsui-app-layout:nth-child(3) > div:nth-child(2) > awsdocs-view:nth-child(1) > div:nth-child(1) >
+            div:nth-child(11) > div:nth-child(5) > div:nth-child(1) > div:nth-child(14) >
+            div:nth-child(1) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(4) >
+            td:nth-child(3)
+          excerpt: Text
+      warnings: []
+- source:
+    id: amazon-nova-launch
+    vendor: amazon
+    kind: release_blog
+    url: >-
+      https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/
+    format: html
+    records:
+    - modelsdev:model:amazon/nova-pro
+    - modelsdev:model:amazon/nova-pro-v1
+  checked_at: "2026-10-16T09:15:23.080075026Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-amazon:dcc89f36ba4eacb1adf4c39a42c602243593959deb7f4c6bcbe60d0a0b691546
+      source: official-amazon
+      url: >-
+        https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/
+      retrieved_at: "2026-10-16T09:08:50.361754817Z"
+      sha256: dcc89f36ba4eacb1adf4c39a42c602243593959deb7f4c6bcbe60d0a0b691546
+    content_type: text/html;charset=UTF-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: "Introducing Amazon Nova foundation models: Frontier intelligence and industry leading price performance | Amazon Web Services"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(12)@content
+          excerpt: "Introducing Amazon Nova foundation models: Frontier intelligence and industry leading price performance | Amazon Web Services"
+      published_at:
+        value: "2024-12-03T09:56:47-08:00"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(32)@content
+          excerpt: "2024-12-03T09:56:47-08:00"
+      canonical_url:
+        value: >-
+          https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(9)@href
+          excerpt: >-
+            https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/
+      links:
+      - url: https://aws.amazon.com/polly/
+        label: ""
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            table:nth-child(1) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1) >
+            div:nth-child(4) > a:nth-child(1)@href
+          excerpt: /polly/
+      - url: https://aws.amazon.com/ai/generative-ai/nova/
+        label: Amazon Nova
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(3) > a:nth-child(1)@href
+          excerpt: /ai/generative-ai/nova/
+      - url: https://aws.amazon.com/what-is/foundation-models/
+        label: foundation models (FMs)
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(3) > a:nth-child(2)@href
+          excerpt: /what-is/foundation-models/
+      - url: https://aws.amazon.com/bedrock/
+        label: Amazon Bedrock
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(3) > a:nth-child(3)@href
+          excerpt: /bedrock/
+      - url: https://aws.amazon.com/ai/generative-ai/
+        label: generative AI
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(4) > a:nth-child(1)@href
+          excerpt: /ai/generative-ai/
+      - url: https://aws.amazon.com/what-is/retrieval-augmented-generation/
+        label: Retrieval-Augmented Generation (RAG)
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(12) > a:nth-child(1)@href
+          excerpt: /what-is/retrieval-augmented-generation/
+      - url: >-
+          https://docs.aws.amazon.com/decision-guides/latest/generative-ai-on-aws-how-to-choose/guide.html
+        label: Choosing a generative AI service
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(19) > a:nth-child(2)@href
+          excerpt: >-
+            https://docs.aws.amazon.com/decision-guides/latest/generative-ai-on-aws-how-to-choose/guide.html
+      - url: https://aws.amazon.com/sdk-for-python/
+        label: AWS SDK for Python (Boto3)
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(26) > a:nth-child(1)@href
+          excerpt: /sdk-for-python/
+      - url: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
+        label: Amazon Bedrock Converse API
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(26) > a:nth-child(2)@href
+          excerpt: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html
+      - url: https://aws.amazon.com/s3/
+        label: Amazon Simple Storage Service (Amazon S3)
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(28) > a:nth-child(1)@href
+          excerpt: /s3/
+      - url: https://aws.amazon.com/cli/
+        label: AWS Command Line Interface (AWS CLI)
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(43) > a:nth-child(2)@href
+          excerpt: /cli/
+      - url: https://aws.amazon.com/about-aws/global-infrastructure/regions_az/
+        label: AWS Region
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(58) > a:nth-child(4)@href
+          excerpt: /about-aws/global-infrastructure/regions_az/
+      - url: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
+        label: cross-Region inference
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(58) > a:nth-child(5)@href
+          excerpt: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
+      - url: https://aws.amazon.com/bedrock/pricing/
+        label: Amazon Bedrock pricing
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(58) > a:nth-child(7)@href
+          excerpt: /bedrock/pricing/
+      - url: https://aws.amazon.com/bedrock/knowledge-bases/
+        label: Amazon Bedrock Knowledge Bases
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(61) > a:nth-child(1)@href
+          excerpt: /bedrock/knowledge-bases/
+      - url: https://aws.amazon.com/bedrock/agents/
+        label: Amazon Bedrock Agents
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(61) > a:nth-child(2)@href
+          excerpt: /bedrock/agents/
+      - url: https://aws.amazon.com/bedrock/guardrails/
+        label: Amazon Bedrock Guardrails
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(61) > a:nth-child(3)@href
+          excerpt: /bedrock/guardrails/
+      - url: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html
+        label: Amazon Bedrock documentation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(62) > a:nth-child(2)@href
+          excerpt: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html
+      claims:
+      - record: modelsdev:model:amazon/nova-pro
+        property: context_window
+        value: 300000
+        unit: tokens
+        precision: approximate
+        conditions:
+        - Launch article describes the maximum input token count
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(10)
+          excerpt: >-
+            Amazon Nova Pro – A highly capable multimodal model with the best combination
+            of accuracy, speed, and cost for a wide range of tasks. Amazon Nova Pro is capable
+            of processing up to 300K input tokens and sets new standards in multimodal inte
+      - record: modelsdev:model:amazon/nova-pro-v1
+        property: context_window
+        value: 300000
+        unit: tokens
+        precision: approximate
+        conditions:
+        - Launch article describes the maximum input token count
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(1)
+            > main:nth-child(1) > article:nth-child(2) > section:nth-child(5) >
+            p:nth-child(10)
+          excerpt: >-
+            Amazon Nova Pro – A highly capable multimodal model with the best combination
+            of accuracy, speed, and cost for a wide range of tasks. Amazon Nova Pro is capable
+            of processing up to 300K input tokens and sets new standards in multimodal inte
+      warnings: []
+- source:
+    id: anthropic-claude4-blog
+    vendor: anthropic
+    kind: release_blog
+    url: https://www.anthropic.com/news/claude-4
+    format: html
+    records:
+    - modelsdev:model:anthropic/claude-sonnet-4-20250514
+  checked_at: "2026-10-16T09:15:11.100273566Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: >-
+        official-anthropic:1c9ab4fac50f1b95d5101a7681a5122327b71eefefb12b57536c4986cf950abb
+      source: official-anthropic
+      url: https://www.anthropic.com/news/claude-4
+      retrieved_at: "2026-10-16T09:15:12.629871754Z"
+      sha256: 1c9ab4fac50f1b95d5101a7681a5122327b71eefefb12b57536c4986cf950abb
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Introducing Claude 4
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(35)@content
+          excerpt: Introducing Claude 4
+      published_at:
+        value: "2025-05-22T16:30:00.000Z"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(40)@content
+          excerpt: "2025-05-22T16:30:00.000Z"
+      canonical_url:
+        value: https://www.anthropic.com/news/claude-4
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(33)@href
+          excerpt: https://www.anthropic.com/news/claude-4
+      links:
+      - url: https://docs.anthropic.com/en/docs/build-with-claude/tool-use/web-search-tool
+        label: web search
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > div:nth-child(2) > article:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > ul:nth-child(5) > li:nth-child(1) > a:nth-child(2)@href
+          excerpt: https://docs.anthropic.com/en/docs/build-with-claude/tool-use/web-search-tool
+      - url: https://www.anthropic.com/news/agent-capabilities-api
+        label: four new capabilities
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > div:nth-child(2) > article:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > ul:nth-child(5) > li:nth-child(4) > a:nth-child(2)@href
+          excerpt: https://www.anthropic.com/news/agent-capabilities-api
+      - url: https://www.anthropic.com/contact-sales
+        label: contact sales
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > div:nth-child(2) > article:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > p:nth-child(19) > a:nth-child(1)@href
+          excerpt: https://www.anthropic.com/contact-sales
+      - url: https://www.anthropic.com/news/activating-asl3-protections
+        label: implementing measures
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > div:nth-child(2) > article:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > p:nth-child(27) > a:nth-child(1)@href
+          excerpt: https://www.anthropic.com/news/activating-asl3-protections
+      - url: https://www.anthropic.com/claude-code
+        label: Claude Code
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > div:nth-child(2) > article:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > p:nth-child(28) > a:nth-child(2)@href
+          excerpt: https://www.anthropic.com/claude-code
+      - url: https://www.anthropic.com/news/claude-3-7-sonnet
+        label: Claude 3.7 Sonnet launch post
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > div:nth-child(3) > div:nth-child(1) > ul:nth-child(4) > li:nth-child(3) >
+            a:nth-child(1)@href
+          excerpt: https://www.anthropic.com/news/claude-3-7-sonnet
+      - url: https://www.anthropic.com/engineering/swe-bench-sonnet
+        label: here
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > div:nth-child(3) > div:nth-child(1) > p:nth-child(12) >
+            a:nth-child(1)@href
+          excerpt: https://www.anthropic.com/engineering/swe-bench-sonnet
+      - url: https://www.anthropic.com/engineering/claude-think-tool
+        label: third ‘planning tool’
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > div:nth-child(3) > div:nth-child(1) > p:nth-child(12) >
+            a:nth-child(2)@href
+          excerpt: https://www.anthropic.com/engineering/claude-think-tool
+      - url: https://www.anthropic.com/news/an-update-on-independent-evaluators
+        label: Read more
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > section:nth-child(4) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(1) > div:nth-child(1) > a:nth-child(3)@href
+          excerpt: /news/an-update-on-independent-evaluators
+      - url: https://www.anthropic.com/news/2026-us-midterms
+        label: Read more
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > section:nth-child(4) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(1) > div:nth-child(2) > a:nth-child(3)@href
+          excerpt: /news/2026-us-midterms
+      - url: https://www.anthropic.com/news/singapore-office-opening
+        label: Read more
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(4) >
+            article:nth-child(1) > section:nth-child(4) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(1) > div:nth-child(3) > a:nth-child(3)@href
+          excerpt: /news/singapore-office-opening
+      claims: []
+      warnings:
+      - >-
+        No model field extracted; page metadata and links do not establish model
+        capabilities.
+- source:
+    id: anthropic-claude4-card
+    vendor: anthropic
+    kind: model_card
+    url: https://www.anthropic.com/claude-4-system-card
+    format: html
+    records:
+    - modelsdev:model:anthropic/claude-sonnet-4-20250514
+  checked_at: "2026-10-16T09:15:12.635608343Z"
+  error: HTTP 307 Temporary Redirect for https://www.anthropic.com/claude-4-system-card
+- source:
+    id: deepseek-blog
+    vendor: deepseek
+    kind: release_blog
+    url: https://api-docs.deepseek.com/news/news251201/
+    format: html
+    records:
+    - huggingface:model:deepseek-ai/DeepSeek-V3.2
+  checked_at: "2026-10-16T09:15:24.880492884Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: >-
+        official-deepseek:b300dffdecc69eb4dec69b77d8890addef5bf78e6121bc4440a973f09cd4150d
+      source: official-deepseek
+      url: https://api-docs.deepseek.com/news/news251201/
+      retrieved_at: "2026-10-16T09:08:51.709961857Z"
+      sha256: b300dffdecc69eb4dec69b77d8890addef5bf78e6121bc4440a973f09cd4150d
+    content_type: text/html
+    extraction:
+      extractor_version: 1
+      title:
+        value: DeepSeek-V3.2 Release | DeepSeek API Docs
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(17)@content
+          excerpt: DeepSeek-V3.2 Release | DeepSeek API Docs
+      published_at: null
+      canonical_url:
+        value: https://api-docs.deepseek.com/news/news251201
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(21)@href
+          excerpt: https://api-docs.deepseek.com/news/news251201
+      links:
+      - url: https://huggingface.co/deepseek-ai/DeepSeek-V3.2/resolve/main/assets/paper.pdf
+        label: https://huggingface.co/deepseek-ai/DeepSeek-V3.2/resolve/main/assets/paper.pdf
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(3) >
+            li:nth-child(3) > p:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/deepseek-ai/DeepSeek-V3.2/resolve/main/assets/paper.pdf
+      - url: https://api-docs.deepseek.com/guides/thinking_mode
+        label: https://api-docs.deepseek.com/guides/thinking_mode
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(16) >
+            li:nth-child(3) > p:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://api-docs.deepseek.com/guides/thinking_mode
+      - url: https://huggingface.co/deepseek-ai/DeepSeek-V3.2
+        label: https://huggingface.co/deepseek-ai/DeepSeek-V3.2
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(20) >
+            li:nth-child(1) > p:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/deepseek-ai/DeepSeek-V3.2
+      - url: https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Speciale
+        label: https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Speciale
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(20) >
+            li:nth-child(2) > p:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Speciale
+      claims:
+      - record: huggingface:model:deepseek-ai/DeepSeek-V3.2
+        property: reasoning
+        value: true
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(12) >
+            li:nth-child(2) > p:nth-child(1)
+          excerpt: >-
+            🔹 DeepSeek-V3.2 is our first model to integrate thinking directly into
+            tool-use, and also supports tool-use in both thinking and non-thinking modes.
+      - record: huggingface:model:deepseek-ai/DeepSeek-V3.2
+        property: tool_call
+        value: true
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(12) >
+            li:nth-child(2) > p:nth-child(1)
+          excerpt: >-
+            🔹 DeepSeek-V3.2 is our first model to integrate thinking directly into
+            tool-use, and also supports tool-use in both thinking and non-thinking modes.
+      warnings: []
+- source:
+    id: deepseek-card
+    vendor: deepseek
+    kind: model_card
+    url: >-
+      https://huggingface.co/deepseek-ai/DeepSeek-V3.2/raw/a7e62ac04ecb2c0a54d736dc46601c5606cf10a6/README.md
+    format: markdown
+    records:
+    - huggingface:model:deepseek-ai/DeepSeek-V3.2
+  checked_at: "2026-10-16T09:15:24.968535849Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: >-
+        official-deepseek:22b9f57e1ece2df27f9de0e71377e19481f7a6892eca8bc23e73fcdffe1d845c
+      source: official-deepseek
+      url: >-
+        https://huggingface.co/deepseek-ai/DeepSeek-V3.2/raw/a7e62ac04ecb2c0a54d736dc46601c5606cf10a6/README.md
+      retrieved_at: "2026-10-16T09:08:52.710299828Z"
+      sha256: 22b9f57e1ece2df27f9de0e71377e19481f7a6892eca8bc23e73fcdffe1d845c
+    content_type: text/plain; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: "DeepSeek-V3.2: Efficient Reasoning & Agentic AI"
+        evidence:
+          locator: markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > h1:nth-child(1)
+          excerpt: "DeepSeek-V3.2: Efficient Reasoning & Agentic AI"
+      published_at: null
+      canonical_url: null
+      links:
+      - url: https://www.deepseek.com/
+        label: ""
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4)
+            > a:nth-child(1)@href
+          excerpt: https://www.deepseek.com/
+      - url: https://huggingface.co/deepseek-ai
+        label: ""
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4)
+            > a:nth-child(3)@href
+          excerpt: https://huggingface.co/deepseek-ai
+      - url: https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/qr.jpeg?raw=true
+        label: ""
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > div:nth-child(5)
+            > a:nth-child(2)@href
+          excerpt: https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/qr.jpeg?raw=true
+      - url: >-
+          https://huggingface.co/deepseek-ai/DeepSeek-V3.2/blob/a7e62ac04ecb2c0a54d736dc46601c5606cf10a6/LICENSE
+        label: ""
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > div:nth-child(6)
+            > a:nth-child(1)@href
+          excerpt: LICENSE
+      - url: https://huggingface.co/deepseek-ai/DeepSeek-V3.2/blob/main/assets/paper.pdf
+        label: Technical Report 👁️
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(7) >
+            a:nth-child(1)@href
+          excerpt: https://huggingface.co/deepseek-ai/DeepSeek-V3.2/blob/main/assets/paper.pdf
+      - url: https://github.com/deepseek-ai/DeepSeek-V3.2-Exp
+        label: DeepSeek-V3.2-Exp
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(21) >
+            a:nth-child(1)@href
+          excerpt: https://github.com/deepseek-ai/DeepSeek-V3.2-Exp
+      - url: >-
+          https://huggingface.co/deepseek-ai/DeepSeek-V3.2/blob/a7e62ac04ecb2c0a54d736dc46601c5606cf10a6/service@deepseek.com
+        label: service@deepseek.com
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(29) >
+            a:nth-child(1)@href
+          excerpt: service@deepseek.com
+      claims:
+      - record: huggingface:model:deepseek-ai/DeepSeek-V3.2
+        property: license
+        value: mit
+        precision: exact
+        evidence:
+          locator: markdown-bytes:4..16:frontmatter/license
+          excerpt: "license: mit"
+      - record: huggingface:model:deepseek-ai/DeepSeek-V3.2
+        property: tool_call
+        value: true
+        precision: exact
+        evidence:
+          locator: markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(14)
+          excerpt: >-
+            DeepSeek-V3.2 introduces significant updates to its chat template compared to
+            prior versions. The primary changes involve a revised format for tool calling and
+            the introduction of a "thinking with tools" capability.
+      warnings: []
+- source:
+    id: deepseek-updates
+    vendor: deepseek
+    kind: documentation
+    url: https://api-docs.deepseek.com/updates/
+    format: html
+    records:
+    - huggingface:model:deepseek-ai/DeepSeek-V3.2
+  checked_at: "2026-10-16T09:15:25.921712699Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: >-
+        official-deepseek:2922113bc4e0e970fa6d3c4065c3cff3ec661a4db03d671cc2310545c5b5bb71
+      source: official-deepseek
+      url: https://api-docs.deepseek.com/updates/
+      retrieved_at: "2026-10-16T09:08:52.798195905Z"
+      sha256: 2922113bc4e0e970fa6d3c4065c3cff3ec661a4db03d671cc2310545c5b5bb71
+    content_type: text/html
+    extraction:
+      extractor_version: 1
+      title:
+        value: Change Log | DeepSeek API Docs
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(17)@content
+          excerpt: Change Log | DeepSeek API Docs
+      published_at: null
+      canonical_url:
+        value: https://api-docs.deepseek.com/updates
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(21)@href
+          excerpt: https://api-docs.deepseek.com/updates
+      links:
+      - url: https://api-docs.deepseek.com/quick_start/pricing
+        label: Models & Pricing
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(12) >
+            a:nth-child(1)@href
+          excerpt: /quick_start/pricing
+      - url: https://api-docs.deepseek.com/news/news260910
+        label: this documentation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(13) >
+            a:nth-child(1)@href
+          excerpt: /news/news260910
+      - url: https://api-docs.deepseek.com/guides/vision
+        label: Vision guide
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(22) >
+            a:nth-child(1)@href
+          excerpt: /guides/vision
+      - url: https://api-docs.deepseek.com/quick_start/agent_integrations/codex
+        label: official documentation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(31) >
+            a:nth-child(1)@href
+          excerpt: /quick_start/agent_integrations/codex
+      - url: https://api-docs.deepseek.com/guides/thinking_mode
+        label: Thinking Mode
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(33) >
+            a:nth-child(1)@href
+          excerpt: /guides/thinking_mode
+      - url: https://api-docs.deepseek.com/news/news260813
+        label: this documentation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(36) >
+            a:nth-child(1)@href
+          excerpt: /news/news260813
+      - url: https://api-docs.deepseek.com/news/news260424
+        label: this documentation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(59) >
+            a:nth-child(1)@href
+          excerpt: /news/news260424
+      - url: https://api-docs.deepseek.com/news/news251201
+        label: this documentation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(67) >
+            a:nth-child(1)@href
+          excerpt: /news/news251201
+      - url: https://api-docs.deepseek.com/news/news250929
+        label: this documentation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(73) >
+            a:nth-child(1)@href
+          excerpt: /news/news250929
+      - url: https://api-docs.deepseek.com/news/news250120
+        label: DeepSeek-R1 Release
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(98) >
+            li:nth-child(2) > a:nth-child(1)@href
+          excerpt: /news/news250120
+      - url: https://api-docs.deepseek.com/news/news1226
+        label: introducing DeepSeek-V3
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > ul:nth-child(102) >
+            li:nth-child(2) > a:nth-child(1)@href
+          excerpt: /news/news1226
+      - url: https://api-docs.deepseek.com/news/news0802
+        label: Context Caching is Available 2024/08/02
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(123) >
+            a:nth-child(1)@href
+          excerpt: /news/news0802
+      - url: https://api-docs.deepseek.com/news/news0725
+        label: New API Features 2024/07/25
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(128) >
+            a:nth-child(1)@href
+          excerpt: /news/news0725
+      claims:
+      - record: huggingface:model:deepseek-ai/DeepSeek-V3.2
+        property: release_date
+        value: "2025-12-01"
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > div:nth-child(1) > div:nth-child(2) > main:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > h2:nth-child(61)
+          excerpt: "Date: 2025-12-01 ​"
+      warnings: []
+- source:
+    id: google-gemini25-blog
+    vendor: google
+    kind: release_blog
+    url: >-
+      https://blog.google/products-and-platforms/products/gemini/gemini-2-5-model-family-expands/
+    format: html
+    records:
+    - modelsdev:model:google/gemini-2.5-pro
+  checked_at: "2026-10-16T09:15:12.943880218Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-google:7d1f0630d22bbb829f31cfceadf84db3b21d76cbf916c23497c60a38c500e4e8
+      source: official-google
+      url: >-
+        https://blog.google/products-and-platforms/products/gemini/gemini-2-5-model-family-expands/
+      retrieved_at: "2026-10-16T09:15:15.008573602Z"
+      sha256: 7d1f0630d22bbb829f31cfceadf84db3b21d76cbf916c23497c60a38c500e4e8
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: We’re expanding our Gemini 2.5 family of models
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(11)@content
+          excerpt: We’re expanding our Gemini 2.5 family of models
+      published_at:
+        value: "2025-06-17"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(17)@content
+          excerpt: "2025-06-17"
+      canonical_url:
+        value: >-
+          https://blog.google/products-and-platforms/products/gemini/gemini-2-5-model-family-expands/
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(42)@href
+          excerpt: >-
+            https://blog.google/products-and-platforms/products/gemini/gemini-2-5-model-family-expands/
+      links:
+      - url: https://blog.google/authors/tulsee-doshi/
+        label: Tulsee Doshi Senior Director, Product Management, on behalf of the Gemini team
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(7) >
+            article:nth-child(1) > section:nth-child(2) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1)
+            > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://blog.google/authors/tulsee-doshi/
+      - url: >-
+          https://cloud.google.com/blog/products/ai-machine-learning/gemini-2-5-flash-lite-flash-pro-ga-vertex-ai
+        label: organizations
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(7) >
+            article:nth-child(1) > section:nth-child(4) > div:nth-child(1) > section:nth-child(1) >
+            uni-article-paragraph:nth-child(1) > div:nth-child(1) > p:nth-child(3) >
+            a:nth-child(2)@href
+          excerpt: >-
+            https://cloud.google.com/blog/products/ai-machine-learning/gemini-2-5-flash-lite-flash-pro-ga-vertex-ai
+      claims: []
+      warnings:
+      - >-
+        No model field extracted; page metadata and links do not establish model
+        capabilities.
+- source:
+    id: google-gemini25-model
+    vendor: google
+    kind: model_page
+    url: >-
+      https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-pro
+    format: html
+    records:
+    - modelsdev:model:google/gemini-2.5-pro
+  checked_at: "2026-10-16T09:15:15.023757823Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-google:2989aecbef0d39b30bc8130f6733c517a63ff6ab70fbe475f242994455b946af
+      source: official-google
+      url: >-
+        https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-pro
+      retrieved_at: "2026-10-16T09:15:17.014960668Z"
+      sha256: 2989aecbef0d39b30bc8130f6733c517a63ff6ab70fbe475f242994455b946af
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Gemini 2.5 Pro | Gemini Enterprise Agent Platform | Google Cloud Documentation
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(48)@content
+          excerpt: Gemini 2.5 Pro | Gemini Enterprise Agent Platform | Google Cloud Documentation
+      published_at: null
+      canonical_url:
+        value: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-pro
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(19)@href
+          excerpt: >-
+            https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-pro
+      links:
+      - url: https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing
+        label: Pricing
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > p:nth-child(4) > a:nth-child(4)@href
+          excerpt: https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing
+      - url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking
+        label: Thinking
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(5)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/thinking
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/prompts/system-instruction-introduction
+        label: System instructions
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(5)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/prompts/system-instruction-introduction
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/control-generated-output
+        label: Structured output
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(5)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(3) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/capabilities/control-generated-output
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/context-cache/context-cache-overview
+        label: Context caching
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(5)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(4) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/context-cache/context-cache-overview
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/rag-engine/rag-overview
+        label: RAG Engine
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(5)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(5) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/build/rag-engine/rag-overview
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/tune-models
+        label: Tuning
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(5)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(6) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/tune-models
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/url-context
+        label: URL context
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(5)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(7) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/url-context
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/video-understanding#agentic-video-processing
+        label: Agentic video understanding
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(5)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(8) > a:nth-child(1)@href
+          excerpt: >-
+            /gemini-enterprise-agent-platform/models/capabilities/video-understanding#agentic-video-processing
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/grounding/overview
+        label: Grounding
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(6)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/grounding/overview
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/tools/code-execution
+        label: Code execution
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(6)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/tools/code-execution
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/tools/function-calling
+        label: Function calling
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(6)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(3) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/tools/function-calling
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/computer-use
+        label: Computer use
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(6)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(4) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/computer-use
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/reference/models/inference
+        label: GenerateContent API
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(7)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/reference/models/inference
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/interactions
+        label: Interactions API
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(7)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/capabilities/interactions
+      - url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/live-api
+        label: Gemini Live API
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(7)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(3) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/live-api
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/get-token-count
+        label: Count Tokens API
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(7)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(4) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/capabilities/get-token-count
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/migrate/openai/overview
+        label: Chat Completions API
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(7)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(5) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/migrate/openai/overview
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/provisioned-throughput
+        label: Provisioned Throughput
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(8)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(1) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/provisioned-throughput
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/batch-inference
+        label: Batch inference
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(8)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/capabilities/batch-inference
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/deploy/consumption-options
+        label: Pay-as-you-go
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(8)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(3) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/deploy/consumption-options
+      - url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/quotas
+        label: Fixed quota
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(8)
+            > td:nth-child(2) > ul:nth-child(1) > li:nth-child(4) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/quotas
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations
+        label: Model availability
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(15)
+            > td:nth-child(2) > p:nth-child(1) > b:nth-child(1) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/resources/locations
+      - url: >-
+          https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/security-controls
+        label: Security controls
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(23)
+            > td:nth-child(1) > a:nth-child(1)@href
+          excerpt: /gemini-enterprise-agent-platform/models/security-controls
+      - url: https://ai.google.dev/
+        label: Gemini API documentation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > p:nth-child(7) > a:nth-child(2)@href
+          excerpt: https://ai.google.dev/
+      claims:
+      - record: modelsdev:model:google/gemini-2.5-pro
+        property: context_window
+        value: 1048576
+        unit: tokens
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(3)
+            > td:nth-child(3)
+          excerpt: 1,048,576
+      - record: modelsdev:model:google/gemini-2.5-pro
+        property: input_modalities
+        value:
+        - text
+        - image
+        - audio
+        - video
+        precision: exact
+        conditions:
+        - Google Cloud model reference
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(2)
+          excerpt: >-
+            Modalities description Text Input and output photo Image Input only mic Audio
+            Input only videocam Video Input only
+      - record: modelsdev:model:google/gemini-2.5-pro
+        property: max_output_tokens
+        value: 65536
+        unit: tokens
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(4)
+            > td:nth-child(2)
+          excerpt: 65,536
+      - record: modelsdev:model:google/gemini-2.5-pro
+        property: output_modalities
+        value:
+        - text
+        precision: exact
+        conditions:
+        - Google Cloud model reference
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(2)
+          excerpt: >-
+            Modalities description Text Input and output photo Image Input only mic Audio
+            Input only videocam Video Input only
+      - record: modelsdev:model:google/gemini-2.5-pro
+        property: release_date
+        value: "2025-06-17"
+        precision: exact
+        conditions:
+        - Google Cloud GA release
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(3) >
+            section:nth-child(5) > main:nth-child(1) > devsite-content:nth-child(2) >
+            article:nth-child(1) > div:nth-child(8) > table:nth-child(6) > tbody:nth-child(1) > tr:nth-child(16)
+            > td:nth-child(2) > ul:nth-child(1) > ul:nth-child(2) > li:nth-child(2)
+          excerpt: "Release date: June 17, 2025"
+      warnings: []
+- source:
+    id: meta-llama33-blog
+    vendor: meta
+    kind: release_blog
+    url: https://ai.meta.com/blog/future-of-ai-built-with-llama/
+    format: html
+    records:
+    - huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+  checked_at: "2026-10-16T09:16:57.392031003Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-meta:df13340835b1933d52cc6b1bb368633451aa3c2b9bdb72cd847a4bbef2996465
+      source: official-meta
+      url: https://ai.meta.com/blog/future-of-ai-built-with-llama/
+      retrieved_at: "2026-10-16T09:16:59.896751884Z"
+      sha256: df13340835b1933d52cc6b1bb368633451aa3c2b9bdb72cd847a4bbef2996465
+    content_type: text/html; charset="utf-8"
+    extraction:
+      extractor_version: 1
+      title:
+        value: "The future of AI: Built with Llama"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(19)@content
+          excerpt: "The future of AI: Built with Llama"
+      published_at: null
+      canonical_url:
+        value: https://ai.meta.com/blog/future-of-ai-built-with-llama/
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(14)@href
+          excerpt: https://ai.meta.com/blog/future-of-ai-built-with-llama/
+      links:
+      - url: https://ai.meta.com/
+        label: ""
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            li:nth-child(7) > a:nth-child(1)@href
+          excerpt: /
+      - url: https://www.llama.com/
+        label: Llama
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) >
+            div:nth-child(3) > ul:nth-child(2) > li:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://www.llama.com/
+      - url: https://ai.meta.com/blog/llama-usage-doubled-may-through-july-2024/
+        label: twice as many downloads
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) >
+            div:nth-child(3) > ul:nth-child(2) > li:nth-child(1) > a:nth-child(2)@href
+          excerpt: https://ai.meta.com/blog/llama-usage-doubled-may-through-july-2024/
+      - url: https://ai.meta.com/meta-ai/
+        label: Meta AI
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) >
+            div:nth-child(3) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: https://ai.meta.com/meta-ai/
+      - url: https://ai.meta.com/blog/meta-llama-3/
+        label: Llama 3
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) >
+            div:nth-child(5) > p:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://ai.meta.com/blog/meta-llama-3/
+      - url: https://ai.meta.com/blog/meta-llama-3-1/
+        label: Llama 3.1
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) >
+            div:nth-child(5) > p:nth-child(1) > a:nth-child(2)@href
+          excerpt: https://ai.meta.com/blog/meta-llama-3-1/
+      - url: https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/
+        label: Llama 3.2
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) >
+            div:nth-child(5) > p:nth-child(1) > a:nth-child(3)@href
+          excerpt: https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/
+      - url: https://www.llama.com/#llama-stack
+        label: Llama Stack
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) >
+            div:nth-child(2) > p:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://www.llama.com/#llama-stack
+      - url: https://ai.meta.com/blog/ibm-watsonx-ai-llama/
+        label: worked with IBM
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) >
+            div:nth-child(2) > p:nth-child(2) > a:nth-child(1)@href
+          excerpt: https://ai.meta.com/blog/ibm-watsonx-ai-llama/
+      - url: https://ai.meta.com/blog/accenture-built-with-llama/
+        label: Accenture
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) >
+            div:nth-child(2) > p:nth-child(4) > a:nth-child(1)@href
+          excerpt: https://ai.meta.com/blog/accenture-built-with-llama/
+      - url: https://ai.meta.com/ai-studio/
+        label: AI Studio
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) >
+            div:nth-child(4) > p:nth-child(4) > a:nth-child(1)@href
+          excerpt: https://ai.meta.com/ai-studio/
+      - url: https://ai.meta.com/research/movie-gen/
+        label: Meta Movie Gen
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(3) > div:nth-child(2) >
+            div:nth-child(6) > p:nth-child(3) > a:nth-child(1)@href
+          excerpt: https://ai.meta.com/research/movie-gen/
+      - url: https://ai.meta.com/blog/segment-anything-foundation-model-image-segmentation/
+        label: Read post
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) >
+            div:nth-child(1) > div:nth-child(3) > a:nth-child(1)@href
+          excerpt: https://ai.meta.com/blog/segment-anything-foundation-model-image-segmentation/
+      - url: https://ai.meta.com/blog/multiray-large-scale-AI-models/
+        label: Read post
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) >
+            div:nth-child(2) > div:nth-child(4) > a:nth-child(1)@href
+          excerpt: https://ai.meta.com/blog/multiray-large-scale-AI-models/
+      - url: https://ai.meta.com/blog/muavic-audio-visual-speech-translation-benchmark/
+        label: Read post
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(2) > div:nth-child(1) > div:nth-child(5) > div:nth-child(2) >
+            div:nth-child(3) > div:nth-child(4) > a:nth-child(1)@href
+          excerpt: https://ai.meta.com/blog/muavic-audio-visual-speech-translation-benchmark/
+      - url: https://ai.meta.com/meta-ai/assistant/
+        label: Meta AI
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /meta-ai/assistant/
+      - url: https://ai.meta.com/meta-ai/media-generation/
+        label: Media Generation
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(2) > a:nth-child(1)@href
+          excerpt: /meta-ai/media-generation/
+      - url: https://ai.meta.com/meta-ai/vibes/
+        label: Vibes
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(3) > a:nth-child(1)@href
+          excerpt: /meta-ai/vibes/
+      - url: https://ai.meta.com/muse/
+        label: Muse
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /muse/
+      - url: https://ai.meta.com/learn/agentic-ai/what-are-ai-agents/
+        label: AI agents explained
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(2) > a:nth-child(1)@href
+          excerpt: /learn/agentic-ai/what-are-ai-agents/
+      - url: https://ai.meta.com/learn/agentic-ai/what-is-agentic-ai/
+        label: What is agentic AI
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(3) > a:nth-child(1)@href
+          excerpt: /learn/agentic-ai/what-is-agentic-ai/
+      - url: https://ai.meta.com/learn/agentic-ai/agentic-ai-examples/
+        label: Agentic AI examples
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(4) > a:nth-child(1)@href
+          excerpt: /learn/agentic-ai/agentic-ai-examples/
+      - url: https://ai.meta.com/research
+        label: AI Research
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /research
+      - url: https://ai.meta.com/research/
+        label: Overview
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /research/
+      - url: https://ai.meta.com/research/#projects
+        label: Projects
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(2) > a:nth-child(1)@href
+          excerpt: /research/#projects
+      - url: https://ai.meta.com/resources/
+        label: Resources & tools
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(3) > a:nth-child(1)@href
+          excerpt: /resources/
+      - url: https://ai.meta.com/results/?content_types%5B0%5D=publication
+        label: Publications
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(4) > a:nth-child(1)@href
+          excerpt: /results/?content_types%5B0%5D=publication
+      - url: https://ai.meta.com/blog/
+        label: Blog
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /blog/
+      - url: https://ai.meta.com/learn/
+        label: Learning Hub
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(4) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(2) > a:nth-child(1)@href
+          excerpt: /learn/
+      - url: https://ai.meta.com/about
+        label: About
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /about
+      - url: https://ai.meta.com/about/
+        label: Overview
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /about/
+      - url: https://ai.meta.com/opensourceai/
+        label: Open Source
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(1)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(5) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) >
+            div:nth-child(2) > a:nth-child(1)@href
+          excerpt: /opensourceai/
+      claims: []
+      warnings:
+      - >-
+        No model field extracted; page metadata and links do not establish model
+        capabilities.
+- source:
+    id: meta-llama33-card
+    vendor: meta
+    kind: model_card
+    url: >-
+      https://raw.githubusercontent.com/meta-llama/llama-models/main/models/llama3_3/MODEL_CARD.md
+    format: markdown
+    records:
+    - huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+  checked_at: "2026-10-16T09:16:57.015632036Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-meta:1bad06e0e2feadf6a195fcce4d6a2f7bca48f05b7a25a71f18c2baa88d292adf
+      source: official-meta
+      url: >-
+        https://raw.githubusercontent.com/meta-llama/llama-models/main/models/llama3_3/MODEL_CARD.md
+      retrieved_at: "2026-10-16T09:08:42.661906853Z"
+      sha256: 1bad06e0e2feadf6a195fcce4d6a2f7bca48f05b7a25a71f18c2baa88d292adf
+    content_type: text/plain; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title: null
+      published_at: null
+      canonical_url: null
+      links:
+      - url: https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE
+        label: https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(11) >
+            a:nth-child(2)@href
+          excerpt: https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE
+      - url: https://github.com/meta-llama/llama3
+        label: README
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(12) >
+            a:nth-child(1)@href
+          excerpt: https://github.com/meta-llama/llama3
+      - url: https://github.com/meta-llama/llama-recipes
+        label: here
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(12) >
+            a:nth-child(2)@href
+          excerpt: https://github.com/meta-llama/llama-recipes
+      - url: https://github.com/meta-llama/llama-agentic-system
+        label: reference implementations
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(42) >
+            a:nth-child(4)@href
+          excerpt: https://github.com/meta-llama/llama-agentic-system
+      - url: https://github.com/meta-llama/PurpleLlama
+        label: Github repository
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(56) >
+            a:nth-child(1)@href
+          excerpt: https://github.com/meta-llama/PurpleLlama
+      claims:
+      - record: huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+        property: context_window
+        value: 128000
+        unit: tokens
+        precision: approximate
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(5) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(6)
+          excerpt: 128k
+      - record: huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+        property: input_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(5) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(4)
+          excerpt: Multilingual Text
+      - record: huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+        property: knowledge_cutoff
+        value: 2023-12
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(5) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(9)
+          excerpt: December 2023
+      - record: huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+        property: license_name
+        value: Llama 3.3 Community License Agreement
+        precision: exact
+        evidence:
+          locator: markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(11)
+          excerpt: "License A custom commercial license, the Llama 3.3 Community License Agreement, is available at: https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/LICENSE"
+      - record: huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+        property: output_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(5) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(5)
+          excerpt: Multilingual Text and code
+      - record: huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+        property: parameter_count
+        value: 70000000000
+        unit: parameters
+        precision: approximate
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(5) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(3)
+          excerpt: 70B
+      - record: huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+        property: release_date
+        value: "2024-12-06"
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(9) >
+            li:nth-child(1)
+          excerpt: "70B Instruct: December 6, 2024"
+      warnings: []
+- source:
+    id: nvidia-blog
+    vendor: nvidia
+    kind: release_blog
+    url: https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/
+    format: html
+    records:
+    - modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+  checked_at: "2026-10-16T09:15:27.161590029Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-nvidia:beffdbb58e71d410522d3576a8fbeb858f6ec5756049fa49963e243d99a9fe69
+      source: official-nvidia
+      url: https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/
+      retrieved_at: "2026-10-16T09:15:28.288192827Z"
+      sha256: beffdbb58e71d410522d3576a8fbeb858f6ec5756049fa49963e243d99a9fe69
+    content_type: text/html; charset=UTF-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: New NVIDIA Nemotron 3 Super Delivers 5x Higher Throughput for Agentic AI
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(18)@content
+          excerpt: New NVIDIA Nemotron 3 Super Delivers 5x Higher Throughput for Agentic AI
+      published_at:
+        value: "2026-03-11T16:00:21+00:00"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(23)@content
+          excerpt: "2026-03-11T16:00:21+00:00"
+      canonical_url:
+        value: https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(15)@href
+          excerpt: https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/
+      links:
+      - url: https://blogs.nvidia.com/blog/author/karibriski/
+        label: Kari Briski
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            header:nth-child(1) > div:nth-child(1) > div:nth-child(3) > span:nth-child(3) >
+            a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/author/karibriski/
+      - url: https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/#disqus_thread
+        label: 0 Comments
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) >
+            header:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(2) > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/#disqus_thread
+      - url: https://build.nvidia.com/nvidia/aiq
+        label: NVIDIA AI-Q
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)
+            > div:nth-child(1) > p:nth-child(11) > a:nth-child(2)@href
+          excerpt: https://build.nvidia.com/nvidia/aiq
+      - url: https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b
+        label: build.nvidia.com
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)
+            > div:nth-child(1) > p:nth-child(25) > a:nth-child(4)@href
+          excerpt: https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b
+      - url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8
+        label: Hugging Face
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)
+            > div:nth-child(1) > p:nth-child(25) > a:nth-child(10)@href
+          excerpt: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8
+      - url: https://www.nvidia.com/en-us/ai-data-science/products/nim-microservices/
+        label: NVIDIA NIM
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)
+            > div:nth-child(1) > p:nth-child(28) > a:nth-child(2)@href
+          excerpt: https://www.nvidia.com/en-us/ai-data-science/products/nim-microservices/
+      - url: https://www.nvidia.com/en-us/ai-data-science/foundation-models/nemotron/
+        label: Nemotron
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)
+            > div:nth-child(1) > p:nth-child(29) > a:nth-child(2)@href
+          excerpt: https://www.nvidia.com/en-us/ai-data-science/foundation-models/nemotron/
+      - url: >-
+          https://www.nvidia.com/en-us/executive-insights/generative-ai-tools/?modal=stay-inf
+        label: NVIDIA AI news
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)
+            > div:nth-child(1) > p:nth-child(29) > a:nth-child(4)@href
+          excerpt: >-
+            https://www.nvidia.com/en-us/executive-insights/generative-ai-tools/?modal=stay-inf
+      - url: https://blogs.nvidia.com/blog/category/generative-ai/
+        label: AI
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(4)
+            > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/category/generative-ai/
+      - url: https://blogs.nvidia.com/blog/tag/agentic-ai/
+        label: Agentic AI
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(5)
+            > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/tag/agentic-ai/
+      - url: https://blogs.nvidia.com/blog/tag/artificial-intelligence/
+        label: Artificial Intelligence
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(5)
+            > ul:nth-child(1) > li:nth-child(3) > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/tag/artificial-intelligence/
+      - url: https://blogs.nvidia.com/blog/tag/nemotron/
+        label: Nemotron
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(5)
+            > ul:nth-child(1) > li:nth-child(4) > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/tag/nemotron/
+      - url: https://blogs.nvidia.com/blog/tag/nvidia-nim/
+        label: NVIDIA NIM
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(5)
+            > ul:nth-child(1) > li:nth-child(5) > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/tag/nvidia-nim/
+      - url: https://blogs.nvidia.com/blog/tag/open-source/
+        label: Open Source
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(5)
+            > ul:nth-child(1) > li:nth-child(6) > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/tag/open-source/
+      - url: https://blogs.nvidia.com/blog/nordics-technology-ecosystem/
+        label: ""
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(6)
+            > div:nth-child(2) > article:nth-child(1) > div:nth-child(1) > div:nth-child(1)
+            > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/nordics-technology-ecosystem/
+      - url: https://blogs.nvidia.com/blog/uk-ecosystem-deployment/
+        label: ""
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(6)
+            > div:nth-child(2) > article:nth-child(2) > div:nth-child(1) > div:nth-child(1)
+            > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/uk-ecosystem-deployment/
+      - url: https://blogs.nvidia.com/blog/european-cities-agents-urban-operations/
+        label: ""
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(6)
+            > div:nth-child(2) > article:nth-child(3) > div:nth-child(1) > div:nth-child(1)
+            > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/european-cities-agents-urban-operations/
+      - url: https://blogs.nvidia.com/blog/france-ecosystem-agentic-computing/
+        label: ""
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(6)
+            > div:nth-child(2) > article:nth-child(4) > div:nth-child(1) > div:nth-child(1)
+            > a:nth-child(1)@href
+          excerpt: https://blogs.nvidia.com/blog/france-ecosystem-agentic-computing/
+      claims:
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: active_parameter_count
+        value: 12000000000
+        unit: parameters
+        precision: approximate
+        conditions:
+        - Advertised rounded active parameter count.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)
+            > div:nth-child(1) > p:nth-child(2)
+          excerpt: >-
+            Launched today, NVIDIA Nemotron 3 Super is a 120‑billion‑parameter open model
+            with 12 billion active parameters designed to run complex agentic AI systems at
+            scale.
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: context_window
+        value: 1‑million‑token
+        unit: tokens
+        precision: approximate
+        conditions:
+        - >-
+          Marketing abbreviation; exact token capacity is not established by this
+          statement.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)
+            > div:nth-child(1) > p:nth-child(10)
+          excerpt: >-
+            Nemotron 3 Super has a 1‑million‑token context window, allowing agents to
+            retain full workflow state in memory and preventing goal drift. Nemotron 3 Super has
+            set new standards, claiming the top spot on Artificial Analysis for efficiency an
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: parameter_count
+        value: 120000000000
+        unit: parameters
+        precision: approximate
+        conditions:
+        - Advertised rounded total parameter count.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2) > div:nth-child(3)
+            > main:nth-child(1) > div:nth-child(1) > article:nth-child(1) > div:nth-child(2)
+            > div:nth-child(1) > p:nth-child(2)
+          excerpt: >-
+            Launched today, NVIDIA Nemotron 3 Super is a 120‑billion‑parameter open model
+            with 12 billion active parameters designed to run complex agentic AI systems at
+            scale.
+      warnings: []
+- source:
+    id: nvidia-card
+    vendor: nvidia
+    kind: model_card
+    url: >-
+      https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16/raw/2dc98e2afe4face0e4ce40972a915c45368bd34a/README.md
+    format: markdown
+    records:
+    - huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+  checked_at: "2026-10-16T09:15:28.294209761Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-nvidia:cade76c064eda90d4f53e12614f45816ae6cfe43dacc8a9410abcc2fc7a17e59
+      source: official-nvidia
+      url: >-
+        https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16/raw/2dc98e2afe4face0e4ce40972a915c45368bd34a/README.md
+      retrieved_at: "2026-10-16T09:08:56.617308615Z"
+      sha256: cade76c064eda90d4f53e12614f45816ae6cfe43dacc8a9410abcc2fc7a17e59
+    content_type: text/plain; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        evidence:
+          locator: markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > h1:nth-child(1)
+          excerpt: NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+      published_at: null
+      canonical_url: null
+      links:
+      - url: https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b
+        label: ""
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2)
+            > a:nth-child(1)@href
+          excerpt: https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b
+      - url: >-
+          https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Super-Technical-Report.pdf
+        label: ""
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2)
+            > a:nth-child(2)@href
+          excerpt: >-
+            https://research.nvidia.com/labs/nemotron/files/NVIDIA-Nemotron-3-Super-Technical-Report.pdf
+      - url: https://huggingface.co/collections/nvidia/nemotron-pre-training-datasets
+        label: ""
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2)
+            > a:nth-child(3)@href
+          excerpt: https://huggingface.co/collections/nvidia/nemotron-pre-training-datasets
+      - url: https://huggingface.co/collections/nvidia/nemotron-post-training-v3
+        label: ""
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > div:nth-child(2)
+            > a:nth-child(4)@href
+          excerpt: https://huggingface.co/collections/nvidia/nemotron-post-training-v3
+      - url: >-
+          https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/
+        label: ""
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4)
+            > a:nth-child(1)@href
+          excerpt: >-
+            https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/
+      - url: https://huggingface.co/nvidia/Nemotron-3-Super-120B-A12B-BF16-MTPv2
+        label: checkpoint
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(7) > tbody:nth-child(2) > tr:nth-child(8) > td:nth-child(2) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/nvidia/Nemotron-3-Super-120B-A12B-BF16-MTPv2
+      - url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4
+        label: NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            blockquote:nth-child(11) > p:nth-child(1) > em:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4
+      - url: >-
+          https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/
+        label: NVIDIA Software License Agreement
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(26) >
+            a:nth-child(2)@href
+          excerpt: >-
+            https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/
+      - url: >-
+          https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/
+        label: Product-Specific Terms for AI Products
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(26) >
+            a:nth-child(3)@href
+          excerpt: >-
+            https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/
+      - url: https://github.com/NVIDIA-NeMo/Evaluator
+        label: Nemo Evaluator SDK
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(29) >
+            a:nth-child(1)@href
+          excerpt: https://github.com/NVIDIA-NeMo/Evaluator
+      - url: https://github.com/NVIDIA-NeMo/Skills
+        label: Nemo Skills Harness
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(29) >
+            a:nth-child(2)@href
+          excerpt: https://github.com/NVIDIA-NeMo/Skills
+      - url: >-
+          https://github.com/NVIDIA-NeMo/Evaluator/tree/main/packages/nemo-evaluator-launcher/examples/nemotron/nemotron-3-super
+        label: Nemo Evaluator SDK configs folder
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(29) >
+            a:nth-child(3)@href
+          excerpt: >-
+            https://github.com/NVIDIA-NeMo/Evaluator/tree/main/packages/nemo-evaluator-launcher/examples/nemotron/nemotron-3-super
+      - url: >-
+          https://github.com/NVIDIA-NeMo/Evaluator/blob/main/packages/nemo-evaluator-launcher/examples/nemotron/nemotron-3-super/reproducibility.md
+        label: reproducibility tutorial for Nemotron 3 Super
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(29) >
+            a:nth-child(4)@href
+          excerpt: >-
+            https://github.com/NVIDIA-NeMo/Evaluator/blob/main/packages/nemo-evaluator-launcher/examples/nemotron/nemotron-3-super/reproducibility.md
+      - url: https://huggingface.co/collections/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        label: Hugging Face
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(35) >
+            a:nth-child(1)@href
+          excerpt: https://huggingface.co/collections/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+      - url: https://huggingface.co/collections/nvidia/nvidia-nemotron-v3
+        label: NVIDIA Nemotron 3 model family on Hugging Face
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(37)
+            > li:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/collections/nvidia/nvidia-nemotron-v3
+      - url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-Base-BF16
+        label: NVIDIA-Nemotron-3-Super-120B-A12B-Base-BF16
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(44)
+            > li:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-Base-BF16
+      - url: >-
+          https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16#training-and-evaluation-datasets
+        label: Training and Evaluation Datasets
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(44)
+            > li:nth-child(1) > a:nth-child(2)@href
+          excerpt: >-
+            https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16#training-and-evaluation-datasets
+      - url: https://github.com/NVIDIA/Megatron-LM
+        label: Megatron-LM
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(44)
+            > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: https://github.com/NVIDIA/Megatron-LM
+      - url: https://github.com/NVIDIA-NeMo/DataDesigner
+        label: Data Designer
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(46)
+            > li:nth-child(1) > a:nth-child(3)@href
+          excerpt: https://github.com/NVIDIA-NeMo/DataDesigner
+      - url: https://github.com/NVIDIA-NeMo/Gym
+        label: NeMo Gym
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(48)
+            > li:nth-child(1) > a:nth-child(2)@href
+          excerpt: https://github.com/NVIDIA-NeMo/Gym
+      - url: https://github.com/NVIDIA-NeMo/RL
+        label: NeMo RL
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(48)
+            > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: https://github.com/NVIDIA-NeMo/RL
+      - url: https://github.com/NVIDIA-NeMo/Nemotron
+        label: NVIDIA Nemotron Developer Repository
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(50) >
+            a:nth-child(1)@href
+          excerpt: https://github.com/NVIDIA-NeMo/Nemotron
+      - url: >-
+          https://github.com/NVIDIA-NeMo/Nemotron/tree/main/usage-cookbook/Nemotron-3-Super/AdvancedDeploymentGuide
+        label: this resource
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(66) >
+            a:nth-child(1)@href
+          excerpt: >-
+            https://github.com/NVIDIA-NeMo/Nemotron/tree/main/usage-cookbook/Nemotron-3-Super/AdvancedDeploymentGuide
+      - url: >-
+          https://github.com/NVIDIA-NeMo/Nemotron/blob/main/usage-cookbook/Nemotron-3-Super/vllm_cookbook.ipynb
+        label: this cookbook
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(69) >
+            a:nth-child(1)@href
+          excerpt: >-
+            https://github.com/NVIDIA-NeMo/Nemotron/blob/main/usage-cookbook/Nemotron-3-Super/vllm_cookbook.ipynb
+      - url: >-
+          https://github.com/NVIDIA-NeMo/Nemotron/blob/main/usage-cookbook/Nemotron-3-Super/sglang_cookbook.ipynb
+        label: this cookbook
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(78) >
+            a:nth-child(1)@href
+          excerpt: >-
+            https://github.com/NVIDIA-NeMo/Nemotron/blob/main/usage-cookbook/Nemotron-3-Super/sglang_cookbook.ipynb
+      - url: >-
+          https://github.com/NVIDIA-NeMo/Nemotron/blob/main/usage-cookbook/Nemotron-3-Super/trtllm_cookbook.ipynb
+        label: this cookbook
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(86) >
+            a:nth-child(1)@href
+          excerpt: >-
+            https://github.com/NVIDIA-NeMo/Nemotron/blob/main/usage-cookbook/Nemotron-3-Super/trtllm_cookbook.ipynb
+      - url: >-
+          https://github.com/NVIDIA-NeMo/Nemotron/tree/main/usage-cookbook/Nemotron-3-Super/OpenScaffoldingResources
+        label: this resource
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(105)
+            > a:nth-child(1)@href
+          excerpt: >-
+            https://github.com/NVIDIA-NeMo/Nemotron/tree/main/usage-cookbook/Nemotron-3-Super/OpenScaffoldingResources
+      - url: https://huggingface.co/datasets/nvidia/Nemotron-Cascade-RL-SWE
+        label: Nemotron-Cascade-RL-SWE
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(6) > tbody:nth-child(2) > tr:nth-child(55) >
+            td:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/datasets/nvidia/Nemotron-Cascade-RL-SWE
+      - url: https://huggingface.co/datasets/nvidia/Nemotron-Personas-USA
+        label: Nemotron Personas
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(1) >
+            td:nth-child(4) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/datasets/nvidia/Nemotron-Personas-USA
+      - url: https://huggingface.co/datasets/nvidia/Nemotron-PrismMath
+        label: Nemotron-PrismMath
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(12) >
+            td:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/datasets/nvidia/Nemotron-PrismMath
+      - url: https://huggingface.co/datasets/nvidia/Nemotron-MIND
+        label: Nemotron-MIND
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(14) >
+            td:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/datasets/nvidia/Nemotron-MIND
+      - url: https://huggingface.co/nvidia/Mistral-NeMo-12B-Instruct
+        label: Mistral-NeMo-12B-Instruct
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(22) >
+            td:nth-child(5) > a:nth-child(2)@href
+          excerpt: https://huggingface.co/nvidia/Mistral-NeMo-12B-Instruct
+      - url: https://huggingface.co/nvidia/Nemotron-4-340B-Instruct
+        label: Nemotron-4-340B-Instruct
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(25) >
+            td:nth-child(5) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/nvidia/Nemotron-4-340B-Instruct
+      - url: https://huggingface.co/datasets/nvidia/OpenCodeReasoning
+        label: OpenCodeReasoning
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(34) >
+            td:nth-child(4) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/datasets/nvidia/OpenCodeReasoning
+      - url: https://huggingface.co/datasets/nvidia/Aegis-AI-Content-Safety-Dataset-2.0
+        label: Nemotron Content Safety Dataset V2
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(39) >
+            td:nth-child(4) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/datasets/nvidia/Aegis-AI-Content-Safety-Dataset-2.0
+      - url: https://huggingface.co/datasets/nvidia/OpenMathReasoning
+        label: OpenMathReasoning
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(46) >
+            td:nth-child(4) > a:nth-child(3)@href
+          excerpt: https://huggingface.co/datasets/nvidia/OpenMathReasoning
+      - url: https://huggingface.co/datasets/nvidia/HelpSteer2
+        label: HelpSteer2
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(58) >
+            td:nth-child(4) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/datasets/nvidia/HelpSteer2
+      - url: https://huggingface.co/datasets/nvidia/HelpSteer3
+        label: HelpSteer3
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(58) >
+            td:nth-child(4) > a:nth-child(2)@href
+          excerpt: https://huggingface.co/datasets/nvidia/HelpSteer3
+      - url: https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-9B-v2
+        label: NVIDIA-Nemotron-Nano-9B-v2
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            details:nth-child(129) > table:nth-child(17) > tbody:nth-child(2) > tr:nth-child(70) >
+            td:nth-child(5) > a:nth-child(9)@href
+          excerpt: https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-9B-v2
+      - url: >-
+          https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16/blob/2dc98e2afe4face0e4ce40972a915c45368bd34a/safety.md
+        label: Safety
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(136)
+            > a:nth-child(1)@href
+          excerpt: ./safety.md
+      claims:
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: active_parameter_count
+        value: 12000000000
+        unit: parameters
+        precision: approximate
+        conditions:
+        - Advertised rounded active parameter count.
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(7) > tbody:nth-child(2) > tr:nth-child(1)
+          excerpt: Total Parameters 120B (12B active)
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: context_window
+        value: Up to 1M tokens
+        unit: tokens
+        precision: approximate
+        conditions:
+        - >-
+          Model card uses abbreviated units; serving configuration may set a lower
+          default.
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(7) > tbody:nth-child(2) > tr:nth-child(3)
+          excerpt: Context Length Up to 1M tokens
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: input_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(52)
+            > li:nth-child(1)
+          excerpt: "Input Type(s): Text"
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: license
+        value: other
+        precision: exact
+        evidence:
+          locator: markdown-bytes:31..45:frontmatter/license
+          excerpt: "license: other"
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: license_name
+        value: NVIDIA Nemotron Open Model License
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(7) > tbody:nth-child(2) > tr:nth-child(9)
+          excerpt: License NVIDIA Nemotron Open Model License
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: output_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(54)
+            > li:nth-child(1)
+          excerpt: "Output Type(s): Text"
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: parameter_count
+        value: 120000000000
+        unit: parameters
+        precision: approximate
+        conditions:
+        - Advertised rounded total parameter count.
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(7) > tbody:nth-child(2) > tr:nth-child(1)
+          excerpt: Total Parameters 120B (12B active)
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: release_date
+        value: "2026-03-11"
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(7) > tbody:nth-child(2) > tr:nth-child(10)
+          excerpt: Release Date March 11, 2026
+      warnings: []
+- source:
+    id: nvidia-page
+    vendor: nvidia
+    kind: model_page
+    url: https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b/modelcard
+    format: html
+    records:
+    - modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+    - huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+  checked_at: "2026-10-16T09:15:28.548669357Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-nvidia:0a105bb431af15c6a4e5b11cbfe4a279872faf6df13c17d6f1825abc77b44443
+      source: official-nvidia
+      url: https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b/modelcard
+      retrieved_at: "2026-10-16T09:15:30.742640683Z"
+      sha256: 0a105bb431af15c6a4e5b11cbfe4a279872faf6df13c17d6f1825abc77b44443
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: nemotron-3-super-120b-a12b Model by NVIDIA | NVIDIA NIM
+        evidence:
+          locator: css:html:nth-child(1) > body:nth-child(2) > meta:nth-child(55)@content
+          excerpt: nemotron-3-super-120b-a12b Model by NVIDIA | NVIDIA NIM
+      published_at: null
+      canonical_url: null
+      links: []
+      claims:
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: active_parameter_count
+        value: 12000000000
+        unit: parameters
+        precision: approximate
+        conditions:
+        - Advertised rounded active parameter count.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1)
+          excerpt: Total Parameters 120B (12B active)
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: context_window
+        value: Up to 1M tokens
+        unit: tokens
+        precision: approximate
+        conditions:
+        - >-
+          Model card uses abbreviated units; serving configuration may set a lower
+          default.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3)
+          excerpt: Context Length Up to 1M tokens
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: input_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            ul:nth-child(46) > li:nth-child(1)
+          excerpt: "Input Type(s): Text"
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: license_name
+        value: NVIDIA Nemotron Open Model License
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(8)
+          excerpt: License NVIDIA Nemotron Open Model License
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: output_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            ul:nth-child(48) > li:nth-child(1)
+          excerpt: "Output Type(s): Text"
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: parameter_count
+        value: 120000000000
+        unit: parameters
+        precision: approximate
+        conditions:
+        - Advertised rounded total parameter count.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1)
+          excerpt: Total Parameters 120B (12B active)
+      - record: huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+        property: release_date
+        value: "2026-03-11"
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(9)
+          excerpt: Release Date March 11, 2026
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: active_parameter_count
+        value: 12000000000
+        unit: parameters
+        precision: approximate
+        conditions:
+        - Advertised rounded active parameter count.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1)
+          excerpt: Total Parameters 120B (12B active)
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: context_window
+        value: Up to 1M tokens
+        unit: tokens
+        precision: approximate
+        conditions:
+        - >-
+          Model card uses abbreviated units; serving configuration may set a lower
+          default.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(3)
+          excerpt: Context Length Up to 1M tokens
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: input_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            ul:nth-child(46) > li:nth-child(1)
+          excerpt: "Input Type(s): Text"
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: license_name
+        value: NVIDIA Nemotron Open Model License
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(8)
+          excerpt: License NVIDIA Nemotron Open Model License
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: output_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            ul:nth-child(48) > li:nth-child(1)
+          excerpt: "Output Type(s): Text"
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: parameter_count
+        value: 120000000000
+        unit: parameters
+        precision: approximate
+        conditions:
+        - Advertised rounded total parameter count.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1)
+          excerpt: Total Parameters 120B (12B active)
+      - record: modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+        property: release_date
+        value: "2026-03-11"
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(75) >
+            div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) >
+            div:nth-child(3) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(9)
+          excerpt: Release Date March 11, 2026
+      warnings: []
+- source:
+    id: openai-gpt41-blog
+    vendor: openai
+    kind: release_blog
+    url: https://openai.com/index/gpt-4-1/
+    format: html
+    records:
+    - modelsdev:model:openai/gpt-4.1
+  checked_at: "2026-10-16T09:15:08.732555602Z"
+  error: HTTP 403 Forbidden for https://openai.com/index/gpt-4-1/
+- source:
+    id: openai-gpt41-model
+    vendor: openai
+    kind: model_page
+    url: https://developers.openai.com/api/docs/models/gpt-4.1
+    format: html
+    records:
+    - modelsdev:model:openai/gpt-4.1
+  checked_at: "2026-10-16T09:15:09.687929878Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-openai:57165a1aca630750939fa9443231dfec3f7b81d054bc19eca8131603ee71331d
+      source: official-openai
+      url: https://developers.openai.com/api/docs/models/gpt-4.1
+      retrieved_at: "2026-10-16T09:15:11.080063626Z"
+      sha256: 57165a1aca630750939fa9443231dfec3f7b81d054bc19eca8131603ee71331d
+    content_type: text/html
+    extraction:
+      extractor_version: 1
+      title:
+        value: GPT-4.1 Model | OpenAI API
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(15)@content
+          excerpt: GPT-4.1 Model | OpenAI API
+      published_at: null
+      canonical_url:
+        value: https://developers.openai.com/api/docs/models/gpt-4.1
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(9)@href
+          excerpt: https://developers.openai.com/api/docs/models/gpt-4.1
+      links:
+      - url: https://developers.openai.com/api/docs/models
+        label: Models
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(10) >
+            div:nth-child(1) > main:nth-child(3) > astro-island:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /api/docs/models
+      - url: https://developers.openai.com/api/docs/models/gpt-5
+        label: GPT-5
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(10) >
+            div:nth-child(1) > main:nth-child(3) > astro-island:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) >
+            div:nth-child(1) > p:nth-child(2) > a:nth-child(1)@href
+          excerpt: /api/docs/models/gpt-5
+      - url: https://developers.openai.com/api/docs/pricing
+        label: pricing page
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(10) >
+            div:nth-child(1) > main:nth-child(3) > astro-island:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(2) > div:nth-child(5) > div:nth-child(2) >
+            div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /api/docs/pricing
+      claims:
+      - record: modelsdev:model:openai/gpt-4.1
+        property: context_window
+        value: 1047576
+        unit: tokens
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(10) >
+            div:nth-child(1) > main:nth-child(3) > astro-island:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(2) >
+            div:nth-child(1) > div:nth-child(2)
+          excerpt: 1,047,576 context window
+      - record: modelsdev:model:openai/gpt-4.1
+        property: input_modalities
+        value:
+        - text
+        - image
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(10) >
+            div:nth-child(1) > main:nth-child(3) > astro-island:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(2) > div:nth-child(7)
+          excerpt: >-
+            Modalities Text Input and output Image Input only Audio Not supported Video Not
+            supported
+      - record: modelsdev:model:openai/gpt-4.1
+        property: knowledge_cutoff
+        value: "2024-06-01"
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(10) >
+            div:nth-child(1) > main:nth-child(3) > astro-island:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(2) >
+            div:nth-child(3) > div:nth-child(2)
+          excerpt: Jun 01, 2024 knowledge cutoff
+      - record: modelsdev:model:openai/gpt-4.1
+        property: max_output_tokens
+        value: 32768
+        unit: tokens
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(10) >
+            div:nth-child(1) > main:nth-child(3) > astro-island:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(2) > div:nth-child(3) > div:nth-child(2) >
+            div:nth-child(2) > div:nth-child(2)
+          excerpt: 32,768 max output tokens
+      - record: modelsdev:model:openai/gpt-4.1
+        property: output_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(10) >
+            div:nth-child(1) > main:nth-child(3) > astro-island:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(2) > div:nth-child(7)
+          excerpt: >-
+            Modalities Text Input and output Image Input only Audio Not supported Video Not
+            supported
+      warnings: []
+- source:
+    id: qwen-ai-blog
+    vendor: qwen
+    kind: release_blog
+    url: https://qwen.ai/blog?id=qwen3
+    format: html
+    records:
+    - huggingface:model:Qwen/Qwen3-8B
+  checked_at: "2026-10-16T09:15:26.905342031Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-qwen:b3b523f2d528eba796fc57bf85f3939f4cf6b0f12dde2405dc69b4349c5150bf
+      source: official-qwen
+      url: https://qwen.ai/blog?id=qwen3
+      retrieved_at: "2026-10-16T09:15:27.157415273Z"
+      sha256: b3b523f2d528eba796fc57bf85f3939f4cf6b0f12dde2405dc69b4349c5150bf
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Qwen
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(16)@content
+          excerpt: Qwen
+      published_at: null
+      canonical_url: null
+      links: []
+      claims: []
+      warnings:
+      - >-
+        No model field extracted; page metadata and links do not establish model
+        capabilities.
+      - >-
+        The Qwen URL returned an application shell; model facts require the linked
+        official static release page.
+- source:
+    id: qwen-blog
+    vendor: qwen
+    kind: release_blog
+    url: https://qwenlm.github.io/blog/qwen3/
+    format: html
+    records:
+    - huggingface:model:Qwen/Qwen3-8B
+  checked_at: "2026-10-16T09:15:25.984713865Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-qwen:e94e989ce505fe3f83bf891f70a7e00d1ae3e7b560dd99fdd0d6249d933d6ace
+      source: official-qwen
+      url: https://qwenlm.github.io/blog/qwen3/
+      retrieved_at: "2026-10-16T09:08:53.930514004Z"
+      sha256: e94e989ce505fe3f83bf891f70a7e00d1ae3e7b560dd99fdd0d6249d933d6ace
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: "Qwen3: Think Deeper, Act Faster"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(24)@content
+          excerpt: "Qwen3: Think Deeper, Act Faster"
+      published_at:
+        value: "2025-04-29T04:00:00+08:00"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(30)@content
+          excerpt: "2025-04-29T04:00:00+08:00"
+      canonical_url:
+        value: https://qwenlm.github.io/blog/qwen3/
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(10)@href
+          excerpt: https://qwenlm.github.io/blog/qwen3/
+      links:
+      - url: https://github.com/QwenLM/Qwen3
+        label: GitHub
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(7) >
+            article:nth-child(1) > div:nth-child(1) > p:nth-child(2) > a:nth-child(2)@href
+          excerpt: https://github.com/QwenLM/Qwen3
+      - url: https://huggingface.co/collections/Qwen/qwen3-67dd247413f0e2e4f653967f
+        label: Hugging Face
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(7) >
+            article:nth-child(1) > div:nth-child(1) > p:nth-child(2) > a:nth-child(3)@href
+          excerpt: https://huggingface.co/collections/Qwen/qwen3-67dd247413f0e2e4f653967f
+      - url: https://huggingface.co/spaces/Qwen/Qwen3-Demo
+        label: DEMO
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(7) >
+            article:nth-child(1) > div:nth-child(1) > p:nth-child(2) > a:nth-child(6)@href
+          excerpt: https://huggingface.co/spaces/Qwen/Qwen3-Demo
+      - url: https://github.com/QwenLM/Qwen-Agent
+        label: Qwen-Agent
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(7) >
+            article:nth-child(1) > div:nth-child(1) > p:nth-child(52) > a:nth-child(1)@href
+          excerpt: https://github.com/QwenLM/Qwen-Agent
+      claims:
+      - record: huggingface:model:Qwen/Qwen3-8B
+        property: context_window
+        value: 128K
+        unit: tokens
+        precision: approximate
+        conditions:
+        - Release table uses abbreviated units; native context is not specified.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(7) >
+            article:nth-child(1) > div:nth-child(1) > table:nth-child(8) > tbody:nth-child(2) >
+            tr:nth-child(4) > td:nth-child(5)
+          excerpt: 128K
+      warnings: []
+- source:
+    id: qwen-card
+    vendor: qwen
+    kind: model_card
+    url: >-
+      https://huggingface.co/Qwen/Qwen3-8B/raw/b968826d9c46dd6066d109eabc6255188de91218/README.md
+    format: markdown
+    records:
+    - huggingface:model:Qwen/Qwen3-8B
+  checked_at: "2026-10-16T09:15:26.658623424Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-qwen:0f36caaff9c2516411a7738db384606263ba653c1e63e61d72f511606164d5a6
+      source: official-qwen
+      url: >-
+        https://huggingface.co/Qwen/Qwen3-8B/raw/b968826d9c46dd6066d109eabc6255188de91218/README.md
+      retrieved_at: "2026-10-16T09:08:54.295522657Z"
+      sha256: 0f36caaff9c2516411a7738db384606263ba653c1e63e61d72f511606164d5a6
+    content_type: text/plain; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Qwen3-8B
+        evidence:
+          locator: markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > h1:nth-child(1)
+          excerpt: Qwen3-8B
+      published_at: null
+      canonical_url: null
+      links:
+      - url: https://qwenlm.github.io/blog/qwen3/
+        label: blog
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(9) >
+            a:nth-child(1)@href
+          excerpt: https://qwenlm.github.io/blog/qwen3/
+      - url: https://github.com/QwenLM/Qwen3
+        label: GitHub
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(9) >
+            a:nth-child(2)@href
+          excerpt: https://github.com/QwenLM/Qwen3
+      - url: https://github.com/QwenLM/Qwen-Agent
+        label: Qwen-Agent
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(37) >
+            a:nth-child(1)@href
+          excerpt: https://github.com/QwenLM/Qwen-Agent
+      claims:
+      - record: huggingface:model:Qwen/Qwen3-8B
+        property: context_window
+        value: 32768
+        unit: tokens
+        precision: exact
+        conditions:
+        - Native context.
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(8) >
+            li:nth-child(7)
+          excerpt: "Context Length: 32,768 natively and 131,072 tokens with YaRN ."
+      - record: huggingface:model:Qwen/Qwen3-8B
+        property: context_window
+        value: 131072
+        unit: tokens
+        precision: exact
+        conditions:
+        - YaRN context extension required.
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(8) >
+            li:nth-child(7)
+          excerpt: "Context Length: 32,768 natively and 131,072 tokens with YaRN ."
+      - record: huggingface:model:Qwen/Qwen3-8B
+        property: license
+        value: apache-2.0
+        precision: exact
+        evidence:
+          locator: markdown-bytes:31..50:frontmatter/license
+          excerpt: "license: apache-2.0"
+      - record: huggingface:model:Qwen/Qwen3-8B
+        property: parameter_count
+        value: 8200000000
+        unit: parameters
+        precision: approximate
+        conditions:
+        - Advertised rounded total parameter count.
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(8) >
+            li:nth-child(3)
+          excerpt: "Number of Parameters: 8.2B"
+      warnings: []
+- source:
+    id: west-cohere-blog
+    vendor: cohere
+    kind: release_blog
+    url: https://cohere.com/blog/command-a
+    format: html
+    records:
+    - modelsdev:model:cohere/command-a-03-2025
+  checked_at: "2026-10-16T09:15:32.527173927Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-cohere:11e7e2081a0c01a95da252431e63b5a8e6369fe83000e5bcbfd8693e6a8e31dc
+      source: official-cohere
+      url: https://cohere.com/blog/command-a
+      retrieved_at: "2026-10-16T09:15:34.961232104Z"
+      sha256: 11e7e2081a0c01a95da252431e63b5a8e6369fe83000e5bcbfd8693e6a8e31dc
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: "Introducing Command A: Max performance, minimal compute | Cohere Blog"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(70)@content
+          excerpt: "Introducing Command A: Max performance, minimal compute | Cohere Blog"
+      published_at:
+        value: "2025-03-13T08:55:21.000-04:00"
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(3) > div:nth-child(7)
+            > main:nth-child(1) > script:nth-child(1)#json-pointer=/datePublished
+          excerpt: "2025-03-13T08:55:21.000-04:00"
+      canonical_url:
+        value: https://cohere.com/blog/command-a
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(69)@href
+          excerpt: https://cohere.com/blog/command-a
+      links:
+      - url: https://cohere.com/blog/north-eap
+        label: North‬‭
+        evidence:
+          locator: >-
+            embedded-rsc:script:self.__next_f.push:record33:css:html:nth-child(1) >
+            body:nth-child(2) > p:nth-child(19) > a:nth-child(1)@href
+          excerpt: https://cohere.com/blog/north-eap
+      - url: https://huggingface.co/CohereForAI/c4ai-command-a-03-2025
+        label: Hugging Face
+        evidence:
+          locator: >-
+            embedded-rsc:script:self.__next_f.push:record33:css:html:nth-child(1) >
+            body:nth-child(2) > p:nth-child(23) > a:nth-child(2)@href
+          excerpt: https://huggingface.co/CohereForAI/c4ai-command-a-03-2025
+      - url: https://cohere.com/contact-sales
+        label: sales team
+        evidence:
+          locator: >-
+            embedded-rsc:script:self.__next_f.push:record33:css:html:nth-child(1) >
+            body:nth-child(2) > p:nth-child(23) > a:nth-child(3)@href
+          excerpt: https://cohere.com/contact-sales
+      claims:
+      - record: modelsdev:model:cohere/command-a-03-2025
+        property: context_window
+        value: 256000
+        unit: tokens
+        precision: approximate
+        evidence:
+          locator: >-
+            embedded-rsc:script:self.__next_f.push:record33:css:html:nth-child(1) >
+            body:nth-child(2) > p:nth-child(11)
+          excerpt: >-
+            We designed Command A with business needs in mind. Its 256k context length (2x
+            most leading models) can handle much longer enterprise documents. Other key
+            features include Cohere’s advanced retrieval-augmented generation (RAG) with verifiab
+      warnings: []
+- source:
+    id: west-cohere-doc
+    vendor: cohere
+    kind: model_page
+    url: https://docs.cohere.com/docs/command-a
+    format: html
+    records:
+    - modelsdev:model:cohere/command-a-03-2025
+  checked_at: "2026-10-16T09:15:34.972180118Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-cohere:5177a9473ba4aafe20b430c7aa775b5002c6e75b41752df4e658ef3f238fb8bc
+      source: official-cohere
+      url: https://docs.cohere.com/docs/command-a
+      retrieved_at: "2026-10-16T09:09:05.122275741Z"
+      sha256: 5177a9473ba4aafe20b430c7aa775b5002c6e75b41752df4e658ef3f238fb8bc
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Cohere Documentation
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(14)@content
+          excerpt: Cohere Documentation
+      published_at: null
+      canonical_url:
+        value: https://docs.cohere.com/docs/command-a
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(12)@href
+          excerpt: https://docs.cohere.com/docs/command-a
+      links:
+      - url: https://docs.cohere.com/docs/command-a-plus
+        label: Command
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(8) >
+            main:nth-child(4) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > article:nth-child(2)
+            > header:nth-child(1) > astro-island:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > span:nth-child(1) > a:nth-child(3)@href
+          excerpt: /docs/command-a-plus
+      - url: https://docs.cohere.com/docs/tool-use
+        label: tool use
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(8) >
+            main:nth-child(4) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > article:nth-child(2)
+            > div:nth-child(2) > astro-island:nth-child(2) > div:nth-child(1) >
+            ul:nth-child(6) > li:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://docs.cohere.com/docs/tool-use
+      - url: https://docs.cohere.com/docs/multi-step-tool-use
+        label: agents
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(8) >
+            main:nth-child(4) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > article:nth-child(2)
+            > div:nth-child(2) > astro-island:nth-child(2) > div:nth-child(1) >
+            ul:nth-child(6) > li:nth-child(2) > a:nth-child(1)@href
+          excerpt: https://docs.cohere.com/docs/multi-step-tool-use
+      - url: https://docs.cohere.com/docs/retrieval-augmented-generation-rag
+        label: Retrieval Augmented Generation (RAG)
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(8) >
+            main:nth-child(4) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > article:nth-child(2)
+            > div:nth-child(2) > astro-island:nth-child(2) > div:nth-child(1) >
+            ul:nth-child(6) > li:nth-child(3) > a:nth-child(1)@href
+          excerpt: https://docs.cohere.com/docs/retrieval-augmented-generation-rag
+      - url: https://docs.cohere.com/docs/system-instructions
+        label: system instructions
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(8) >
+            main:nth-child(4) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > article:nth-child(2)
+            > div:nth-child(2) > astro-island:nth-child(2) > div:nth-child(1) >
+            p:nth-child(8) > a:nth-child(1)@href
+          excerpt: https://docs.cohere.com/docs/system-instructions
+      claims:
+      - record: modelsdev:model:cohere/command-a-03-2025
+        property: context_window
+        value: 256000
+        unit: tokens
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(8) >
+            main:nth-child(4) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > article:nth-child(2)
+            > div:nth-child(2) > astro-island:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > ul:nth-child(2) > div:nth-child(1)
+          excerpt: "Context Window: 256,000 tokens"
+      - record: modelsdev:model:cohere/command-a-03-2025
+        property: max_output_tokens
+        value: 8000
+        unit: tokens
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(8) >
+            main:nth-child(4) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > article:nth-child(2)
+            > div:nth-child(2) > astro-island:nth-child(2) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > ul:nth-child(2) > div:nth-child(2)
+          excerpt: "Max Output Tokens: 8,000 tokens"
+      - record: modelsdev:model:cohere/command-a-03-2025
+        property: parameter_count
+        value: 111000000000
+        unit: parameters
+        precision: approximate
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(8) >
+            main:nth-child(4) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > article:nth-child(2)
+            > div:nth-child(2) > astro-island:nth-child(2) > div:nth-child(1) >
+            p:nth-child(3)
+          excerpt: >-
+            Command A is Cohere’s most performant model to date, excelling at real world
+            enterprise tasks including tool use, retrieval augmented generation (RAG), agents,
+            and multilingual use cases. At 111B parameters, Command A has a context length o
+      warnings: []
+- source:
+    id: west-microsoft-blog
+    vendor: microsoft
+    kind: release_blog
+    url: >-
+      https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-phi-4-microsoft%E2%80%99s-newest-small-language-model-specializing-in-comple/4357090
+    format: html
+    records:
+    - huggingface:model:microsoft/phi-4
+  checked_at: "2026-10-16T09:15:35.969721442Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: >-
+        official-microsoft:b918ef2d4cd16d71a224797f0b83ce6003a6980eedd8f886449f591ac0c7d7e8
+      source: official-microsoft
+      url: >-
+        https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-phi-4-microsoft%E2%80%99s-newest-small-language-model-specializing-in-comple/4357090
+      retrieved_at: "2026-10-16T09:15:41.761001099Z"
+      sha256: b918ef2d4cd16d71a224797f0b83ce6003a6980eedd8f886449f591ac0c7d7e8
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: "Introducing Phi-4: Microsoft’s Newest Small Language Model Specializing in Complex Reasoning | Microsoft Community Hub"
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(10)@content
+          excerpt: "Introducing Phi-4: Microsoft’s Newest Small Language Model Specializing in Complex Reasoning | Microsoft Community Hub"
+      published_at:
+        value: 12/13/2024, 12:59:44 AM
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > head:nth-child(1) >
+            script:nth-child(21)#json-pointer=/datePublished
+          excerpt: 12/13/2024, 12:59:44 AM
+      canonical_url:
+        value: >-
+          https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-phi-4-microsoft%e2%80%99s-newest-small-language-model-specializing-in-comple/4357090
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(19)@href
+          excerpt: >-
+            https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-phi-4-microsoft%e2%80%99s-newest-small-language-model-specializing-in-comple/4357090
+      links:
+      - url: https://azure.microsoft.com/en-us/products/phi/
+        label: Phi-4
+        evidence:
+          locator: >-
+            embedded-json:script#__NEXT_DATA__:/props/pageProps/apolloState/BlogTopicMessage:message:4357090/body:css:html:nth-child(1) > body:nth-child(2) > p:nth-child(1) > a:nth-child(2)@href
+          excerpt: https://azure.microsoft.com/en-us/products/phi/
+      - url: https://huggingface.co/collections/microsoft/phi-4-677e9380e514feb5577a40e4
+        label: Hugging Face
+        evidence:
+          locator: >-
+            embedded-json:script#__NEXT_DATA__:/props/pageProps/apolloState/BlogTopicMessage:message:4357090/body:css:html:nth-child(1) > body:nth-child(2) > p:nth-child(1) > a:nth-child(6)@href
+          excerpt: https://huggingface.co/collections/microsoft/phi-4-677e9380e514feb5577a40e4
+      - url: >-
+          https://learn.microsoft.com/en-us/azure/ai-studio/how-to/evaluate-generative-ai-app
+        label: Azure AI evaluations in AI Foundry
+        evidence:
+          locator: >-
+            embedded-json:script#__NEXT_DATA__:/props/pageProps/apolloState/BlogTopicMessage:message:4357090/body:css:html:nth-child(1) > body:nth-child(2) > p:nth-child(11) > span:nth-child(1) > a:nth-child(2)@href
+          excerpt: >-
+            https://learn.microsoft.com/en-us/azure/ai-studio/how-to/evaluate-generative-ai-app
+      - url: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/overview
+        label: Azure AI Content Safety
+        evidence:
+          locator: >-
+            embedded-json:script#__NEXT_DATA__:/props/pageProps/apolloState/BlogTopicMessage:message:4357090/body:css:html:nth-child(1) > body:nth-child(2) > p:nth-child(12) > span:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://learn.microsoft.com/en-us/azure/ai-services/content-safety/overview
+      claims:
+      - record: huggingface:model:microsoft/phi-4
+        property: parameter_count
+        value: 14000000000
+        unit: parameters
+        precision: approximate
+        evidence:
+          locator: >-
+            embedded-json:script#__NEXT_DATA__:/props/pageProps/apolloState/BlogTopicMessage:message:4357090/body:css:html:nth-child(1) > body:nth-child(2) > p:nth-child(1)
+          excerpt: >-
+            Today we are introducing Phi-4 , our 14B parameter state-of-the-art small
+            language model (SLM) that excels at complex reasoning in areas such as math, in
+            addition to conventional language processing. Phi-4 is the latest member of our Phi fa
+      warnings: []
+- source:
+    id: west-microsoft-card
+    vendor: microsoft
+    kind: model_card
+    url: >-
+      https://huggingface.co/microsoft/phi-4/raw/2db69c1c3e91a05d2c64a3185acfbaf36f744e25/README.md
+    format: markdown
+    records:
+    - huggingface:model:microsoft/phi-4
+  checked_at: "2026-10-16T09:15:41.776732141Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: >-
+        official-microsoft:4cc56faa6a5bcbde6227789b2ef9aedfde481ca660c8a4b686703aae19b00011
+      source: official-microsoft
+      url: >-
+        https://huggingface.co/microsoft/phi-4/raw/2db69c1c3e91a05d2c64a3185acfbaf36f744e25/README.md
+      retrieved_at: "2026-10-16T09:09:12.174490991Z"
+      sha256: 4cc56faa6a5bcbde6227789b2ef9aedfde481ca660c8a4b686703aae19b00011
+    content_type: text/plain; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Phi-4 Model Card
+        evidence:
+          locator: markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > h1:nth-child(1)
+          excerpt: Phi-4 Model Card
+      published_at: null
+      canonical_url: null
+      links:
+      - url: https://azure.microsoft.com/en-us/products/ai-services/ai-content-safety
+        label: Azure AI Content Safety
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(35) >
+            a:nth-child(1)@href
+          excerpt: https://azure.microsoft.com/en-us/products/ai-services/ai-content-safety
+      claims:
+      - record: huggingface:model:microsoft/phi-4
+        property: context_window
+        value: 16000
+        unit: tokens
+        precision: approximate
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(4) > tbody:nth-child(2) > tr:nth-child(5)
+          excerpt: Context length 16K tokens
+      - record: huggingface:model:microsoft/phi-4
+        property: input_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(4) > tbody:nth-child(2) > tr:nth-child(4)
+          excerpt: Inputs Text, best suited for prompts in the chat format
+      - record: huggingface:model:microsoft/phi-4
+        property: license
+        value: mit
+        precision: exact
+        evidence:
+          locator: markdown-bytes:4..16:frontmatter/license
+          excerpt: "license: mit"
+      - record: huggingface:model:microsoft/phi-4
+        property: output_modalities
+        value:
+        - text
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(4) > tbody:nth-child(2) > tr:nth-child(9)
+          excerpt: Outputs Generated text in response to input
+      - record: huggingface:model:microsoft/phi-4
+        property: parameter_count
+        value: 14000000000
+        unit: parameters
+        precision: approximate
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(4) > tbody:nth-child(2) > tr:nth-child(3)
+          excerpt: Architecture 14B parameters, dense decoder-only Transformer model
+      - record: huggingface:model:microsoft/phi-4
+        property: release_date
+        value: "2024-12-12"
+        precision: exact
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) >
+            table:nth-child(4) > tbody:nth-child(2) > tr:nth-child(12)
+          excerpt: Release date December 12, 2024
+      warnings: []
+- source:
+    id: west-mistral-blog
+    vendor: mistral
+    kind: release_blog
+    url: https://mistral.ai/news/magistral/
+    format: html
+    records:
+    - huggingface:model:mistralai/Magistral-Small-2506
+  checked_at: "2026-10-16T09:15:30.76074926Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: >-
+        official-mistral:327eb59acf76e0cd5a67f6398400b868b9b6c70d59e2a45ad25f6130b9984c2d
+      source: official-mistral
+      url: https://mistral.ai/news/magistral/
+      retrieved_at: "2026-10-16T09:15:32.270012422Z"
+      sha256: 327eb59acf76e0cd5a67f6398400b868b9b6c70d59e2a45ad25f6130b9984c2d
+    content_type: text/html; charset=UTF-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Magistral | Mistral AI
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(9)@content
+          excerpt: Magistral | Mistral AI
+      published_at:
+        value: "2025-06-10T12:00:00.000Z"
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > head:nth-child(1) >
+            script:nth-child(24)#json-pointer=/datePublished
+          excerpt: "2025-06-10T12:00:00.000Z"
+      canonical_url:
+        value: https://mistral.ai/news/magistral/
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(4)@href
+          excerpt: https://mistral.ai/news/magistral/
+      links:
+      - url: https://mistral.ai/news/
+        label: Back to Blog
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(3) >
+            article:nth-child(1) > mistral-block-hero-post-magistral:nth-child(1) > section:nth-child(1) >
+            div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /news/
+      - url: https://mistral.ai/models
+        label: models
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(3) >
+            article:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) >
+            section:nth-child(1) > p:nth-child(28) > a:nth-child(1)@href
+          excerpt: https://mistral.ai/models
+      - url: https://huggingface.co/mistralai/Magistral-Small-2506
+        label: https://huggingface.co/mistralai/Magistral-Small-2506
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(3) >
+            article:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) >
+            section:nth-child(1) > ul:nth-child(37) > li:nth-child(1) > p:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://huggingface.co/mistralai/Magistral-Small-2506
+      - url: https://mistral.ai/contact
+        label: contact our sales team
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(3) >
+            article:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) >
+            section:nth-child(1) > p:nth-child(40) > a:nth-child(1)@href
+          excerpt: https://mistral.ai/contact
+      claims:
+      - record: huggingface:model:mistralai/Magistral-Small-2506
+        property: license
+        value: apache-2.0
+        precision: exact
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(3) >
+            article:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) >
+            section:nth-child(1) > p:nth-child(36)
+          excerpt: "Magistral Small is an open-weight model, and is available for self-deployment under the Apache 2.0 license. You can download it from:"
+      - record: huggingface:model:mistralai/Magistral-Small-2506
+        property: parameter_count
+        value: 24000000000
+        unit: parameters
+        precision: approximate
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(3) >
+            article:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) >
+            section:nth-child(1) > ul:nth-child(12) > li:nth-child(1)
+          excerpt: "We’re releasing the model in two variants: Magistral Small — a 24B parameter open-source version and Magistral Medium — a more powerful, enterprise version."
+      - record: huggingface:model:mistralai/Magistral-Small-2506
+        property: parameter_count
+        value: 24000000000
+        unit: parameters
+        precision: approximate
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > main:nth-child(3) >
+            article:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) >
+            section:nth-child(1) > ul:nth-child(12) > li:nth-child(1) > p:nth-child(1)
+          excerpt: "We’re releasing the model in two variants: Magistral Small — a 24B parameter open-source version and Magistral Medium — a more powerful, enterprise version."
+      warnings: []
+- source:
+    id: west-mistral-card
+    vendor: mistral
+    kind: model_card
+    url: >-
+      https://huggingface.co/mistralai/Magistral-Small-2506/raw/ad2fce5b4113139e1877dcadfd826c9262ad8e8c/README.md
+    format: markdown
+    records:
+    - huggingface:model:mistralai/Magistral-Small-2506
+  checked_at: "2026-10-16T09:15:32.277869794Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: >-
+        official-mistral:c7170dd18de06879c0bd9a4e04ba20c6a42aa54bb108b4b75f62ed1b182cd9ad
+      source: official-mistral
+      url: >-
+        https://huggingface.co/mistralai/Magistral-Small-2506/raw/ad2fce5b4113139e1877dcadfd826c9262ad8e8c/README.md
+      retrieved_at: "2026-10-16T09:09:01.127319494Z"
+      sha256: c7170dd18de06879c0bd9a4e04ba20c6a42aa54bb108b4b75f62ed1b182cd9ad
+    content_type: text/plain; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Magistral Small 1.0
+        evidence:
+          locator: markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > h1:nth-child(1)
+          excerpt: Magistral Small 1.0
+      published_at: null
+      canonical_url: null
+      links:
+      - url: https://mistral.ai/news/magistral/
+        label: blog post
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(4) >
+            a:nth-child(1)@href
+          excerpt: https://mistral.ai/news/magistral/
+      - url: https://github.com/mistralai/mistral-common
+        label: mistral-common
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(18) >
+            em:nth-child(1) > strong:nth-child(1) > a:nth-child(1)@href
+          excerpt: https://github.com/mistralai/mistral-common
+      - url: https://github.com/mistralai/mistral-common/releases/tag/v1.6.0
+        label: mistral_common >= 1.6.0
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(36) >
+            a:nth-child(1)@href
+          excerpt: https://github.com/mistralai/mistral-common/releases/tag/v1.6.0
+      claims:
+      - record: huggingface:model:mistralai/Magistral-Small-2506
+        property: context_window
+        value: 128000
+        unit: tokens
+        precision: approximate
+        conditions:
+        - Advertised capacity; source separately recommends a shorter context for quality
+        evidence:
+          locator: >-
+            markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > ul:nth-child(7) >
+            li:nth-child(4)
+          excerpt: "Context Window: A 128k context window, but performance might degrade past 40k . Hence we recommend setting the maximum model length to 40k."
+      - record: huggingface:model:mistralai/Magistral-Small-2506
+        property: license
+        value: apache-2.0
+        precision: exact
+        evidence:
+          locator: markdown-bytes:213..232:frontmatter/license
+          excerpt: "license: apache-2.0"
+      - record: huggingface:model:mistralai/Magistral-Small-2506
+        property: parameter_count
+        value: 24000000000
+        unit: parameters
+        precision: approximate
+        evidence:
+          locator: markdown-rendered-css:html:nth-child(1) > body:nth-child(2) > p:nth-child(2)
+          excerpt: >-
+            Building upon Mistral Small 3.1 (2503), with added reasoning capabilities ,
+            undergoing SFT from Magistral Medium traces and RL on top, it's a small, efficient
+            reasoning model with 24B parameters.
+      warnings: []
+- source:
+    id: xai-code-launch
+    vendor: xai
+    kind: release_blog
+    url: https://x.ai/news/grok-code-fast-1
+    format: html
+    records:
+    - modelsdev:model:xai/grok-code-fast-1
+  checked_at: "2026-10-16T09:15:19.998687442Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-xai:ff46df1c0b59e3caf145c35296266e9069fb602e9ee88ebac8475b23fa3aa8f9
+      source: official-xai
+      url: https://x.ai/news/grok-code-fast-1
+      retrieved_at: "2026-10-16T09:15:21.494133516Z"
+      sha256: ff46df1c0b59e3caf145c35296266e9069fb602e9ee88ebac8475b23fa3aa8f9
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Grok Code Fast 1
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(54)@content
+          excerpt: Grok Code Fast 1
+      published_at:
+        value: "2025-08-28T00:00:00Z"
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(5) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) >
+            script:nth-child(33)#json-pointer=/datePublished
+          excerpt: "2025-08-28T00:00:00Z"
+      canonical_url:
+        value: https://x.ai/news/grok-code-fast-1
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(53)@href
+          excerpt: https://x.ai/news/grok-code-fast-1
+      links:
+      - url: https://x.ai/news
+        label: Back to news
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(5) >
+            div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1)@href
+          excerpt: /news
+      - url: https://data.x.ai/2025-08-26-grok-code-fast-1-model-card.pdf
+        label: model card here
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > section:nth-child(5) >
+            div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > p:nth-child(32) > a:nth-child(2)@href
+          excerpt: https://data.x.ai/2025-08-26-grok-code-fast-1-model-card.pdf
+      claims: []
+      warnings:
+      - >-
+        No model field extracted; page metadata and links do not establish model
+        capabilities.
+- source:
+    id: xai-code-model
+    vendor: xai
+    kind: model_page
+    url: https://docs.x.ai/developers/models/grok-code-fast-1
+    format: html
+    records:
+    - modelsdev:model:xai/grok-code-fast-1
+  checked_at: "2026-10-16T09:15:21.500984947Z"
+  content:
+    snapshot:
+      schema_version: 1
+      id: official-xai:e2c46b2e7b2daf57ca9af2544a7781a2cbfc3664b5e30c5aede0d2f38f74a16b
+      source: official-xai
+      url: https://docs.x.ai/developers/models/grok-code-fast-1
+      retrieved_at: "2026-10-16T09:15:23.069442916Z"
+      sha256: e2c46b2e7b2daf57ca9af2544a7781a2cbfc3664b5e30c5aede0d2f38f74a16b
+    content_type: text/html; charset=utf-8
+    extraction:
+      extractor_version: 1
+      title:
+        value: Grok Code Fast 1 | SpaceXSI Docs
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > meta:nth-child(45)@content
+          excerpt: Grok Code Fast 1 | SpaceXSI Docs
+      published_at: null
+      canonical_url:
+        value: https://docs.x.ai/developers/models/grok-code-fast-1
+        evidence:
+          locator: css:html:nth-child(1) > head:nth-child(1) > link:nth-child(44)@href
+          excerpt: https://docs.x.ai/developers/models/grok-code-fast-1
+      links:
+      - url: https://docs.x.ai/docs/models
+        label: Models
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4) > div:nth-child(3)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > main:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)
+            > a:nth-child(1)@href
+          excerpt: /docs/models
+      - url: https://docs.x.ai/developers/models/grok-code-fast-1.md
+        label: View as Markdown
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4) > div:nth-child(3)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > main:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > a:nth-child(3)@href
+          excerpt: /developers/models/grok-code-fast-1.md
+      - url: https://docs.x.ai/developers/pricing
+        label: How does pricing work
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4) > div:nth-child(3)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > main:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) >
+            div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(1) >
+            a:nth-child(1)@href
+          excerpt: https://docs.x.ai/developers/pricing
+      - url: https://docs.x.ai/developers/pricing#tools-pricing
+        label: Tool pricing
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4) > div:nth-child(3)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > main:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) >
+            div:nth-child(2) > div:nth-child(2) > div:nth-child(4) > div:nth-child(1) >
+            a:nth-child(2)@href
+          excerpt: https://docs.x.ai/developers/pricing#tools-pricing
+      - url: https://docs.x.ai/docs/tutorial
+        label: Learn more Quickstart Create an API Key and make your first request.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4) > div:nth-child(3)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > main:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) >
+            a:nth-child(1)@href
+          excerpt: https://docs.x.ai/docs/tutorial
+      - url: https://docs.x.ai/docs/guides/function-calling
+        label: Learn more Tool use Let Grok perform actions and look up information.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4) > div:nth-child(3)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > main:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) >
+            a:nth-child(2)@href
+          excerpt: https://docs.x.ai/docs/guides/function-calling
+      - url: https://docs.x.ai/docs/guides/structured-outputs
+        label: Learn more Structured outputs Let Grok generate structured outputs.
+        evidence:
+          locator: >-
+            css:html:nth-child(1) > body:nth-child(2) > div:nth-child(4) > div:nth-child(3)
+            > div:nth-child(3) > div:nth-child(1) > div:nth-child(1) > main:nth-child(1) >
+            div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(6) >
+            a:nth-child(3)@href
+          excerpt: https://docs.x.ai/docs/guides/structured-outputs
+      claims: []
+      warnings:
+      - >-
+        No model field extracted; page metadata and links do not establish model
+        capabilities.
+      - >-
+        The model page heading no longer identifies Grok Code Fast 1; documented
+        aliases do not establish historical model capabilities.

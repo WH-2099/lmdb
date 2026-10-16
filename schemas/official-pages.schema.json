@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PageConfig",
+  "type": "object",
+  "properties": {
+    "pages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PageSource"
+      }
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "pages"
+  ],
+  "$defs": {
+    "DocumentKind": {
+      "type": "string",
+      "enum": [
+        "release_blog",
+        "model_card",
+        "model_page",
+        "documentation"
+      ]
+    },
+    "Format": {
+      "type": "string",
+      "enum": [
+        "html",
+        "markdown"
+      ]
+    },
+    "PageSource": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "$ref": "#/$defs/Format"
+        },
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/DocumentKind"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "type": "string"
+        },
+        "vendor": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "vendor",
+        "kind",
+        "url",
+        "format",
+        "records"
+      ]
+    }
+  }
+}

@@ -1,0 +1,195 @@
+# Explicit model bindings and canonical anonymous URLs.
+schema_version: 1
+pages:
+- id: openai-gpt41-blog
+  vendor: openai
+  kind: release_blog
+  url: https://openai.com/index/gpt-4-1/
+  format: html
+  records:
+  - modelsdev:model:openai/gpt-4.1
+- id: openai-gpt41-model
+  vendor: openai
+  kind: model_page
+  url: https://developers.openai.com/api/docs/models/gpt-4.1
+  format: html
+  records:
+  - modelsdev:model:openai/gpt-4.1
+- id: anthropic-claude4-blog
+  vendor: anthropic
+  kind: release_blog
+  url: https://www.anthropic.com/news/claude-4
+  format: html
+  records:
+  - modelsdev:model:anthropic/claude-sonnet-4-20250514
+- id: anthropic-claude4-card
+  vendor: anthropic
+  kind: model_card
+  url: https://www.anthropic.com/claude-4-system-card
+  format: html
+  records:
+  - modelsdev:model:anthropic/claude-sonnet-4-20250514
+- id: google-gemini25-blog
+  vendor: google
+  kind: release_blog
+  url: https://blog.google/products-and-platforms/products/gemini/gemini-2-5-model-family-expands/
+  format: html
+  records:
+  - modelsdev:model:google/gemini-2.5-pro
+- id: google-gemini25-model
+  vendor: google
+  kind: model_page
+  url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/2-5-pro
+  format: html
+  records:
+  - modelsdev:model:google/gemini-2.5-pro
+- id: meta-llama33-card
+  vendor: meta
+  kind: model_card
+  url: https://raw.githubusercontent.com/meta-llama/llama-models/main/models/llama3_3/MODEL_CARD.md
+  format: markdown
+  records:
+  - huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+- id: meta-llama33-blog
+  vendor: meta
+  kind: release_blog
+  url: https://ai.meta.com/blog/future-of-ai-built-with-llama/
+  format: html
+  records:
+  - huggingface:model:meta-llama/Llama-3.3-70B-Instruct
+- id: xai-code-launch
+  vendor: xai
+  kind: release_blog
+  url: https://x.ai/news/grok-code-fast-1
+  format: html
+  records:
+  - modelsdev:model:xai/grok-code-fast-1
+- id: xai-code-model
+  vendor: xai
+  kind: model_page
+  url: https://docs.x.ai/developers/models/grok-code-fast-1
+  format: html
+  records:
+  - modelsdev:model:xai/grok-code-fast-1
+- id: amazon-nova-launch
+  vendor: amazon
+  kind: release_blog
+  url: https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/
+  format: html
+  records:
+  - modelsdev:model:amazon/nova-pro
+  - modelsdev:model:amazon/nova-pro-v1
+- id: amazon-nova-doc
+  vendor: amazon
+  kind: documentation
+  url: https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html
+  format: html
+  records:
+  - modelsdev:model:amazon/nova-pro
+  - modelsdev:model:amazon/nova-pro-v1
+- id: deepseek-blog
+  vendor: deepseek
+  kind: release_blog
+  url: https://api-docs.deepseek.com/news/news251201/
+  format: html
+  records:
+  - huggingface:model:deepseek-ai/DeepSeek-V3.2
+- id: deepseek-card
+  vendor: deepseek
+  kind: model_card
+  url: https://huggingface.co/deepseek-ai/DeepSeek-V3.2/raw/a7e62ac04ecb2c0a54d736dc46601c5606cf10a6/README.md
+  format: markdown
+  records:
+  - huggingface:model:deepseek-ai/DeepSeek-V3.2
+- id: deepseek-updates
+  vendor: deepseek
+  kind: documentation
+  url: https://api-docs.deepseek.com/updates/
+  format: html
+  records:
+  - huggingface:model:deepseek-ai/DeepSeek-V3.2
+- id: qwen-blog
+  vendor: qwen
+  kind: release_blog
+  url: https://qwenlm.github.io/blog/qwen3/
+  format: html
+  records:
+  - huggingface:model:Qwen/Qwen3-8B
+- id: qwen-card
+  vendor: qwen
+  kind: model_card
+  url: https://huggingface.co/Qwen/Qwen3-8B/raw/b968826d9c46dd6066d109eabc6255188de91218/README.md
+  format: markdown
+  records:
+  - huggingface:model:Qwen/Qwen3-8B
+- id: qwen-ai-blog
+  vendor: qwen
+  kind: release_blog
+  url: https://qwen.ai/blog?id=qwen3
+  format: html
+  records:
+  - huggingface:model:Qwen/Qwen3-8B
+- id: nvidia-blog
+  vendor: nvidia
+  kind: release_blog
+  url: https://blogs.nvidia.com/blog/nemotron-3-super-agentic-ai/
+  format: html
+  records:
+  - modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+- id: nvidia-card
+  vendor: nvidia
+  kind: model_card
+  url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16/raw/2dc98e2afe4face0e4ce40972a915c45368bd34a/README.md
+  format: markdown
+  records:
+  - huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+- id: nvidia-page
+  vendor: nvidia
+  kind: model_page
+  url: https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b/modelcard
+  format: html
+  records:
+  - modelsdev:model:nvidia/nemotron-3-super-120b-a12b
+  - huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+- id: west-mistral-blog
+  vendor: mistral
+  kind: release_blog
+  url: https://mistral.ai/news/magistral/
+  format: html
+  records:
+  - huggingface:model:mistralai/Magistral-Small-2506
+- id: west-mistral-card
+  vendor: mistral
+  kind: model_card
+  url: https://huggingface.co/mistralai/Magistral-Small-2506/raw/ad2fce5b4113139e1877dcadfd826c9262ad8e8c/README.md
+  format: markdown
+  records:
+  - huggingface:model:mistralai/Magistral-Small-2506
+- id: west-cohere-blog
+  vendor: cohere
+  kind: release_blog
+  url: https://cohere.com/blog/command-a
+  format: html
+  records:
+  - modelsdev:model:cohere/command-a-03-2025
+- id: west-cohere-doc
+  vendor: cohere
+  kind: model_page
+  url: https://docs.cohere.com/docs/command-a
+  format: html
+  records:
+  - modelsdev:model:cohere/command-a-03-2025
+- id: west-microsoft-blog
+  vendor: microsoft
+  kind: release_blog
+  url: https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/introducing-phi-4-microsoft%E2%80%99s-newest-small-language-model-specializing-in-comple/4357090
+  format: html
+  records:
+  - huggingface:model:microsoft/phi-4
+- id: west-microsoft-card
+  vendor: microsoft
+  kind: model_card
+  url: https://huggingface.co/microsoft/phi-4/raw/2db69c1c3e91a05d2c64a3185acfbaf36f744e25/README.md
+  format: markdown
+  records:
+  - huggingface:model:microsoft/phi-4

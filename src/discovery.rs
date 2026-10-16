@@ -62,6 +62,7 @@ pub struct Coverage {
 pub enum CoverageScope {
     UpstreamCatalog,
     SelectedRepositories,
+    SelectedPages,
 }
 
 #[derive(Debug, Deserialize, Serialize, JsonSchema)]
@@ -792,7 +793,7 @@ mod tests {
     #[test]
     fn configuration_limits_and_source_metadata_are_validated() {
         let root = Path::new(env!("CARGO_MANIFEST_DIR"));
-        assert_eq!(load_sources(root).unwrap().len(), 12);
+        assert_eq!(load_sources(root).unwrap().len(), 13);
         let config = load_config(root).unwrap();
         let mut value = serde_json::to_value(config).unwrap();
         value["max_results"] = json!(201);

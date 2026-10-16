@@ -53,6 +53,19 @@ sources:
       - https://openrouter.ai/docs/api/api-reference/models/list-all-models-and-their-properties
       - https://openrouter.ai/docs/guides/overview/models
 
+  - id: official
+    access: public
+    coverage:
+      scope: selected_pages
+      description: config/official-pages.yaml 显式绑定的厂商发布博客、模型卡和详情页；按页面保存失败与字段证据，不代表完整型号目录。
+    auth_contract:
+      mode: anonymous
+    terms_status: unverified
+    terms_urls: []
+    docs_urls:
+      - https://developers.openai.com/api/docs/models/gpt-4.1
+      - https://huggingface.co/docs/hub/model-cards
+
   - id: artificialanalysis
     access: authenticated_opt_in
     coverage:

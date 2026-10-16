@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DocumentCatalog",
+  "type": "object",
+  "properties": {
+    "documents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PageDocument"
+      }
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "documents"
+  ],
+  "$defs": {
+    "Claim": {
+      "type": "object",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence": {
+          "$ref": "#/$defs/PageEvidence"
+        },
+        "precision": {
+          "$ref": "#/$defs/Precision"
+        },
+        "property": {
+          "type": "string"
+        },
+        "record": {
+          "type": "string"
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "record",
+        "property",
+        "value",
+        "precision",
+        "evidence"
+      ]
+    },
+    "DocumentKind": {
+      "type": "string",
+      "enum": [
+        "release_blog",
+        "model_card",
+        "model_page",
+        "documentation"
+      ]
+    },
+    "Extraction": {
+      "type": "object",
+      "properties": {
+        "canonical_url": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LocatedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claims": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Claim"
+          }
+        },
+        "extractor_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OfficialLink"
+          }
+        },
+        "published_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LocatedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LocatedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "extractor_version",
+        "links",
+        "claims",
+        "warnings"
+      ]
+    },
+    "Format": {
+      "type": "string",
+      "enum": [
+        "html",
+        "markdown"
+      ]
+    },
+    "LocatedValue": {
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/PageEvidence"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "evidence"
+      ]
+    },
+    "OfficialLink": {
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/PageEvidence"
+        },
+        "label": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "label",
+        "evidence"
+      ]
+    },
+    "PageContent": {
+      "type": "object",
+      "properties": {
+        "content_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "extraction": {
+          "$ref": "#/$defs/Extraction"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/Snapshot"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "snapshot",
+        "extraction"
+      ]
+    },
+    "PageDocument": {
+      "type": "object",
+      "properties": {
+        "checked_at": {
+          "type": "string"
+        },
+        "content": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PageContent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/PageSource"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "checked_at"
+      ]
+    },
+    "PageEvidence": {
+      "type": "object",
+      "properties": {
+        "excerpt": {
+          "description": "Short whitespace-normalized DOM text or attribute, or a literal Markdown fragment.\nThe complete response and deterministic extraction preserve the original evidence.",
+          "type": "string"
+        },
+        "locator": {
+          "description": "CSS path in original HTML, or rendered Markdown DOM, or explicit Markdown byte range.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "locator",
+        "excerpt"
+      ]
+    },
+    "PageSource": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "$ref": "#/$defs/Format"
+        },
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/DocumentKind"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "type": "string"
+        },
+        "vendor": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "vendor",
+        "kind",
+        "url",
+        "format",
+        "records"
+      ]
+    },
+    "Precision": {
+      "type": "string",
+      "enum": [
+        "exact",
+        "approximate"
+      ]
+    },
+    "Snapshot": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "upstream_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "id",
+        "source",
+        "url",
+        "retrieved_at",
+        "sha256"
+      ]
+    }
+  }
+}

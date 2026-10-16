@@ -8,7 +8,10 @@ use anyhow::{Context, Result, bail, ensure};
 use futures_util::StreamExt;
 use reqwest::{
     Client, StatusCode, Url,
-    header::{ETAG, HeaderMap, IF_MODIFIED_SINCE, IF_NONE_MATCH, LAST_MODIFIED, LINK, RETRY_AFTER},
+    header::{
+        CONTENT_TYPE, ETAG, HeaderMap, IF_MODIFIED_SINCE, IF_NONE_MATCH, LAST_MODIFIED, LINK,
+        RETRY_AFTER,
+    },
 };
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
@@ -24,12 +27,19 @@ use crate::{
 };
 
 const MAX_BODY_BYTES: usize = 64 * 1024 * 1024;
+const MAX_DOCUMENT_BYTES: usize = 8 * 1024 * 1024;
 const MAX_RETRIES: u32 = 3;
 const RETRY_BUDGET: Duration = Duration::from_secs(30);
 
 pub struct Fetcher {
     client: Client,
     cache_root: PathBuf,
+}
+
+#[derive(Clone, Copy)]
+enum ResponseKind {
+    Json,
+    Document,
 }
 
 #[derive(Deserialize, Serialize)]
@@ -39,6 +49,8 @@ struct Receipt {
     last_modified: Option<String>,
     #[serde(default)]
     link: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    content_type: Option<String>,
 }
 
 impl Fetcher {
@@ -71,6 +83,40 @@ impl Fetcher {
         url: &str,
         headers: HeaderMap,
     ) -> Result<(Snapshot, Value, Option<String>)> {
+        self.get(source, url, headers, ResponseKind::Json, |bytes| {
+            Ok(serde_json::from_slice(bytes)?)
+        })
+        .await
+    }
+
+    /// Fetch an anonymous UTF-8 document, preserving its bytes and Content-Type.
+    pub async fn get_document(
+        &self,
+        source: &str,
+        url: &str,
+    ) -> Result<(Snapshot, Vec<u8>, Option<String>)> {
+        self.get(
+            source,
+            url,
+            HeaderMap::new(),
+            ResponseKind::Document,
+            |bytes| {
+                let text = std::str::from_utf8(bytes).context("document is not UTF-8")?;
+                ensure!(!text.trim().is_empty(), "document is empty");
+                Ok(bytes.to_vec())
+            },
+        )
+        .await
+    }
+
+    async fn get<T>(
+        &self,
+        source: &str,
+        url: &str,
+        headers: HeaderMap,
+        kind: ResponseKind,
+        parse: impl Fn(&[u8]) -> Result<T>,
+    ) -> Result<(Snapshot, T, Option<String>)> {
         let parsed = Url::parse(url).context("invalid request URL")?;
         ensure!(
             matches!(parsed.scheme(), "http" | "https") && parsed.has_host(),
@@ -80,10 +126,20 @@ impl Fetcher {
             parsed.username().is_empty() && parsed.password().is_none(),
             "credentials must use headers"
         );
+        let (receipt_dir, body_dir, extension, max_bytes, body_name) = match kind {
+            ResponseKind::Json => ("http", "snapshots", "json", MAX_BODY_BYTES, "JSON"),
+            ResponseKind::Document => (
+                "document-http",
+                "documents",
+                "bin",
+                MAX_DOCUMENT_BYTES,
+                "document",
+            ),
+        };
         let public = headers.is_empty();
         let receipt_path = self
             .cache_root
-            .join("http")
+            .join(receipt_dir)
             .join(format!("{}.json", sha256(url.as_bytes())));
         let receipt: Option<Receipt> = if public {
             match fs::read(&receipt_path) {
@@ -134,23 +190,31 @@ impl Fetcher {
                     receipt.context("unexpected HTTP 304 without a public cache receipt")?;
                 let path = self
                     .cache_root
-                    .join("snapshots")
-                    .join(format!("{}.json", receipt.snapshot.sha256));
+                    .join(body_dir)
+                    .join(format!("{}.{extension}", receipt.snapshot.sha256));
                 let bytes = fs::read(&path)
                     .with_context(|| format!("missing or unreadable cached snapshot for {url}"))?;
                 ensure!(
                     sha256(&bytes) == receipt.snapshot.sha256,
                     "cached snapshot SHA-256 mismatch for {url}"
                 );
-                let value = serde_json::from_slice(&bytes)
-                    .with_context(|| format!("invalid cached JSON for {url}"))?;
-                receipt.link = link_header(response.headers())?.or(receipt.link);
-                let next = next_link(receipt.link.as_deref())?;
+                let value = parse(&bytes)
+                    .with_context(|| format!("invalid cached {body_name} for {url}"))?;
+                match kind {
+                    ResponseKind::Json => {
+                        receipt.link = link_header(response.headers())?.or(receipt.link);
+                    }
+                    ResponseKind::Document => {
+                        receipt.content_type =
+                            document_content_type(response.headers())?.or(receipt.content_type);
+                    }
+                }
+                let metadata = response_metadata(kind, &receipt.link, &receipt.content_type)?;
                 receipt.etag = header_text(response.headers(), ETAG).or(receipt.etag);
                 receipt.last_modified =
                     header_text(response.headers(), LAST_MODIFIED).or(receipt.last_modified);
                 write_bytes(&receipt_path, &serde_json::to_vec(&receipt)?)?;
-                return Ok((receipt.snapshot, value, next));
+                return Ok((receipt.snapshot, value, metadata));
             }
             if status == StatusCode::TOO_MANY_REQUESTS || status.is_server_error() {
                 ensure!(
@@ -173,25 +237,29 @@ impl Fetcher {
             ensure!(
                 response
                     .content_length()
-                    .is_none_or(|length| length <= MAX_BODY_BYTES as u64),
-                "response exceeds 64 MiB for {url}"
+                    .is_none_or(|length| length <= max_bytes as u64),
+                "response exceeds {} MiB for {url}",
+                max_bytes / (1024 * 1024)
             );
             let etag = header_text(response.headers(), ETAG);
             let last_modified = header_text(response.headers(), LAST_MODIFIED);
-            let link = link_header(response.headers())?;
-            let next = next_link(link.as_deref())?;
+            let (link, content_type) = match kind {
+                ResponseKind::Json => (link_header(response.headers())?, None),
+                ResponseKind::Document => (None, document_content_type(response.headers())?),
+            };
+            let metadata = response_metadata(kind, &link, &content_type)?;
             let mut stream = response.bytes_stream();
             let mut bytes = Vec::new();
             while let Some(chunk) = stream.next().await {
                 let chunk = chunk.with_context(|| format!("reading response from {url}"))?;
                 ensure!(
-                    chunk.len() <= MAX_BODY_BYTES - bytes.len(),
-                    "response exceeds 64 MiB for {url}"
+                    chunk.len() <= max_bytes - bytes.len(),
+                    "response exceeds {} MiB for {url}",
+                    max_bytes / (1024 * 1024)
                 );
                 bytes.extend_from_slice(&chunk);
             }
-            let value = serde_json::from_slice(&bytes)
-                .with_context(|| format!("invalid JSON from {url}"))?;
+            let value = parse(&bytes).with_context(|| format!("invalid {body_name} from {url}"))?;
             let digest = sha256(&bytes);
             let snapshot = Snapshot {
                 schema_version: SCHEMA_VERSION,
@@ -205,8 +273,8 @@ impl Fetcher {
             write_bytes(
                 &self
                     .cache_root
-                    .join("snapshots")
-                    .join(format!("{digest}.json")),
+                    .join(body_dir)
+                    .join(format!("{digest}.{extension}")),
                 &bytes,
             )?;
             if public {
@@ -217,17 +285,58 @@ impl Fetcher {
                         etag,
                         last_modified,
                         link,
+                        content_type,
                     })?,
                 )?;
             }
-            return Ok((snapshot, value, next));
+            return Ok((snapshot, value, metadata));
         }
         unreachable!("the final failed attempt returns an error")
     }
 }
 
+fn response_metadata(
+    kind: ResponseKind,
+    link: &Option<String>,
+    content_type: &Option<String>,
+) -> Result<Option<String>> {
+    match kind {
+        ResponseKind::Json => next_link(link.as_deref()),
+        ResponseKind::Document => {
+            if let Some(content_type) = content_type {
+                let mime = content_type.split(';').next().unwrap_or("").trim();
+                ensure!(
+                    [
+                        "text/html",
+                        "application/xhtml+xml",
+                        "text/markdown",
+                        "text/x-markdown",
+                        "text/plain",
+                    ]
+                    .iter()
+                    .any(|allowed| mime.eq_ignore_ascii_case(allowed)),
+                    "unsupported document Content-Type: {content_type}"
+                );
+            }
+            Ok(content_type.clone())
+        }
+    }
+}
+
 fn sha256(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
+}
+
+fn document_content_type(headers: &HeaderMap) -> Result<Option<String>> {
+    headers
+        .get(CONTENT_TYPE)
+        .map(|value| {
+            value
+                .to_str()
+                .map(str::to_owned)
+                .context("invalid document Content-Type header")
+        })
+        .transpose()
 }
 
 fn header_text(headers: &HeaderMap, name: reqwest::header::HeaderName) -> Option<String> {
@@ -419,7 +528,9 @@ mod tests {
         thread,
     };
 
-    fn server(responses: Vec<String>) -> (String, thread::JoinHandle<Vec<String>>) {
+    fn server(
+        responses: Vec<impl AsRef<[u8]> + Send + 'static>,
+    ) -> (String, thread::JoinHandle<Vec<String>>) {
         let listener = TcpListener::bind("127.0.0.1:0").unwrap();
         let url = format!("http://{}/models", listener.local_addr().unwrap());
         let worker = thread::spawn(move || {
@@ -436,7 +547,7 @@ mod tests {
                         socket.read_exact(&mut byte).unwrap();
                         request.push(byte[0]);
                     }
-                    socket.write_all(response.as_bytes()).unwrap();
+                    socket.write_all(response.as_ref()).unwrap();
                     String::from_utf8(request).unwrap()
                 })
                 .collect()
@@ -449,6 +560,132 @@ mod tests {
             "HTTP/1.1 {status}\r\nConnection: close\r\nContent-Length: {}\r\n{headers}\r\n{body}",
             body.len()
         )
+    }
+
+    #[tokio::test]
+    async fn documents_preserve_bytes_and_content_type_without_sharing_json_receipts() {
+        let body = "\u{feff}<!doctype html>\r\n<p>模型 — pricing</p>\r\n";
+        let content_type = "text/html; charset=utf-8";
+        let (url, worker) = server(vec![
+            response(
+                "200 OK",
+                &format!(
+                    "ETag: document\r\nLast-Modified: Thu, 15 Oct 2026 01:00:00 GMT\r\nContent-Type: {content_type}\r\nLink: irrelevant\r\n"
+                ),
+                body,
+            ),
+            response("200 OK", "ETag: json\r\n", "{}"),
+            response("304 Not Modified", "", ""),
+            response("304 Not Modified", "", ""),
+        ]);
+        let cache = tempfile::tempdir().unwrap();
+        let fetcher = Fetcher::new(cache.path()).unwrap();
+        let document = fetcher.get_document("fixture", &url).await.unwrap();
+        assert_eq!(document.1, body.as_bytes());
+        assert_eq!(document.2.as_deref(), Some(content_type));
+        let json = fetcher
+            .get_json("fixture", &url, HeaderMap::new())
+            .await
+            .unwrap();
+        assert_eq!(
+            fetcher.get_document("fixture", &url).await.unwrap(),
+            document
+        );
+        assert_eq!(
+            fetcher
+                .get_json("fixture", &url, HeaderMap::new())
+                .await
+                .unwrap(),
+            json
+        );
+        assert_eq!(
+            fs::read(
+                cache
+                    .path()
+                    .join("documents")
+                    .join(format!("{}.bin", document.0.sha256))
+            )
+            .unwrap(),
+            body.as_bytes()
+        );
+        let requests = worker.join().unwrap();
+        assert!(!requests[1].contains("if-none-match"));
+        assert!(requests[2].contains("if-none-match: document"));
+        assert!(requests[2].contains("if-modified-since: Thu, 15 Oct 2026 01:00:00 GMT"));
+        assert!(requests[3].contains("if-none-match: json"));
+        assert!(
+            requests
+                .iter()
+                .all(|request| !request.contains("authorization:"))
+        );
+    }
+
+    #[tokio::test]
+    async fn invalid_documents_preserve_receipts_and_cached_bytes_are_verified() {
+        let body = "# Model\n\n$1 per million tokens.\n";
+        let mut invalid_utf8 =
+            b"HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 1\r\n\r\n".to_vec();
+        invalid_utf8.push(0xff);
+        let (url, worker) = server(vec![
+            response(
+                "200 OK",
+                "ETag: good\r\nContent-Type: text/markdown\r\n",
+                body,
+            )
+            .into_bytes(),
+            invalid_utf8,
+            response("200 OK", "", " \r\n").into_bytes(),
+            response("200 OK", "Content-Type: application/pdf\r\n", "%PDF-1.7").into_bytes(),
+            b"HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 8\r\nContent-Type: application/pdf; x=\xff\r\n\r\n%PDF-1.7".to_vec(),
+            format!(
+                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+                MAX_DOCUMENT_BYTES + 1
+            )
+            .into_bytes(),
+            response("304 Not Modified", "", "").into_bytes(),
+            response("304 Not Modified", "", "").into_bytes(),
+        ]);
+        let cache = tempfile::tempdir().unwrap();
+        let fetcher = Fetcher::new(cache.path()).unwrap();
+        let first = fetcher.get_document("fixture", &url).await.unwrap();
+        let receipt_path = cache
+            .path()
+            .join("document-http")
+            .join(format!("{}.json", sha256(url.as_bytes())));
+        let receipt = fs::read(&receipt_path).unwrap();
+        for expected in [
+            "not UTF-8",
+            "document is empty",
+            "unsupported",
+            "invalid document Content-Type",
+            "exceeds 8 MiB",
+        ] {
+            let error = fetcher.get_document("fixture", &url).await.unwrap_err();
+            assert!(format!("{error:#}").contains(expected), "{error:#}");
+            assert_eq!(fs::read(&receipt_path).unwrap(), receipt);
+        }
+        assert_eq!(fetcher.get_document("fixture", &url).await.unwrap(), first);
+        let raw_path = cache
+            .path()
+            .join("documents")
+            .join(format!("{}.bin", first.0.sha256));
+        assert_eq!(fs::read(&raw_path).unwrap(), body.as_bytes());
+        fs::write(raw_path, b"changed").unwrap();
+        assert!(
+            fetcher
+                .get_document("fixture", &url)
+                .await
+                .unwrap_err()
+                .to_string()
+                .contains("SHA-256 mismatch")
+        );
+        assert_eq!(fs::read(&receipt_path).unwrap(), receipt);
+        let requests = worker.join().unwrap();
+        assert!(
+            requests[1..]
+                .iter()
+                .all(|request| request.contains("if-none-match: good"))
+        );
     }
 
     #[test]

@@ -1,6 +1,7 @@
 pub mod adapters;
 pub mod assertion;
 pub mod discovery;
+pub mod documents;
 pub mod domain;
 pub mod evidence;
 pub mod http;
