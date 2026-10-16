@@ -5,7 +5,7 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use super::model::{Claim, DocumentCatalog, Precision};
+use super::model::{Claim, ClaimScope, DocumentCatalog, Precision};
 use crate::model::{Fact, Origin, Snapshot};
 use crate::registry::Registry;
 
@@ -93,7 +93,7 @@ pub fn compare(catalog: &DocumentCatalog, registry: &Registry) -> Result<Vec<Com
 }
 
 #[derive(Clone, Copy)]
-enum Property {
+pub(super) enum Property {
     Count(&'static str),
     Boolean,
     Modalities,
@@ -101,12 +101,17 @@ enum Property {
     License,
 }
 
-fn property(name: &str) -> Option<Property> {
+pub(super) fn property(name: &str) -> Option<Property> {
     Some(match name {
         "context_window" | "max_input_tokens" | "max_output_tokens" => Property::Count("tokens"),
-        "parameter_count" => Property::Count("parameters"),
-        "reasoning" | "thinking" | "tool_call" | "structured_output" | "open_weights"
-        | "attachment" => Property::Boolean,
+        "parameter_count" | "active_parameter_count" => Property::Count("parameters"),
+        "reasoning"
+        | "thinking"
+        | "tool_call"
+        | "structured_output"
+        | "open_weights"
+        | "attachment"
+        | "temperature_control" => Property::Boolean,
         "input_modalities" | "output_modalities" => Property::Modalities,
         "knowledge_cutoff" | "release_date" => Property::Date,
         "license" => Property::License,
@@ -118,6 +123,12 @@ fn assess(claim: &Claim, fact: Option<&Fact>, stale: bool) -> (ComparisonStatus,
     use ComparisonStatus::*;
     if !claim.conditions.is_empty() {
         return (Conditional, "The official claim has explicit conditions.");
+    }
+    if claim.scope != ClaimScope::Model {
+        return (
+            NotComparable,
+            "The official claim does not establish model scope; interface and unspecified claims cannot be compared with model facts.",
+        );
     }
     if stale {
         return (
@@ -161,27 +172,9 @@ fn assess(claim: &Claim, fact: Option<&Fact>, stale: bool) -> (ComparisonStatus,
             "The catalog value or unit does not match this property's comparison rule.",
         );
     }
-    let equal = match property {
-        Property::Count(_) | Property::Boolean => claim.value == fact.value,
-        Property::Modalities => string_set(&claim.value) == string_set(&fact.value),
-        Property::Date => {
-            if date_precision(&claim.value) != date_precision(&fact.value) {
-                return (NotComparable, "The source dates have different precision.");
-            }
-            claim.value == fact.value
-        }
-        Property::License => match (&claim.value, &fact.value) {
-            (Value::String(_), Value::String(_)) => claim.value == fact.value,
-            (Value::Array(_), Value::Array(_)) => {
-                string_set(&claim.value) == string_set(&fact.value)
-            }
-            _ => {
-                return (
-                    NotComparable,
-                    "The license declarations use different value shapes.",
-                );
-            }
-        },
+    let equal = match equal_values(property, &claim.value, &fact.value) {
+        Ok(equal) => equal,
+        Err(reason) => return (NotComparable, reason),
     };
     if equal {
         (
@@ -196,14 +189,38 @@ fn assess(claim: &Claim, fact: Option<&Fact>, stale: bool) -> (ComparisonStatus,
     }
 }
 
-fn valid_unit(property: Property, unit: Option<&str>) -> bool {
+pub(super) fn equal_values(
+    property: Property,
+    left: &Value,
+    right: &Value,
+) -> std::result::Result<bool, &'static str> {
+    Ok(match property {
+        Property::Count(_) | Property::Boolean => left == right,
+        Property::Modalities => string_set(left) == string_set(right),
+        Property::Date => {
+            if date_precision(left) != date_precision(right) {
+                return Err("The source dates have different precision.");
+            }
+            left == right
+        }
+        Property::License => match (left, right) {
+            (Value::String(_), Value::String(_)) => left == right,
+            (Value::Array(_), Value::Array(_)) => string_set(left) == string_set(right),
+            _ => {
+                return Err("The license declarations use different value shapes.");
+            }
+        },
+    })
+}
+
+pub(super) fn valid_unit(property: Property, unit: Option<&str>) -> bool {
     match property {
         Property::Count(expected) => unit == Some(expected),
         _ => unit.is_none(),
     }
 }
 
-fn valid_value(property: Property, value: &Value) -> bool {
+pub(super) fn valid_value(property: Property, value: &Value) -> bool {
     match property {
         Property::Count(_) => value.as_u64().is_some(),
         Property::Boolean => value.is_boolean(),
@@ -256,7 +273,8 @@ fn date_precision(value: &Value) -> Option<usize> {
 mod tests {
     use super::*;
     use crate::documents::model::{
-        DocumentKind, Extraction, Format, PageContent, PageDocument, PageEvidence, PageSource,
+        ClaimScope, DocumentKind, Extraction, Format, PageContent, PageDocument, PageEvidence,
+        PageSource,
     };
     use crate::model::{Catalog, Record, RecordKind, SCHEMA_VERSION};
     use serde_json::json;
@@ -268,6 +286,7 @@ mod tests {
             value,
             unit: unit.map(str::to_owned),
             precision: Precision::Exact,
+            scope: ClaimScope::Model,
             conditions: Vec::new(),
             evidence: PageEvidence {
                 locator: "#specs td:nth-child(2)".into(),
@@ -344,6 +363,7 @@ mod tests {
                         published_at: None,
                         canonical_url: None,
                         links: Vec::new(),
+                        passages: Vec::new(),
                         claims,
                         warnings: Vec::new(),
                     },
@@ -419,6 +439,30 @@ mod tests {
         assert_eq!(stale[2].status, ComparisonStatus::NotComparable);
         assert!(stale.iter().all(|comparison| comparison.official_stale));
         assert_eq!(stale[2].source_error.as_deref(), Some("HTTP 503"));
+    }
+
+    #[test]
+    fn interface_and_unspecified_claims_cannot_agree_with_model_facts() {
+        let registry = registry(&[("context_window", fact(json!(128000), Some("tokens")))]);
+        let mut interface = claim("context_window", json!(128000), Some("tokens"));
+        interface.scope = ClaimScope::Interface {
+            id: "https://example.com/api".into(),
+        };
+        let mut unspecified = interface.clone();
+        unspecified.scope = ClaimScope::Unspecified;
+        let mut conditional = interface.clone();
+        conditional
+            .conditions
+            .push("Requires the beta header".into());
+        let compared = compare(
+            &documents(vec![interface, unspecified, conditional]),
+            &registry,
+        )
+        .unwrap();
+        assert_eq!(compared[0].status, ComparisonStatus::NotComparable);
+        assert_eq!(compared[1].status, ComparisonStatus::NotComparable);
+        assert_eq!(compared[2].status, ComparisonStatus::Conditional);
+        assert!(compared[0].reason.contains("scope"));
     }
 
     #[test]

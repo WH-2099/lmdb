@@ -1,7 +1,11 @@
 mod asia;
 pub mod compare;
+mod content;
+mod details_asia;
+mod details_west;
 pub mod model;
 pub mod page;
+pub mod resolve;
 mod west;
 pub use model::*;
 
@@ -22,7 +26,7 @@ use std::{
 };
 use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 
-pub const EXTRACTOR_VERSION: u32 = 1;
+pub const EXTRACTOR_VERSION: u32 = 2;
 const MAX_DOCUMENT_BYTES: u64 = 8 * 1024 * 1024;
 
 pub fn is_official_url(vendor: &str, raw: &str) -> bool {
@@ -223,6 +227,8 @@ pub fn extract(source: &PageSource, bytes: &[u8]) -> Result<Extraction> {
     out.extractor_version = EXTRACTOR_VERSION;
     west::extract(source, &page, &mut out)?;
     asia::extract(source, &page, &mut out)?;
+    details_west::extract(source, &page, &mut out)?;
+    details_asia::extract(source, &page, &mut out)?;
     out.claims.sort_by(|a, b| {
         (&a.record, &a.property, &a.evidence.locator).cmp(&(
             &b.record,
@@ -230,7 +236,7 @@ pub fn extract(source: &PageSource, bytes: &[u8]) -> Result<Extraction> {
             &b.evidence.locator,
         ))
     });
-    if out.claims.is_empty() {
+    if out.claims.is_empty() && out.passages.is_empty() {
         out.warnings.push("No model field extracted; page metadata and links do not establish model capabilities.".into());
     }
     out.warnings.sort();
@@ -262,27 +268,10 @@ pub fn validate(
         );
         if let Some(content) = &document.content {
             let snapshot = &content.snapshot;
-            ensure!(
-                snapshot.schema_version == 1
-                    && snapshot.source == format!("official-{}", source.vendor)
-                    && snapshot.url == source.url
-                    && snapshot.id == format!("{}:{}", snapshot.source, snapshot.sha256),
-                "{}: snapshot identity mismatch",
-                source.id
-            );
-            ensure!(
-                snapshot.sha256.len() == 64
-                    && snapshot
-                        .sha256
-                        .bytes()
-                        .all(|c| c.is_ascii_digit() || (b'a'..=b'f').contains(&c)),
-                "invalid document hash"
-            );
-            OffsetDateTime::parse(&snapshot.retrieved_at, &Rfc3339)
-                .context("invalid document retrieved_at")?;
+            validate_snapshot(source, snapshot)?;
             ensure!(
                 content.extraction.extractor_version == EXTRACTOR_VERSION,
-                "{}: extraction version changed; sync documents again",
+                "{}: extraction version changed; run documents reparse or sync documents again",
                 source.id
             );
             for claim in &content.extraction.claims {
@@ -300,6 +289,49 @@ pub fn validate(
                     "{}: incomplete claim evidence",
                     source.id
                 );
+            }
+            ensure!(
+                content.extraction.passages.len() <= content::MAX_PASSAGES,
+                "{}: too many selected passages",
+                source.id
+            );
+            let mut passage_chars = 0;
+            for passage in &content.extraction.passages {
+                let chars = passage.text.chars().count();
+                passage_chars += chars;
+                ensure!(
+                    chars > 0
+                        && chars <= content::MAX_PASSAGE_CHARS
+                        && passage.text == passage.text.trim()
+                        && !passage.evidence.locator.is_empty()
+                        && !passage.evidence.excerpt.is_empty()
+                        && passage.evidence.excerpt.chars().count() <= 240,
+                    "{}: invalid selected passage",
+                    source.id
+                );
+                ensure!(
+                    passage.records.iter().all(|id| source.records.contains(id)),
+                    "{}: passage escapes explicit model bindings",
+                    source.id
+                );
+            }
+            ensure!(
+                passage_chars <= content::MAX_TOTAL_PASSAGE_CHARS,
+                "{}: selected passage text exceeds page budget",
+                source.id
+            );
+            for claim in &content.extraction.claims {
+                if let ClaimScope::Interface { id } = &claim.scope {
+                    let url =
+                        Url::parse(id).context("invalid interface documentation reference")?;
+                    ensure!(
+                        url.scheme() == "https"
+                            && url.host_str().is_some()
+                            && url.username().is_empty()
+                            && url.password().is_none(),
+                        "invalid interface documentation reference"
+                    );
+                }
             }
             for link in &content.extraction.links {
                 ensure!(
@@ -319,6 +351,51 @@ pub fn validate(
         }
     }
     Ok(())
+}
+
+fn validate_snapshot(source: &PageSource, snapshot: &crate::model::Snapshot) -> Result<()> {
+    ensure!(
+        snapshot.schema_version == 1
+            && snapshot.source == format!("official-{}", source.vendor)
+            && snapshot.url == source.url
+            && snapshot.id == format!("{}:{}", snapshot.source, snapshot.sha256),
+        "{}: snapshot identity mismatch",
+        source.id
+    );
+    ensure!(
+        snapshot.sha256.len() == 64
+            && snapshot
+                .sha256
+                .bytes()
+                .all(|c| c.is_ascii_digit() || (b'a'..=b'f').contains(&c)),
+        "invalid document hash"
+    );
+    OffsetDateTime::parse(&snapshot.retrieved_at, &Rfc3339)
+        .context("invalid document retrieved_at")?;
+    Ok(())
+}
+
+/// Rebuild selected content from verified local response bodies, preserving observation dates.
+pub fn reparse(root: &Path) -> Result<DocumentCatalog> {
+    let config = load_config(root)?;
+    let registry = registry::load(root)?;
+    let mut catalog = load(root)?;
+    ensure!(
+        catalog.schema_version == 1,
+        "unsupported document catalog version"
+    );
+    validate_configuration(&config, &catalog, &registry)?;
+    for document in &mut catalog.documents {
+        if let Some(content) = &mut document.content {
+            validate_snapshot(&document.source, &content.snapshot)?;
+            let bytes = read_raw(&root.join(".cache"), &content.snapshot.sha256)?;
+            content.extraction = extract(&document.source, &bytes)?;
+        }
+    }
+    // Finish every parse and validation before replacing the saved catalog.
+    validate(&catalog, &registry, None)?;
+    store::write_yaml(&root.join("data/documents/official.yaml"), &catalog)?;
+    Ok(catalog)
 }
 
 pub fn validate_configuration(
@@ -353,6 +430,17 @@ pub async fn sync(root: &Path, vendor: Option<&str>) -> Result<DocumentCatalog> 
         validate_bindings(source, &registry)?;
     }
     let old = load(root)?;
+    if let Some(vendor) = vendor {
+        for document in &old.documents {
+            if document.source.vendor != vendor {
+                ensure!(
+                    config.pages.contains(&document.source),
+                    "{}: an unselected vendor's configuration changed; run a full sync with documents sync",
+                    document.source.id
+                );
+            }
+        }
+    }
     let mut old: BTreeMap<_, _> = old
         .documents
         .into_iter()

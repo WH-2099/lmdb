@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResolvedMetadata",
+  "type": "object",
+  "properties": {
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/Resolution"
+      }
+    },
+    "record": {
+      "type": "string"
+    },
+    "scoped_claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Candidate"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "record",
+    "fields",
+    "scoped_claims"
+  ],
+  "$defs": {
+    "Candidate": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "fact": {
+              "$ref": "#/$defs/Fact"
+            },
+            "origin": {
+              "$ref": "#/$defs/Origin"
+            },
+            "record": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "const": "catalog"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "record",
+            "origin",
+            "fact"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "claim": {
+              "$ref": "#/$defs/Claim"
+            },
+            "document": {
+              "type": "string"
+            },
+            "kind": {
+              "$ref": "#/$defs/DocumentKind"
+            },
+            "snapshot": {
+              "$ref": "#/$defs/Snapshot"
+            },
+            "source_error": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "stale": {
+              "type": "boolean"
+            },
+            "type": {
+              "type": "string",
+              "const": "document"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "document",
+            "kind",
+            "snapshot",
+            "claim",
+            "stale"
+          ]
+        }
+      ]
+    },
+    "Claim": {
+      "type": "object",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence": {
+          "$ref": "#/$defs/PageEvidence"
+        },
+        "precision": {
+          "$ref": "#/$defs/Precision"
+        },
+        "property": {
+          "type": "string"
+        },
+        "record": {
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/ClaimScope",
+          "default": {
+            "kind": "unspecified"
+          }
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "record",
+        "property",
+        "value",
+        "precision",
+        "evidence"
+      ]
+    },
+    "ClaimScope": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "model"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string",
+              "const": "interface"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "unspecified"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ]
+        }
+      ]
+    },
+    "DocumentKind": {
+      "type": "string",
+      "enum": [
+        "release_blog",
+        "model_card",
+        "model_page",
+        "documentation"
+      ]
+    },
+    "Fact": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "description": "JSON Pointer into the original response, including the record path.",
+          "type": "string"
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "pointer"
+      ]
+    },
+    "Origin": {
+      "type": "object",
+      "properties": {
+        "pointer": {
+          "type": "string"
+        },
+        "snapshot": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "snapshot",
+        "pointer"
+      ]
+    },
+    "PageEvidence": {
+      "type": "object",
+      "properties": {
+        "excerpt": {
+          "description": "Short whitespace-normalized DOM text or attribute, or a literal Markdown fragment.\nThe complete response and deterministic extraction preserve the original evidence.",
+          "type": "string"
+        },
+        "locator": {
+          "description": "CSS path in original HTML, or rendered Markdown DOM, or explicit Markdown byte range.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "locator",
+        "excerpt"
+      ]
+    },
+    "Precision": {
+      "type": "string",
+      "enum": [
+        "exact",
+        "approximate"
+      ]
+    },
+    "Resolution": {
+      "type": "object",
+      "properties": {
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Candidate"
+          }
+        },
+        "selected": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint",
+          "minimum": 0
+        },
+        "status": {
+          "$ref": "#/$defs/ResolutionStatus"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "candidates"
+      ]
+    },
+    "ResolutionStatus": {
+      "type": "string",
+      "enum": [
+        "selected",
+        "qualified",
+        "conflict",
+        "unavailable"
+      ]
+    },
+    "Snapshot": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "upstream_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "id",
+        "source",
+        "url",
+        "retrieved_at",
+        "sha256"
+      ]
+    }
+  }
+}

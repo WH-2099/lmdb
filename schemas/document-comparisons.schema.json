@@ -27,6 +27,12 @@
         "record": {
           "type": "string"
         },
+        "scope": {
+          "$ref": "#/$defs/ClaimScope",
+          "default": {
+            "kind": "unspecified"
+          }
+        },
         "unit": {
           "type": [
             "string",
@@ -42,6 +48,53 @@
         "value",
         "precision",
         "evidence"
+      ]
+    },
+    "ClaimScope": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "model"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string",
+              "const": "interface"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "unspecified"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ]
+        }
       ]
     },
     "Comparison": {

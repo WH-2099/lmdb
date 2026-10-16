@@ -3,7 +3,7 @@ use scraper::{ElementRef, Selector};
 use serde_json::{Value, json};
 
 use super::Extraction;
-use super::model::{Claim, Format, PageEvidence, PageSource, Precision};
+use super::model::{Claim, ClaimScope, Format, PageEvidence, PageSource, Precision};
 use super::page::{Page, text};
 
 pub fn extract(source: &PageSource, page: &Page, out: &mut Extraction) -> Result<()> {
@@ -58,13 +58,22 @@ fn add(
             value: value.clone(),
             unit: unit.map(str::to_owned),
             precision,
+            scope: if source.id == "west-cohere-doc"
+                && matches!(property, "context_window" | "max_output_tokens")
+            {
+                ClaimScope::Interface {
+                    id: source.url.clone(),
+                }
+            } else {
+                ClaimScope::Model
+            },
             conditions: conditions.iter().map(|s| (*s).to_owned()).collect(),
             evidence: evidence.clone(),
         });
     }
 }
 
-fn model_heading(page: &Page, expected: &str, out: &mut Extraction) -> bool {
+pub(super) fn model_heading(page: &Page, expected: &str, out: &mut Extraction) -> bool {
     if page.select("h1").iter().any(|n| text(*n) == expected) {
         true
     } else {
@@ -87,7 +96,7 @@ fn heading_level(node: ElementRef<'_>) -> Option<u8> {
     }
 }
 
-fn section<'a>(page: &'a Page, heading: &str) -> Vec<ElementRef<'a>> {
+pub(super) fn section<'a>(page: &'a Page, heading: &str) -> Vec<ElementRef<'a>> {
     let Some(start) = page
         .select("h1,h2,h3,h4,h5,h6")
         .into_iter()
@@ -103,7 +112,7 @@ fn section<'a>(page: &'a Page, heading: &str) -> Vec<ElementRef<'a>> {
         .collect()
 }
 
-fn elements<'a>(nodes: &[ElementRef<'a>], css: &str) -> Vec<ElementRef<'a>> {
+pub(super) fn elements<'a>(nodes: &[ElementRef<'a>], css: &str) -> Vec<ElementRef<'a>> {
     let selector = Selector::parse(css).expect("static selector");
     nodes
         .iter()
@@ -115,14 +124,14 @@ fn elements<'a>(nodes: &[ElementRef<'a>], css: &str) -> Vec<ElementRef<'a>> {
         .collect()
 }
 
-fn cells(row: ElementRef<'_>) -> Vec<ElementRef<'_>> {
+pub(super) fn cells(row: ElementRef<'_>) -> Vec<ElementRef<'_>> {
     row.children()
         .filter_map(ElementRef::wrap)
         .filter(|n| matches!(n.value().name(), "th" | "td"))
         .collect()
 }
 
-fn number(value: &str) -> Option<u64> {
+pub(super) fn number(value: &str) -> Option<u64> {
     let token = value.split_whitespace().next()?;
     if !token.bytes().all(|c| c.is_ascii_digit() || c == b',') {
         return None;
@@ -137,7 +146,7 @@ fn number(value: &str) -> Option<u64> {
     token.replace(',', "").parse().ok()
 }
 
-fn scaled(value: &str) -> Option<u64> {
+pub(super) fn scaled(value: &str) -> Option<u64> {
     let value = value.trim_start();
     let end = value
         .find(|c: char| !c.is_ascii_digit() && c != ',' && c != '.')
@@ -855,7 +864,7 @@ fn west_parameters(text: &str) -> Option<u64> {
     before.split_whitespace().last().and_then(scaled)
 }
 
-fn west_date(text: &str) -> Option<String> {
+pub(super) fn west_date(text: &str) -> Option<String> {
     let mut parts = text.split_whitespace();
     let month_name = parts.next()?;
     let month = [
@@ -880,7 +889,9 @@ fn west_date(text: &str) -> Option<String> {
     if parts.next().is_some() || day == 0 || day > 31 {
         return None;
     }
-    Some(format!("{year:04}-{month:02}-{day:02}"))
+    time::Date::from_calendar_date(year.into(), time::Month::try_from(month as u8).ok()?, day)
+        .ok()
+        .map(|date| date.to_string())
 }
 
 fn west_embedded_links(
@@ -896,7 +907,7 @@ fn west_embedded_links(
     Ok(())
 }
 
-fn west_flight_bodies(page: &Page) -> Vec<(String, String)> {
+pub(super) fn west_flight_bodies(page: &Page) -> Vec<(String, String)> {
     let mut stream = String::new();
     for script in page.select("script") {
         let script = script.text().collect::<String>();
@@ -996,6 +1007,7 @@ mod extraction_tests {
             published_at: None,
             canonical_url: None,
             links: Vec::new(),
+            passages: Vec::new(),
             claims: Vec::new(),
             warnings: Vec::new(),
         };

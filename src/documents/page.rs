@@ -90,6 +90,18 @@ pub fn text(element: ElementRef<'_>) -> String {
     words.join(" ")
 }
 
+pub fn original_text(element: ElementRef<'_>) -> String {
+    let mut text = String::new();
+    for node in element.descendants() {
+        if let Some(value) = node.value().as_text()
+            && !node.ancestors().filter_map(ElementRef::wrap).any(excluded)
+        {
+            text.push_str(value);
+        }
+    }
+    text.trim().to_owned()
+}
+
 pub fn metadata(source: &PageSource, page: &Page) -> Result<Extraction> {
     let base = markdown_base(source)?;
     let scope = content_scope(page);
@@ -181,6 +193,7 @@ pub fn metadata(source: &PageSource, page: &Page) -> Result<Extraction> {
         published_at,
         canonical_url,
         links,
+        passages: Vec::new(),
         claims: Vec::new(),
         warnings: Vec::new(),
     })
@@ -191,7 +204,12 @@ fn normalize(value: &str) -> String {
 }
 
 fn excerpt(value: &str) -> String {
-    value.chars().take(240).collect()
+    value
+        .chars()
+        .take(240)
+        .collect::<String>()
+        .trim_end()
+        .to_owned()
 }
 
 fn excluded(element: ElementRef<'_>) -> bool {
@@ -642,6 +660,18 @@ mod tests {
                 expected
             );
         }
+    }
+
+    #[test]
+    fn original_text_preserves_inline_punctuation_and_internal_whitespace() {
+        let source = source(Format::Html, "https://openai.com/index/model/");
+        let page = Page::parse(&source, b"<div>  First <strong>word</strong>,\n\tsecond  line &amp; punctuation.<script>hidden script</script><style>hidden style</style><nav hidden>hidden navigation</nav><footer>footer</footer><span role='navigation'>navigation</span>  </div>").unwrap();
+        assert_eq!(
+            original_text(page.select("div")[0]),
+            "First word,\n\tsecond  line & punctuation."
+        );
+        assert_eq!(original_text(page.select("script")[0]), "");
+        assert_eq!(original_text(page.select("nav")[0]), "");
     }
 
     #[test]

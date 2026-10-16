@@ -42,6 +42,12 @@
         "record": {
           "type": "string"
         },
+        "scope": {
+          "$ref": "#/$defs/ClaimScope",
+          "default": {
+            "kind": "unspecified"
+          }
+        },
         "unit": {
           "type": [
             "string",
@@ -57,6 +63,53 @@
         "value",
         "precision",
         "evidence"
+      ]
+    },
+    "ClaimScope": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "model"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string",
+              "const": "interface"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "id"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "unspecified"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ]
+        }
       ]
     },
     "DocumentKind": {
@@ -96,6 +149,13 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/OfficialLink"
+          }
+        },
+        "passages": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Passage"
           }
         },
         "published_at": {
@@ -281,6 +341,54 @@
         "url",
         "format",
         "records"
+      ]
+    },
+    "Passage": {
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/PageEvidence"
+        },
+        "heading": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "records": {
+          "description": "Explicit subjects; empty means the passage concerns the page or model family.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "text": {
+          "description": "Published DOM text with original wording and whitespace, excluding outer whitespace.",
+          "type": "string"
+        },
+        "topic": {
+          "$ref": "#/$defs/PassageTopic"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "topic",
+        "records",
+        "text",
+        "evidence"
+      ]
+    },
+    "PassageTopic": {
+      "type": "string",
+      "enum": [
+        "overview",
+        "capabilities",
+        "limitations",
+        "availability",
+        "training",
+        "evaluation",
+        "usage",
+        "license"
       ]
     },
     "Precision": {

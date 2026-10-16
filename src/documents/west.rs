@@ -3,7 +3,7 @@ use scraper::{ElementRef, Selector};
 use serde_json::{Value, json};
 
 use super::page::{Page, text};
-use super::{Claim, Extraction, PageSource, Precision};
+use super::{Claim, ClaimScope, Extraction, PageSource, Precision};
 
 pub fn extract(source: &PageSource, page: &Page, out: &mut Extraction) -> Result<()> {
     match source.id.as_str() {
@@ -29,19 +29,19 @@ pub fn extract(source: &PageSource, page: &Page, out: &mut Extraction) -> Result
     Ok(())
 }
 
-fn select<'a>(node: ElementRef<'a>, css: &str) -> Vec<ElementRef<'a>> {
+pub(super) fn select<'a>(node: ElementRef<'a>, css: &str) -> Vec<ElementRef<'a>> {
     node.select(&Selector::parse(css).expect("static selector"))
         .collect()
 }
 
-fn cells(row: ElementRef<'_>) -> Vec<ElementRef<'_>> {
+pub(super) fn cells(row: ElementRef<'_>) -> Vec<ElementRef<'_>> {
     row.children()
         .filter_map(ElementRef::wrap)
         .filter(|n| matches!(n.value().name(), "th" | "td"))
         .collect()
 }
 
-fn unique<'a>(nodes: Vec<ElementRef<'a>>) -> Option<ElementRef<'a>> {
+pub(super) fn unique<'a>(nodes: Vec<ElementRef<'a>>) -> Option<ElementRef<'a>> {
     (nodes.len() == 1).then(|| nodes[0])
 }
 
@@ -64,6 +64,13 @@ fn emit(
             value: value.clone(),
             unit: unit.map(str::to_owned),
             precision,
+            scope: if source.id.starts_with("google-") || source.id.starts_with("amazon-") {
+                ClaimScope::Interface {
+                    id: source.url.clone(),
+                }
+            } else {
+                ClaimScope::Model
+            },
             conditions: conditions.iter().map(|s| (*s).to_owned()).collect(),
             evidence: page.evidence(node),
         });
@@ -71,7 +78,7 @@ fn emit(
 }
 
 // Abbreviations preserve their advertised scale rather than pretending to be exact counts.
-fn count(raw: &str) -> Option<(u64, Precision)> {
+pub(super) fn count(raw: &str) -> Option<(u64, Precision)> {
     let raw = raw.trim();
     let (number, multiplier, precision) = match raw.as_bytes().last()? {
         b'k' | b'K' => (&raw[..raw.len() - 1], 1_000_u128, Precision::Approximate),
@@ -137,7 +144,7 @@ fn number(
     }
 }
 
-fn date(raw: &str) -> Option<String> {
+pub(super) fn date(raw: &str) -> Option<String> {
     let normalized = raw.replace(',', "");
     let parts: Vec<_> = normalized.split_whitespace().collect();
     let month = [
@@ -482,7 +489,7 @@ fn amazon(source: &PageSource, page: &Page, out: &mut Extraction) {
     }
 }
 
-fn amazon_launch(source: &PageSource, page: &Page, out: &mut Extraction) {
+pub(super) fn amazon_launch_identity(page: &Page) -> bool {
     let model_ids: std::collections::BTreeSet<_> = page
         .select("section.blog-post-content pre code")
         .into_iter()
@@ -494,7 +501,11 @@ fn amazon_launch(source: &PageSource, page: &Page, out: &mut Extraction) {
                 .collect::<Vec<_>>()
         })
         .collect();
-    if model_ids.len() != 1 || !model_ids.contains("amazon.nova-pro-v1:0") {
+    model_ids.len() == 1 && model_ids.contains("amazon.nova-pro-v1:0")
+}
+
+fn amazon_launch(source: &PageSource, page: &Page, out: &mut Extraction) {
+    if !amazon_launch_identity(page) {
         out.warnings.push(
             "Missing or ambiguous Nova Pro v1 identifier in launch article; skipped model facts."
                 .into(),
@@ -691,6 +702,7 @@ mod tests {
             published_at: None,
             canonical_url: None,
             links: Vec::new(),
+            passages: Vec::new(),
             claims: Vec::new(),
             warnings: Vec::new(),
         };

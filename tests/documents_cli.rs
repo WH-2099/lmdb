@@ -22,6 +22,7 @@ const HTML: &[u8] = br#"<!doctype html>
 <html><head><title>GPT-4.1</title>
 <link rel="canonical" href="https://developers.openai.com/api/docs/models/gpt-4.1">
 </head><body><main><h1>GPT-4.1</h1>
+<p>GPT-4.1 excels at instruction following and tool calling. It performs without a reasoning step.</p>
 <div>1,047,576 context window</div><div>32,768 max output tokens</div>
 <a href="https://openai.com/index/gpt-4-1/">Release announcement</a>
 </main></body></html>
@@ -30,6 +31,8 @@ const HTML: &[u8] = br#"<!doctype html>
 fn run(root: &Path, args: &[&str]) -> Output {
     Command::new(env!("CARGO_BIN_EXE_lmdb"))
         .env_clear()
+        .env("HTTP_PROXY", "http://127.0.0.1:0")
+        .env("HTTPS_PROXY", "http://127.0.0.1:0")
         .arg("--root")
         .arg(root)
         .args(args)
@@ -114,6 +117,246 @@ fn seed(root: &Path) -> Result<(Catalog, DocumentCatalog)> {
     };
     store::write_yaml(&root.join("data/documents/official.yaml"), &documents)?;
     Ok((catalog, documents))
+}
+
+#[test]
+fn official_resolution_drives_queries_and_preserves_raw_records() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let (catalog, documents) = seed(root.path())?;
+    let catalog_path = root.path().join("data/catalogs/modelsdev.yaml");
+    let original_catalog = fs::read(&catalog_path)?;
+    let raw_record = serde_json::to_value(&catalog.records[0])?;
+
+    let queried = output(root.path(), &["query", "--min-context", "100000"]);
+    let found = queried
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|record| record["id"] == MODEL)
+        .expect("official context includes the model in the query");
+    assert_eq!(found, &raw_record);
+    assert_eq!(found["facts"]["context_window"]["value"], 4096);
+
+    let resolved = output(root.path(), &["documents", "resolve", MODEL]);
+    assert_eq!(resolved["record"], MODEL);
+    let context = &resolved["fields"]["context_window"];
+    assert_eq!(context["status"], "selected");
+    let selected = &context["candidates"][context["selected"].as_u64().unwrap() as usize];
+    assert_eq!(selected["type"], "document");
+    assert_eq!(selected["document"], "openai-gpt41-model");
+    assert_eq!(selected["kind"], "model_page");
+    assert_eq!(selected["claim"]["value"], 1047576);
+    assert_eq!(selected["claim"]["scope"]["kind"], "model");
+    assert_eq!(selected["stale"], false);
+    assert_eq!(
+        selected["snapshot"],
+        serde_json::to_value(&documents.documents[0].content.as_ref().unwrap().snapshot)?
+    );
+    let claim = documents.documents[0]
+        .content
+        .as_ref()
+        .unwrap()
+        .extraction
+        .claims
+        .iter()
+        .find(|claim| claim.property == "context_window")
+        .unwrap();
+    assert_eq!(selected["claim"], serde_json::to_value(claim)?);
+    let raw = context["candidates"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|candidate| candidate["type"] == "catalog")
+        .expect("original catalog evidence remains available");
+    assert_eq!(raw["origin"], raw_record["origin"]);
+    assert_eq!(raw["fact"], raw_record["facts"]["context_window"]);
+
+    let inspected = output(root.path(), &["inspect", MODEL]);
+    assert_eq!(inspected["record"], raw_record);
+    assert_eq!(inspected["resolved_metadata"], resolved);
+    success(root.path(), &["export"]);
+    let exported: Value =
+        serde_json::from_slice(&fs::read(root.path().join("dist/registry.json"))?)?;
+    assert_eq!(exported["resolved_metadata"][MODEL], resolved);
+    assert_eq!(
+        exported["models"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|record| record["id"] == MODEL)
+            .unwrap(),
+        &raw_record
+    );
+    assert_eq!(fs::read(catalog_path)?, original_catalog);
+    Ok(())
+}
+
+#[test]
+fn conflicting_official_claims_block_catalog_fallback_in_queries() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let (_, mut documents) = seed(root.path())?;
+    // Synthetic saved claims isolate conflict handling; replay is tested separately.
+    let mut alternate = documents.documents[0].clone();
+    alternate.source.id = "openai-gpt41-alternate".into();
+    alternate.source.url = format!("{URL}?revision=alternate");
+    let content = alternate.content.as_mut().unwrap();
+    content.snapshot.url = alternate.source.url.clone();
+    content
+        .extraction
+        .claims
+        .iter_mut()
+        .find(|claim| claim.property == "context_window")
+        .unwrap()
+        .value = json!(2097152);
+    documents.documents.push(alternate);
+    store::write_yaml(
+        &root.path().join("config/official-pages.yaml"),
+        &PageConfig {
+            schema_version: 1,
+            pages: documents
+                .documents
+                .iter()
+                .map(|doc| doc.source.clone())
+                .collect(),
+        },
+    )?;
+    store::write_yaml(
+        &root.path().join("data/documents/official.yaml"),
+        &documents,
+    )?;
+    success(root.path(), &["validate"]);
+
+    let resolved = output(root.path(), &["documents", "resolve", MODEL]);
+    let context = &resolved["fields"]["context_window"];
+    assert_eq!(context["status"], "conflict");
+    assert!(context.get("selected").is_none());
+    assert_eq!(context["candidates"].as_array().unwrap().len(), 3);
+    let queried = output(root.path(), &["query", "--min-context", "1000"]);
+    assert!(
+        queried
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|record| record["id"] != MODEL)
+    );
+    assert!(
+        queried
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|record| record["id"] == SIMILAR)
+    );
+    let unfiltered = output(root.path(), &["query"]);
+    assert!(unfiltered.as_array().unwrap().iter().any(|record| {
+        record["id"] == MODEL && record["facts"]["context_window"]["value"] == 4096
+    }));
+    Ok(())
+}
+
+#[test]
+fn reparse_migrates_cached_extractions_and_never_partially_writes() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let (_, mut expected) = seed(root.path())?;
+    expected.documents[0].checked_at = "2026-10-17T00:00:00Z".into();
+    expected.documents[0].error = Some("HTTP 503 from last refresh".into());
+    let mut second = expected.documents[0].clone();
+    second.source.id = "openai-gpt41-blog".into();
+    second.source.url = RELEASE.into();
+    second.source.kind = documents::DocumentKind::ReleaseBlog;
+    let second_body = br"<html><head><title>GPT-4.1 release</title></head><body><article><h1>GPT-4.1</h1><p>Introducing GPT-4.1.</p></article></body></html>";
+    let second_content = second.content.as_mut().unwrap();
+    second_content.snapshot = snapshot("official-openai", RELEASE, second_body);
+    second_content.extraction = documents::extract(&second.source, second_body)?;
+    let second_path = root.path().join(format!(
+        ".cache/documents/{}.bin",
+        second_content.snapshot.sha256
+    ));
+    store::write_bytes(&second_path, second_body)?;
+    expected.documents.push(second);
+    store::write_yaml(
+        &root.path().join("config/official-pages.yaml"),
+        &PageConfig {
+            schema_version: 1,
+            pages: expected
+                .documents
+                .iter()
+                .map(|doc| doc.source.clone())
+                .collect(),
+        },
+    )?;
+
+    let mut legacy = serde_json::to_value(&expected)?;
+    for document in legacy["documents"].as_array_mut().unwrap() {
+        let extraction = document["content"]["extraction"].as_object_mut().unwrap();
+        extraction.insert("extractor_version".into(), json!(1));
+        extraction.remove("passages");
+        for claim in extraction["claims"].as_array_mut().unwrap() {
+            claim.as_object_mut().unwrap().remove("scope");
+            if claim["property"] == "context_window" {
+                claim["value"] = json!(999);
+            }
+        }
+    }
+    let path = root.path().join("data/documents/official.yaml");
+    store::write_yaml(&path, &legacy)?;
+    let old_bytes = fs::read(&path)?;
+    success(root.path(), &["documents", "reparse"]);
+    let reparsed = documents::load(root.path())?;
+    assert_eq!(reparsed, expected);
+    let content = reparsed.documents[0].content.as_ref().unwrap();
+    assert_eq!(content.extraction.extractor_version, 2);
+    assert!(!content.extraction.passages.is_empty());
+    assert!(content.extraction.claims.iter().any(|claim| {
+        claim.property == "context_window"
+            && claim.value == json!(1047576)
+            && claim.scope == documents::ClaimScope::Model
+    }));
+    success(root.path(), &["validate", "--evidence"]);
+
+    fs::write(&path, &old_bytes)?;
+    fs::remove_file(&second_path)?;
+    let missing = run(root.path(), &["documents", "reparse"]);
+    assert!(!missing.status.success());
+    assert!(String::from_utf8_lossy(&missing.stderr).contains("open document"));
+    assert_eq!(fs::read(&path)?, old_bytes);
+    fs::write(second_path, b"corrupt")?;
+    let corrupt = run(root.path(), &["documents", "reparse"]);
+    assert!(!corrupt.status.success());
+    assert!(String::from_utf8_lossy(&corrupt.stderr).contains("document SHA-256 mismatch"));
+    assert_eq!(fs::read(path)?, old_bytes);
+    Ok(())
+}
+
+#[test]
+fn partial_sync_rejects_changed_or_removed_unselected_sources_before_fetching() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let (_, documents) = seed(root.path())?;
+    let path = root.path().join("data/documents/official.yaml");
+    let before = fs::read(&path)?;
+    let selected: PageSource = serde_json::from_value(json!({
+        "id":"qwen-test", "vendor":"qwen", "kind":"release_blog",
+        "url":"https://qwenlm.github.io/blog/qwen3/", "format":"html", "records":[MODEL]
+    }))?;
+    for keep_changed_source in [true, false] {
+        let mut pages = vec![selected.clone()];
+        if keep_changed_source {
+            let mut changed = documents.documents[0].source.clone();
+            changed.url = format!("{URL}?revision=changed");
+            pages.push(changed);
+        }
+        store::write_yaml(
+            &root.path().join("config/official-pages.yaml"),
+            &PageConfig {
+                schema_version: 1,
+                pages,
+            },
+        )?;
+        let result = run(root.path(), &["documents", "sync", "--vendor", "qwen"]);
+        assert!(!result.status.success());
+        assert!(String::from_utf8_lossy(&result.stderr).contains("full sync"));
+        assert_eq!(fs::read(&path)?, before);
+    }
+    Ok(())
 }
 
 #[test]
@@ -302,6 +545,16 @@ fn fetch_errors_remain_visible_with_retained_or_absent_content() -> Result<()> {
     let inspected = output(root.path(), &["inspect", MODEL]);
     assert_eq!(inspected["documents"], listed["documents"]);
     assert_eq!(inspected["document_comparisons"], comparisons);
+    let resolved = output(root.path(), &["documents", "resolve", MODEL]);
+    assert_eq!(resolved["fields"]["context_window"]["status"], "qualified");
+    let queried = output(root.path(), &["query", "--min-context", "1"]);
+    assert!(
+        queried
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|record| record["id"] != MODEL)
+    );
     success(root.path(), &["export"]);
     let exported: Value =
         serde_json::from_slice(&fs::read(root.path().join("dist/registry.json"))?)?;

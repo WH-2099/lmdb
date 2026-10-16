@@ -168,6 +168,10 @@ enum DocumentCommand {
         #[arg(long)]
         vendor: Option<String>,
     },
+    /// Re-extract cached pages without changing fetch dates or contacting vendors.
+    Reparse,
+    /// Show authoritative field choices and all supporting or conflicting evidence.
+    Resolve { record: String },
     /// List source URLs, metadata, claims and fetch failures.
     List {
         #[arg(long)]
@@ -220,6 +224,14 @@ async fn main() -> Result<()> {
                 "official page failures saved in data/documents/official.yaml"
             );
         }
+        Command::Documents {
+            command: DocumentCommand::Reparse,
+        } => {
+            let catalog = documents::reparse(&cli.root)?;
+            print_json(
+                &json!({"reparsed":catalog.documents.iter().filter(|d|d.content.is_some()).count(),"extractor_version":documents::EXTRACTOR_VERSION}),
+            )?;
+        }
         Command::Schema { check } => {
             for (name, schema) in [
                 ("catalog", schemars::schema_for!(Catalog)),
@@ -234,6 +246,10 @@ async fn main() -> Result<()> {
                 (
                     "document-comparisons",
                     schemars::schema_for!(Vec<documents::compare::Comparison>),
+                ),
+                (
+                    "resolved-metadata",
+                    schemars::schema_for!(documents::resolve::ResolvedMetadata),
                 ),
                 ("assertions", schemars::schema_for!(AssertionSet)),
                 ("identities", schemars::schema_for!(IdentitySet)),
@@ -290,6 +306,13 @@ async fn main() -> Result<()> {
             )?;
             match command {
                 Command::Documents { command } => match command {
+                    DocumentCommand::Resolve { record } => {
+                        print_json(&documents::resolve::resolve(
+                            find_record(&registry, &record)?,
+                            &identities,
+                            &document_catalog,
+                        )?)?;
+                    }
                     DocumentCommand::List { record, vendor } => {
                         if let Some(id) = &record {
                             find_record(&registry, id)?;
@@ -327,7 +350,7 @@ async fn main() -> Result<()> {
                                 .collect();
                         print_json(&comparisons)?;
                     }
-                    DocumentCommand::Sync { .. } => unreachable!(),
+                    DocumentCommand::Sync { .. } | DocumentCommand::Reparse => unreachable!(),
                 },
                 Command::Validate { evidence } => {
                     if cli.root.join("config/sources.yaml").try_exists()? {
@@ -360,7 +383,18 @@ async fn main() -> Result<()> {
                         .map(|r| Ok((r.id.as_str(), domain::project(r)?)))
                         .collect::<Result<BTreeMap<_, _>>>()?;
                     value["profiles"] = serde_json::to_value(profiles)?;
-                    value["identities"] = serde_json::to_value(identities)?;
+                    let resolved = registry
+                        .records()
+                        .filter(|r| r.kind == RecordKind::Model)
+                        .map(|r| {
+                            Ok((
+                                r.id.as_str(),
+                                documents::resolve::resolve(r, &identities, &document_catalog)?,
+                            ))
+                        })
+                        .collect::<Result<BTreeMap<_, _>>>()?;
+                    value["resolved_metadata"] = serde_json::to_value(resolved)?;
+                    value["identities"] = serde_json::to_value(&identities)?;
                     value["relationships"] = serde_json::to_value(relations::derive(&registry)?)?;
                     value["official_sources"] = serde_json::to_value(&document_config.pages)?;
                     value["documents"] = serde_json::to_value(&document_catalog.documents)?;
@@ -398,9 +432,19 @@ async fn main() -> Result<()> {
                                     .model_for_record(record.model.as_deref().unwrap_or(&record.id))
                                     .is_some_and(|model| model.id == *id)
                             })
-                            && query.matches(&domain::project(record)?)
                         {
-                            records.push(record);
+                            let resolved = (record.kind == RecordKind::Model)
+                                .then(|| {
+                                    documents::resolve::resolve(
+                                        record,
+                                        &identities,
+                                        &document_catalog,
+                                    )
+                                })
+                                .transpose()?;
+                            if query.matches(&domain::project(record)?, resolved.as_ref()) {
+                                records.push(record);
+                            }
                         }
                     }
                     records.sort_by(|a, b| a.id.cmp(&b.id));
@@ -428,8 +472,10 @@ async fn main() -> Result<()> {
                         .into_iter()
                         .filter(|r| r.from == record || r.to == record)
                         .collect();
+                    let resolved =
+                        documents::resolve::resolve(found, &identities, &document_catalog)?;
                     print_json(
-                        &json!({"record":found,"profile":domain::project(found)?,"identities":selected_identities(identities,Some(&record)),"relationships":relationships,"sync":{"completed_at":catalog.last_sync.as_ref().map(|s|&s.completed_at),"observed_in_last_sync":observed},"rules":{"scopes":scopes,"groups":groups},"official_sources":document_config.pages.iter().filter(|p|p.records.contains(&record)).collect::<Vec<_>>(),"documents":document_catalog.documents.iter().filter(|d|d.source.records.contains(&record)).collect::<Vec<_>>(),"document_comparisons":documents::compare::compare(&document_catalog,&registry)?.into_iter().filter(|c|c.record==record).collect::<Vec<_>>()}),
+                        &json!({"record":found,"profile":domain::project(found)?,"resolved_metadata":resolved,"identities":selected_identities(identities,Some(&record)),"relationships":relationships,"sync":{"completed_at":catalog.last_sync.as_ref().map(|s|&s.completed_at),"observed_in_last_sync":observed},"rules":{"scopes":scopes,"groups":groups},"official_sources":document_config.pages.iter().filter(|p|p.records.contains(&record)).collect::<Vec<_>>(),"documents":document_catalog.documents.iter().filter(|d|d.source.records.contains(&record)).collect::<Vec<_>>(),"document_comparisons":documents::compare::compare(&document_catalog,&registry)?.into_iter().filter(|c|c.record==record).collect::<Vec<_>>()}),
                     )?;
                 }
                 Command::Identities { record } => {
@@ -558,27 +604,55 @@ async fn main() -> Result<()> {
 }
 
 impl Query {
-    fn matches(&self, profile: &DomainMetadata) -> bool {
-        let modality =
-            |wanted: &Option<String>,
-             actual: &Option<domain::Derived<Vec<domain::ModalityLabel>>>| {
-                wanted.as_ref().is_none_or(|wanted| {
-                    actual.as_ref().is_some_and(|labels| {
-                        labels.value.iter().any(|label| {
-                            label.source_label == *wanted
-                                || label.canonical.is_some_and(|value| json!(value) == *wanted)
-                        })
+    fn matches(
+        &self,
+        profile: &DomainMetadata,
+        resolved: Option<&documents::resolve::ResolvedMetadata>,
+    ) -> bool {
+        // A qualified or conflicting official field deliberately blocks raw fallback.
+        let official = |property: &str| -> Option<Option<&Value>> {
+            let resolved = resolved?;
+            let field = resolved.fields.get(property)?;
+            field
+                .candidates
+                .iter()
+                .any(|candidate| {
+                    matches!(candidate, documents::resolve::Candidate::Document { .. })
+                })
+                .then(|| resolved.value(property))
+        };
+        let modality = |wanted: &Option<String>,
+                        actual: &Option<domain::Derived<Vec<domain::ModalityLabel>>>,
+                        property: &str| {
+            wanted.as_ref().is_none_or(|wanted| {
+                if let Some(value) = official(property) {
+                    return value.and_then(Value::as_array).is_some_and(|labels| {
+                        labels
+                            .iter()
+                            .any(|label| label.as_str() == Some(wanted.as_str()))
+                    });
+                }
+                actual.as_ref().is_some_and(|labels| {
+                    labels.value.iter().any(|label| {
+                        label.source_label == *wanted
+                            || label.canonical.is_some_and(|value| json!(value) == *wanted)
                     })
                 })
-            };
+            })
+        };
         let capability = self.capability.map(|wanted| match wanted {
-            Capability::Reasoning => &profile.capabilities.reasoning,
-            Capability::Thinking => &profile.capabilities.thinking,
-            Capability::ToolCall => &profile.capabilities.tool_call,
-            Capability::StructuredOutput => &profile.capabilities.structured_output,
-            Capability::OpenWeights => &profile.capabilities.open_weights,
-            Capability::Attachment => &profile.capabilities.attachment,
-            Capability::TemperatureControl => &profile.capabilities.temperature_control,
+            Capability::Reasoning => ("reasoning", &profile.capabilities.reasoning),
+            Capability::Thinking => ("thinking", &profile.capabilities.thinking),
+            Capability::ToolCall => ("tool_call", &profile.capabilities.tool_call),
+            Capability::StructuredOutput => {
+                ("structured_output", &profile.capabilities.structured_output)
+            }
+            Capability::OpenWeights => ("open_weights", &profile.capabilities.open_weights),
+            Capability::Attachment => ("attachment", &profile.capabilities.attachment),
+            Capability::TemperatureControl => (
+                "temperature_control",
+                &profile.capabilities.temperature_control,
+            ),
         });
         self.task.as_ref().is_none_or(|wanted| {
             profile.tasks.as_ref().is_some_and(|tasks| {
@@ -590,16 +664,30 @@ impl Query {
                             .is_some_and(|value| json!(value) == *wanted)
                 })
             })
-        }) && modality(&self.input, &profile.modalities.input)
-            && modality(&self.output, &profile.modalities.output)
+        }) && modality(&self.input, &profile.modalities.input, "input_modalities")
+            && modality(
+                &self.output,
+                &profile.modalities.output,
+                "output_modalities",
+            )
             && self.min_context.is_none_or(|min| {
+                if let Some(value) = official("context_window") {
+                    return value
+                        .and_then(Value::as_u64)
+                        .is_some_and(|limit| limit >= min);
+                }
                 profile
                     .limits
                     .context_window
                     .as_ref()
                     .is_some_and(|limit| limit.value >= min)
             })
-            && capability.is_none_or(|fact| fact.as_ref().is_some_and(|fact| fact.value))
+            && capability.is_none_or(|(property, fact)| {
+                official(property).map_or_else(
+                    || fact.as_ref().is_some_and(|fact| fact.value),
+                    |value| value.and_then(Value::as_bool) == Some(true),
+                )
+            })
     }
 }
 
@@ -666,7 +754,7 @@ fn stats(
         *relationships.entry(relation.kind).or_insert(0usize) += 1;
     }
     print_json(
-        &json!({"documents":{"pages":documents.documents.len(),"failed":documents.documents.iter().filter(|d|d.error.is_some()).count(),"with_content":documents.documents.iter().filter(|d|d.content.is_some()).count(),"claims":documents.documents.iter().filter_map(|d|d.content.as_ref()).map(|c|c.extraction.claims.len()).sum::<usize>()},"sources":sources,"task_facts":tasks,"typed_coverage":coverage,"identities":{"models":identities.models.len(),"model_records":identities.models.iter().map(|i|i.records.len()).sum::<usize>(),"interfaces":identities.interfaces.len(),"service_bindings":identities.interfaces.iter().map(|i|i.records.len()).sum::<usize>()},"relationships":relationships,"assertions":registry.assertions.iter().map(|s|s.assertions.len()).sum::<usize>(),"conflicts":registry.assertions.iter().flat_map(|s|&s.assertions).filter(|a|a.review == Review::Conflicted).count()}),
+        &json!({"documents":{"pages":documents.documents.len(),"failed":documents.documents.iter().filter(|d|d.error.is_some()).count(),"with_content":documents.documents.iter().filter(|d|d.content.is_some()).count(),"passages":documents.documents.iter().filter_map(|d|d.content.as_ref()).map(|c|c.extraction.passages.len()).sum::<usize>(),"claims":documents.documents.iter().filter_map(|d|d.content.as_ref()).map(|c|c.extraction.claims.len()).sum::<usize>()},"sources":sources,"task_facts":tasks,"typed_coverage":coverage,"identities":{"models":identities.models.len(),"model_records":identities.models.iter().map(|i|i.records.len()).sum::<usize>(),"interfaces":identities.interfaces.len(),"service_bindings":identities.interfaces.iter().map(|i|i.records.len()).sum::<usize>()},"relationships":relationships,"assertions":registry.assertions.iter().map(|s|s.assertions.len()).sum::<usize>(),"conflicts":registry.assertions.iter().flat_map(|s|&s.assertions).filter(|a|a.review == Review::Conflicted).count()}),
     )
 }
 
