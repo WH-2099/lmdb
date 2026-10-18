@@ -3,6 +3,9 @@ pub mod compare;
 mod content;
 mod details_asia;
 mod details_west;
+mod directories;
+mod expanded_asia;
+mod expanded_modal;
 pub mod model;
 pub mod page;
 pub mod resolve;
@@ -26,7 +29,7 @@ use std::{
 };
 use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 
-pub const EXTRACTOR_VERSION: u32 = 2;
+pub const EXTRACTOR_VERSION: u32 = 3;
 const MAX_DOCUMENT_BYTES: u64 = 8 * 1024 * 1024;
 
 pub fn is_official_url(vendor: &str, raw: &str) -> bool {
@@ -111,6 +114,22 @@ pub fn is_official_url(vendor: &str, raw: &str) -> bool {
             ],
             &["microsoft"],
         ),
+        "moonshot" => (
+            &[
+                "www.kimi.ai",
+                "www.kimi.com",
+                "platform.kimi.ai",
+                "www.moonshot.ai",
+            ],
+            &["moonshotai"],
+        ),
+        "zai" => (&["z.ai", "docs.z.ai"], &["zai-org"]),
+        "minimax" => (&["www.minimax.io", "platform.minimax.io"], &["minimaxai"]),
+        "baidu" => (&["ernie.baidu.com"], &["baidu"]),
+        "bfl" => (&["bfl.ai", "docs.bfl.ai"], &["black-forest-labs"]),
+        "stability" => (&["stability.ai"], &["stabilityai"]),
+        "wan" => (&["www.alibabacloud.com"], &["wan-ai", "wan-video"]),
+        "bytedance" => (&["seed.bytedance.com"], &["bytedance", "bytedance-seed"]),
         _ => return false,
     };
     if domains.contains(&host) {
@@ -181,17 +200,19 @@ fn validate_source(source: &PageSource) -> Result<()> {
         "{}: URL is not on the configured vendor's official domains",
         source.id
     );
-    ensure!(
-        !source.records.is_empty(),
-        "{}: explicit model records required",
-        source.id
-    );
-    let unique: BTreeSet<_> = source.records.iter().collect();
-    ensure!(
-        unique.len() == source.records.len(),
-        "{}: duplicate model binding",
-        source.id
-    );
+    if source.kind == DocumentKind::Directory {
+        ensure!(
+            source.records.is_empty(),
+            "{}: directory entries must remain unbound candidates",
+            source.id
+        );
+    } else {
+        ensure!(
+            source.records.len() == 1,
+            "{}: exactly one explicit model record is required; directory entries remain unbound",
+            source.id
+        );
+    }
     Ok(())
 }
 
@@ -229,6 +250,16 @@ pub fn extract(source: &PageSource, bytes: &[u8]) -> Result<Extraction> {
     asia::extract(source, &page, &mut out)?;
     details_west::extract(source, &page, &mut out)?;
     details_asia::extract(source, &page, &mut out)?;
+    expanded_asia::extract(source, &page, &mut out)?;
+    expanded_modal::extract(source, &page, &mut out)?;
+    directories::extract(source, &page, &mut out)?;
+    let mut linked_urls = BTreeSet::new();
+    out.links
+        .retain(|link| linked_urls.insert(link.url.clone()));
+    if out.links.len() > page::MAX_OFFICIAL_LINKS {
+        out.warnings.push(format!("Official link limit of {} reached after embedded content extraction; additional links were omitted.", page::MAX_OFFICIAL_LINKS));
+        out.links.truncate(page::MAX_OFFICIAL_LINKS);
+    }
     out.claims.sort_by(|a, b| {
         (&a.record, &a.property, &a.evidence.locator).cmp(&(
             &b.record,
@@ -236,7 +267,7 @@ pub fn extract(source: &PageSource, bytes: &[u8]) -> Result<Extraction> {
             &b.evidence.locator,
         ))
     });
-    if out.claims.is_empty() && out.passages.is_empty() {
+    if out.claims.is_empty() && out.passages.is_empty() && source.kind != DocumentKind::Directory {
         out.warnings.push("No model field extracted; page metadata and links do not establish model capabilities.".into());
     }
     out.warnings.sort();
@@ -337,6 +368,39 @@ pub fn validate(
                 ensure!(
                     is_official_url(&source.vendor, &link.url),
                     "{}: unrelated link classified official",
+                    source.id
+                );
+            }
+            ensure!(
+                content.extraction.links.len() <= page::MAX_OFFICIAL_LINKS,
+                "{}: too many official links",
+                source.id
+            );
+            let entries = &content.extraction.catalog_entries;
+            ensure!(
+                entries.is_empty() || source.kind == DocumentKind::Directory,
+                "{}: catalog entries require a directory source",
+                source.id
+            );
+            ensure!(
+                entries.len() <= 500,
+                "{}: directory exceeds the 500 entry limit",
+                source.id
+            );
+            let mut urls = BTreeSet::new();
+            for entry in entries {
+                ensure!(
+                    !entry.label.trim().is_empty()
+                        && is_official_url(&source.vendor, &entry.url)
+                        && urls.insert(&entry.url)
+                        && entry
+                            .model_id
+                            .as_ref()
+                            .is_none_or(|id| !id.trim().is_empty())
+                        && !entry.evidence.locator.is_empty()
+                        && !entry.evidence.excerpt.is_empty()
+                        && entry.evidence.excerpt.chars().count() <= 240,
+                    "{}: invalid or duplicate directory entry",
                     source.id
                 );
             }
@@ -475,7 +539,17 @@ pub async fn sync(root: &Path, vendor: Option<&str>) -> Result<DocumentCatalog> 
             Ok(content) => (Some(content), None),
             Err(error) => {
                 eprintln!("{}: {error:#}", source.id);
-                (previous.and_then(|d| d.content), Some(format!("{error:#}")))
+                let mut retained = previous.and_then(|d| d.content);
+                if let Some(content) = retained.as_mut()
+                    && content.extraction.extractor_version != EXTRACTOR_VERSION
+                {
+                    validate_snapshot(&source, &content.snapshot)?;
+                    let bytes = read_raw(&cache, &content.snapshot.sha256).with_context(|| {
+                        format!("{}: cached body required to upgrade retained extraction after fetch failure", source.id)
+                    })?;
+                    content.extraction = extract(&source, &bytes)?;
+                }
+                (retained, Some(format!("{error:#}")))
             }
         };
         documents.push(PageDocument {
@@ -622,5 +696,27 @@ mod tests {
                 .contains("official domains")
         );
         Ok(())
+    }
+
+    #[test]
+    fn content_pages_cannot_fan_out_to_multiple_models_and_directories_cannot_bind_models() {
+        let mut source = PageSource {
+            id: "microsoft-phi4-card".into(),
+            vendor: "microsoft".into(),
+            kind: DocumentKind::ModelCard,
+            url: "https://huggingface.co/microsoft/phi-4/raw/main/README.md".into(),
+            format: Format::Markdown,
+            records: vec![
+                "huggingface:model:microsoft/phi-4".into(),
+                "huggingface:model:microsoft/Phi-4-mini-instruct".into(),
+            ],
+        };
+        assert!(validate_source(&source).is_err());
+        source.records.pop();
+        assert!(validate_source(&source).is_ok());
+        source.kind = DocumentKind::Directory;
+        assert!(validate_source(&source).is_err());
+        source.records.clear();
+        assert!(validate_source(&source).is_ok());
     }
 }

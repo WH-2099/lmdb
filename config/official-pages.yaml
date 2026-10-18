@@ -1,4 +1,4 @@
-# Explicit model bindings and canonical anonymous URLs.
+# Explicit model bindings; directory entries remain unbound candidates.
 schema_version: 1
 pages:
 - id: openai-gpt41-blog
@@ -77,7 +77,6 @@ pages:
   url: https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/
   format: html
   records:
-  - modelsdev:model:amazon/nova-pro
   - modelsdev:model:amazon/nova-pro-v1
 - id: amazon-nova-doc
   vendor: amazon
@@ -85,7 +84,6 @@ pages:
   url: https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html
   format: html
   records:
-  - modelsdev:model:amazon/nova-pro
   - modelsdev:model:amazon/nova-pro-v1
 - id: deepseek-blog
   vendor: deepseek
@@ -150,7 +148,6 @@ pages:
   format: html
   records:
   - modelsdev:model:nvidia/nemotron-3-super-120b-a12b
-  - huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
 - id: west-mistral-blog
   vendor: mistral
   kind: release_blog
@@ -193,3 +190,197 @@ pages:
   format: markdown
   records:
   - huggingface:model:microsoft/phi-4
+- id: kimi-k3-card
+  vendor: moonshot
+  kind: model_card
+  url: https://huggingface.co/moonshotai/Kimi-K3/raw/f831ab66814297da540d832a5235f8e904f29d06/README.md
+  format: markdown
+  records:
+  - huggingface:model:moonshotai/Kimi-K3
+- id: kimi-k3-blog
+  vendor: moonshot
+  kind: release_blog
+  url: https://www.kimi.ai/blog/kimi-k3
+  format: html
+  records:
+  - modelsdev:model:moonshotai/kimi-k3
+- id: glm-5-3-card
+  vendor: zai
+  kind: model_card
+  url: https://huggingface.co/zai-org/GLM-5.3/raw/ba32f8c19c8738e2c57c71798c601d477a7bf844/README.md
+  format: markdown
+  records:
+  - huggingface:model:zai-org/GLM-5.3
+- id: glm-5-3-detail
+  vendor: zai
+  kind: model_page
+  url: https://docs.z.ai/guides/llm/glm-5.3.md
+  format: markdown
+  records:
+  - modelsdev:model:zhipuai/glm-5.3
+- id: minimax-m3-card
+  vendor: minimax
+  kind: model_card
+  url: https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/f0e1c1e04d40177e4673a22097036854f536e9c0/README.md
+  format: markdown
+  records:
+  - huggingface:model:MiniMaxAI/MiniMax-M3
+- id: minimax-m3-detail
+  vendor: minimax
+  kind: model_page
+  url: https://www.minimax.io/models/text/m3
+  format: html
+  records:
+  - modelsdev:model:minimax/MiniMax-M3
+- id: minimax-m3-release
+  vendor: minimax
+  kind: release_blog
+  url: https://www.minimax.io/blog/minimax-m3
+  format: html
+  records:
+  - modelsdev:model:minimax/MiniMax-M3
+- id: minimax-m21-release
+  vendor: minimax
+  kind: release_blog
+  url: https://www.minimax.io/news/minimax-m21
+  format: html
+  records:
+  - modelsdev:model:minimax/MiniMax-M2.1
+- id: baidu-release
+  vendor: baidu
+  kind: release_blog
+  url: https://ernie.baidu.com/blog/posts/ernie4.5/
+  format: html
+  records:
+  - modelsdev:model:baidu/ernie-4.5-21b-a3b
+- id: baidu-21b-card
+  vendor: baidu
+  kind: model_card
+  url: https://huggingface.co/baidu/ERNIE-4.5-21B-A3B-PT/raw/87db95487941cb39592ee0abca3b9155a6d19c5c/README.md
+  format: markdown
+  records:
+  - modelsdev:model:baidu/ernie-4.5-21b-a3b
+- id: modal-bfl-flux2-blog
+  vendor: bfl
+  kind: release_blog
+  url: https://bfl.ai/blog/flux-2
+  format: html
+  records:
+  - huggingface:model:black-forest-labs/FLUX.2-dev
+- id: modal-stability-sd35-blog
+  vendor: stability
+  kind: release_blog
+  url: https://stability.ai/news-updates/introducing-stable-diffusion-3-5
+  format: html
+  records:
+  - huggingface:model:stabilityai/stable-diffusion-3.5-large
+- id: modal-stability-audio-blog
+  vendor: stability
+  kind: release_blog
+  url: https://stability.ai/news-updates/stable-audio-open-research-paper
+  format: html
+  records:
+  - huggingface:model:stabilityai/stable-audio-open-1.0
+- id: modal-wan22-card
+  vendor: wan
+  kind: model_card
+  url: https://huggingface.co/Wan-AI/Wan2.2-T2V-A14B/raw/c8c270b13ee05bfa474194ac9fb07a5868a97cea/README.md
+  format: markdown
+  records:
+  - huggingface:model:Wan-AI/Wan2.2-T2V-A14B
+- id: modal-wan22-blog
+  vendor: wan
+  kind: release_blog
+  url: https://www.alibabacloud.com/blog/alibaba-releases-wan2-2-to-uplift-cinematic-video-production_602413
+  format: html
+  records:
+  - huggingface:model:Wan-AI/Wan2.2-T2V-A14B
+- id: modal-seedance25-blog
+  vendor: bytedance
+  kind: release_blog
+  url: https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5
+  format: html
+  records:
+  - modelsdev:model:bytedance-seed/seedance-2.5
+- id: modal-bfl-flux2-card-public
+  vendor: bfl
+  kind: model_card
+  url: https://huggingface.co/black-forest-labs/FLUX.2-dev
+  format: html
+  records:
+  - huggingface:model:black-forest-labs/FLUX.2-dev
+- id: modal-stability-sd35-card-public
+  vendor: stability
+  kind: model_card
+  url: https://huggingface.co/stabilityai/stable-diffusion-3.5-large
+  format: html
+  records:
+  - huggingface:model:stabilityai/stable-diffusion-3.5-large
+- id: modal-stability-audio-card-public
+  vendor: stability
+  kind: model_card
+  url: https://huggingface.co/stabilityai/stable-audio-open-1.0
+  format: html
+  records:
+  - huggingface:model:stabilityai/stable-audio-open-1.0
+- id: modal-seedance25-model
+  vendor: bytedance
+  kind: model_page
+  url: https://seed.bytedance.com/en/seedance2_5
+  format: html
+  records:
+  - modelsdev:model:bytedance-seed/seedance-2.5
+- id: google-model-directory
+  vendor: google
+  kind: directory
+  url: https://ai.google.dev/gemini-api/docs/models
+  format: html
+  records: []
+- id: anthropic-model-directory
+  vendor: anthropic
+  kind: directory
+  url: https://www.anthropic.com/news
+  format: html
+  records: []
+- id: qwen-blog-directory
+  vendor: qwen
+  kind: directory
+  url: https://qwenlm.github.io/blog/
+  format: html
+  records: []
+- id: mistral-model-directory
+  vendor: mistral
+  kind: directory
+  url: https://mistral.ai/research/
+  format: html
+  records: []
+- id: kimi-model-directory
+  vendor: moonshot
+  kind: directory
+  url: https://www.kimi.ai/ai-models/
+  format: html
+  records: []
+- id: zai-model-directory
+  vendor: zai
+  kind: directory
+  url: https://docs.z.ai/llms.txt
+  format: markdown
+  records: []
+- id: seed-model-directory
+  vendor: bytedance
+  kind: directory
+  url: https://seed.bytedance.com/en/models
+  format: html
+  records: []
+- id: stability-model-directory
+  vendor: stability
+  kind: directory
+  url: https://stability.ai/core-models
+  format: html
+  records: []
+- id: wan-model-directory
+  vendor: wan
+  kind: directory
+  url: https://raw.githubusercontent.com/Wan-Video/Wan2.2/main/README.md
+  format: markdown
+  records: []

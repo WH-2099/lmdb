@@ -5,6 +5,7 @@ YAML 保存来源目录、人工身份映射与条件声明，JSON 提供保留�
 任务、模态、限制、参数、能力和价格从原始事实派生为有类型的领域视图（profile），支持字段筛选、显式关系查询和条件求值。
 每个目录导入字段保留来源快照与 JSON Pointer，便于回溯原始响应。
 官方发布博客、模型卡和详情页保存完整选定段落与带作用域的声明，可交叉核对目录字段并按来源优先级选择模型元数据。
+官方目录页保存带来源定位的候选链接，便于审查后补充型号与页面清单。
 当前格式为 `schema_version: 1`，仍处于早期维护阶段。
 
 ## 开始使用
@@ -31,6 +32,7 @@ cargo run --release --locked -- export --output dist/registry.json
 ```text
 cargo run --release --locked -- sync
 cargo run --release --locked -- sync --source modelsdev,openrouter
+cargo run --release --locked -- sync --source vercel
 cargo run --release --locked -- sync --source official
 cargo run --release --locked -- documents resolve huggingface:model:Qwen/Qwen3-8B
 cargo run --release --locked -- sync --source huggingface --source modelscope
@@ -38,9 +40,9 @@ cargo run --release --locked -- validate --evidence
 cargo run --release --locked -- schema --check
 ```
 
-默认同步 `modelsdev`、`huggingface`、`modelscope`、`openrouter`、`official` 五个公开来源。
+默认同步 `modelsdev`、`huggingface`、`modelscope`、`openrouter`、`vercel`、`official` 六个公开来源。
 Hugging Face 和 ModelScope 只同步配置中明确列出的模型；`discover` 将有数量上限的公开候选写入报告，审查后再加入清单。
-`sources` 读取 `config/sources.yaml` 中 13 个来源的覆盖范围、认证约定和条款状态，列出约定时不读取凭据。
+`sources` 读取 `config/sources.yaml` 中 14 个来源的覆盖范围、认证约定和条款状态，其中 6 个公开来源、8 个认证来源，列出约定时不读取凭据。
 认证来源需要同时指定 `--source NAME` 与 `--authenticated`，本轮未进行真实认证采集。
 目录同步逐来源保存成功结果；失败来源保留旧目录，命令最终以非零状态报告失败。
 官方页面按页记录失败；同一来源定义下保留的旧内容会显式标记过期。
@@ -54,39 +56,32 @@ Hugging Face 和 ModelScope 只同步配置中明确列出的模型；`discover`
 
 ## 当前数据如何理解
 
-截至 2026-10-16，公开采集得到以下来源记录，已通过全量本地缓存证据校验。
-这些是本次采集统计，后续以 `stats` 的输出为准。
-
-| 来源 | 模型记录 | 服务记录 |
-| --- | ---: | ---: |
-| models.dev | 556 | 8,966 |
-| Hugging Face | 151 | 0 |
-| ModelScope | 22 | 0 |
-| OpenRouter | 0 | 678 |
-| 合计 | 729 | 9,644 |
-
-共 10,373 条来源记录，另有 34 条人工条件声明，其中 2 条保留来源冲突。
-人工身份集合包含 23 个模型身份、36 条模型记录，以及 1 个接口身份、2 条服务绑定。
-这些身份只覆盖已审查的成员，不能用于估算全库去重后的模型总数。
+`stats` 返回本地各来源的模型记录、服务记录与同步状态，以及官方页面、人工条件声明和身份集合的数量。
+来源记录、目录候选和人工身份各有计数范围，不能相加为去重后的模型总数。
+身份集合只覆盖已审查的成员。
+官方页面清单包含 20 个厂商的 56 个页面，其中 9 个为目录页；配置数量不代表成功采集数量。
 
 | 内容 | 范围 |
 | --- | --- |
 | models.dev | 模型目录与服务条目，保留上游明确的模型关联 |
 | Hugging Face、ModelScope | 精选仓库的身份、任务、谱系、许可及版本信息 |
 | OpenRouter | 平台目录中的模态、限制、参数与价格原值 |
+| Vercel AI Gateway | 匿名公开路由目录中的服务记录，保存类型、模态、限制、参数、价格与平台声明 |
 | 领域视图（profile） | 任务与模态标签、限制、参数、能力和价格结构，每个派生值保留事实定位 |
-| 官方页面 | 选定 12 个厂商的 27 个页面，保存原文段落、页面元数据、链接、带作用域的声明、比较与字段选择结果 |
+| 官方页面 | 按清单采集发布博客、模型卡、详情页与文档，保存原文段落、声明、比较与字段选择结果 |
+| 官方目录页 | 厂商型号、发布博客和下载索引中的候选链接，保存页面快照与链接定位，审查后再补充模型绑定 |
 | 人工条件声明 | 官方文档中的角色、功能组合、音视频、检索及专业模型限制，条件求值保留未知和冲突 |
 | 身份与关系 | 精确成员映射、接口绑定，以及有来源证据的服务、引用和派生关系 |
 | 认证适配器 | 请求说明、字段映射和分页实现，使用合成响应验证，在线访问仍待验证 |
 
 模型的输入输出、上下文和能力筛选可使用已选官方字段，限定或冲突字段保留状态，服务仍使用自己的平台事实。
 原始 `facts` 与 `profile` 保留目录声明，`resolved_metadata` 单独呈现字段选择与全部候选。
+Vercel AI Gateway 的记录 ID 为 `vercel:service:<上游 ID>`，不根据路由名称推断模型关联。
+其 `pricing` 保留原始结构和证据，当前未确认币种与计费口径，价格视图将这些字段保存在 `unclassified`。
 
 记录 ID 包含来源和类型，同一模型在不同来源出现时会有多个记录。
 统计数字表示来源记录数，不能视为跨来源去重后的模型总量。
 来源本轮未返回的旧记录会保留，`last_sync` 独立记录本次返回、缺席和采集快照。
-本轮 models.dev 返回 9,496 条记录、保留 26 条缺席服务，OpenRouter 返回 676 条、保留 2 条缺席服务。
 缺席不表示退役，目录中存在某条记录也不证明模型仍可调用。
 字段未变化时保留旧证据，快照日期表示该证据的获取时间，最近同步时间从 `last_sync.completed_at` 读取。
 
@@ -101,8 +96,8 @@ FAST 的 `robotics` 任务标签表示领域归类，其角色应连同声明读
 | [领域字段](docs/domain-fields.md) | profile、任务标签、计量单位、价格和字段筛选 |
 | [身份与关系](docs/relationships.md) | 精确成员、接口绑定、显式关系和缺失目标 |
 | [规则查询](docs/rule-queries.md) | 三值条件匹配、请求上下文、未知与冲突 |
-| [官方页面与字段核对](docs/official-documents.md) | 完整段落、字段作用域、来源优先级、离线重解析与证据 |
-| [候选发现](docs/discovery.md) | 匿名发现规则、预算、报告和种子审查 |
+| [官方页面与字段核对](docs/official-documents.md) | 完整段落、目录候选、字段作用域、来源优先级、离线重解析与证据 |
+| [候选发现](docs/discovery.md) | 公开仓库发现规则、官方目录候选、预算和种子审查 |
 | [专业模型](docs/specialized-models.md) | 机器人、蛋白结构、医疗分割与 tokenizer 的具体样本 |
 | [维护流程](docs/maintenance.md) | 命令、更新、校验、缓存、依赖与来源许可 |
 | [条件声明](docs/assertions.md) | 人工证据、状态、条件与实际样本的解释 |
@@ -122,7 +117,7 @@ lmdb/
 ├── data/
 │   ├── catalogs/            每个来源一个 YAML 目录
 │   ├── assertions/          人工审查的条件声明
-│   ├── documents/           官方页面元数据、选定段落与声明
+│   ├── documents/           官方页面元数据、目录候选、选定段落与声明
 │   └── identities/          模型身份与接口绑定证据
 ├── schemas/                 由 Rust 类型生成的 JSON Schema
 ├── tests/fixtures/          合成响应与回归样本

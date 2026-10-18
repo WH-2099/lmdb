@@ -1,7 +1,7 @@
 schema_version: 1
 source: openrouter
 last_sync:
-  completed_at: "2026-10-16T07:12:38.731712445Z"
+  completed_at: "2026-10-18T19:48:34.422784319Z"
   returned_ids:
   - openrouter:service:aion-labs/aion-2.0
   - openrouter:service:aion-labs/aion-3.0
@@ -114,6 +114,7 @@ last_sync:
   - openrouter:service:deepseek/deepseek-v4-pro
   - openrouter:service:deepseek/deepseek-v4-pro-0813
   - openrouter:service:deepseek/deepseek-v4.1-flash
+  - openrouter:service:deepseek/deepseek-v4.1-flash-1017
   - openrouter:service:deepseek/deepseek-v4.1-flash:batch
   - openrouter:service:dots-studio/dots-3-note-preview:free
   - openrouter:service:elevenlabs/eleven-flash-v2
@@ -127,6 +128,7 @@ last_sync:
   - openrouter:service:elevenlabs/eleven-v4-turbo
   - openrouter:service:elevenlabs/scribe-v2
   - openrouter:service:elevenlabs/scribe-v2-medical
+  - openrouter:service:elorian/glimpse
   - openrouter:service:fireworks/ember-1
   - openrouter:service:fish-audio/drama-3
   - openrouter:service:fish-audio/s1
@@ -469,7 +471,8 @@ last_sync:
   - openrouter:service:openrouter/pareto-code
   - openrouter:service:perceptron/perceptron-mk1
   - openrouter:service:perceptron/perceptron-mk1.5
-  - openrouter:service:perplexity/pplx-decider-v1.1-27b
+  - openrouter:service:perplexity/pplx-decider-flash-v1.2
+  - openrouter:service:perplexity/pplx-decider-v1.2
   - openrouter:service:perplexity/pplx-embed-v1-0.6b
   - openrouter:service:perplexity/pplx-embed-v1-4b
   - openrouter:service:perplexity/sonar
@@ -487,6 +490,8 @@ last_sync:
   - openrouter:service:qwen/qwen-2.5-coder-32b-instruct
   - openrouter:service:qwen/qwen-audio-3.0-tts-flash
   - openrouter:service:qwen/qwen-audio-3.0-tts-plus
+  - openrouter:service:qwen/qwen-image-2.1-pro
+  - openrouter:service:qwen/qwen-image-2.1-turbo
   - openrouter:service:qwen/qwen-image-3
   - openrouter:service:qwen/qwen-image-3-pro
   - openrouter:service:qwen/qwen-plus
@@ -527,6 +532,7 @@ last_sync:
   - openrouter:service:qwen/qwen3.7-flash
   - openrouter:service:qwen/qwen3.7-max
   - openrouter:service:qwen/qwen3.7-plus
+  - openrouter:service:qwen/qwen3.7-plus:batch
   - openrouter:service:qwen/qwen3.8-2.4t-a95b
   - openrouter:service:qwen/qwen3.8-27b
   - openrouter:service:qwen/qwen3.8-flash
@@ -549,6 +555,7 @@ last_sync:
   - openrouter:service:recraft/recraft-v4.1-utility
   - openrouter:service:recraft/recraft-v4.1-utility-pro
   - openrouter:service:recraft/recraft-v4.1-vector
+  - openrouter:service:reflection/beam-1.0-501b-a23b
   - openrouter:service:rekaai/reka-edge
   - openrouter:service:rekaai/reka-flash-3
   - openrouter:service:relace/relace-apply-3
@@ -603,6 +610,7 @@ last_sync:
   - openrouter:service:typesafe/jev-1.13
   - openrouter:service:typesafe/jev-1.14
   - openrouter:service:typesafe/jev-router
+  - openrouter:service:unbiased/pareto-26.10
   - openrouter:service:unbiased/pareto-26.9
   - openrouter:service:undi95/remm-slerp-l2-13b
   - openrouter:service:upstage/solar-decide
@@ -640,6 +648,7 @@ last_sync:
   - openrouter:service:xiaomi/mimo-v2.6-flash
   - openrouter:service:xiaomi/mimo-v2.6-pro
   - openrouter:service:xiaomi/mimo-v2.6-pro-ultraspeed
+  - openrouter:service:xingchen-agi/xing4.0-29b-a4b:free
   - openrouter:service:z-ai/glm-4.5
   - openrouter:service:z-ai/glm-4.5-air
   - openrouter:service:z-ai/glm-4.5v
@@ -673,6 +682,7 @@ last_sync:
   - openrouter:service:~openai/gpt-mini-latest
   - openrouter:service:~openai/gpt-sol-latest
   - openrouter:service:~openai/gpt-terra-latest
+  - openrouter:service:~perplexity/pplx-decider-flash-latest
   - openrouter:service:~perplexity/pplx-decider-latest
   - openrouter:service:~typesafe/jev-latest
   - openrouter:service:~unbiased/pareto-latest
@@ -681,9 +691,10 @@ last_sync:
   - openrouter:service:~z-ai/glm-latest
   missing_ids:
   - openrouter:service:anthropic/claude-sonnet-4
+  - openrouter:service:perplexity/pplx-decider-v1.1-27b
   - openrouter:service:unbiased/pareto-26.10-preview
   snapshot_ids:
-  - openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
+  - openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
 snapshots:
 - schema_version: 1
   id: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
@@ -691,6 +702,12 @@ snapshots:
   url: https://openrouter.ai/api/v1/models?output_modalities=all&limit=1000
   retrieved_at: "2026-10-15T08:22:11.250994267Z"
   sha256: 809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
+- schema_version: 1
+  id: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+  source: openrouter
+  url: https://openrouter.ai/api/v1/models?output_modalities=all&limit=1000
+  retrieved_at: "2026-10-18T19:48:34.288727525Z"
+  sha256: c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
 - schema_version: 1
   id: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
   source: openrouter
@@ -1338,44 +1355,46 @@ records:
   upstream_id: alibaba/wan-3.0
   name: "Alibaba: Wan 3.0"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/149
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/166
   facts:
     canonical_slug:
       value: alibaba/wan-3.0-20260824
-      pointer: /data/149/canonical_slug
+      pointer: /data/166/canonical_slug
     catalog_created_at:
       value: 1787603856
-      pointer: /data/149/created
+      pointer: /data/166/created
       unit: unix_seconds
     context_window:
       value: 0
-      pointer: /data/149/context_length
+      pointer: /data/166/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/149/default_parameters
+      pointer: /data/166/default_parameters
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/149/architecture/input_modalities
+      - video
+      - audio
+      pointer: /data/166/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/149/top_provider/is_moderated
+      pointer: /data/166/top_provider/is_moderated
     max_output_tokens:
       value: 0
-      pointer: /data/149/top_provider/max_completion_tokens
+      pointer: /data/166/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - video
-      pointer: /data/149/architecture/output_modalities
+      pointer: /data/166/architecture/output_modalities
     pricing:
       value:
         completion: "0"
         prompt: "0"
-      pointer: /data/149/pricing
+      pointer: /data/166/pricing
     supported_parameters:
       value:
       - max_tokens
@@ -1384,13 +1403,13 @@ records:
       - seed
       - temperature
       - top_p
-      pointer: /data/149/supported_parameters
+      pointer: /data/166/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/149/architecture/tokenizer
+      pointer: /data/166/architecture/tokenizer
     top_provider_context_window:
       value: 0
-      pointer: /data/149/top_provider/context_length
+      pointer: /data/166/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -1399,44 +1418,46 @@ records:
   upstream_id: alibaba/wan-3.0-prime
   name: "Alibaba: Wan 3.0 Prime"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/139
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/156
   facts:
     canonical_slug:
       value: alibaba/wan-3.0-prime-20260827
-      pointer: /data/139/canonical_slug
+      pointer: /data/156/canonical_slug
     catalog_created_at:
       value: 1787863800
-      pointer: /data/139/created
+      pointer: /data/156/created
       unit: unix_seconds
     context_window:
       value: 0
-      pointer: /data/139/context_length
+      pointer: /data/156/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/139/default_parameters
+      pointer: /data/156/default_parameters
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/139/architecture/input_modalities
+      - video
+      - audio
+      pointer: /data/156/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/139/top_provider/is_moderated
+      pointer: /data/156/top_provider/is_moderated
     max_output_tokens:
       value: 0
-      pointer: /data/139/top_provider/max_completion_tokens
+      pointer: /data/156/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - video
-      pointer: /data/139/architecture/output_modalities
+      pointer: /data/156/architecture/output_modalities
     pricing:
       value:
         completion: "0"
         prompt: "0"
-      pointer: /data/139/pricing
+      pointer: /data/156/pricing
     supported_parameters:
       value:
       - max_tokens
@@ -1445,13 +1466,13 @@ records:
       - seed
       - temperature
       - top_p
-      pointer: /data/139/supported_parameters
+      pointer: /data/156/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/139/architecture/tokenizer
+      pointer: /data/156/architecture/tokenizer
     top_provider_context_window:
       value: 0
-      pointer: /data/139/top_provider/context_length
+      pointer: /data/156/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -4010,40 +4031,40 @@ records:
   upstream_id: anthropic/claude-sonnet-5.5
   name: "Anthropic: Claude Sonnet 5.5"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/59
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/76
   facts:
     canonical_slug:
       value: anthropic/claude-sonnet-5.5-20260928
-      pointer: /data/59/canonical_slug
+      pointer: /data/76/canonical_slug
     catalog_created_at:
       value: 1790618686
-      pointer: /data/59/created
+      pointer: /data/76/created
       unit: unix_seconds
     context_window:
       value: 1000000
-      pointer: /data/59/context_length
+      pointer: /data/76/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/59/default_parameters
+      pointer: /data/76/default_parameters
     input_modalities:
       value:
       - text
       - image
       - file
-      pointer: /data/59/architecture/input_modalities
+      pointer: /data/76/architecture/input_modalities
     is_moderated:
-      value: true
-      pointer: /data/59/top_provider/is_moderated
+      value: false
+      pointer: /data/76/top_provider/is_moderated
     max_output_tokens:
       value: 128000
-      pointer: /data/59/top_provider/max_completion_tokens
+      pointer: /data/76/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/59/architecture/output_modalities
+      pointer: /data/76/architecture/output_modalities
     pricing:
       value:
         completion: "0.00001"
@@ -4052,7 +4073,7 @@ records:
         input_cache_write_1h: "0.000004"
         prompt: "0.000002"
         web_search: "0.01"
-      pointer: /data/59/pricing
+      pointer: /data/76/pricing
     supported_parameters:
       value:
       - include_reasoning
@@ -4066,13 +4087,13 @@ records:
       - tool_choice
       - tools
       - verbosity
-      pointer: /data/59/supported_parameters
+      pointer: /data/76/supported_parameters
     tokenizer:
       value: Claude
-      pointer: /data/59/architecture/tokenizer
+      pointer: /data/76/architecture/tokenizer
     top_provider_context_window:
       value: 1000000
-      pointer: /data/59/top_provider/context_length
+      pointer: /data/76/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -6388,56 +6409,56 @@ records:
   upstream_id: cloudflare/clef-flash
   name: "Cloudflare: Clef Flash"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/53
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/62
   facts:
     canonical_slug:
       value: cloudflare/clef-flash
-      pointer: /data/53/canonical_slug
+      pointer: /data/62/canonical_slug
     catalog_created_at:
       value: 1790870973
-      pointer: /data/53/created
+      pointer: /data/62/created
       unit: unix_seconds
     context_window:
       value: 24576
-      pointer: /data/53/context_length
+      pointer: /data/62/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/53/default_parameters
+      pointer: /data/62/default_parameters
     hugging_face_id:
       value: Cloudflare/clef-flash
-      pointer: /data/53/hugging_face_id
+      pointer: /data/62/hugging_face_id
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/53/architecture/input_modalities
+      pointer: /data/62/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/53/top_provider/is_moderated
+      pointer: /data/62/top_provider/is_moderated
     max_output_tokens:
-      value: 14745
-      pointer: /data/53/top_provider/max_completion_tokens
+      value: 22118
+      pointer: /data/62/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - decisions
-      pointer: /data/53/architecture/output_modalities
+      pointer: /data/62/architecture/output_modalities
     pricing:
       value:
         completion: "0"
-        prompt: "0.000000021"
-      pointer: /data/53/pricing
+        prompt: "0.000000038"
+      pointer: /data/62/pricing
     supported_parameters:
       value: []
-      pointer: /data/53/supported_parameters
+      pointer: /data/62/supported_parameters
     tokenizer:
       value: Qwen
-      pointer: /data/53/architecture/tokenizer
+      pointer: /data/62/architecture/tokenizer
     top_provider_context_window:
-      value: 16384
-      pointer: /data/53/top_provider/context_length
+      value: 24576
+      pointer: /data/62/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -7482,49 +7503,49 @@ records:
   upstream_id: deepseek/deepseek-chat
   name: "DeepSeek: DeepSeek V3"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/627
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/637
   facts:
     canonical_slug:
       value: deepseek/deepseek-chat-v3
-      pointer: /data/627/canonical_slug
+      pointer: /data/637/canonical_slug
     catalog_created_at:
       value: 1735241320
-      pointer: /data/627/created
+      pointer: /data/637/created
       unit: unix_seconds
     context_window:
       value: 163840
-      pointer: /data/627/context_length
+      pointer: /data/637/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/627/default_parameters
+      pointer: /data/637/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V3
-      pointer: /data/627/hugging_face_id
+      pointer: /data/637/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/627/architecture/input_modalities
+      pointer: /data/637/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/627/top_provider/is_moderated
+      pointer: /data/637/top_provider/is_moderated
     knowledge_cutoff:
       value: "2024-07-31"
-      pointer: /data/627/knowledge_cutoff
+      pointer: /data/637/knowledge_cutoff
     max_output_tokens:
-      value: 16000
-      pointer: /data/627/top_provider/max_completion_tokens
+      value: 16384
+      pointer: /data/637/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/627/architecture/output_modalities
+      pointer: /data/637/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000010287"
-        prompt: "0.0000002574"
-      pointer: /data/627/pricing
+        completion: "0.00000089"
+        prompt: "0.00000032"
+      pointer: /data/637/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -7542,13 +7563,13 @@ records:
       - tools
       - top_k
       - top_p
-      pointer: /data/627/supported_parameters
+      pointer: /data/637/supported_parameters
     tokenizer:
       value: DeepSeek
-      pointer: /data/627/architecture/tokenizer
+      pointer: /data/637/architecture/tokenizer
     top_provider_context_window:
-      value: 128000
-      pointer: /data/627/top_provider/context_length
+      value: 163840
+      pointer: /data/637/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -7960,19 +7981,19 @@ records:
   upstream_id: deepseek/deepseek-v3.2
   name: "DeepSeek: DeepSeek V3.2"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/471
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/489
   facts:
     canonical_slug:
       value: deepseek/deepseek-v3.2-20251201
-      pointer: /data/471/canonical_slug
+      pointer: /data/489/canonical_slug
     catalog_created_at:
       value: 1764594642
-      pointer: /data/471/created
+      pointer: /data/489/created
       unit: unix_seconds
     context_window:
       value: 163840
-      pointer: /data/471/context_length
+      pointer: /data/489/context_length
       unit: tokens
     default_parameters:
       value:
@@ -7982,31 +8003,31 @@ records:
         temperature: 1
         top_k: null
         top_p: 0.95
-      pointer: /data/471/default_parameters
+      pointer: /data/489/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V3.2
-      pointer: /data/471/hugging_face_id
+      pointer: /data/489/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/471/architecture/input_modalities
+      pointer: /data/489/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/471/top_provider/is_moderated
+      pointer: /data/489/top_provider/is_moderated
     max_output_tokens:
-      value: 147456
-      pointer: /data/471/top_provider/max_completion_tokens
+      value: 65536
+      pointer: /data/489/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/471/architecture/output_modalities
+      pointer: /data/489/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000008"
-        input_cache_read: "0.00000014"
-        prompt: "0.000000259"
-      pointer: /data/471/pricing
+        completion: "0.00000042"
+        input_cache_read: "0.000000028"
+        prompt: "0.00000028"
+      pointer: /data/489/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -8028,13 +8049,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/471/supported_parameters
+      pointer: /data/489/supported_parameters
     tokenizer:
       value: DeepSeek
-      pointer: /data/471/architecture/tokenizer
+      pointer: /data/489/architecture/tokenizer
     top_provider_context_window:
-      value: 163840
-      pointer: /data/471/top_provider/context_length
+      value: 131072
+      pointer: /data/489/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -8200,47 +8221,47 @@ records:
   upstream_id: deepseek/deepseek-v4-flash-0731
   name: "DeepSeek: DeepSeek V4 Flash 0731"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/203
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/212
   facts:
     canonical_slug:
       value: deepseek/deepseek-v4-flash-20260731
-      pointer: /data/203/canonical_slug
+      pointer: /data/212/canonical_slug
     catalog_created_at:
       value: 1785478908
-      pointer: /data/203/created
+      pointer: /data/212/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/203/context_length
+      pointer: /data/212/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/203/default_parameters
+      pointer: /data/212/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V4-Flash-0731
-      pointer: /data/203/hugging_face_id
+      pointer: /data/212/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/203/architecture/input_modalities
+      pointer: /data/212/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/203/top_provider/is_moderated
+      pointer: /data/212/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/203/top_provider/max_completion_tokens
+      pointer: /data/212/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/203/architecture/output_modalities
+      pointer: /data/212/architecture/output_modalities
     pricing:
       value:
-        completion: "0.00000064"
-        input_cache_read: "0.0000000094"
-        prompt: "0.0000000094"
-      pointer: /data/203/pricing
+        completion: "0.00000045"
+        input_cache_read: "0.0000000114"
+        prompt: "0.0000000114"
+      pointer: /data/212/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -8265,16 +8286,16 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/203/supported_parameters
+      pointer: /data/212/supported_parameters
     supported_voices:
       value: []
-      pointer: /data/203/supported_voices
+      pointer: /data/212/supported_voices
     tokenizer:
       value: DeepSeek
-      pointer: /data/203/architecture/tokenizer
+      pointer: /data/212/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/203/top_provider/context_length
+      pointer: /data/212/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -8362,49 +8383,49 @@ records:
   upstream_id: deepseek/deepseek-v4-pro
   name: "DeepSeek: DeepSeek V4 Pro 0423"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/348
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/366
   facts:
     canonical_slug:
       value: deepseek/deepseek-v4-pro-20260423
-      pointer: /data/348/canonical_slug
+      pointer: /data/366/canonical_slug
     catalog_created_at:
       value: 1777000679
-      pointer: /data/348/created
+      pointer: /data/366/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/348/context_length
+      pointer: /data/366/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 1
-      pointer: /data/348/default_parameters
+      pointer: /data/366/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V4-Pro
-      pointer: /data/348/hugging_face_id
+      pointer: /data/366/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/348/architecture/input_modalities
+      pointer: /data/366/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/348/top_provider/is_moderated
+      pointer: /data/366/top_provider/is_moderated
     max_output_tokens:
       value: 384000
-      pointer: /data/348/top_provider/max_completion_tokens
+      pointer: /data/366/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/348/architecture/output_modalities
+      pointer: /data/366/architecture/output_modalities
     pricing:
       value:
-        completion: "0.00000191052"
-        input_cache_read: "0.000000079605"
-        prompt: "0.00000095526"
-      pointer: /data/348/pricing
+        completion: "0.0000004176"
+        input_cache_read: "0.0000000174"
+        prompt: "0.0000002088"
+      pointer: /data/366/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -8428,13 +8449,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/348/supported_parameters
+      pointer: /data/366/supported_parameters
     tokenizer:
       value: DeepSeek
-      pointer: /data/348/architecture/tokenizer
+      pointer: /data/366/architecture/tokenizer
     top_provider_context_window:
       value: 1024000
-      pointer: /data/348/top_provider/context_length
+      pointer: /data/366/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -8443,111 +8464,49 @@ records:
   upstream_id: deepseek/deepseek-v4-pro-0813
   name: "DeepSeek: DeepSeek V4 Pro 0813"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/187
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/196
   facts:
     canonical_slug:
       value: deepseek/deepseek-v4-pro-20260813
-      pointer: /data/187/canonical_slug
+      pointer: /data/196/canonical_slug
     catalog_created_at:
       value: 1786549364
-      pointer: /data/187/created
+      pointer: /data/196/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/187/context_length
+      pointer: /data/196/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 1
-      pointer: /data/187/default_parameters
+      pointer: /data/196/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V4-Pro-0813
-      pointer: /data/187/hugging_face_id
+      pointer: /data/196/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/187/architecture/input_modalities
+      pointer: /data/196/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/187/top_provider/is_moderated
+      pointer: /data/196/top_provider/is_moderated
     max_output_tokens:
-      value: 393216
-      pointer: /data/187/top_provider/max_completion_tokens
+      value: 384000
+      pointer: /data/196/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/187/architecture/output_modalities
+      pointer: /data/196/architecture/output_modalities
     pricing:
       value:
         completion: "0.00000198"
         input_cache_read: "0.000000022"
-        overrides:
-        - completion: "0.00000198"
-          input_cache_read: "0.000000022"
-          prompt: "0.00000066"
-          utc_days:
-          - saturday
-          - sunday
-        - completion: "0.00000198"
-          input_cache_read: "0.000000022"
-          prompt: "0.00000066"
-          utc_days:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          utc_end: 100
-          utc_start: 0
-        - completion: "0.00000396"
-          input_cache_read: "0.000000044"
-          prompt: "0.00000132"
-          utc_days:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          utc_end: 400
-          utc_start: 100
-        - completion: "0.00000198"
-          input_cache_read: "0.000000022"
-          prompt: "0.00000066"
-          utc_days:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          utc_end: 600
-          utc_start: 400
-        - completion: "0.00000396"
-          input_cache_read: "0.000000044"
-          prompt: "0.00000132"
-          utc_days:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          utc_end: 1000
-          utc_start: 600
-        - completion: "0.00000198"
-          input_cache_read: "0.000000022"
-          prompt: "0.00000066"
-          utc_days:
-          - monday
-          - tuesday
-          - wednesday
-          - thursday
-          - friday
-          utc_end: 0
-          utc_start: 1000
         prompt: "0.00000066"
-      pointer: /data/187/pricing
+      pointer: /data/196/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -8570,13 +8529,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/187/supported_parameters
+      pointer: /data/196/supported_parameters
     tokenizer:
       value: DeepSeek
-      pointer: /data/187/architecture/tokenizer
+      pointer: /data/196/architecture/tokenizer
     top_provider_context_window:
-      value: 1048576
-      pointer: /data/187/top_provider/context_length
+      value: 1024000
+      pointer: /data/196/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -8585,48 +8544,48 @@ records:
   upstream_id: deepseek/deepseek-v4.1-flash
   name: "DeepSeek: DeepSeek V4.1 Flash"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/123
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/132
   facts:
     canonical_slug:
       value: deepseek/deepseek-v4.1-flash-20260910
-      pointer: /data/123/canonical_slug
+      pointer: /data/132/canonical_slug
     catalog_created_at:
       value: 1789021285
-      pointer: /data/123/created
+      pointer: /data/132/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/123/context_length
+      pointer: /data/132/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/123/default_parameters
+      pointer: /data/132/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V4.1-Flash
-      pointer: /data/123/hugging_face_id
+      pointer: /data/132/hugging_face_id
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/123/architecture/input_modalities
+      pointer: /data/132/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/123/top_provider/is_moderated
+      pointer: /data/132/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/123/top_provider/max_completion_tokens
+      pointer: /data/132/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/123/architecture/output_modalities
+      pointer: /data/132/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000000684"
-        input_cache_read: "0.0000000054"
-        prompt: "0.000000018"
-      pointer: /data/123/pricing
+        completion: "0.000000144"
+        input_cache_read: "0.0000000016"
+        prompt: "0.00000004"
+      pointer: /data/132/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -8649,13 +8608,156 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/123/supported_parameters
+      pointer: /data/132/supported_parameters
     tokenizer:
       value: DeepSeek
-      pointer: /data/123/architecture/tokenizer
+      pointer: /data/132/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/123/top_provider/context_length
+      pointer: /data/132/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:deepseek/deepseek-v4.1-flash-1017
+  source: openrouter
+  upstream_id: deepseek/deepseek-v4.1-flash-1017
+  name: "DeepSeek: DeepSeek V4.1 Flash 1017"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/0
+  facts:
+    canonical_slug:
+      value: deepseek/deepseek-v4.1-flash-20261017
+      pointer: /data/0/canonical_slug
+    catalog_created_at:
+      value: 1792225624
+      pointer: /data/0/created
+      unit: unix_seconds
+    context_window:
+      value: 1048576
+      pointer: /data/0/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/0/default_parameters
+    hugging_face_id:
+      value: deepseek-ai/DeepSeek-V4.1-Flash-1017
+      pointer: /data/0/hugging_face_id
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/0/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/0/top_provider/is_moderated
+    max_output_tokens:
+      value: 393216
+      pointer: /data/0/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/0/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0.0000006"
+        input_cache_read: "0.000000003"
+        overrides:
+        - completion: "0.0000006"
+          input_cache_read: "0.000000003"
+          prompt: "0.00000015"
+          utc_days:
+          - saturday
+          - sunday
+        - completion: "0.0000006"
+          input_cache_read: "0.000000003"
+          prompt: "0.00000015"
+          utc_days:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          utc_end: 100
+          utc_start: 0
+        - completion: "0.0000012"
+          input_cache_read: "0.000000006"
+          prompt: "0.0000003"
+          utc_days:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          utc_end: 400
+          utc_start: 100
+        - completion: "0.0000006"
+          input_cache_read: "0.000000003"
+          prompt: "0.00000015"
+          utc_days:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          utc_end: 600
+          utc_start: 400
+        - completion: "0.0000012"
+          input_cache_read: "0.000000006"
+          prompt: "0.0000003"
+          utc_days:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          utc_end: 1000
+          utc_start: 600
+        - completion: "0.0000006"
+          input_cache_read: "0.000000003"
+          prompt: "0.00000015"
+          utc_days:
+          - monday
+          - tuesday
+          - wednesday
+          - thursday
+          - friday
+          utc_end: 0
+          utc_start: 1000
+        prompt: "0.00000015"
+      pointer: /data/0/pricing
+    supported_parameters:
+      value:
+      - frequency_penalty
+      - include_reasoning
+      - logit_bias
+      - logprobs
+      - max_completion_tokens
+      - max_tokens
+      - min_p
+      - parallel_tool_calls
+      - presence_penalty
+      - reasoning
+      - reasoning_effort
+      - repetition_penalty
+      - response_format
+      - seed
+      - stop
+      - structured_outputs
+      - temperature
+      - tool_choice
+      - tools
+      - top_k
+      - top_logprobs
+      - top_p
+      pointer: /data/0/supported_parameters
+    tokenizer:
+      value: DeepSeek
+      pointer: /data/0/architecture/tokenizer
+    top_provider_context_window:
+      value: 1048576
+      pointer: /data/0/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -8664,53 +8766,54 @@ records:
   upstream_id: deepseek/deepseek-v4.1-flash:batch
   name: "DeepSeek: DeepSeek V4.1 Flash (batch)"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/116
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/133
   facts:
     canonical_slug:
       value: deepseek/deepseek-v4.1-flash-20260910
-      pointer: /data/116/canonical_slug
+      pointer: /data/133/canonical_slug
     catalog_created_at:
       value: 1789021285
-      pointer: /data/116/created
+      pointer: /data/133/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/116/context_length
+      pointer: /data/133/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/116/default_parameters
+      pointer: /data/133/default_parameters
     hugging_face_id:
       value: deepseek-ai/DeepSeek-V4.1-Flash
-      pointer: /data/116/hugging_face_id
+      pointer: /data/133/hugging_face_id
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/116/architecture/input_modalities
+      pointer: /data/133/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/116/top_provider/is_moderated
+      pointer: /data/133/top_provider/is_moderated
     max_output_tokens:
-      value: 131072
-      pointer: /data/116/top_provider/max_completion_tokens
+      value: 384000
+      pointer: /data/133/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/116/architecture/output_modalities
+      pointer: /data/133/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000000336"
-        input_cache_read: "0.00000000336"
-        prompt: "0.000000112"
-      pointer: /data/116/pricing
+        completion: "0.00000015"
+        input_cache_read: "0.000000004"
+        prompt: "0.00000005"
+      pointer: /data/133/pricing
     supported_parameters:
       value:
       - frequency_penalty
       - include_reasoning
       - logit_bias
+      - logprobs
       - max_tokens
       - min_p
       - presence_penalty
@@ -8725,14 +8828,15 @@ records:
       - tool_choice
       - tools
       - top_k
+      - top_logprobs
       - top_p
-      pointer: /data/116/supported_parameters
+      pointer: /data/133/supported_parameters
     tokenizer:
       value: DeepSeek
-      pointer: /data/116/architecture/tokenizer
+      pointer: /data/133/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/116/top_provider/context_length
+      pointer: /data/133/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -9610,6 +9714,81 @@ records:
     top_provider_context_window:
       value: 0
       pointer: /data/34/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:elorian/glimpse
+  source: openrouter
+  upstream_id: elorian/glimpse
+  name: "Elorian: Glimpse"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/1
+  facts:
+    canonical_slug:
+      value: elorian/glimpse-20261016
+      pointer: /data/1/canonical_slug
+    catalog_created_at:
+      value: 1792206629
+      pointer: /data/1/created
+      unit: unix_seconds
+    context_window:
+      value: 262144
+      pointer: /data/1/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/1/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      - video
+      pointer: /data/1/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/1/top_provider/is_moderated
+    max_output_tokens:
+      value: 256000
+      pointer: /data/1/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/1/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0.000003"
+        input_cache_read: "0.00000006"
+        prompt: "0.0000006"
+      pointer: /data/1/pricing
+    supported_parameters:
+      value:
+      - frequency_penalty
+      - include_reasoning
+      - logit_bias
+      - logprobs
+      - max_tokens
+      - min_p
+      - presence_penalty
+      - reasoning
+      - repetition_penalty
+      - response_format
+      - stop
+      - structured_outputs
+      - temperature
+      - tool_choice
+      - tools
+      - top_k
+      - top_logprobs
+      - top_p
+      pointer: /data/1/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/1/architecture/tokenizer
+    top_provider_context_window:
+      value: 262144
+      pointer: /data/1/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -13640,57 +13819,57 @@ records:
   upstream_id: google/gemma-3-27b-it
   name: "Google: Gemma 3 27B"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/603
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/620
   facts:
     canonical_slug:
       value: google/gemma-3-27b-it
-      pointer: /data/603/canonical_slug
+      pointer: /data/620/canonical_slug
     catalog_created_at:
       value: 1741756359
-      pointer: /data/603/created
+      pointer: /data/620/created
       unit: unix_seconds
     context_window:
       value: 131072
-      pointer: /data/603/context_length
+      pointer: /data/620/context_length
       unit: tokens
     default_parameters:
       value:
         frequency_penalty: null
         temperature: null
         top_p: null
-      pointer: /data/603/default_parameters
+      pointer: /data/620/default_parameters
     hugging_face_id:
       value: google/gemma-3-27b-it
-      pointer: /data/603/hugging_face_id
+      pointer: /data/620/hugging_face_id
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/603/architecture/input_modalities
+      pointer: /data/620/architecture/input_modalities
     instruct_type:
       value: gemma
-      pointer: /data/603/architecture/instruct_type
+      pointer: /data/620/architecture/instruct_type
     is_moderated:
       value: false
-      pointer: /data/603/top_provider/is_moderated
+      pointer: /data/620/top_provider/is_moderated
     knowledge_cutoff:
       value: "2024-08-31"
-      pointer: /data/603/knowledge_cutoff
+      pointer: /data/620/knowledge_cutoff
     max_output_tokens:
       value: 117964
-      pointer: /data/603/top_provider/max_completion_tokens
+      pointer: /data/620/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/603/architecture/output_modalities
+      pointer: /data/620/architecture/output_modalities
     pricing:
       value:
-        completion: "0.00000045"
+        completion: "0.00000035"
         input_cache_read: "0.00000004"
         prompt: "0.00000008"
-      pointer: /data/603/pricing
+      pointer: /data/620/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -13710,13 +13889,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/603/supported_parameters
+      pointer: /data/620/supported_parameters
     tokenizer:
       value: Gemini
-      pointer: /data/603/architecture/tokenizer
+      pointer: /data/620/architecture/tokenizer
     top_provider_context_window:
       value: 131072
-      pointer: /data/603/top_provider/context_length
+      pointer: /data/620/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -13804,52 +13983,52 @@ records:
   upstream_id: google/gemma-4-26b-a4b-it
   name: "Google: Gemma 4 26B A4B "
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/384
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/394
   facts:
     canonical_slug:
       value: google/gemma-4-26b-a4b-it-20260403
-      pointer: /data/384/canonical_slug
+      pointer: /data/394/canonical_slug
     catalog_created_at:
       value: 1775227989
-      pointer: /data/384/created
+      pointer: /data/394/created
       unit: unix_seconds
     context_window:
       value: 262144
-      pointer: /data/384/context_length
+      pointer: /data/394/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_k: 64
         top_p: 0.95
-      pointer: /data/384/default_parameters
+      pointer: /data/394/default_parameters
     hugging_face_id:
       value: google/gemma-4-26B-A4B-it
-      pointer: /data/384/hugging_face_id
+      pointer: /data/394/hugging_face_id
     input_modalities:
       value:
       - image
       - text
       - video
-      pointer: /data/384/architecture/input_modalities
+      pointer: /data/394/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/384/top_provider/is_moderated
+      pointer: /data/394/top_provider/is_moderated
     max_output_tokens:
       value: 235929
-      pointer: /data/384/top_provider/max_completion_tokens
+      pointer: /data/394/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/384/architecture/output_modalities
+      pointer: /data/394/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000000255"
-        input_cache_read: "0.0000000425"
-        prompt: "0.0000000765"
-      pointer: /data/384/pricing
+        completion: "0.000000225"
+        input_cache_read: "0.0000000375"
+        prompt: "0.0000000675"
+      pointer: /data/394/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -13871,13 +14050,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/384/supported_parameters
+      pointer: /data/394/supported_parameters
     tokenizer:
       value: Gemma
-      pointer: /data/384/architecture/tokenizer
+      pointer: /data/394/architecture/tokenizer
     top_provider_context_window:
       value: 262144
-      pointer: /data/384/top_provider/context_length
+      pointer: /data/394/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -14817,46 +14996,46 @@ records:
   upstream_id: heygen/heygen-voice-1-turbo
   name: "HeyGen: HeyGen Voice Turbo"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/6
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/25
   facts:
     canonical_slug:
       value: heygen/heygen-voice-1-turbo-20261009
-      pointer: /data/6/canonical_slug
+      pointer: /data/25/canonical_slug
     catalog_created_at:
       value: 1791929548
-      pointer: /data/6/created
+      pointer: /data/25/created
       unit: unix_seconds
     context_window:
       value: 0
-      pointer: /data/6/context_length
+      pointer: /data/25/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/6/default_parameters
+      pointer: /data/25/default_parameters
     input_modalities:
       value:
       - text
-      pointer: /data/6/architecture/input_modalities
+      pointer: /data/25/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/6/top_provider/is_moderated
+      pointer: /data/25/top_provider/is_moderated
     max_output_tokens:
       value: 0
-      pointer: /data/6/top_provider/max_completion_tokens
+      pointer: /data/25/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - speech
-      pointer: /data/6/architecture/output_modalities
+      pointer: /data/25/architecture/output_modalities
     pricing:
       value:
         completion: "0"
-        prompt: "0.0000075"
-      pointer: /data/6/pricing
+        prompt: "0.000004"
+      pointer: /data/25/pricing
     supported_parameters:
       value: []
-      pointer: /data/6/supported_parameters
+      pointer: /data/25/supported_parameters
     supported_voices:
       value:
       - nadine
@@ -14869,13 +15048,13 @@ records:
       - lucian
       - weston
       - vincent
-      pointer: /data/6/supported_voices
+      pointer: /data/25/supported_voices
     tokenizer:
       value: Other
-      pointer: /data/6/architecture/tokenizer
+      pointer: /data/25/architecture/tokenizer
     top_provider_context_window:
       value: 0
-      pointer: /data/6/top_provider/context_length
+      pointer: /data/25/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -17084,53 +17263,52 @@ records:
   upstream_id: meta-llama/llama-3.3-70b-instruct
   name: "Meta: Llama 3.3 70B Instruct"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/624
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/641
   facts:
     canonical_slug:
       value: meta-llama/llama-3.3-70b-instruct
-      pointer: /data/624/canonical_slug
+      pointer: /data/641/canonical_slug
     catalog_created_at:
       value: 1733506137
-      pointer: /data/624/created
+      pointer: /data/641/created
       unit: unix_seconds
     context_window:
       value: 131072
-      pointer: /data/624/context_length
+      pointer: /data/641/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/624/default_parameters
+      pointer: /data/641/default_parameters
     hugging_face_id:
       value: meta-llama/Llama-3.3-70B-Instruct
-      pointer: /data/624/hugging_face_id
+      pointer: /data/641/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/624/architecture/input_modalities
+      pointer: /data/641/architecture/input_modalities
     instruct_type:
       value: llama3
-      pointer: /data/624/architecture/instruct_type
+      pointer: /data/641/architecture/instruct_type
     is_moderated:
       value: false
-      pointer: /data/624/top_provider/is_moderated
+      pointer: /data/641/top_provider/is_moderated
     knowledge_cutoff:
       value: "2023-12-31"
-      pointer: /data/624/knowledge_cutoff
+      pointer: /data/641/knowledge_cutoff
     max_output_tokens:
-      value: 32768
-      pointer: /data/624/top_provider/max_completion_tokens
+      value: 16384
+      pointer: /data/641/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/624/architecture/output_modalities
+      pointer: /data/641/architecture/output_modalities
     pricing:
       value:
-        completion: "0.00000079"
-        input_cache_read: "0.000000295"
-        prompt: "0.00000059"
-      pointer: /data/624/pricing
+        completion: "0.00000032"
+        prompt: "0.0000001"
+      pointer: /data/641/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -17150,13 +17328,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/624/supported_parameters
+      pointer: /data/641/supported_parameters
     tokenizer:
       value: Llama3
-      pointer: /data/624/architecture/tokenizer
+      pointer: /data/641/architecture/tokenizer
     top_provider_context_window:
       value: 131072
-      pointer: /data/624/top_provider/context_length
+      pointer: /data/641/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -17243,50 +17421,50 @@ records:
   upstream_id: meta-llama/llama-4-scout
   name: "Meta: Llama 4 Scout"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/595
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/612
   facts:
     canonical_slug:
       value: meta-llama/llama-4-scout-17b-16e-instruct
-      pointer: /data/595/canonical_slug
+      pointer: /data/612/canonical_slug
     catalog_created_at:
       value: 1743881519
-      pointer: /data/595/created
+      pointer: /data/612/created
       unit: unix_seconds
     context_window:
       value: 1310720
-      pointer: /data/595/context_length
+      pointer: /data/612/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/595/default_parameters
+      pointer: /data/612/default_parameters
     hugging_face_id:
       value: meta-llama/Llama-4-Scout-17B-16E-Instruct
-      pointer: /data/595/hugging_face_id
+      pointer: /data/612/hugging_face_id
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/595/architecture/input_modalities
+      pointer: /data/612/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/595/top_provider/is_moderated
+      pointer: /data/612/top_provider/is_moderated
     knowledge_cutoff:
       value: "2024-08-31"
-      pointer: /data/595/knowledge_cutoff
+      pointer: /data/612/knowledge_cutoff
     max_output_tokens:
-      value: 117964
-      pointer: /data/595/top_provider/max_completion_tokens
+      value: 16384
+      pointer: /data/612/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/595/architecture/output_modalities
+      pointer: /data/612/architecture/output_modalities
     pricing:
       value:
-        completion: "0.00000059"
-        prompt: "0.00000018"
-      pointer: /data/595/pricing
+        completion: "0.0000003"
+        prompt: "0.0000001"
+      pointer: /data/612/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -17304,13 +17482,13 @@ records:
       - tools
       - top_k
       - top_p
-      pointer: /data/595/supported_parameters
+      pointer: /data/612/supported_parameters
     tokenizer:
       value: Llama4
-      pointer: /data/595/architecture/tokenizer
+      pointer: /data/612/architecture/tokenizer
     top_provider_context_window:
-      value: 131072
-      pointer: /data/595/top_provider/context_length
+      value: 327680
+      pointer: /data/612/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -23008,19 +23186,19 @@ records:
   upstream_id: moonshotai/kimi-k3
   name: "MoonshotAI: Kimi K3"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/244
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/253
   facts:
     canonical_slug:
       value: moonshotai/kimi-k3-20260715
-      pointer: /data/244/canonical_slug
+      pointer: /data/253/canonical_slug
     catalog_created_at:
       value: 1784215858
-      pointer: /data/244/created
+      pointer: /data/253/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/244/context_length
+      pointer: /data/253/context_length
       unit: tokens
     default_parameters:
       value:
@@ -23030,33 +23208,33 @@ records:
         temperature: null
         top_k: null
         top_p: 0.95
-      pointer: /data/244/default_parameters
+      pointer: /data/253/default_parameters
     hugging_face_id:
       value: moonshotai/Kimi-K3
-      pointer: /data/244/hugging_face_id
+      pointer: /data/253/hugging_face_id
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/244/architecture/input_modalities
+      pointer: /data/253/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/244/top_provider/is_moderated
+      pointer: /data/253/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/244/top_provider/max_completion_tokens
+      pointer: /data/253/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/244/architecture/output_modalities
+      pointer: /data/253/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000011588"
+        completion: "0.000011936"
         input_cache_read: "0.00000021"
-        prompt: "0.000000304"
-      pointer: /data/244/pricing
+        prompt: "0.000000249"
+      pointer: /data/253/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -23079,13 +23257,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/244/supported_parameters
+      pointer: /data/253/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/244/architecture/tokenizer
+      pointer: /data/253/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/244/top_provider/context_length
+      pointer: /data/253/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -24780,49 +24958,49 @@ records:
   upstream_id: nvidia/nemotron-3.5-super-vl
   name: "NVIDIA: Nemotron 3.5 Super VL"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/7
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/16
   facts:
     canonical_slug:
       value: nvidia/nemotron-3.5-super-vl-20261015
-      pointer: /data/7/canonical_slug
+      pointer: /data/16/canonical_slug
     catalog_created_at:
       value: 1792076662
-      pointer: /data/7/created
+      pointer: /data/16/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/7/context_length
+      pointer: /data/16/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/7/default_parameters
+      pointer: /data/16/default_parameters
     hugging_face_id:
       value: nvidia/NVIDIA-Nemotron-3.5-Super-VL
-      pointer: /data/7/hugging_face_id
+      pointer: /data/16/hugging_face_id
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/7/architecture/input_modalities
+      pointer: /data/16/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/7/top_provider/is_moderated
+      pointer: /data/16/top_provider/is_moderated
     max_output_tokens:
       value: 235929
-      pointer: /data/7/top_provider/max_completion_tokens
+      pointer: /data/16/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/7/architecture/output_modalities
+      pointer: /data/16/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000005"
-        input_cache_read: "0.00000002"
-        prompt: "0.00000015"
-      pointer: /data/7/pricing
+        completion: "0.0000004"
+        input_cache_read: "0.00000008"
+        prompt: "0.0000001"
+      pointer: /data/16/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -24844,13 +25022,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/7/supported_parameters
+      pointer: /data/16/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/7/architecture/tokenizer
+      pointer: /data/16/architecture/tokenizer
     top_provider_context_window:
       value: 262144
-      pointer: /data/7/top_provider/context_length
+      pointer: /data/16/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -25170,46 +25348,46 @@ records:
   upstream_id: openai/gpt-3.5-turbo-16k
   name: "OpenAI: GPT-3.5 Turbo 16k"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/662
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/679
   facts:
     canonical_slug:
       value: openai/gpt-3.5-turbo-16k
-      pointer: /data/662/canonical_slug
+      pointer: /data/679/canonical_slug
     catalog_created_at:
       value: 1693180800
-      pointer: /data/662/created
+      pointer: /data/679/created
       unit: unix_seconds
     context_window:
       value: 16385
-      pointer: /data/662/context_length
+      pointer: /data/679/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/662/default_parameters
+      pointer: /data/679/default_parameters
     input_modalities:
       value:
       - text
-      pointer: /data/662/architecture/input_modalities
+      pointer: /data/679/architecture/input_modalities
     is_moderated:
-      value: true
-      pointer: /data/662/top_provider/is_moderated
+      value: false
+      pointer: /data/679/top_provider/is_moderated
     knowledge_cutoff:
       value: "2021-09-30"
-      pointer: /data/662/knowledge_cutoff
+      pointer: /data/679/knowledge_cutoff
     max_output_tokens:
       value: 4096
-      pointer: /data/662/top_provider/max_completion_tokens
+      pointer: /data/679/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/662/architecture/output_modalities
+      pointer: /data/679/architecture/output_modalities
     pricing:
       value:
         completion: "0.000004"
         prompt: "0.000003"
-      pointer: /data/662/pricing
+      pointer: /data/679/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -25227,13 +25405,13 @@ records:
       - tools
       - top_logprobs
       - top_p
-      pointer: /data/662/supported_parameters
+      pointer: /data/679/supported_parameters
     tokenizer:
       value: GPT
-      pointer: /data/662/architecture/tokenizer
+      pointer: /data/679/architecture/tokenizer
     top_provider_context_window:
       value: 16385
-      pointer: /data/662/top_provider/context_length
+      pointer: /data/679/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -34742,6 +34920,61 @@ records:
       unit: tokens
 - schema_version: 1
   kind: service
+  id: openrouter:service:perplexity/pplx-decider-flash-v1.2
+  source: openrouter
+  upstream_id: perplexity/pplx-decider-flash-v1.2
+  name: "Perplexity: Decider Flash V1.2"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/4
+  facts:
+    canonical_slug:
+      value: perplexity/pplx-decider-flash-v1.2-20261016
+      pointer: /data/4/canonical_slug
+    catalog_created_at:
+      value: 1792183496
+      pointer: /data/4/created
+      unit: unix_seconds
+    context_window:
+      value: 262144
+      pointer: /data/4/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/4/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/4/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/4/top_provider/is_moderated
+    max_output_tokens:
+      value: 235929
+      pointer: /data/4/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - decisions
+      pointer: /data/4/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        prompt: "0.00000001"
+      pointer: /data/4/pricing
+    supported_parameters:
+      value: []
+      pointer: /data/4/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/4/architecture/tokenizer
+    top_provider_context_window:
+      value: 262144
+      pointer: /data/4/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
   id: openrouter:service:perplexity/pplx-decider-v1.1-27b
   source: openrouter
   upstream_id: perplexity/pplx-decider-v1.1-27b
@@ -34794,6 +35027,61 @@ records:
     top_provider_context_window:
       value: 262144
       pointer: /data/23/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:perplexity/pplx-decider-v1.2
+  source: openrouter
+  upstream_id: perplexity/pplx-decider-v1.2
+  name: "Perplexity: Decider V1.2"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/5
+  facts:
+    canonical_slug:
+      value: perplexity/pplx-decider-v1.2-20261016
+      pointer: /data/5/canonical_slug
+    catalog_created_at:
+      value: 1792183495
+      pointer: /data/5/created
+      unit: unix_seconds
+    context_window:
+      value: 262144
+      pointer: /data/5/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/5/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/5/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/5/top_provider/is_moderated
+    max_output_tokens:
+      value: 235929
+      pointer: /data/5/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - decisions
+      pointer: /data/5/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        prompt: "0.00000002"
+      pointer: /data/5/pricing
+    supported_parameters:
+      value: []
+      pointer: /data/5/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/5/architecture/tokenizer
+    top_provider_context_window:
+      value: 262144
+      pointer: /data/5/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -35966,6 +36254,134 @@ records:
       unit: tokens
 - schema_version: 1
   kind: service
+  id: openrouter:service:qwen/qwen-image-2.1-pro
+  source: openrouter
+  upstream_id: qwen/qwen-image-2.1-pro
+  name: "Qwen: Qwen Image 2.1 Pro"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/3
+  facts:
+    canonical_slug:
+      value: qwen/qwen-image-2.1-pro-20261016
+      pointer: /data/3/canonical_slug
+    catalog_created_at:
+      value: 1792194075
+      pointer: /data/3/created
+      unit: unix_seconds
+    context_window:
+      value: 65536
+      pointer: /data/3/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/3/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/3/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/3/top_provider/is_moderated
+    max_output_tokens:
+      value: 58982
+      pointer: /data/3/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - image
+      pointer: /data/3/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        image: "0"
+        image_output: "0.0000110179640718563"
+        image_token: "0.0000110179640718563"
+        prompt: "0"
+      pointer: /data/3/pricing
+    supported_parameters:
+      value:
+      - max_tokens
+      - presence_penalty
+      - response_format
+      - seed
+      - temperature
+      - top_p
+      pointer: /data/3/supported_parameters
+    tokenizer:
+      value: Qwen
+      pointer: /data/3/architecture/tokenizer
+    top_provider_context_window:
+      value: 65536
+      pointer: /data/3/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:qwen/qwen-image-2.1-turbo
+  source: openrouter
+  upstream_id: qwen/qwen-image-2.1-turbo
+  name: "Qwen: Qwen Image 2.1 Turbo"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/2
+  facts:
+    canonical_slug:
+      value: qwen/qwen-image-2.1-turbo-20261016
+      pointer: /data/2/canonical_slug
+    catalog_created_at:
+      value: 1792194104
+      pointer: /data/2/created
+      unit: unix_seconds
+    context_window:
+      value: 65536
+      pointer: /data/2/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/2/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/2/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/2/top_provider/is_moderated
+    max_output_tokens:
+      value: 58982
+      pointer: /data/2/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - image
+      pointer: /data/2/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        image: "0"
+        image_output: "0.00000440718562874251"
+        image_token: "0.00000440718562874251"
+        prompt: "0"
+      pointer: /data/2/pricing
+    supported_parameters:
+      value:
+      - max_tokens
+      - presence_penalty
+      - response_format
+      - seed
+      - temperature
+      - top_p
+      pointer: /data/2/supported_parameters
+    tokenizer:
+      value: Qwen
+      pointer: /data/2/architecture/tokenizer
+    top_provider_context_window:
+      value: 65536
+      pointer: /data/2/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
   id: openrouter:service:qwen/qwen-image-3
   source: openrouter
   upstream_id: qwen/qwen-image-3
@@ -36576,49 +36992,49 @@ records:
   upstream_id: qwen/qwen3-30b-a3b-instruct-2507
   name: "Qwen: Qwen3 30B A3B Instruct 2507"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/554
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/572
   facts:
     canonical_slug:
       value: qwen/qwen3-30b-a3b-instruct-2507
-      pointer: /data/554/canonical_slug
+      pointer: /data/572/canonical_slug
     catalog_created_at:
       value: 1753806965
-      pointer: /data/554/created
+      pointer: /data/572/created
       unit: unix_seconds
     context_window:
       value: 262144
-      pointer: /data/554/context_length
+      pointer: /data/572/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/554/default_parameters
+      pointer: /data/572/default_parameters
     hugging_face_id:
       value: Qwen/Qwen3-30B-A3B-Instruct-2507
-      pointer: /data/554/hugging_face_id
+      pointer: /data/572/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/554/architecture/input_modalities
+      pointer: /data/572/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/554/top_provider/is_moderated
+      pointer: /data/572/top_provider/is_moderated
     knowledge_cutoff:
       value: "2025-06-30"
-      pointer: /data/554/knowledge_cutoff
+      pointer: /data/572/knowledge_cutoff
     max_output_tokens:
       value: 235929
-      pointer: /data/554/top_provider/max_completion_tokens
+      pointer: /data/572/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/554/architecture/output_modalities
+      pointer: /data/572/architecture/output_modalities
     pricing:
       value:
         completion: "0.0000003"
-        prompt: "0.0000001"
-      pointer: /data/554/pricing
+        prompt: "0.00000009"
+      pointer: /data/572/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -36637,13 +37053,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/554/supported_parameters
+      pointer: /data/572/supported_parameters
     tokenizer:
       value: Qwen3
-      pointer: /data/554/architecture/tokenizer
+      pointer: /data/572/architecture/tokenizer
     top_provider_context_window:
       value: 262144
-      pointer: /data/554/top_provider/context_length
+      pointer: /data/572/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -36927,67 +37343,68 @@ records:
   upstream_id: qwen/qwen3-coder-30b-a3b-instruct
   name: "Qwen: Qwen3 Coder 30B A3B Instruct"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/553
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/571
   facts:
     canonical_slug:
       value: qwen/qwen3-coder-30b-a3b-instruct
-      pointer: /data/553/canonical_slug
+      pointer: /data/571/canonical_slug
     catalog_created_at:
       value: 1753972379
-      pointer: /data/553/created
+      pointer: /data/571/created
       unit: unix_seconds
     context_window:
       value: 262144
-      pointer: /data/553/context_length
+      pointer: /data/571/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/553/default_parameters
+      pointer: /data/571/default_parameters
     hugging_face_id:
       value: Qwen/Qwen3-Coder-30B-A3B-Instruct
-      pointer: /data/553/hugging_face_id
+      pointer: /data/571/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/553/architecture/input_modalities
+      pointer: /data/571/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/553/top_provider/is_moderated
+      pointer: /data/571/top_provider/is_moderated
     knowledge_cutoff:
       value: "2025-06-30"
-      pointer: /data/553/knowledge_cutoff
+      pointer: /data/571/knowledge_cutoff
     max_output_tokens:
       value: 235929
-      pointer: /data/553/top_provider/max_completion_tokens
+      pointer: /data/571/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/553/architecture/output_modalities
+      pointer: /data/571/architecture/output_modalities
     pricing:
       value:
         completion: "0.00000028"
         prompt: "0.00000007"
-      pointer: /data/553/pricing
+      pointer: /data/571/pricing
     supported_parameters:
       value:
       - frequency_penalty
       - max_tokens
       - response_format
+      - stop
       - structured_outputs
       - temperature
       - tool_choice
       - tools
       - top_k
       - top_p
-      pointer: /data/553/supported_parameters
+      pointer: /data/571/supported_parameters
     tokenizer:
       value: Qwen3
-      pointer: /data/553/architecture/tokenizer
+      pointer: /data/571/architecture/tokenizer
     top_provider_context_window:
       value: 262144
-      pointer: /data/553/top_provider/context_length
+      pointer: /data/571/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -37986,19 +38403,19 @@ records:
   upstream_id: qwen/qwen3.5-35b-a3b
   name: "Qwen: Qwen3.5-35B-A3B"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/413
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/431
   facts:
     canonical_slug:
       value: qwen/qwen3.5-35b-a3b-20260224
-      pointer: /data/413/canonical_slug
+      pointer: /data/431/canonical_slug
     catalog_created_at:
       value: 1772053822
-      pointer: /data/413/created
+      pointer: /data/431/created
       unit: unix_seconds
     context_window:
       value: 262144
-      pointer: /data/413/context_length
+      pointer: /data/431/context_length
       unit: tokens
     default_parameters:
       value:
@@ -38008,33 +38425,33 @@ records:
         temperature: 1
         top_k: 20
         top_p: 0.95
-      pointer: /data/413/default_parameters
+      pointer: /data/431/default_parameters
     hugging_face_id:
       value: Qwen/Qwen3.5-35B-A3B
-      pointer: /data/413/hugging_face_id
+      pointer: /data/431/hugging_face_id
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/413/architecture/input_modalities
+      pointer: /data/431/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/413/top_provider/is_moderated
+      pointer: /data/431/top_provider/is_moderated
     max_output_tokens:
-      value: 16384
-      pointer: /data/413/top_provider/max_completion_tokens
+      value: 235929
+      pointer: /data/431/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/413/architecture/output_modalities
+      pointer: /data/431/architecture/output_modalities
     pricing:
       value:
         completion: "0.000001"
         input_cache_read: "0.00000005"
         prompt: "0.00000015"
-      pointer: /data/413/pricing
+      pointer: /data/431/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -38056,13 +38473,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/413/supported_parameters
+      pointer: /data/431/supported_parameters
     tokenizer:
       value: Qwen3
-      pointer: /data/413/architecture/tokenizer
+      pointer: /data/431/architecture/tokenizer
     top_provider_context_window:
-      value: 256000
-      pointer: /data/413/top_provider/context_length
+      value: 262144
+      pointer: /data/431/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -39044,6 +39461,77 @@ records:
     top_provider_context_window:
       value: 1000000
       pointer: /data/287/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:qwen/qwen3.7-plus:batch
+  source: openrouter
+  upstream_id: qwen/qwen3.7-plus:batch
+  name: "Qwen: Qwen3.7 Plus (batch)"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/305
+  facts:
+    canonical_slug:
+      value: qwen/qwen3.7-plus-20260602
+      pointer: /data/305/canonical_slug
+    catalog_created_at:
+      value: 1780491783
+      pointer: /data/305/created
+      unit: unix_seconds
+    context_window:
+      value: 262144
+      pointer: /data/305/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/305/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/305/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/305/top_provider/is_moderated
+    max_output_tokens:
+      value: 131072
+      pointer: /data/305/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/305/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0.00000092"
+        prompt: "0.00000023"
+      pointer: /data/305/pricing
+    supported_parameters:
+      value:
+      - frequency_penalty
+      - include_reasoning
+      - logprobs
+      - max_tokens
+      - presence_penalty
+      - reasoning
+      - response_format
+      - seed
+      - stop
+      - structured_outputs
+      - temperature
+      - tool_choice
+      - tools
+      - top_k
+      - top_logprobs
+      - top_p
+      pointer: /data/305/supported_parameters
+    tokenizer:
+      value: Qwen
+      pointer: /data/305/architecture/tokenizer
+    top_provider_context_window:
+      value: 262144
+      pointer: /data/305/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -40460,6 +40948,87 @@ records:
     top_provider_context_window:
       value: 65536
       pointer: /data/307/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
+  id: openrouter:service:reflection/beam-1.0-501b-a23b
+  source: openrouter
+  upstream_id: reflection/beam-1.0-501b-a23b
+  name: "Reflection: Beam 1.0 501B A23B"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/8
+  facts:
+    canonical_slug:
+      value: reflection/beam-1.0-501b-a23b-20261016
+      pointer: /data/8/canonical_slug
+    catalog_created_at:
+      value: 1792160499
+      pointer: /data/8/created
+      unit: unix_seconds
+    context_window:
+      value: 1048576
+      pointer: /data/8/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/8/default_parameters
+    hugging_face_id:
+      value: reflection/Beam-1.0-501B-A23B
+      pointer: /data/8/hugging_face_id
+    input_modalities:
+      value:
+      - text
+      pointer: /data/8/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/8/top_provider/is_moderated
+    knowledge_cutoff:
+      value: "2026-06-30"
+      pointer: /data/8/knowledge_cutoff
+    max_output_tokens:
+      value: 943718
+      pointer: /data/8/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/8/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0.000003"
+        input_cache_read: "0.0000001"
+        prompt: "0.000001"
+      pointer: /data/8/pricing
+    supported_parameters:
+      value:
+      - frequency_penalty
+      - include_reasoning
+      - logit_bias
+      - logprobs
+      - max_tokens
+      - min_p
+      - presence_penalty
+      - reasoning
+      - reasoning_effort
+      - repetition_penalty
+      - response_format
+      - seed
+      - stop
+      - structured_outputs
+      - temperature
+      - tool_choice
+      - tools
+      - top_k
+      - top_logprobs
+      - top_p
+      pointer: /data/8/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/8/architecture/tokenizer
+    top_provider_context_window:
+      value: 1048576
+      pointer: /data/8/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -42946,19 +43515,19 @@ records:
   upstream_id: tencent/hy3
   name: "Tencent: Hy3"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/259
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/276
   facts:
     canonical_slug:
       value: tencent/hy3-20260706
-      pointer: /data/259/canonical_slug
+      pointer: /data/276/canonical_slug
     catalog_created_at:
       value: 1783344048
-      pointer: /data/259/created
+      pointer: /data/276/created
       unit: unix_seconds
     context_window:
       value: 262144
-      pointer: /data/259/context_length
+      pointer: /data/276/context_length
       unit: tokens
     default_parameters:
       value:
@@ -42968,29 +43537,29 @@ records:
         temperature: 0.9
         top_k: null
         top_p: 1
-      pointer: /data/259/default_parameters
+      pointer: /data/276/default_parameters
     hugging_face_id:
       value: tencent/Hy3
-      pointer: /data/259/hugging_face_id
+      pointer: /data/276/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/259/architecture/input_modalities
+      pointer: /data/276/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/259/top_provider/is_moderated
+      pointer: /data/276/top_provider/is_moderated
     max_output_tokens:
       value: 128000
-      pointer: /data/259/top_provider/max_completion_tokens
+      pointer: /data/276/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/259/architecture/output_modalities
+      pointer: /data/276/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000000528"
-        input_cache_read: "0.000000033"
+        completion: "0.00000033"
+        input_cache_read: "0.000000020625"
         overrides:
         - completion: "0.000000528"
           input_cache_read: "0.000000033"
@@ -43002,8 +43571,8 @@ records:
           prompt: "0.0000000825"
           utc_end: 0
           utc_start: 1600
-        prompt: "0.000000132"
-      pointer: /data/259/pricing
+        prompt: "0.0000000825"
+      pointer: /data/276/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -43025,13 +43594,13 @@ records:
       - tools
       - top_k
       - top_p
-      pointer: /data/259/supported_parameters
+      pointer: /data/276/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/259/architecture/tokenizer
+      pointer: /data/276/architecture/tokenizer
     top_provider_context_window:
       value: 262144
-      pointer: /data/259/top_provider/context_length
+      pointer: /data/276/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -43113,45 +43682,45 @@ records:
   upstream_id: tencent/hy4-preview
   name: "Tencent: Hy4 preview"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/138
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/155
   facts:
     canonical_slug:
       value: tencent/hy4-preview-20260827
-      pointer: /data/138/canonical_slug
+      pointer: /data/155/canonical_slug
     catalog_created_at:
       value: 1787897375
-      pointer: /data/138/created
+      pointer: /data/155/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/138/context_length
+      pointer: /data/155/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/138/default_parameters
+      pointer: /data/155/default_parameters
     hugging_face_id:
       value: tencent/Hy4-preview
-      pointer: /data/138/hugging_face_id
+      pointer: /data/155/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/138/architecture/input_modalities
+      pointer: /data/155/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/138/top_provider/is_moderated
+      pointer: /data/155/top_provider/is_moderated
     max_output_tokens:
       value: 64000
-      pointer: /data/138/top_provider/max_completion_tokens
+      pointer: /data/155/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/138/architecture/output_modalities
+      pointer: /data/155/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000002501"
-        input_cache_read: "0.000000042"
+        completion: "0.0000022509"
+        input_cache_read: "0.0000000378"
         overrides:
         - completion: "0.000002501"
           input_cache_read: "0.000000042"
@@ -43163,14 +43732,13 @@ records:
           prompt: "0.0000007506"
           utc_end: 0
           utc_start: 1600
-        prompt: "0.000000834"
-      pointer: /data/138/pricing
+        prompt: "0.0000007506"
+      pointer: /data/155/pricing
     supported_parameters:
       value:
       - frequency_penalty
       - include_reasoning
       - logit_bias
-      - logprobs
       - max_completion_tokens
       - max_tokens
       - min_p
@@ -43186,15 +43754,14 @@ records:
       - tool_choice
       - tools
       - top_k
-      - top_logprobs
       - top_p
-      pointer: /data/138/supported_parameters
+      pointer: /data/155/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/138/architecture/tokenizer
+      pointer: /data/155/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/138/top_provider/context_length
+      pointer: /data/155/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -44102,6 +44669,67 @@ records:
     tokenizer:
       value: Router
       pointer: /data/66/architecture/tokenizer
+- schema_version: 1
+  kind: service
+  id: openrouter:service:unbiased/pareto-26.10
+  source: openrouter
+  upstream_id: unbiased/pareto-26.10
+  name: Pareto 26.10
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/18
+  facts:
+    canonical_slug:
+      value: unbiased/pareto-26.10-20261015
+      pointer: /data/18/canonical_slug
+    catalog_created_at:
+      value: 1792073620
+      pointer: /data/18/created
+      unit: unix_seconds
+    context_window:
+      value: 1048576
+      pointer: /data/18/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/18/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/18/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/18/top_provider/is_moderated
+    max_output_tokens:
+      value: 131072
+      pointer: /data/18/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/18/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0.0000032"
+        input_cache_read: "0.00000003"
+        prompt: "0.0000008"
+      pointer: /data/18/pricing
+    supported_parameters:
+      value:
+      - max_tokens
+      - temperature
+      - tool_choice
+      - tools
+      - top_p
+      pointer: /data/18/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/18/architecture/tokenizer
+    top_provider_context_window:
+      value: 1048576
+      pointer: /data/18/top_provider/context_length
+      unit: tokens
 - schema_version: 1
   kind: service
   id: openrouter:service:unbiased/pareto-26.10-preview
@@ -46696,6 +47324,82 @@ records:
       unit: tokens
 - schema_version: 1
   kind: service
+  id: openrouter:service:xingchen-agi/xing4.0-29b-a4b:free
+  source: openrouter
+  upstream_id: xingchen-agi/xing4.0-29b-a4b:free
+  name: "XingChen: Xing4.0 29B A4B (free)"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/6
+  facts:
+    canonical_slug:
+      value: xingchen-agi/xing4.0-29b-a4b-20261015
+      pointer: /data/6/canonical_slug
+    catalog_created_at:
+      value: 1792177496
+      pointer: /data/6/created
+      unit: unix_seconds
+    context_window:
+      value: 262144
+      pointer: /data/6/context_length
+      unit: tokens
+    default_parameters:
+      value:
+        repetition_penalty: 1.05
+        temperature: 1
+        top_p: 0.95
+      pointer: /data/6/default_parameters
+    hugging_face_id:
+      value: XingChen-AGI/Xing4.0-29B-A4B
+      pointer: /data/6/hugging_face_id
+    input_modalities:
+      value:
+      - text
+      pointer: /data/6/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/6/top_provider/is_moderated
+    max_output_tokens:
+      value: 235929
+      pointer: /data/6/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - text
+      pointer: /data/6/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        prompt: "0"
+      pointer: /data/6/pricing
+    supported_parameters:
+      value:
+      - frequency_penalty
+      - include_reasoning
+      - max_tokens
+      - min_p
+      - presence_penalty
+      - reasoning
+      - repetition_penalty
+      - response_format
+      - seed
+      - stop
+      - structured_outputs
+      - temperature
+      - tool_choice
+      - tools
+      - top_k
+      - top_p
+      pointer: /data/6/supported_parameters
+    tokenizer:
+      value: Other
+      pointer: /data/6/architecture/tokenizer
+    top_provider_context_window:
+      value: 262144
+      pointer: /data/6/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
   id: openrouter:service:z-ai/glm-4.5
   source: openrouter
   upstream_id: z-ai/glm-4.5
@@ -47094,19 +47798,19 @@ records:
   upstream_id: z-ai/glm-4.7
   name: "Z.ai: GLM 4.7"
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/449
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/467
   facts:
     canonical_slug:
       value: z-ai/glm-4.7-20251222
-      pointer: /data/449/canonical_slug
+      pointer: /data/467/canonical_slug
     catalog_created_at:
       value: 1766378014
-      pointer: /data/449/created
+      pointer: /data/467/created
       unit: unix_seconds
     context_window:
       value: 204800
-      pointer: /data/449/context_length
+      pointer: /data/467/context_length
       unit: tokens
     default_parameters:
       value:
@@ -47116,34 +47820,31 @@ records:
         temperature: 1
         top_k: null
         top_p: 0.95
-      pointer: /data/449/default_parameters
-    expiration_date:
-      value: "2026-12-31"
-      pointer: /data/449/expiration_date
+      pointer: /data/467/default_parameters
     hugging_face_id:
       value: zai-org/GLM-4.7
-      pointer: /data/449/hugging_face_id
+      pointer: /data/467/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/449/architecture/input_modalities
+      pointer: /data/467/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/449/top_provider/is_moderated
+      pointer: /data/467/top_provider/is_moderated
     max_output_tokens:
       value: 131072
-      pointer: /data/449/top_provider/max_completion_tokens
+      pointer: /data/467/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/449/architecture/output_modalities
+      pointer: /data/467/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000022"
-        input_cache_read: "0.00000011"
-        prompt: "0.0000006"
-      pointer: /data/449/pricing
+        completion: "0.00000198"
+        input_cache_read: "0.000000099"
+        prompt: "0.00000054"
+      pointer: /data/467/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -47164,13 +47865,13 @@ records:
       - top_a
       - top_k
       - top_p
-      pointer: /data/449/supported_parameters
+      pointer: /data/467/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/449/architecture/tokenizer
+      pointer: /data/467/architecture/tokenizer
     top_provider_context_window:
-      value: 202752
-      pointer: /data/449/top_provider/context_length
+      value: 204800
+      pointer: /data/467/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -47577,49 +48278,49 @@ records:
   upstream_id: z-ai/glm-5.3
   name: "Z.ai: GLM 5.3"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/166
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/175
   facts:
     canonical_slug:
       value: z-ai/glm-5.3-20260816
-      pointer: /data/166/canonical_slug
+      pointer: /data/175/canonical_slug
     catalog_created_at:
       value: 1787086655
-      pointer: /data/166/created
+      pointer: /data/175/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/166/context_length
+      pointer: /data/175/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 0.95
-      pointer: /data/166/default_parameters
+      pointer: /data/175/default_parameters
     hugging_face_id:
       value: zai-org/GLM-5.3
-      pointer: /data/166/hugging_face_id
+      pointer: /data/175/hugging_face_id
     input_modalities:
       value:
       - text
-      pointer: /data/166/architecture/input_modalities
+      pointer: /data/175/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/166/top_provider/is_moderated
+      pointer: /data/175/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/166/top_provider/max_completion_tokens
+      pointer: /data/175/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/166/architecture/output_modalities
+      pointer: /data/175/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000048"
+        completion: "0.000001"
         input_cache_read: "0.000000078"
         prompt: "0.000000079"
-      pointer: /data/166/pricing
+      pointer: /data/175/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -47643,13 +48344,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/166/supported_parameters
+      pointer: /data/175/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/166/architecture/tokenizer
+      pointer: /data/175/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/166/top_provider/context_length
+      pointer: /data/175/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -47658,51 +48359,51 @@ records:
   upstream_id: z-ai/glm-5.3-flash
   name: "Z.ai: GLM 5.3 Flash"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/151
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/160
   facts:
     canonical_slug:
       value: z-ai/glm-5.3-flash-20260826
-      pointer: /data/151/canonical_slug
+      pointer: /data/160/canonical_slug
     catalog_created_at:
       value: 1787752741
-      pointer: /data/151/created
+      pointer: /data/160/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/151/context_length
+      pointer: /data/160/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 0.95
-      pointer: /data/151/default_parameters
+      pointer: /data/160/default_parameters
     hugging_face_id:
       value: zai-org/GLM-5.3-Flash
-      pointer: /data/151/hugging_face_id
+      pointer: /data/160/hugging_face_id
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/151/architecture/input_modalities
+      pointer: /data/160/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/151/top_provider/is_moderated
+      pointer: /data/160/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/151/top_provider/max_completion_tokens
+      pointer: /data/160/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/151/architecture/output_modalities
+      pointer: /data/160/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000001125"
-        input_cache_read: "0.000000009"
-        prompt: "0.00000001584"
-      pointer: /data/151/pricing
+        completion: "0.0000002"
+        input_cache_read: "0.000000006"
+        prompt: "0.000000048"
+      pointer: /data/160/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -47726,13 +48427,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/151/supported_parameters
+      pointer: /data/160/supported_parameters
     tokenizer:
       value: Other
-      pointer: /data/151/architecture/tokenizer
+      pointer: /data/160/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/151/top_provider/context_length
+      pointer: /data/160/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -48415,53 +49116,55 @@ records:
   upstream_id: ~deepseek/deepseek-flash-latest
   name: "DeepSeek: DeepSeek Flash Latest"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/111
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/120
   facts:
     canonical_slug:
       value: ~deepseek/deepseek-flash-latest
-      pointer: /data/111/canonical_slug
+      pointer: /data/120/canonical_slug
     catalog_created_at:
       value: 1789399150
-      pointer: /data/111/created
+      pointer: /data/120/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/111/context_length
+      pointer: /data/120/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/111/default_parameters
+      pointer: /data/120/default_parameters
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/111/architecture/input_modalities
+      pointer: /data/120/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/111/top_provider/is_moderated
+      pointer: /data/120/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/111/top_provider/max_completion_tokens
+      pointer: /data/120/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/111/architecture/output_modalities
+      pointer: /data/120/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000000684"
-        input_cache_read: "0.0000000054"
-        prompt: "0.000000018"
-      pointer: /data/111/pricing
+        completion: "0.0000006"
+        input_cache_read: "0.000000008"
+        prompt: "0.00000005"
+      pointer: /data/120/pricing
     supported_parameters:
       value:
       - frequency_penalty
       - include_reasoning
       - logit_bias
       - logprobs
+      - max_completion_tokens
       - max_tokens
       - min_p
+      - parallel_tool_calls
       - presence_penalty
       - reasoning
       - reasoning_effort
@@ -48476,13 +49179,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/111/supported_parameters
+      pointer: /data/120/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/111/architecture/tokenizer
+      pointer: /data/120/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/111/top_provider/context_length
+      pointer: /data/120/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -48491,46 +49194,46 @@ records:
   upstream_id: ~deepseek/deepseek-pro-latest
   name: "DeepSeek: DeepSeek Pro Latest"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/110
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/119
   facts:
     canonical_slug:
       value: ~deepseek/deepseek-pro-latest
-      pointer: /data/110/canonical_slug
+      pointer: /data/119/canonical_slug
     catalog_created_at:
       value: 1789399174
-      pointer: /data/110/created
+      pointer: /data/119/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/110/context_length
+      pointer: /data/119/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 1
-      pointer: /data/110/default_parameters
+      pointer: /data/119/default_parameters
     input_modalities:
       value:
       - text
-      pointer: /data/110/architecture/input_modalities
+      pointer: /data/119/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/110/top_provider/is_moderated
+      pointer: /data/119/top_provider/is_moderated
     max_output_tokens:
-      value: 943718
-      pointer: /data/110/top_provider/max_completion_tokens
+      value: 393216
+      pointer: /data/119/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/110/architecture/output_modalities
+      pointer: /data/119/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000005"
-        input_cache_read: "0.000000249"
-        prompt: "0.00000025"
-      pointer: /data/110/pricing
+        completion: "0.000008"
+        input_cache_read: "0.00000012"
+        prompt: "0.00000012"
+      pointer: /data/119/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -48553,13 +49256,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/110/supported_parameters
+      pointer: /data/119/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/110/architecture/tokenizer
+      pointer: /data/119/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/110/top_provider/context_length
+      pointer: /data/119/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -48568,44 +49271,44 @@ records:
   upstream_id: ~deepseek/deepseek-v4-flash-latest
   name: "DeepSeek: DeepSeek V4 Flash Latest"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/202
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/211
   facts:
     canonical_slug:
       value: ~deepseek/deepseek-v4-flash-latest
-      pointer: /data/202/canonical_slug
+      pointer: /data/211/canonical_slug
     catalog_created_at:
       value: 1785606009
-      pointer: /data/202/created
+      pointer: /data/211/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/202/context_length
+      pointer: /data/211/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/202/default_parameters
+      pointer: /data/211/default_parameters
     input_modalities:
       value:
       - text
-      pointer: /data/202/architecture/input_modalities
+      pointer: /data/211/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/202/top_provider/is_moderated
+      pointer: /data/211/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/202/top_provider/max_completion_tokens
+      pointer: /data/211/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/202/architecture/output_modalities
+      pointer: /data/211/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000000576"
-        input_cache_read: "0.00000000846"
-        prompt: "0.00000000846"
-      pointer: /data/202/pricing
+        completion: "0.00000045"
+        input_cache_read: "0.0000000114"
+        prompt: "0.0000000114"
+      pointer: /data/211/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -48630,16 +49333,16 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/202/supported_parameters
+      pointer: /data/211/supported_parameters
     supported_voices:
       value: []
-      pointer: /data/202/supported_voices
+      pointer: /data/211/supported_voices
     tokenizer:
       value: Router
-      pointer: /data/202/architecture/tokenizer
+      pointer: /data/211/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/202/top_provider/context_length
+      pointer: /data/211/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -48808,19 +49511,19 @@ records:
   upstream_id: ~moonshotai/kimi-latest
   name: "MoonshotAI: Kimi Latest"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/345
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/355
   facts:
     canonical_slug:
       value: ~moonshotai/kimi-latest
-      pointer: /data/345/canonical_slug
+      pointer: /data/355/canonical_slug
     catalog_created_at:
       value: 1777318428
-      pointer: /data/345/created
+      pointer: /data/355/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/345/context_length
+      pointer: /data/355/context_length
       unit: tokens
     default_parameters:
       value:
@@ -48830,30 +49533,30 @@ records:
         temperature: null
         top_k: null
         top_p: 0.95
-      pointer: /data/345/default_parameters
+      pointer: /data/355/default_parameters
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/345/architecture/input_modalities
+      pointer: /data/355/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/345/top_provider/is_moderated
+      pointer: /data/355/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/345/top_provider/max_completion_tokens
+      pointer: /data/355/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/345/architecture/output_modalities
+      pointer: /data/355/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000028"
-        input_cache_read: "0.000000284"
-        prompt: "0.000000294"
-      pointer: /data/345/pricing
+        completion: "0.000011936"
+        input_cache_read: "0.00000021"
+        prompt: "0.000000249"
+      pointer: /data/355/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -48876,13 +49579,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/345/supported_parameters
+      pointer: /data/355/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/345/architecture/tokenizer
+      pointer: /data/355/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/345/top_provider/context_length
+      pointer: /data/355/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -49283,6 +49986,61 @@ records:
       unit: tokens
 - schema_version: 1
   kind: service
+  id: openrouter:service:~perplexity/pplx-decider-flash-latest
+  source: openrouter
+  upstream_id: ~perplexity/pplx-decider-flash-latest
+  name: "Perplexity: Decider Flash Latest"
+  origin:
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/7
+  facts:
+    canonical_slug:
+      value: ~perplexity/pplx-decider-flash-latest
+      pointer: /data/7/canonical_slug
+    catalog_created_at:
+      value: 1792173791
+      pointer: /data/7/created
+      unit: unix_seconds
+    context_window:
+      value: 262144
+      pointer: /data/7/context_length
+      unit: tokens
+    default_parameters:
+      value: {}
+      pointer: /data/7/default_parameters
+    input_modalities:
+      value:
+      - text
+      - image
+      pointer: /data/7/architecture/input_modalities
+    is_moderated:
+      value: false
+      pointer: /data/7/top_provider/is_moderated
+    max_output_tokens:
+      value: 235929
+      pointer: /data/7/top_provider/max_completion_tokens
+      unit: tokens
+    output_modalities:
+      value:
+      - decisions
+      pointer: /data/7/architecture/output_modalities
+    pricing:
+      value:
+        completion: "0"
+        prompt: "0.00000001"
+      pointer: /data/7/pricing
+    supported_parameters:
+      value: []
+      pointer: /data/7/supported_parameters
+    tokenizer:
+      value: Router
+      pointer: /data/7/architecture/tokenizer
+    top_provider_context_window:
+      value: 262144
+      pointer: /data/7/top_provider/context_length
+      unit: tokens
+- schema_version: 1
+  kind: service
   id: openrouter:service:~perplexity/pplx-decider-latest
   source: openrouter
   upstream_id: ~perplexity/pplx-decider-latest
@@ -49398,60 +50156,59 @@ records:
   upstream_id: ~unbiased/pareto-latest
   name: Pareto Latest
   origin:
-    snapshot: openrouter:809106e32c9ff858cc89527fc82416309be31b5820de034c1adc0e9fcf157011
-    pointer: /data/3
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/22
   facts:
     canonical_slug:
       value: ~unbiased/pareto-latest
-      pointer: /data/3/canonical_slug
+      pointer: /data/22/canonical_slug
     catalog_created_at:
       value: 1791933050
-      pointer: /data/3/created
+      pointer: /data/22/created
       unit: unix_seconds
     context_window:
-      value: 262144
-      pointer: /data/3/context_length
+      value: 1048576
+      pointer: /data/22/context_length
       unit: tokens
     default_parameters:
       value: {}
-      pointer: /data/3/default_parameters
+      pointer: /data/22/default_parameters
     input_modalities:
       value:
       - text
       - image
-      pointer: /data/3/architecture/input_modalities
+      pointer: /data/22/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/3/top_provider/is_moderated
+      pointer: /data/22/top_provider/is_moderated
     max_output_tokens:
       value: 131072
-      pointer: /data/3/top_provider/max_completion_tokens
+      pointer: /data/22/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/3/architecture/output_modalities
+      pointer: /data/22/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000075"
-        input_cache_read: "0.00000025"
-        prompt: "0.0000025"
-      pointer: /data/3/pricing
+        completion: "0.0000032"
+        input_cache_read: "0.00000003"
+        prompt: "0.0000008"
+      pointer: /data/22/pricing
     supported_parameters:
       value:
       - max_tokens
-      - response_format
       - temperature
       - tool_choice
       - tools
       - top_p
-      pointer: /data/3/supported_parameters
+      pointer: /data/22/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/3/architecture/tokenizer
+      pointer: /data/22/architecture/tokenizer
     top_provider_context_window:
-      value: 262144
-      pointer: /data/3/top_provider/context_length
+      value: 1048576
+      pointer: /data/22/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -49538,48 +50295,48 @@ records:
   upstream_id: ~z-ai/glm-flash-latest
   name: "Z.ai: GLM Flash Latest"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/148
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/157
   facts:
     canonical_slug:
       value: ~z-ai/glm-flash-latest
-      pointer: /data/148/canonical_slug
+      pointer: /data/157/canonical_slug
     catalog_created_at:
       value: 1787817633
-      pointer: /data/148/created
+      pointer: /data/157/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/148/context_length
+      pointer: /data/157/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 0.95
-      pointer: /data/148/default_parameters
+      pointer: /data/157/default_parameters
     input_modalities:
       value:
       - text
       - image
       - video
-      pointer: /data/148/architecture/input_modalities
+      pointer: /data/157/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/148/top_provider/is_moderated
+      pointer: /data/157/top_provider/is_moderated
     max_output_tokens:
       value: 943718
-      pointer: /data/148/top_provider/max_completion_tokens
+      pointer: /data/157/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/148/architecture/output_modalities
+      pointer: /data/157/architecture/output_modalities
     pricing:
       value:
-        completion: "0.000001125"
-        input_cache_read: "0.000000009"
-        prompt: "0.00000001584"
-      pointer: /data/148/pricing
+        completion: "0.0000002"
+        input_cache_read: "0.000000006"
+        prompt: "0.000000048"
+      pointer: /data/157/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -49603,13 +50360,13 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/148/supported_parameters
+      pointer: /data/157/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/148/architecture/tokenizer
+      pointer: /data/157/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/148/top_provider/context_length
+      pointer: /data/157/top_provider/context_length
       unit: tokens
 - schema_version: 1
   kind: service
@@ -49618,46 +50375,46 @@ records:
   upstream_id: ~z-ai/glm-latest
   name: "Z.ai: GLM Latest"
   origin:
-    snapshot: openrouter:c79fb014f299d050f30842cb12ce9a1f1a558920413a1c3bcb5e1143440439fe
-    pointer: /data/164
+    snapshot: openrouter:c0bd94495e9586b40d173b66c3c47b9d23e1355441f2ad1f7ec8799b6b509ad4
+    pointer: /data/173
   facts:
     canonical_slug:
       value: ~z-ai/glm-latest
-      pointer: /data/164/canonical_slug
+      pointer: /data/173/canonical_slug
     catalog_created_at:
       value: 1787151053
-      pointer: /data/164/created
+      pointer: /data/173/created
       unit: unix_seconds
     context_window:
       value: 1048576
-      pointer: /data/164/context_length
+      pointer: /data/173/context_length
       unit: tokens
     default_parameters:
       value:
         temperature: 1
         top_p: 0.95
-      pointer: /data/164/default_parameters
+      pointer: /data/173/default_parameters
     input_modalities:
       value:
       - text
-      pointer: /data/164/architecture/input_modalities
+      pointer: /data/173/architecture/input_modalities
     is_moderated:
       value: false
-      pointer: /data/164/top_provider/is_moderated
+      pointer: /data/173/top_provider/is_moderated
     max_output_tokens:
       value: 131072
-      pointer: /data/164/top_provider/max_completion_tokens
+      pointer: /data/173/top_provider/max_completion_tokens
       unit: tokens
     output_modalities:
       value:
       - text
-      pointer: /data/164/architecture/output_modalities
+      pointer: /data/173/architecture/output_modalities
     pricing:
       value:
-        completion: "0.0000044"
-        input_cache_read: "0.0000000565"
-        prompt: "0.0000000608"
-      pointer: /data/164/pricing
+        completion: "0.0000022"
+        input_cache_read: "0.00000007"
+        prompt: "0.000000075"
+      pointer: /data/173/pricing
     supported_parameters:
       value:
       - frequency_penalty
@@ -49681,11 +50438,11 @@ records:
       - top_k
       - top_logprobs
       - top_p
-      pointer: /data/164/supported_parameters
+      pointer: /data/173/supported_parameters
     tokenizer:
       value: Router
-      pointer: /data/164/architecture/tokenizer
+      pointer: /data/173/architecture/tokenizer
     top_provider_context_window:
       value: 1048576
-      pointer: /data/164/top_provider/context_length
+      pointer: /data/173/top_provider/context_length
       unit: tokens

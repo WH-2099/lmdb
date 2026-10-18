@@ -7,7 +7,7 @@ use serde_json::Value;
 use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 
 use crate::{
-    adapters::{gated, modelsdev, public},
+    adapters::{gated, modelsdev, public, vercel},
     http::{Fetcher, checked_next_url},
     model::{Catalog, Record, SCHEMA_VERSION, Snapshot},
     registry::{self, Registry, merge_catalog},
@@ -19,6 +19,7 @@ pub const PUBLIC_SOURCES: &[&str] = &[
     "huggingface",
     "modelscope",
     "openrouter",
+    "vercel",
     "official",
 ];
 pub const AUTHENTICATED_SOURCES: &[&str] = &[
@@ -130,6 +131,17 @@ async fn fetch_catalog(fetcher: &Fetcher, root: &Path, source: &str) -> Result<C
         records: vec![],
     };
     match source {
+        "vercel" => {
+            let (snapshot, value) = fetcher
+                .get_json(
+                    source,
+                    "https://ai-gateway.vercel.sh/v1/models",
+                    HeaderMap::new(),
+                )
+                .await?;
+            catalog.records = vercel::models(&value, &snapshot)?;
+            catalog.snapshots.push(snapshot);
+        }
         "modelsdev" => {
             for (url, normalize) in [
                 (

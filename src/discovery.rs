@@ -793,7 +793,7 @@ mod tests {
     #[test]
     fn configuration_limits_and_source_metadata_are_validated() {
         let root = Path::new(env!("CARGO_MANIFEST_DIR"));
-        assert_eq!(load_sources(root).unwrap().len(), 13);
+        assert_eq!(load_sources(root).unwrap().len(), 14);
         let config = load_config(root).unwrap();
         let mut value = serde_json::to_value(config).unwrap();
         value["max_results"] = json!(201);

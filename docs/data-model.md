@@ -33,6 +33,7 @@ CLI 通过类型解析与语义检查执行校验，JSON Schema 为编辑器和�
 `kind: model` 表示来源中的模型或模型仓库记录。
 `kind: service` 表示目录或平台作用域内的提供条目，可能包含平台限额、价格、别名或访问范围。
 认证适配器当前统一使用服务分类；其中 Artificial Analysis 是聚合目录，这个分类不表示它提供推理服务。
+Vercel AI Gateway 的公开目录同样保存为 `vercel:service:<upstream_id>`，`model` 留空，网关型号名称不会自动绑定开发者模型。
 当前只有 models.dev 的 `canonical_model_id` 会生成显式 `model` 引用。
 OpenRouter 的 `hugging_face_id` 等显式声明可派生为 `references` 关系，但引用关系不证明模型身份相同。
 HF 和 ModelScope 的 `base_models` 可派生为 `derived_from`，原始派生类型在有明确声明时另行保留。
@@ -63,6 +64,7 @@ JSON Pointer 指向快照根对象下的绝对位置，采用 `/` 分段，并�
 `profiles` 保留这一目录事实视图，官方声明参与的字段选择另存为下文的 `resolved_metadata`。
 任务与模态保留来源标签，仅对已知标签补充规范分类，未识别标签不会被删掉。
 价格视图区分金额、计费单位、数量、条件和未分类字段，不从缺失单位猜测总价。
+Vercel 的 `pricing` 保留平台原始 JSON，并进入 `pricing.unclassified`；当前没有据此推断 USD、计费分母或生成统一报价。
 具体映射与计量边界见[领域字段](domain-fields.md)。
 
 `data/identities/core.yaml` 保存经审查的模型身份和接口绑定，每个集合都附文档证据。
@@ -94,31 +96,41 @@ Git 历史能保存旧记录版本，但只有同时保留对应原始响应，�
 ## 官方页面与模型声明
 
 [`config/official-pages.yaml`](../config/official-pages.yaml) 显式列出要获取的厂商页面，[`src/documents/model.rs`](../src/documents/model.rs) 定义其存储结构。
-2026-10-16 的配置包含 12 个厂商的 27 个页面，属于精选覆盖，页面数量不代表成功获取数量或完整型号目录。
-[`config/sources.yaml`](../config/sources.yaml) 的 13 个来源约定包含 `official`，其范围为 `selected_pages`。
+厂商和页面以配置清单为准，属于精选覆盖，页面数量不代表成功获取数量或完整型号目录。
+[`config/sources.yaml`](../config/sources.yaml) 保存 14 个来源约定，其中 6 个公开来源包含 `vercel` 与 `official`，另有 8 个需要显式启用的认证来源。
+`official` 的范围为 `selected_pages`，同时支持型号页面和官方目录页。
 来源约定描述采集范围，具体页面及模型绑定由官方页面配置维护。
-页面 URL 必须符合对应厂商的 HTTPS 域名或作者仓库命名空间约束，每页必须显式绑定已收录的模型记录。
-`records` 中的服务记录、重复成员与缺失记录会被拒绝，配置中的相同页面 ID 或 URL 也不能重复。
+页面 URL 必须符合对应厂商的 HTTPS 域名或作者仓库命名空间约束。
+`kind: directory` 必须使用 `records: []`，其他页面必须恰好绑定一条已收录的模型记录。
+服务记录、缺失记录和多条型号绑定会被拒绝，配置中的相同页面 ID 或 URL 也不能重复。
 链接和页面名称不会自动增加模型绑定或采集范围。
 
 | 对象 | 字段 | 含义 |
 | --- | --- | --- |
-| `PageSource` | `id`、`vendor`、`kind`、`url`、`format`、`records` | 页面身份、厂商、文档种类、请求地址、解析格式与显式模型记录绑定 |
+| `PageSource` | `id`、`vendor`、`kind`、`url`、`format`、`records` | 页面身份、厂商、文档种类、请求地址、解析格式与型号绑定；目录页不绑定模型 |
 | `DocumentCatalog` | `schema_version`、`documents` | 保存于 `data/documents/official.yaml` 的文档目录 |
 | `PageDocument` | `source`、`checked_at`、可选 `error`、可选 `content` | 页面配置、最近检查时间、该次错误与可用内容 |
 | `PageContent` | `snapshot`、`content_type`、`extraction` | 原始响应身份、响应内容类型与提取结果 |
-| `Extraction` | `extractor_version`、`title`、`published_at`、`canonical_url`、`links`、`passages`、`claims`、`warnings` | 提取器版本、页面元信息、官方链接、选定原文、结构化声明及提取警告 |
+| `Extraction` | `extractor_version`、`title`、`published_at`、`canonical_url`、`links`、`catalog_entries`、`passages`、`claims`、`warnings` | 提取器版本、页面元信息、官方链接、目录候选、选定原文、结构化声明及提取警告 |
 | `LocatedValue` | `value`、`evidence` | 带来源定位的页面元信息字符串 |
 | `OfficialLink` | `url`、`label`、`evidence` | 指向同一厂商允许范围的链接、页面标签及原始链接定位 |
+| `CatalogEntry` | `label`、`url`、可选 `model_id`、`evidence` | 官方目录中的候选标签、目标地址、可选型号标识和链接证据 |
 | `Claim` | `record`、`property`、`value`、可选 `unit`、`precision`、`scope`、`conditions`、`evidence` | 绑定记录、属性、JSON 值、单位、精度、适用作用域、文字条件和证据定位 |
 | `Passage` | `topic`、`heading`、`records`、`text`、`evidence` | 选定段落的主题、可选标题、明确主体、原文和证据位置 |
 | `PageEvidence` | `locator`、`excerpt` | 提取位置与至多 240 个字符的证据片段 |
 
-`kind` 区分 `release_blog`、`model_card`、`model_page` 和 `documentation`，`format` 支持 `html` 与 `markdown`。
+`kind` 区分 `release_blog`、`model_card`、`model_page`、`documentation` 和 `directory`，`format` 支持 `html` 与 `markdown`。
 解析器保存 UTF-8 原始响应，Markdown 正文先渲染为 DOM，再由对应页面的规则提取字段。
-提取范围由已实现的页面规则限定，只有标题、日期或链接的页面也可以保存为文档结果；没有声明或选定段落时附提取警告。
+提取范围由已实现的页面规则限定，只有标题、日期或链接的页面也可以保存为文档结果；型号页面没有声明或选定段落时附提取警告。
 标题、版本、章节或表格无法明确对应目标模型时，相关规则可以保留警告或省略声明。
 页面抓取成功与模型字段提取成功因此是不同状态。
+
+目录页将符合该页面规则的链接写入 `catalog_entries`，按去除片段后的目标 URL 去重，证据定位到原始 `href`。
+候选最多保留 500 条，发生省略、缺少提取规则或未匹配预期页面结构时保存警告。
+候选仅表示本次响应中的目录条目，分页和交互结果不会自动枚举，目标页面也不会递归抓取。
+`model_id` 当前不从标签或 URL 推断；即使存在这个可选字段，也不建立本库记录绑定。
+目录候选不新增模型记录、不改变身份集合，也不参与模型字段选择，需先审查具体型号与证据再配置采集。
+每页官方 `links` 最多保存 200 条不同链接，发生截断时保存警告；它与目录候选的数量上限分别计算。
 
 `title`、`published_at` 与 `canonical_url` 属于页面元信息，保留其来源定位。
 `published_at` 取自页面的文章发布日期元数据，表示页面发布声明；它不自动生成模型的 `release_date`。
@@ -161,8 +173,11 @@ HTML 证据通常使用 `css:` 定位，Markdown 正文使用 `markdown-rendered
 它不会补采失败页面，也不会把旧内容标记为新一次成功获取。
 所有页面重新提取和校验完成后才写入文档目录；缺失缓存、损坏字节或解析失败会保留原文件。
 提取器升级可以使用 `reparse` 更新已有内容，页面来源定义改变则需要重新同步，校验会检查配置一致性与提取器版本。
+当前提取器版本为 3，已有原始页面可以离线迁移；新加入配置但尚无保存内容的页面仍需获取后才能提取。
 
-`documents list` 展示配置、页面元信息、声明和错误，`documents check` 从保存的声明生成字段对照。
+`documents list` 展示配置、页面元信息、目录候选、声明和错误，`documents check` 从保存的声明生成字段对照。
+目录页没有模型绑定，按 `--record` 查看或通过 `inspect` 查看模型时不会出现，可用 `documents list --kind directory` 或 `--vendor` 检查目录候选。
+`stats.documents.directories` 统计已保存的目录页，`directory_entries` 累加各页候选且不跨页去重，不能用作模型总数。
 每条 `Comparison` 保留页面 ID、模型记录 ID、属性、完整官方声明、官方快照、目录事实及其 `catalog_origin`。
 `official_stale` 表示最近一次页面检查存在错误，`source_error` 保留错误说明，即使旧内容仍可读取也不会丢失该状态。
 这个标记不依据内容年龄计算，对照也没有自动判断目录事实是否过期。
@@ -189,6 +204,7 @@ HTML 证据通常使用 `css:` 定位，Markdown 正文使用 `markdown-rendered
 `documents resolve RECORD_ID` 生成 `ResolvedMetadata`，按字段保留原始候选及选择结果，具体实现见 [`resolve.rs`](../src/documents/resolve.rs)。
 它读取当前记录的目录事实，以及直接绑定或通过已审查模型身份成员关联的 `model` 作用域官方声明。
 身份共享仅适用于同一显式模型身份中的模型成员，不沿名称、仓库引用、父模型关系或服务托管关系扩展。
+型号页面只绑定一条记录，其他模型来源的证据共享仍由显式模型身份决定。
 其他身份成员的目录事实不会参与当前记录的字段选择，共享声明仍保留原始 `claim.record` 和证据。
 直接绑定的 `interface` 与 `unspecified` 声明单独放在 `scoped_claims`，也不会共享给同一身份的其他记录。
 服务记录只采用自己的目录事实。
@@ -227,7 +243,7 @@ HTML 证据通常使用 `css:` 定位，Markdown 正文使用 `markdown-rendered
 页面快照沿用 `Snapshot`，其来源为 `official-<vendor>`，ID 为 `official-<vendor>:<sha256>`。
 HTML 与 Markdown 原始字节保存在 `.cache/documents/<sha256>.bin`，与 API 响应的 `.cache/snapshots/<sha256>.json` 分别保存。
 文档证据校验先核对 SHA-256、UTF-8 和 8 MiB 大小上限，再重跑同一提取器并比较完整 `Extraction`。
-因此校验覆盖页面元信息、链接、选定段落、结构化声明、作用域、条件、精度、警告和定位是否可由保留响应重现。
+因此校验覆盖页面元信息、链接、目录候选、选定段落、结构化声明、作用域、条件、精度、警告和定位是否可由保留响应重现。
 回放成功说明提取可复现，不能证明官方声明正确或模型实际行为符合描述。
 
 `evidence archive` 与 `evidence restore` 同时处理 API 原始 JSON 和已保存文档引用的原始字节。
@@ -266,6 +282,7 @@ HTML 与 Markdown 原始字节保存在 `.cache/documents/<sha256>.bin`，与 AP
 导出对象包含 `schema_version`、`models`、`services`、`snapshots`、`syncs`、`assertion_sets`、`profiles`、`identities`、`relationships`、`official_sources`、`documents`、`document_comparisons` 和 `resolved_metadata`。
 `profiles` 按记录 ID 索引，`syncs` 按来源键保存最近同步清单；规则结果由 `rules` 按调用上下文单独生成。
 `official_sources` 保存配置中的页面来源，`documents` 保存抓取结果、失败状态及嵌套页面快照，`document_comparisons` 保存本次按目录事实派生的对照结果。
+目录候选随 `documents[].content.extraction.catalog_entries` 导出，属于文档证据；顶层 `models` 和 `services` 只包含实际目录记录。
 官方页面快照位于各文档的 `content.snapshot`，顶层 `snapshots` 继续保存 API 目录快照。
 `resolved_metadata` 仅按模型记录 ID 索引，保存选定字段、候选、限制与冲突；服务事实保留在原服务记录和其 profile 中。
 导出保留事实、来源指针、条件和冲突，不将它们压平成一个能力布尔值。

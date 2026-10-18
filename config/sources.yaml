@@ -53,11 +53,26 @@ sources:
       - https://openrouter.ai/docs/api/api-reference/models/list-all-models-and-their-properties
       - https://openrouter.ai/docs/guides/overview/models
 
+  - id: vercel
+    access: public
+    coverage:
+      scope: upstream_catalog
+      description: Vercel AI Gateway 公开路由目录，保留平台可用性、模态、限制和价格原值；不推断开发者模型身份。
+    auth_contract:
+      mode: anonymous
+    terms_status: unverified
+    terms_urls:
+      - https://vercel.com/legal/terms
+      - https://vercel.com/legal/ai-product-terms
+    docs_urls:
+      - https://vercel.com/docs/ai-gateway/models-and-providers
+      - https://vercel.com/docs/ai-gateway/sdks-and-apis/rest-api#list-models
+
   - id: official
     access: public
     coverage:
       scope: selected_pages
-      description: config/official-pages.yaml 显式绑定的厂商发布博客、模型卡和详情页；按页面保存失败与字段证据，不代表完整型号目录。
+      description: config/official-pages.yaml 中的厂商发布博客、模型卡、详情页和官方目录；型号声明需要明确绑定，目录条目保留为候选，按页面保存失败与字段证据。
     auth_contract:
       mode: anonymous
     terms_status: unverified

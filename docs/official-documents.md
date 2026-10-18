@@ -2,8 +2,9 @@
 
 [项目首页](../README.md) · [页面清单](../config/official-pages.yaml) · [数据模型](data-model.md) · [维护流程](maintenance.md)
 
-官方页面采集保存厂商发布博客、模型卡、模型详情页和文档的 URL、完整选定段落、结构化声明与原文证据。
-页面与现有模型记录显式绑定，声明既可与目录事实交叉核对，也可按作用域和来源优先级生成字段选择结果。
+官方页面采集保存厂商发布博客、模型卡、模型详情页、文档和目录页的 URL、提取内容与原文证据。
+型号页面与一个现有模型记录显式绑定，声明既可与目录事实交叉核对，也可按作用域和来源优先级生成字段选择结果。
+目录页保存待审查的型号、文章或下载链接，维护者确认具体主体后再补充记录与页面清单。
 原始目录事实、页面声明和人工条件规则各自保留，选择结果携带全部候选和证据。
 
 ## 使用
@@ -11,55 +12,81 @@
 ```text
 cargo run --release --locked -- sync --source official
 cargo run --release --locked -- documents sync --vendor qwen
+cargo run --release --locked -- documents list --kind directory
 cargo run --release --locked -- documents list --record huggingface:model:Qwen/Qwen3-8B
 cargo run --release --locked -- documents check --record huggingface:model:Qwen/Qwen3-8B
 cargo run --release --locked -- documents resolve huggingface:model:Qwen/Qwen3-8B
 cargo run --release --locked -- documents reparse
 ```
 
-默认 `sync` 包含 `official` 和原有四个公开目录来源。
+默认 `sync` 包含 `official` 和 `modelsdev`、`huggingface`、`modelscope`、`openrouter`、`vercel` 五个公开目录来源。
 `documents sync` 只采集官方页面，省略 `--vendor` 时处理配置中的全部页面。
-`documents list` 输出配置来源与已保存文档，可用 `--vendor`、`--record` 同时筛选。
+`documents list` 输出配置来源与已保存文档，可用 `--vendor`、`--record`、`--kind` 同时筛选。
+`--kind` 接受 `release_blog`、`model_card`、`model_page`、`documentation` 或 `directory`。
+目录页没有模型绑定，可用 `--kind directory` 查看，按 `--record` 筛选时不会出现。
 `documents check` 离线生成字段比较，省略 `--record` 时返回全部已有声明的比较结果。
 `documents resolve RECORD_ID` 返回字段选择状态、选中的候选索引和全部证据。
 `documents reparse` 从已缓存原文离线重建提取结果，适用于提取器升级，保留页面的采集时间、最近尝试时间与错误。
+同步失败后保留的旧版提取也会从经过摘要校验的缓存原文升级，保留原始快照和本次错误；缺少准确缓存时中止保存，避免丢失旧内容。
 `list`、`check`、`resolve`、`inspect` 和 `export` 都只读取本地数据。
 
 `inspect RECORD_ID` 包含 `official_sources`、`documents`、`document_comparisons` 和 `resolved_metadata`。
 `export` 的 `resolved_metadata` 按模型记录 ID 索引；服务记录继续从自身事实读取平台限制。
-`stats.documents` 返回已保存页面数、最近采集失败数、有内容的页面数、段落数与声明数。
+`stats.documents` 返回已保存页面数、目录页数 `directories`、目录候选数 `directory_entries`、最近采集失败数、有内容的页面数、段落数与声明数。
+目录候选只在单页内按 URL 去重，跨页面总数不表示独立模型数量。
 失败页面可能保留旧内容，所以 `failed` 与 `with_content` 可以重叠。
 配置数量、成功响应数量、含字段声明的页面数量是不同口径；当前采集结果以 `documents list` 与 `stats` 为准。
 
-2026-10-16 从已有 25 份页面快照离线重解析，保存了 50 段完整选定原文与 234 条结构化声明，覆盖 106 种属性名。
-另外两页继续保留获取失败记录；本轮离线处理没有改变页面获取时间。
-按模型记录与属性统计，93 项采用官方值，76 项保留限定状态；具体来源与适用条件可通过 `documents resolve` 查看。
-
 ## 页面选择与范围
 
-[`config/official-pages.yaml`](../config/official-pages.yaml) 当前选定 12 个厂商的 27 个页面。
-配置最多允许 200 个页面，每个条目要求唯一 ID、唯一 URL、厂商键、页面类型、格式及非空的模型记录绑定。
-这些是为字段核对选择的具体页面，不能视为厂商或型号的完整目录。
+[`config/official-pages.yaml`](../config/official-pages.yaml) 保存 20 个厂商的 56 个页面，其中 47 个绑定具体模型、9 个为目录入口。
+配置最多允许 200 个页面，每个条目要求唯一 ID、唯一 URL、厂商键、页面类型与格式。
+`kind: directory` 要求 `records: []`，其余页面必须恰好绑定一条已有的模型记录，避免将一个型号的字段复制给多个型号。
+清单与目录页提取均有明确范围，不能视为厂商或型号的完整目录。
 
-| 厂商键 | 选定型号或系列 | 页面材料 |
+| 厂商键 | 型号页面样本 | 页面与目录材料 |
 | --- | --- | --- |
 | `openai` | GPT-4.1 | 发布博客、模型详情页 |
-| `anthropic` | Claude 4 / Sonnet 4 | 发布博客、system card 入口 |
-| `google` | Gemini 2.5 Pro | 发布博客、模型详情页 |
+| `anthropic` | Claude 4 / Sonnet 4 | 发布博客、system card 入口、发布索引 |
+| `google` | Gemini 2.5 Pro | 发布博客、模型详情页、型号索引 |
 | `meta` | Llama 3.3 70B Instruct | 官方仓库模型卡、博客 |
 | `xai` | Grok Code Fast 1 | 发布博客、模型详情页 |
 | `amazon` | Nova Pro | 发布博客、用户文档 |
 | `deepseek` | DeepSeek V3.2 | 发布博客、模型卡、更新文档 |
-| `qwen` | Qwen3-8B | 官方博客、模型卡 |
+| `qwen` | Qwen3-8B | 官方博客、模型卡、博客索引 |
 | `nvidia` | Nemotron 3 Super | 发布博客、模型卡、模型详情页 |
-| `mistral` | Magistral Small 2506 | 发布博客、模型卡 |
+| `mistral` | Magistral Small 2506 | 发布博客、模型卡、型号索引 |
 | `cohere` | Command A | 发布博客、模型详情页 |
 | `microsoft` | Phi-4 | 发布博客、模型卡 |
+| `moonshot` | Kimi K3 | 发布博客、模型卡、型号索引 |
+| `zai` | GLM-5.3 | 模型卡、模型文档、文档索引 |
+| `minimax` | MiniMax M3 / M2.1 | 发布博客、模型卡、模型详情页 |
+| `baidu` | ERNIE 4.5 21B A3B | 发布博客、模型卡 |
+| `bfl` | FLUX.2-dev | 发布博客、公开模型卡页面 |
+| `stability` | Stable Diffusion 3.5 Large / Stable Audio Open 1.0 | 发布博客、公开模型卡页面、核心模型索引 |
+| `wan` | Wan2.2-T2V-A14B | 发布博客、模型卡、项目下载索引 |
+| `bytedance` | Seedance 2.5 | 发布博客、模型详情页、型号索引 |
 
 原始 URL 和绑定的准确记录 ID 以页面清单为准。
 URL 必须属于该厂商允许的 HTTPS 域名；Hugging Face、GitHub 和原始文件域名还检查官方组织命名空间。
-页面绑定仅接受已存在的 `kind: model` 记录，不沿服务引用、身份集合或名称相似性扩大范围。
+页面绑定仅接受已存在的 `kind: model` 记录，来源定义不会沿服务引用、身份集合或名称相似性扩大范围。
+模型身份成员之间使用官方声明的规则见下方[字段选择](#按来源选择模型字段)。
 固定修订的模型卡可以定位到指定版本；使用分支或动态页面的条目依靠采集时间和原文摘要区分版本。
+
+## 官方目录候选
+
+`kind: directory` 使用已支持的正文结构与厂商 URL 范围，提取 `catalog_entries`。
+每项保存页面标签 `label`、解析后的完整 `url` 与链接属性的 `evidence`，相同页面内按 URL 去重。
+可选 `model_id` 用于保存来源明确提供的型号标识；当前提取器不填充该字段，也不推断本库的模型身份。
+
+目录条目可能指向型号详情、发布文章、仓库、集合或演示入口，链接存在本身不证明模型能力或可调用性。
+提取器每页最多保存 500 个候选，额外条目被省略并留下警告。
+范围仅限本次响应中的已支持正文，不自动翻页、运行交互界面、跟进链接或创建模型记录。
+未找到候选时同样保留页面元数据与警告。
+
+目录候选随页面一起保存至 `data/documents/official.yaml`，可通过 `documents list` 和 `export` 读取，并参与原文证据重放。
+维护者核对主体、版本、官方归属与许可后，再将准确仓库加入种子，或为现有模型增加一条型号页面绑定。
+仓库 API 候选与官方目录候选的审查入口见[候选发现](discovery.md#官方目录候选)。
 
 ## 提取内容与定位
 
@@ -72,10 +99,12 @@ URL 必须属于该厂商允许的 HTTPS 域名；Hugging Face、GitHub 和原�
 | `published_at` | 页面元数据中的发布时间，保留来源值 |
 | `canonical_url` | 页面声明的规范 URL 及原始属性定位 |
 | `links` | 正文中属于同一厂商官方范围的链接、标签及定位 |
+| `catalog_entries` | 官方目录页中的候选标签、URL、可选来源型号标识与链接定位 |
 | `passages` | 完整选定段落、主题、章节标题、明确主体与原文定位 |
 | `claims` | 精确模型记录、属性、原生 JSON 值、可选单位、作用域、精度、条件和证据 |
 | `warnings` | 未提取到模型字段、页面结构或目标段落无法确认等情况 |
 
+`links` 每页最多保存 200 项，超限时保留截断警告；它与目录页的 `catalog_entries` 分别提取。
 `passages` 保留所选段落的原始表述与段内空白，仅去除外围空白。
 每页最多保存 6 段、每段最多 2,000 个字符、全页最多 6,000 个字符；完整段落超限时跳过并留下警告。
 段落主题可为概览、能力、限制、可用性、训练、评估、用法或许可，`records` 为空表示页面或模型家族层面的文字。
@@ -188,7 +217,7 @@ PDF、OCR 和浏览器 JavaScript 渲染尚未实现；官方 PDF 等链接可�
 修改配置中的来源定义后应重新同步；普通校验会拒绝与当前配置不一致的旧文档定义。
 
 原始响应按 SHA-256 保存为 `.cache/documents/<sha256>.bin`，Git 保存页面来源、元数据、预算内的完整段落、证据预览和声明。
-`validate --evidence` 校验原始字节摘要后重新执行完整提取，并核对全部提取结果，包括标题、日期、链接、段落、声明、作用域、警告和定位。
+`validate --evidence` 校验原始字节摘要后重新执行完整提取，并核对全部提取结果，包括标题、日期、链接、目录候选、段落、声明、作用域、警告和定位。
 这能证明当前提取结果可由已保存响应重放，不能证明页面声明就是模型的实际行为。
 
 ```text
@@ -200,5 +229,6 @@ cargo run --release --locked -- evidence restore --input /path/to/evidence
 归档和恢复同时处理 `snapshots/<sha256>.json` 与 `documents/<sha256>.bin`。
 使用相同 Git 数据版本和完整证据目录即可离线恢复与重放；正文缓存和 HTTP 收据继续排除在 Git 之外。
 新增或修订提取器后，应检查页面范围、模型绑定、证据定位和比较口径，再执行 `documents reparse` 并检查 diff。
+当前 `extractor_version` 为 3，已有原文缓存可通过该命令离线迁移。
 重解析核对原始字节的摘要与格式，全部提取和校验完成后才替换文档 YAML；没有内容的错误记录继续保留。
 缺少原文时需恢复相同证据归档；配置中的 URL、格式或绑定发生变化时仍应重新同步页面。

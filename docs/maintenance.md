@@ -13,13 +13,16 @@
 
 | 命令 | 用途 |
 | --- | --- |
-| `cargo run --release --locked -- sources` | 读取 13 个来源的范围、认证约定和条款状态 |
-| `cargo run --release --locked -- sync` | 更新五个默认公开来源，包含官方页面 |
+| `cargo run --release --locked -- sources` | 读取 14 个来源的范围、认证约定和条款状态 |
+| `cargo run --release --locked -- sync` | 更新六个默认公开来源，包含 Vercel 网关与官方页面 |
 | `cargo run --release --locked -- sync --source modelsdev,openrouter` | 仅更新指定来源，`--source` 也可重复提供 |
+| `cargo run --release --locked -- sync --source vercel` | 匿名获取 Vercel AI Gateway 的服务目录 |
 | `cargo run --release --locked -- sync --source official` | 更新配置中的官方页面 |
 | `cargo run --release --locked -- documents sync --vendor qwen` | 只更新指定厂商的官方页面 |
 | `cargo run --release --locked -- documents reparse` | 从本地原始页面离线重新提取段落和字段，保留原获取时间与采集错误 |
 | `cargo run --release --locked -- documents list --record huggingface:model:Qwen/Qwen3-8B` | 查看模型明确绑定的页面、声明、警告和失败 |
+| `cargo run --release --locked -- documents list --vendor google` | 查看厂商页面及其中保存的未绑定目录候选 |
+| `cargo run --release --locked -- documents list --kind directory` | 仅查看官方目录页及候选、警告和失败 |
 | `cargo run --release --locked -- documents check --record huggingface:model:Qwen/Qwen3-8B` | 离线比较页面声明与同一记录的目录事实 |
 | `cargo run --release --locked -- documents resolve huggingface:model:Qwen/Qwen3-8B` | 查看按来源优先级选择的字段及其候选、限制和冲突 |
 | `cargo run --release --locked -- discover --source huggingface,modelscope --output dist/discovery.json` | 将有数量上限的公开候选保存为报告，供种子审查 |
@@ -70,7 +73,12 @@ cargo run --release --locked -- rules --record huggingface:model:wanglab/MedSAM2
 | `huggingface` | 配置中每个仓库的模型详情 | [`config/huggingface-models.txt`](../config/huggingface-models.txt) |
 | `modelscope` | 配置中每个仓库的模型详情 | [`config/modelscope-models.txt`](../config/modelscope-models.txt) |
 | `openrouter` | 显式请求全部输出模态的模型目录并处理分页 | 适配器内的固定入口 |
-| `official` | 选定厂商的发布博客、模型卡、模型详情页和文档 | [`config/official-pages.yaml`](../config/official-pages.yaml) |
+| `vercel` | Vercel AI Gateway 公开服务目录 | 固定匿名入口 `https://ai-gateway.vercel.sh/v1/models` |
+| `official` | 选定厂商的发布博客、模型卡、模型详情页、文档和官方目录 | [`config/official-pages.yaml`](../config/official-pages.yaml) |
+
+Vercel 条目保存为 `vercel:service:<id>`，网关限制、模态、价格和可用性保留服务作用域，`model` 留空。
+`pricing` 的数字字符串、分档和其他复合值按原值保存，领域视图将其列入 `unclassified`，当前不推断 USD 或统一计费单位。
+来源约定共 6 个公开来源与 8 个需显式启用的认证来源。
 
 精选清单每行一个 `组织/模型` 上游 ID，支持空行和以 `#` 开头的注释，重复 ID 会报错。
 添加模型前确认原始组织、仓库路径、任务与资料可访问性，避免根据名称推断 ID。
@@ -101,16 +109,23 @@ cargo run --release --locked -- export
 
 ## 官方页面维护
 
-官方页面配置当前包含 12 个厂商的 27 个页面，最多允许 200 个条目。
-页面要求准确 URL 和已有模型记录绑定，采集匿名进行，详细范围见[官方页面与字段核对](official-documents.md)。
+官方页面按配置选择厂商与具体 URL，最多允许 200 个条目，采集匿名进行，详细范围见[官方页面与字段核对](official-documents.md)。
+`kind: directory` 的 `records` 必须为空；其他页面必须恰好绑定一条已有模型记录，避免一个型号的声明被直接复制到多个记录。
 `documents sync --vendor NAME` 按厂商重试；成功内容与页面失败一起写入 `data/documents/official.yaml`，存在失败时命令返回非零状态。
 失败时只保留完整 `source` 定义相同的旧内容，`checked_at` 记录最近尝试，旧快照保留实际获取时间，比较结果标记 `official_stale`。
 修改 URL、格式或绑定后重新同步，避免旧页面内容被用于新的来源定义。
 
-维护者用 `documents list` 检查来源、错误和警告，再用 `documents check` 审查可比较字段。
+维护者用 `documents list` 检查来源、目录候选、错误和警告，再用 `documents check` 审查可比较字段。
 页面发布时间不自动成为模型发布日期，近似数值、附加条件和旧内容不会产生精确一致结论。
 字段差异不会自动改写 API 目录事实；需要核对模型版本、单位、适用条件和双方定位。
 页面条件目前保存为文字说明，不能直接当作 `rules` 的 `eq` / `in` 条件执行。
+
+目录页的 `catalog_entries` 保存标签、URL、可选型号标识和原始链接证据，每页最多 500 条，省略条目时留下警告。
+每页官方链接另有 200 条上限，截断警告应与目录提取警告一起检查。
+这些条目是待审查候选，不会自动新增模型、绑定身份或继续抓取目标页面，分页和交互结果也不代表已取尽。
+目录页没有记录绑定，因此 `documents list --record` 和 `inspect` 不会展示它们；使用 `documents list --kind directory`，也可按厂商筛选。
+`stats.documents.directories` 是已保存目录页数，`directory_entries` 是各页候选数量之和，跨页重复会分别计数。
+审查候选后，为具体型号增加一条有明确模型绑定的页面配置，再获取其字段证据。
 
 `documents list` 还展示选定原文段落以及架构、训练、语言、许可、硬件等结构化声明。
 每页最多 6 段，每段最多 2,000 个字符，合计最多 6,000 个字符；超限段落整段跳过并留下警告。
@@ -123,7 +138,7 @@ cargo run --release --locked -- export
 缺省声明作用域是 `unspecified`，接口声明中的 `id` 是 HTTPS 文档引用，与 `rules` 使用的接口身份分别维护。
 `inspect` 增加 `resolved_metadata`，导出中的同名映射只包含模型记录；原目录事实和 profile 继续保留各自来源。
 
-提取器修改后，可在现有缓存上离线更新文档结果：
+当前提取器版本为 3，可在现有缓存上离线迁移已有文档结果：
 
 ```text
 cargo run --release --locked -- documents reparse
@@ -134,6 +149,7 @@ git diff -- data/documents
 
 `reparse` 核对缓存摘要并重建所有已保存内容的提取结果，保留 `checked_at`、快照时间和最近采集错误。
 它不请求上游，只有错误而没有内容的页面仍保留原错误。
+新增配置页没有已保存响应时不会由 `reparse` 自动采集，需在需要获取新内容时运行对应同步。
 全部页面处理和校验成功后才写入 YAML，缓存缺失或损坏时原文档文件继续保留。
 修改页面 URL、格式或绑定后需重新同步；离线重新提取不把旧响应改绑到新的来源定义。
 
@@ -154,12 +170,13 @@ HTTP 客户端复用连接，设置请求超时和响应体上限，拒绝 HTTP 
 ## 缓存与证据保存
 
 `.cache/snapshots/<sha256>.json` 保存目录原始 JSON，`.cache/documents/<sha256>.bin` 保存官方页面原始字节，`.cache/http/` 保存公开请求的条件缓存收据。
-这些缓存目录和 `dist/` 均被 Git 忽略，页面 YAML 保存元数据、选定段落、短摘录、定位和结构化声明。
+这些缓存目录和 `dist/` 均被 Git 忽略，页面 YAML 保存元数据、目录候选、选定段落、短摘录、定位和结构化声明。
 认证响应同样可能包含账户范围内的数据，不应直接发布整个缓存目录。
 
 普通 `validate` 从 YAML 检查结构与引用，不读取缓存，也不会请求上游。
 `validate --evidence` 读取每个被引用的目录快照，核对摘要、记录位置与事实值。
-对官方页面，它从原始 UTF-8 响应重新执行提取，核对完整结果，包括元数据、链接、段落、声明、作用域、警告和定位。
+对官方页面，它从原始 UTF-8 响应重新执行提取，核对完整结果，包括元数据、链接、目录候选、段落、声明、作用域、警告和定位。
+目录候选随文档导出，并沿用 `.bin` 证据的归档和恢复；Vercel 服务目录沿用 `.json` 快照。
 目录适配器不会在证据校验中重新采集，人工声明也不会联网复核；通过校验不证明模型实际支持某个功能。
 干净克隆可以执行普通校验和导出，但缺少历史原始响应时无法完成证据校验。
 重新同步只能取得当前响应，无法保证恢复已经变化的历史快照。
@@ -222,6 +239,7 @@ uv 部署使用 `uv sync --frozen`，CI 另用 `uv lock --check` 检查锁文件
 | models.dev | 保留 [`licenses/models.dev-MIT.txt`](../licenses/models.dev-MIT.txt)；记录内的模型许可与外链资产另行判断 |
 | Hugging Face、ModelScope | 保留模型仓库许可与来源证据；不把单个模型许可推广到整个平台目录 |
 | OpenRouter | 保存接口声明与来源，批量再分发范围仍待确认 |
+| Vercel AI Gateway | 保存平台目录声明、价格原值和证据，按网关条款确认保存与再分发范围 |
 | 官方页面提取 | Git 保存来源 URL、定位、选定段落与结构化声明，完整响应在本地缓存；按实际保存内容核对再分发范围 |
 | 人工文档声明 | 保留官方 URL、定位和核查时间；`accepted` 表示证据审查结果 |
 | 认证来源与原始缓存 | 根据账户条款和来源要求确认保存、分享与再分发范围 |

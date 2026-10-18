@@ -21,6 +21,32 @@
     "documents"
   ],
   "$defs": {
+    "CatalogEntry": {
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "$ref": "#/$defs/PageEvidence"
+        },
+        "label": {
+          "type": "string"
+        },
+        "model_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "url",
+        "evidence"
+      ]
+    },
     "Claim": {
       "type": "object",
       "properties": {
@@ -118,7 +144,8 @@
         "release_blog",
         "model_card",
         "model_page",
-        "documentation"
+        "documentation",
+        "directory"
       ]
     },
     "Extraction": {
@@ -133,6 +160,13 @@
               "type": "null"
             }
           ]
+        },
+        "catalog_entries": {
+          "description": "Official directory entries are candidates, without inferred model bindings.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CatalogEntry"
+          }
         },
         "claims": {
           "type": "array",

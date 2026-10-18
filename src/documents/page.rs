@@ -6,7 +6,11 @@ use reqwest::Url;
 use scraper::{ElementRef, Html, Selector};
 use serde_json::Value;
 
-use super::model::{Extraction, Format, LocatedValue, OfficialLink, PageEvidence, PageSource};
+use super::model::{
+    DocumentKind, Extraction, Format, LocatedValue, OfficialLink, PageEvidence, PageSource,
+};
+
+pub(super) const MAX_OFFICIAL_LINKS: usize = 200;
 
 pub struct Page {
     pub html: Html,
@@ -104,7 +108,7 @@ pub fn original_text(element: ElementRef<'_>) -> String {
 
 pub fn metadata(source: &PageSource, page: &Page) -> Result<Extraction> {
     let base = markdown_base(source)?;
-    let scope = content_scope(page);
+    let scope = content_scope(page, source.kind);
     let title = page
         .select("meta[property='og:title'], meta[name='og:title']")
         .into_iter()
@@ -156,7 +160,7 @@ pub fn metadata(source: &PageSource, page: &Page) -> Result<Extraction> {
         .find_map(|element| attribute_value(page, element, "content"))
         .or_else(|| json_ld_publication(page, &base, canonical_url.as_ref()));
     let mut seen = HashSet::new();
-    let links = page
+    let mut links: Vec<_> = page
         .select("a[href]")
         .into_iter()
         .filter(|element| {
@@ -185,17 +189,26 @@ pub fn metadata(source: &PageSource, page: &Page) -> Result<Extraction> {
                 evidence: page.attribute_evidence(element, "href"),
             })
         })
-        .take(40)
+        .take(MAX_OFFICIAL_LINKS + 1)
         .collect();
+    let mut warnings = Vec::new();
+    if links.len() > MAX_OFFICIAL_LINKS {
+        warnings.push(format!(
+            "Official links truncated: observed at least {} distinct links; limit is {MAX_OFFICIAL_LINKS}.",
+            links.len()
+        ));
+        links.truncate(MAX_OFFICIAL_LINKS);
+    }
     Ok(Extraction {
         extractor_version: super::EXTRACTOR_VERSION,
         title,
         published_at,
         canonical_url,
         links,
+        catalog_entries: Vec::new(),
         passages: Vec::new(),
         claims: Vec::new(),
-        warnings: Vec::new(),
+        warnings,
     })
 }
 
@@ -244,13 +257,18 @@ fn attribute_value(page: &Page, element: ElementRef<'_>, attribute: &str) -> Opt
     })
 }
 
-fn content_scope(page: &Page) -> Option<ElementRef<'_>> {
-    for selector in [
-        "main article, [role='main'] article",
-        "main, [role='main']",
-        "article",
-        "body",
-    ] {
+fn content_scope(page: &Page, kind: DocumentKind) -> Option<ElementRef<'_>> {
+    let selectors: &[&str] = if kind == DocumentKind::Directory {
+        &["main, [role='main']", "body"]
+    } else {
+        &[
+            "main article, [role='main'] article",
+            "main, [role='main']",
+            "article",
+            "body",
+        ]
+    };
+    for selector in selectors {
         if let Some(element) = page
             .select(selector)
             .into_iter()
@@ -504,6 +522,62 @@ mod tests {
         assert_eq!(page.select(path).len(), 1);
         assert_eq!(page.select(path)[0].attr("href"), Some("../../docs/model"));
         assert!(result.claims.is_empty() && result.warnings.is_empty());
+    }
+
+    #[test]
+    fn official_link_limit_warns_only_when_distinct_links_are_omitted() {
+        let source = source(Format::Html, "https://openai.com/index/model/");
+        for count in [MAX_OFFICIAL_LINKS, MAX_OFFICIAL_LINKS + 1] {
+            let links: String = (0..count)
+                .map(|index| format!("<a href='/models/{index}'>Model {index}</a><a href='/models/{index}'>Duplicate</a>"))
+                .collect();
+            let page = Page::parse(&source, format!("<main>{links}</main>").as_bytes()).unwrap();
+            let result = metadata(&source, &page).unwrap();
+            assert_eq!(result.links.len(), MAX_OFFICIAL_LINKS);
+            for (index, link) in result.links.iter().enumerate() {
+                assert_eq!(link.url, format!("https://openai.com/models/{index}"));
+                assert_eq!(link.label, format!("Model {index}"));
+            }
+            if count > MAX_OFFICIAL_LINKS {
+                assert_eq!(
+                    result.warnings,
+                    [
+                        "Official links truncated: observed at least 201 distinct links; limit is 200."
+                    ]
+                );
+            } else {
+                assert!(result.warnings.is_empty());
+            }
+        }
+    }
+
+    #[test]
+    fn directory_metadata_includes_all_article_cards_in_main_content() {
+        let mut source = source(Format::Html, "https://openai.com/models/");
+        source.kind = DocumentKind::Directory;
+        let page = Page::parse(&source, br#"<nav><a href='/pricing'>Pricing</a></nav>
+            <main><h1>Models</h1>
+            <article><h2>First model with a longer description</h2><a href='/models/first'>First model</a></article>
+            <article><h2>Second model</h2><a href='/models/second'>Second model</a></article></main>
+            <footer><a href='/about'>About</a></footer>"#).unwrap();
+        let result = metadata(&source, &page).unwrap();
+        assert_eq!(result.title.unwrap().value, "Models");
+        assert_eq!(
+            result
+                .links
+                .iter()
+                .map(|link| link.url.as_str())
+                .collect::<Vec<_>>(),
+            [
+                "https://openai.com/models/first",
+                "https://openai.com/models/second"
+            ]
+        );
+
+        source.kind = DocumentKind::ReleaseBlog;
+        let result = metadata(&source, &page).unwrap();
+        assert_eq!(result.links.len(), 1);
+        assert_eq!(result.links[0].url, "https://openai.com/models/first");
     }
 
     #[test]

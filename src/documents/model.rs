@@ -17,6 +17,7 @@ pub enum DocumentKind {
     ModelCard,
     ModelPage,
     Documentation,
+    Directory,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
@@ -137,12 +138,25 @@ pub struct OfficialLink {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
+pub struct CatalogEntry {
+    pub label: String,
+    pub url: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub model_id: Option<String>,
+    pub evidence: PageEvidence,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
 pub struct Extraction {
     pub extractor_version: u32,
     pub title: Option<LocatedValue>,
     pub published_at: Option<LocatedValue>,
     pub canonical_url: Option<LocatedValue>,
     pub links: Vec<OfficialLink>,
+    /// Official directory entries are candidates, without inferred model bindings.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub catalog_entries: Vec<CatalogEntry>,
     #[serde(default)]
     pub passages: Vec<Passage>,
     pub claims: Vec<Claim>,

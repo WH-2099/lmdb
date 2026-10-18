@@ -1,10 +1,11 @@
-# 发现公开模型候选
+# 发现公开模型与页面候选
 
 [项目首页](../README.md) · [维护流程](maintenance.md) · [发现规则](../config/discovery.yaml) · [种子选择依据](../research/2026-10-15/sources/seed-catalog.md)
 
 `discover` 根据明确的组织、任务与搜索条件查询公开模型列表，将当前种子之外的仓库写入候选报告。
 维护者核对候选的作者、任务、许可声明与具体模型身份后，再决定是否加入种子清单。
 报告中的候选不会自动进入同步目录。
+官方目录页另将型号、文章和下载入口保存为页面候选，复用官方页面的快照、缓存与证据校验。
 
 ## 使用
 
@@ -101,6 +102,32 @@ ModelScope 返回超过每页数量上限的页面，或尚未达到总数却少
 
 [`config/sources.yaml`](../config/sources.yaml) 保存来源范围、认证约定、条款状态与文档链接等描述信息。
 它不覆盖可执行端点，也不授权发现流程使用该文件描述的认证来源。
+
+## 官方目录候选
+
+[`config/official-pages.yaml`](../config/official-pages.yaml) 中的 `kind: directory` 页面通过官方页面同步读取。
+它们使用 `records: []`，提取结果保存在 `content.extraction.catalog_entries`，可按页面类型查看：
+
+```text
+cargo run --release --locked -- sync --source official
+cargo run --release --locked -- documents list --kind directory
+cargo run --release --locked -- documents list --kind directory --vendor qwen
+```
+
+| 候选入口 | 范围与证据 | 保存位置 |
+| --- | --- | --- |
+| `discover` | 配置规则返回的 Hugging Face、ModelScope 仓库 ID，附列表快照和 JSON Pointer | 候选 JSON 报告，默认 `dist/discovery.json` |
+| 官方目录页 | 已支持正文中的型号、文章、仓库、集合或演示链接，附标签、页面快照与链接属性定位 | `data/documents/official.yaml`，随 `documents list`、`export` 输出 |
+
+目录页按厂商 URL 范围筛选，每页按 URL 去重后最多保存 500 项，超限时留下警告。
+当前提取器不填充可选 `model_id`，候选没有本库记录或模型身份绑定。
+它只读取本次响应中的已支持正文，不自动翻页、跟进候选链接或执行网页交互；零个候选也可能表示页面结构不再匹配，应检查警告。
+目录候选不参与模型字段比较或选择，也不会自动加入种子清单。
+
+审查时先确认候选指向单个型号、模型家族还是文章与下载集合，再核对官方归属、具体版本、许可与已有记录。
+确认新的仓库后补充对应种子；确认已有模型的官方详情后，在页面清单中新增一条绑定准确模型记录的来源。
+`stats.documents.directory_entries` 统计保存的目录条目总数，不跨页面去重，不能视为独立模型数量。
+页面缓存、原文重放及字段绑定规则见[官方页面与字段核对](official-documents.md)。
 
 ## 值得审查的专业模型候选
 

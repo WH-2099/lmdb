@@ -178,6 +178,8 @@ enum DocumentCommand {
         record: Option<String>,
         #[arg(long)]
         vendor: Option<String>,
+        #[arg(long, value_parser = ["release_blog", "model_card", "model_page", "documentation", "directory"])]
+        kind: Option<String>,
     },
     /// Compare exact model claims with source catalog facts.
     Check {
@@ -313,7 +315,18 @@ async fn main() -> Result<()> {
                             &document_catalog,
                         )?)?;
                     }
-                    DocumentCommand::List { record, vendor } => {
+                    DocumentCommand::List {
+                        record,
+                        vendor,
+                        kind,
+                    } => {
+                        let kind = kind
+                            .map(|kind| {
+                                serde_json::from_value::<documents::DocumentKind>(Value::String(
+                                    kind,
+                                ))
+                            })
+                            .transpose()?;
                         if let Some(id) = &record {
                             find_record(&registry, id)?;
                         }
@@ -326,6 +339,7 @@ async fn main() -> Result<()> {
                         let matches = |source: &documents::PageSource| {
                             record.as_ref().is_none_or(|id| source.records.contains(id))
                                 && vendor.as_ref().is_none_or(|v| source.vendor == *v)
+                                && kind.is_none_or(|kind| source.kind == kind)
                         };
                         let sources: Vec<_> = document_config
                             .pages
@@ -754,7 +768,7 @@ fn stats(
         *relationships.entry(relation.kind).or_insert(0usize) += 1;
     }
     print_json(
-        &json!({"documents":{"pages":documents.documents.len(),"failed":documents.documents.iter().filter(|d|d.error.is_some()).count(),"with_content":documents.documents.iter().filter(|d|d.content.is_some()).count(),"passages":documents.documents.iter().filter_map(|d|d.content.as_ref()).map(|c|c.extraction.passages.len()).sum::<usize>(),"claims":documents.documents.iter().filter_map(|d|d.content.as_ref()).map(|c|c.extraction.claims.len()).sum::<usize>()},"sources":sources,"task_facts":tasks,"typed_coverage":coverage,"identities":{"models":identities.models.len(),"model_records":identities.models.iter().map(|i|i.records.len()).sum::<usize>(),"interfaces":identities.interfaces.len(),"service_bindings":identities.interfaces.iter().map(|i|i.records.len()).sum::<usize>()},"relationships":relationships,"assertions":registry.assertions.iter().map(|s|s.assertions.len()).sum::<usize>(),"conflicts":registry.assertions.iter().flat_map(|s|&s.assertions).filter(|a|a.review == Review::Conflicted).count()}),
+        &json!({"documents":{"pages":documents.documents.len(),"directories":documents.documents.iter().filter(|d|d.source.kind==documents::DocumentKind::Directory).count(),"directory_entries":documents.documents.iter().filter_map(|d|d.content.as_ref()).map(|c|c.extraction.catalog_entries.len()).sum::<usize>(),"failed":documents.documents.iter().filter(|d|d.error.is_some()).count(),"with_content":documents.documents.iter().filter(|d|d.content.is_some()).count(),"passages":documents.documents.iter().filter_map(|d|d.content.as_ref()).map(|c|c.extraction.passages.len()).sum::<usize>(),"claims":documents.documents.iter().filter_map(|d|d.content.as_ref()).map(|c|c.extraction.claims.len()).sum::<usize>()},"sources":sources,"task_facts":tasks,"typed_coverage":coverage,"identities":{"models":identities.models.len(),"model_records":identities.models.iter().map(|i|i.records.len()).sum::<usize>(),"interfaces":identities.interfaces.len(),"service_bindings":identities.interfaces.iter().map(|i|i.records.len()).sum::<usize>()},"relationships":relationships,"assertions":registry.assertions.iter().map(|s|s.assertions.len()).sum::<usize>(),"conflicts":registry.assertions.iter().flat_map(|s|&s.assertions).filter(|a|a.review == Review::Conflicted).count()}),
     )
 }
 

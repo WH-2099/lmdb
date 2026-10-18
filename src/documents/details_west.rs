@@ -402,7 +402,6 @@ fn google_details(source: &PageSource, page: &Page, out: &mut Extraction) {
                 ("Context caching", "context_caching"),
                 ("RAG Engine", "rag_engine"),
                 ("Tuning", "fine_tuning"),
-                ("URL context", "url_context"),
                 ("Agentic video understanding", "agentic_video_understanding"),
             ][..],
         ),
@@ -455,6 +454,30 @@ fn google_details(source: &PageSource, page: &Page, out: &mut Extraction) {
                 }
             }
         }
+    }
+    let url_context = select(table, "tr")
+        .into_iter()
+        .filter(|row| {
+            cells(*row)
+                .first()
+                .is_some_and(|cell| matches!(text(*cell).as_str(), "Capabilities" | "Tools"))
+        })
+        .flat_map(|row| select(row, "li.geap-feature"))
+        .filter(|node| feature_label(*node) == "URL context")
+        .collect();
+    if let Some(node) = unique(url_context)
+        && let Some(supported) = feature_status(node)
+    {
+        add(
+            source,
+            page,
+            out,
+            node,
+            "url_context",
+            json!(supported),
+            interface(source),
+            &[],
+        );
     }
     for (label, property) in [
         ("APIs", "endpoint_support"),
@@ -1141,6 +1164,58 @@ mod tests {
                 .iter()
                 .all(|c| matches!(c.scope, ClaimScope::Interface { .. }))
         );
+    }
+
+    #[test]
+    fn google_url_context_accepts_either_section_and_rejects_ambiguous_evidence() {
+        let row = |section, supported| {
+            let (class, status) = if supported {
+                ("geap-supported", "Supported")
+            } else {
+                ("geap-not-supported", "Not supported")
+            };
+            format!(
+                "<tr><th>{section}</th><td><li class='geap-feature'><a>URL context</a><span class='{class}'>{status}</span></li></td></tr>"
+            )
+        };
+        let extract = |rows: &str| {
+            run(
+                "google-gemini25-model",
+                Format::Html,
+                &format!(
+                    "<table class='geap-model-table'><tr><th>Model ID</th><td>gemini-2.5-pro</td></tr>{rows}</table>"
+                ),
+            )
+        };
+        for section in ["Capabilities", "Tools"] {
+            for supported in [true, false] {
+                let out = extract(&row(section, supported));
+                let claims: Vec<_> = out
+                    .claims
+                    .iter()
+                    .filter(|claim| claim.property == "url_context")
+                    .collect();
+                assert_eq!(claims.len(), 1);
+                assert_eq!(claims[0].value, json!(supported));
+                assert!(matches!(claims[0].scope, ClaimScope::Interface { .. }));
+                assert_eq!(
+                    claims[0].evidence.excerpt,
+                    if supported {
+                        "URL context Supported"
+                    } else {
+                        "URL context Not supported"
+                    }
+                );
+            }
+        }
+        for sections in [["Capabilities", "Tools"], ["Tools", "Tools"]] {
+            let out = extract(&(row(sections[0], true) + &row(sections[1], false)));
+            assert!(
+                !out.claims
+                    .iter()
+                    .any(|claim| claim.property == "url_context")
+            );
+        }
     }
 
     #[test]

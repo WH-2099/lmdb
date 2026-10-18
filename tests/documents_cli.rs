@@ -304,7 +304,10 @@ fn reparse_migrates_cached_extractions_and_never_partially_writes() -> Result<()
     let reparsed = documents::load(root.path())?;
     assert_eq!(reparsed, expected);
     let content = reparsed.documents[0].content.as_ref().unwrap();
-    assert_eq!(content.extraction.extractor_version, 2);
+    assert_eq!(
+        content.extraction.extractor_version,
+        documents::EXTRACTOR_VERSION
+    );
     assert!(!content.extraction.passages.is_empty());
     assert!(content.extraction.claims.iter().any(|claim| {
         claim.property == "context_window"
@@ -324,6 +327,71 @@ fn reparse_migrates_cached_extractions_and_never_partially_writes() -> Result<()
     assert!(!corrupt.status.success());
     assert!(String::from_utf8_lossy(&corrupt.stderr).contains("document SHA-256 mismatch"));
     assert_eq!(fs::read(path)?, old_bytes);
+    Ok(())
+}
+
+#[test]
+fn failed_sync_upgrades_retained_extraction_and_preserves_observed_content() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let (_, original) = seed(root.path())?;
+    let expected = &original.documents[0];
+    let mut legacy = original.clone();
+    let extraction = &mut legacy.documents[0].content.as_mut().unwrap().extraction;
+    extraction.extractor_version = documents::EXTRACTOR_VERSION - 1;
+    extraction
+        .claims
+        .iter_mut()
+        .find(|claim| claim.property == "context_window")
+        .unwrap()
+        .value = json!(999);
+    let path = root.path().join("data/documents/official.yaml");
+    store::write_yaml(&path, &legacy)?;
+    let legacy_bytes = fs::read(&path)?;
+
+    let failed = run(root.path(), &["documents", "sync", "--vendor", "openai"]);
+    assert!(!failed.status.success());
+    assert!(String::from_utf8_lossy(&failed.stderr).contains("official page failures saved"));
+    let report: Value = serde_json::from_slice(&failed.stdout)?;
+    assert_eq!(report["checked"], 1);
+    assert_eq!(report["failed"], json!([expected.source.id]));
+    let migrated = documents::load(root.path())?;
+    let observed = &migrated.documents[0];
+    assert_eq!(observed.source, expected.source);
+    assert_eq!(observed.content, expected.content);
+    assert_ne!(observed.checked_at, expected.checked_at);
+    assert!(
+        observed
+            .error
+            .as_deref()
+            .unwrap()
+            .contains("request failed")
+    );
+    success(root.path(), &["validate", "--evidence"]);
+
+    let raw_path = root.path().join(format!(
+        ".cache/documents/{}.bin",
+        expected.content.as_ref().unwrap().snapshot.sha256
+    ));
+    fs::remove_file(&raw_path)?;
+    let current = run(root.path(), &["documents", "sync", "--vendor", "openai"]);
+    assert!(!current.status.success());
+    assert!(String::from_utf8_lossy(&current.stderr).contains("official page failures saved"));
+    assert_eq!(
+        documents::load(root.path())?.documents[0].content,
+        expected.content
+    );
+    success(root.path(), &["validate"]);
+
+    fs::write(&path, &legacy_bytes)?;
+    let missing = run(root.path(), &["documents", "sync", "--vendor", "openai"]);
+    assert!(!missing.status.success());
+    assert!(String::from_utf8_lossy(&missing.stderr).contains("open document"));
+    assert_eq!(fs::read(&path)?, legacy_bytes);
+    fs::write(raw_path, b"corrupt")?;
+    let corrupt = run(root.path(), &["documents", "sync", "--vendor", "openai"]);
+    assert!(!corrupt.status.success());
+    assert!(String::from_utf8_lossy(&corrupt.stderr).contains("document SHA-256 mismatch"));
+    assert_eq!(fs::read(path)?, legacy_bytes);
     Ok(())
 }
 
@@ -507,6 +575,162 @@ fn archive_restores_json_and_document_evidence_into_an_empty_cache() -> Result<(
     assert!(String::from_utf8_lossy(&result.stderr).contains("document SHA-256 mismatch"));
     assert!(!root.path().join(".cache").exists());
     assert_eq!(export, fs::read(root.path().join("dist/registry.json"))?);
+    Ok(())
+}
+
+#[test]
+fn directory_entries_remain_unbound_and_preserve_replayable_evidence() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let (catalog, mut saved) = seed(root.path())?;
+    let initial_inspection = output(root.path(), &["inspect", MODEL]);
+    let directory_url = "https://ai.google.dev/gemini-api/docs/models";
+    let raw = br#"<!doctype html><html><head><title>Gemini models</title></head>
+<body><main><div class="devsite-article-body">
+<article><a href="/gemini-api/docs/models/gemini-2.5-pro">Gemini 2.5 Pro</a></article>
+<article><a href="/gemini-api/docs/models/gemini-2.5-flash">Gemini 2.5 Flash</a></article>
+</div></main></body></html>"#;
+    let source: PageSource = serde_json::from_value(json!({
+        "id":"google-model-directory", "vendor":"google", "kind":"directory",
+        "url":directory_url, "format":"html", "records":[]
+    }))?;
+    let content = PageContent {
+        snapshot: snapshot("official-google", directory_url, raw),
+        content_type: Some("text/html; charset=utf-8".into()),
+        extraction: documents::extract(&source, raw)?,
+    };
+    assert!(content.extraction.claims.is_empty());
+    assert!(content.extraction.passages.is_empty());
+    assert_eq!(
+        content
+            .extraction
+            .catalog_entries
+            .iter()
+            .map(|entry| (entry.label.as_str(), entry.url.as_str()))
+            .collect::<Vec<_>>(),
+        [
+            (
+                "Gemini 2.5 Pro",
+                "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-pro",
+            ),
+            (
+                "Gemini 2.5 Flash",
+                "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash",
+            ),
+        ]
+    );
+    assert!(
+        content
+            .extraction
+            .catalog_entries
+            .iter()
+            .all(|entry| entry.model_id.is_none())
+    );
+    let raw_path = format!("documents/{}.bin", content.snapshot.sha256);
+    store::write_bytes(&root.path().join(".cache").join(&raw_path), raw)?;
+    let directory = PageDocument {
+        source,
+        checked_at: "2026-10-19T00:00:00Z".into(),
+        error: None,
+        content: Some(content),
+    };
+    saved.documents.push(directory.clone());
+    store::write_yaml(
+        &root.path().join("config/official-pages.yaml"),
+        &PageConfig {
+            schema_version: 1,
+            pages: saved
+                .documents
+                .iter()
+                .map(|doc| doc.source.clone())
+                .collect(),
+        },
+    )?;
+    let saved_path = root.path().join("data/documents/official.yaml");
+    store::write_yaml(&saved_path, &saved)?;
+    success(root.path(), &["validate", "--evidence"]);
+
+    let listed = output(root.path(), &["documents", "list", "--kind", "directory"]);
+    assert_eq!(
+        listed,
+        json!({"sources":[directory.source], "documents":[directory]})
+    );
+    assert_eq!(
+        output(
+            root.path(),
+            &[
+                "documents",
+                "list",
+                "--kind",
+                "directory",
+                "--vendor",
+                "google"
+            ],
+        ),
+        listed
+    );
+    for args in [
+        [
+            "documents",
+            "list",
+            "--kind",
+            "directory",
+            "--vendor",
+            "openai",
+        ],
+        [
+            "documents",
+            "list",
+            "--kind",
+            "directory",
+            "--record",
+            MODEL,
+        ],
+    ] {
+        assert_eq!(
+            output(root.path(), &args),
+            json!({"sources":[], "documents":[]})
+        );
+    }
+    assert_eq!(output(root.path(), &["inspect", MODEL]), initial_inspection);
+    let stats = output(root.path(), &["stats"]);
+    assert_eq!(stats["documents"]["directories"], 1);
+    assert_eq!(stats["documents"]["directory_entries"], 2);
+
+    success(root.path(), &["export"]);
+    let export_path = root.path().join("dist/registry.json");
+    let export_bytes = fs::read(&export_path)?;
+    let exported: Value = serde_json::from_slice(&export_bytes)?;
+    assert_eq!(exported["models"], serde_json::to_value(&catalog.records)?);
+    assert_eq!(
+        exported["documents"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|doc| doc["source"]["id"] == "google-model-directory")
+            .unwrap(),
+        &listed["documents"][0]
+    );
+    success(root.path(), &["evidence", "archive", "--output", "archive"]);
+    assert_eq!(fs::read(root.path().join("archive").join(&raw_path))?, raw);
+    fs::remove_dir_all(root.path().join(".cache"))?;
+    success(root.path(), &["evidence", "restore", "--input", "archive"]);
+    assert_eq!(fs::read(root.path().join(".cache").join(&raw_path))?, raw);
+    success(root.path(), &["validate", "--evidence"]);
+    success(root.path(), &["export"]);
+    assert_eq!(fs::read(export_path)?, export_bytes);
+
+    saved.documents[1]
+        .content
+        .as_mut()
+        .unwrap()
+        .extraction
+        .catalog_entries[0]
+        .label = "Changed directory entry".into();
+    store::write_yaml(&saved_path, &saved)?;
+    success(root.path(), &["validate"]);
+    let tampered = run(root.path(), &["validate", "--evidence"]);
+    assert!(!tampered.status.success());
+    assert!(String::from_utf8_lossy(&tampered.stderr).contains("differs from snapshot replay"));
     Ok(())
 }
 

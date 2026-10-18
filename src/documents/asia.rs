@@ -1007,6 +1007,7 @@ mod extraction_tests {
             published_at: None,
             canonical_url: None,
             links: Vec::new(),
+            catalog_entries: Vec::new(),
             passages: Vec::new(),
             claims: Vec::new(),
             warnings: Vec::new(),

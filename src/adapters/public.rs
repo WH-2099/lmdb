@@ -166,7 +166,7 @@ pub fn openrouter(value: &Value, snapshot: &Snapshot) -> Result<Vec<Record>> {
         .collect()
 }
 
-fn required_string<'a>(value: &'a Value, field: &str) -> Result<&'a str> {
+pub(super) fn required_string<'a>(value: &'a Value, field: &str) -> Result<&'a str> {
     value
         .get(field)
         .and_then(Value::as_str)
@@ -174,7 +174,7 @@ fn required_string<'a>(value: &'a Value, field: &str) -> Result<&'a str> {
         .with_context(|| format!("missing or empty string field {field}"))
 }
 
-fn mapped_facts(
+pub(super) fn mapped_facts(
     value: &Value,
     root: &str,
     fields: &[(&str, &str, Option<&str>)],

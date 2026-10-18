@@ -27,7 +27,8 @@
         "release_blog",
         "model_card",
         "model_page",
-        "documentation"
+        "documentation",
+        "directory"
       ]
     },
     "Format": {

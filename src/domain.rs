@@ -326,7 +326,7 @@ fn modalities(record: &Record, key: &str) -> Result<Option<Derived<Vec<ModalityL
 
 fn tasks(record: &Record) -> Result<Option<TaskLabels>> {
     let (taxonomy, labels) = match record.source.as_str() {
-        "huggingface" | "modelsdev" => {
+        "huggingface" | "modelsdev" | "vercel" => {
             let (key, taxonomy) = if record.source == "huggingface" {
                 ("task", "pipeline_tag")
             } else {
@@ -374,23 +374,29 @@ fn tasks(record: &Record) -> Result<Option<TaskLabels>> {
 
 fn task_label(source: &str, label: String) -> TaskLabel {
     let family = match (source, label.as_str()) {
-        ("huggingface" | "modelscope", "text-generation") => Some(TaskFamily::TextGeneration),
-        ("huggingface" | "modelscope", "text-ranking") | ("modelsdev", "reranking") => {
+        ("huggingface" | "modelscope", "text-generation") | ("vercel", "language") => {
+            Some(TaskFamily::TextGeneration)
+        }
+        ("huggingface" | "modelscope", "text-ranking") | ("modelsdev" | "vercel", "reranking") => {
             Some(TaskFamily::Reranking)
         }
-        ("huggingface" | "modelscope", "text-to-speech") => Some(TaskFamily::TextToSpeech),
-        ("huggingface" | "modelscope", "image-to-video") => Some(TaskFamily::VideoGeneration),
-        ("huggingface", "text-to-image") | ("modelscope", "text-to-image-synthesis") => {
-            Some(TaskFamily::ImageGeneration)
+        ("huggingface" | "modelscope", "text-to-speech") | ("vercel", "speech") => {
+            Some(TaskFamily::TextToSpeech)
         }
+        ("huggingface" | "modelscope", "image-to-video") => Some(TaskFamily::VideoGeneration),
+        ("huggingface", "text-to-image")
+        | ("modelscope", "text-to-image-synthesis")
+        | ("vercel", "image") => Some(TaskFamily::ImageGeneration),
         ("huggingface", "text-to-video" | "image-text-to-video")
-        | ("modelscope", "text-to-video-synthesis") => Some(TaskFamily::VideoGeneration),
+        | ("modelscope", "text-to-video-synthesis")
+        | ("vercel", "video") => Some(TaskFamily::VideoGeneration),
         ("huggingface", "automatic-speech-recognition")
-        | ("modelscope", "auto-speech-recognition") => Some(TaskFamily::SpeechRecognition),
+        | ("modelscope", "auto-speech-recognition")
+        | ("vercel", "transcription") => Some(TaskFamily::SpeechRecognition),
         ("huggingface", "image-segmentation" | "mask-generation") => Some(TaskFamily::Segmentation),
         ("huggingface", "time-series-forecasting") => Some(TaskFamily::TimeSeries),
         ("huggingface", "robotics") => Some(TaskFamily::Robotics),
-        ("modelscope", "sentence-embedding") | ("modelsdev", "embedding") => {
+        ("modelscope", "sentence-embedding") | ("modelsdev" | "vercel", "embedding") => {
             Some(TaskFamily::Embedding)
         }
         _ => None,
@@ -760,6 +766,62 @@ mod tests {
                 .temperature_control
                 .is_none()
         );
+    }
+
+    #[test]
+    fn vercel_keeps_source_tasks_and_unverified_prices_across_modalities() {
+        for (label, family, input, output) in [
+            ("language", Some(TaskFamily::TextGeneration), "text", "text"),
+            (
+                "language",
+                Some(TaskFamily::TextGeneration),
+                "text",
+                "image",
+            ),
+            ("embedding", Some(TaskFamily::Embedding), "text", "text"),
+            ("reranking", Some(TaskFamily::Reranking), "text", "text"),
+            ("image", Some(TaskFamily::ImageGeneration), "text", "image"),
+            ("video", Some(TaskFamily::VideoGeneration), "text", "video"),
+            ("speech", Some(TaskFamily::TextToSpeech), "text", "audio"),
+            (
+                "transcription",
+                Some(TaskFamily::SpeechRecognition),
+                "audio",
+                "text",
+            ),
+            ("realtime", None, "audio", "audio"),
+            ("evaluation", None, "text", "text"),
+            ("future-type", None, "future-input", "future-output"),
+        ] {
+            let prices = json!({
+                "input":"0.000000000000000000123", "output":"0",
+                "input_tiers":[{"cost":"0.0000012","min":0,"max":32001}],
+                "speech_input_character_cost":"0.00001",
+                "video_duration_pricing":[{"resolution":"720p","cost_per_second":"0.1"}],
+                "future_unit":{"cost":"1"}
+            });
+            let profile = project(&record(
+                "vercel",
+                json!({
+                    "type":label, "input_modalities":[input], "output_modalities":[output],
+                    "pricing":prices
+                }),
+            ))
+            .unwrap();
+            let tasks = profile.tasks.unwrap();
+            assert_eq!(tasks.source, "vercel");
+            assert_eq!(tasks.taxonomy, "type");
+            assert_eq!(tasks.labels[0].value.source_label, label);
+            assert_eq!(tasks.labels[0].value.family, family);
+            assert_eq!(tasks.labels[0].pointer, "/type");
+            let pricing = profile.pricing.unwrap();
+            assert!(pricing.base.is_empty());
+            for (key, value) in prices.as_object().unwrap() {
+                assert_eq!(&pricing.unclassified[key].value, value);
+                assert_eq!(pricing.unclassified[key].pointer, format!("/pricing/{key}"));
+            }
+        }
+        assert!(project(&record("vercel", json!({"type":[]}))).is_err());
     }
 
     #[test]
