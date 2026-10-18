@@ -1,0 +1,306 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Config",
+  "type": "object",
+  "properties": {
+    "providers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ProviderProfile"
+      }
+    },
+    "schema_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0
+    },
+    "script": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Script"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Source"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sources",
+    "providers"
+  ],
+  "$defs": {
+    "Fixture": {
+      "type": "object",
+      "properties": {
+        "chunk_delay_ms": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "default": null,
+          "minimum": 0
+        },
+        "delay_ms": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "default": null,
+          "minimum": 0
+        },
+        "output": {
+          "default": null
+        },
+        "scenario": {
+          "$ref": "#/$defs/Scenario",
+          "default": "text"
+        },
+        "text": {
+          "type": "string",
+          "default": "Mock response: ready ✓ 世界"
+        },
+        "tool_arguments": {
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "ModelProfile": {
+      "type": "object",
+      "properties": {
+        "behavior": {
+          "description": "Explicit model settings consumed by its provider adapter; no inferred aliases.",
+          "type": "object",
+          "additionalProperties": true,
+          "default": {}
+        },
+        "context_window": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "default": null,
+          "minimum": 0
+        },
+        "id": {
+          "type": "string"
+        },
+        "input_modalities": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "max_output_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "default": null,
+          "minimum": 0
+        },
+        "notes": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "output_modalities": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Protocol"
+          }
+        },
+        "reasoning": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": null
+        },
+        "record": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "sources": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "structured_output": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": null
+        },
+        "tool_call": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "protocols"
+      ]
+    },
+    "Protocol": {
+      "type": "string",
+      "enum": [
+        "openai_chat",
+        "openai_responses",
+        "anthropic_messages",
+        "gemini_generate"
+      ]
+    },
+    "ProviderProfile": {
+      "type": "object",
+      "properties": {
+        "aliases": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ModelProfile"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Protocol"
+          }
+        },
+        "sources": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "protocols",
+        "models"
+      ]
+    },
+    "Scenario": {
+      "type": "string",
+      "enum": [
+        "text",
+        "tool_call",
+        "parallel_tools",
+        "malformed_tool_arguments",
+        "structured",
+        "reasoning",
+        "refusal",
+        "truncated",
+        "empty",
+        "stop_sequence",
+        "rate_limit",
+        "overloaded",
+        "server_error",
+        "unauthorized",
+        "forbidden",
+        "not_found",
+        "context_overflow",
+        "stream_error",
+        "disconnect",
+        "slow",
+        "unknown_event",
+        "cache_miss"
+      ]
+    },
+    "Script": {
+      "type": "object",
+      "properties": {
+        "repeat": {
+          "type": "boolean",
+          "default": false
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Fixture"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "steps"
+      ]
+    },
+    "Source": {
+      "type": "object",
+      "properties": {
+        "checked_on": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "url",
+        "checked_on",
+        "scope"
+      ]
+    }
+  }
+}

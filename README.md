@@ -88,6 +88,26 @@ Vercel AI Gateway 的记录 ID 为 `vercel:service:<上游 ID>`，不根据路�
 专业样本包括 GR00T 的本体相关动作表示、ESMFold2 的蛋白结构输出、按 checkpoint 区分的 MedSAM2，以及 FAST 的 `action_tokenizer` 角色。
 FAST 的 `robotics` 任务标签表示领域归类，其角色应连同声明读取；详见[专业模型](docs/specialized-models.md)。
 
+## 模型 API Mock 服务
+
+`mock serve` 启动独立的本地 HTTP 服务，用固定响应测试客户端的原生协议、参数、错误、SSE 和工具多轮会话。
+内置配置随二进制发布，运行时无需注册表目录或上游凭据。
+
+```text
+cargo run --release --locked -- mock list
+cargo run --release --locked -- mock serve --provider openai --model gpt-6.1-sol --port 8080
+cargo run --release --locked -- mock scenarios
+cargo run --release --locked -- mock rankings --top 20
+```
+
+OpenAI 客户端可将 base URL 设为 `http://127.0.0.1:8080/v1`，使用测试凭据 `mock-key`。
+提供方包括 OpenAI、Anthropic、Gemini、Meta，以及 OpenRouter、Vercel 网关；其他兼容提供方需要自定义模型配置。
+首批按 Artificial Analysis Intelligence Index 前 20 个评测变体选取，涉及 8 个基础模型候选，其中 7 个具有已映射接口。
+Muse Wonder Full 的公开 API 缺口、精确 effort 映射以及前 50 名扩展均保留状态。
+`--suite coverage`、`x-mock-session` 和 `x-mock-scenario` 可安排、重放和查看测试分支。
+使用量、签名与延迟是合成数据，真实 token 探针仍是待办。
+启动、各协议示例、工具续轮、脚本、覆盖报告和实现边界见[Mock 服务](docs/mock-server.md)。
+
 ## 文档索引
 
 | 文档 | 内容 |
@@ -102,10 +122,12 @@ FAST 的 `robotics` 任务标签表示领域归类，其角色应连同声明读
 | [维护流程](docs/maintenance.md) | 命令、更新、校验、缓存、依赖与来源许可 |
 | [条件声明](docs/assertions.md) | 人工证据、状态、条件与实际样本的解释 |
 | [认证来源](docs/authenticated-sources.md) | 来源键、环境变量、字段与分页边界 |
+| [Mock 服务](docs/mock-server.md) | 本地模型 API、原生协议、确定性会话、工具续轮、SSE 与错误场景 |
 | [代码与数据许可](docs/licensing.md) | 项目代码许可、上游声明与数据再分发范围 |
 | [项目决定](project/decisions.md) | 已采用的实现选择与待决事项 |
 | [路线与进度](project/roadmap.md) | 当前能力、验证入口与后续工作 |
 | [研究档案](research/2026-10-15/README.md) | 初始来源、框架、架构与同类项目调研 |
+| [Mock 协议研究](research/2026-10-19/mock-server.md) | AA 排名口径、提供方一手文档、冲突与待验证项 |
 
 ## 目录
 
@@ -118,6 +140,7 @@ lmdb/
 │   ├── catalogs/            每个来源一个 YAML 目录
 │   ├── assertions/          人工审查的条件声明
 │   ├── documents/           官方页面元数据、目录候选、选定段落与声明
+│   ├── mock/                Mock 提供方配置与排名快照
 │   └── identities/          模型身份与接口绑定证据
 ├── schemas/                 由 Rust 类型生成的 JSON Schema
 ├── tests/fixtures/          合成响应与回归样本

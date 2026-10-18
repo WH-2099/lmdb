@@ -15,6 +15,8 @@ use model_metadata::{
 use serde::Serialize;
 use serde_json::{Value, json};
 
+mod mock_cli;
+
 #[derive(Parser)]
 #[command(version, about = "Model metadata with field-level source evidence")]
 struct Cli {
@@ -26,6 +28,11 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
+    /// Run deterministic model API simulations for client development.
+    Mock {
+        #[command(subcommand)]
+        command: mock_cli::Command,
+    },
     /// List source coverage, authentication and terms metadata.
     Sources,
     /// Fetch selected sources; defaults to all public sources.
@@ -192,6 +199,7 @@ enum DocumentCommand {
 async fn main() -> Result<()> {
     let cli = Cli::parse();
     match cli.command {
+        Command::Mock { command } => mock_cli::run(command).await?,
         Command::Sources => print_json(&discovery::load_sources(&cli.root)?)?,
         Command::Sync {
             source,
@@ -236,6 +244,10 @@ async fn main() -> Result<()> {
         }
         Command::Schema { check } => {
             for (name, schema) in [
+                (
+                    "mock-config",
+                    schemars::schema_for!(model_metadata::mock::Config),
+                ),
                 ("catalog", schemars::schema_for!(Catalog)),
                 (
                     "official-pages",
@@ -367,6 +379,10 @@ async fn main() -> Result<()> {
                     DocumentCommand::Sync { .. } | DocumentCommand::Reparse => unreachable!(),
                 },
                 Command::Validate { evidence } => {
+                    let mock_config = cli.root.join("data/mock/providers.yaml");
+                    if mock_config.try_exists()? {
+                        model_metadata::mock::config::load(Some(&mock_config))?;
+                    }
                     if cli.root.join("config/sources.yaml").try_exists()? {
                         discovery::load_sources(&cli.root)?;
                     }

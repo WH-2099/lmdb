@@ -179,6 +179,20 @@ mod tests {
     use super::*;
     use crate::model::{Fact, Origin, Record, RecordKind, SCHEMA_VERSION};
 
+    #[test]
+    fn snapshot_decimal_precision_survives_json_and_yaml() -> Result<()> {
+        let raw = br#"{"cache_read":0.024999999999999994,"input":0.09999999999999999}"#;
+        let value: serde_json::Value = serde_json::from_slice(raw)?;
+        assert_eq!(value["cache_read"].as_f64(), Some(0.024999999999999994));
+        assert_eq!(value["input"].as_f64(), Some(0.09999999999999999));
+        let root = tempfile::tempdir()?;
+        let path = root.path().join("prices.yaml");
+        write_yaml(&path, &value)?;
+        let restored: serde_json::Value = read_yaml(&path)?;
+        assert_eq!(restored, value);
+        Ok(())
+    }
+
     fn catalog(source: &str) -> Catalog {
         Catalog {
             schema_version: SCHEMA_VERSION,

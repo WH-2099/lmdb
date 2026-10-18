@@ -6,6 +6,7 @@ pub mod domain;
 pub mod evidence;
 pub mod http;
 pub mod identity;
+pub mod mock;
 pub mod model;
 pub mod registry;
 pub mod relations;

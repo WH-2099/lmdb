@@ -156520,7 +156520,7 @@ records:
       pointer: /providers/chutes/models/Qwen~1Qwen3.6-27B-TEE/modalities/output
     pricing:
       value:
-        cache_read: 0.02499999999999999
+        cache_read: 0.024999999999999994
         input: 0.25
         output: 2
       pointer: /providers/chutes/models/Qwen~1Qwen3.6-27B-TEE/cost
@@ -157226,7 +157226,7 @@ records:
       pointer: /providers/chutes/models/zai-org~1GLM-5.2-TEE/modalities/output
     pricing:
       value:
-        cache_read: 0.12499999999999996
+        cache_read: 0.12499999999999997
         input: 1.25
         output: 3.95
       pointer: /providers/chutes/models/zai-org~1GLM-5.2-TEE/cost
@@ -279601,7 +279601,7 @@ records:
       pointer: /providers/helicone/models/claude-4.5-haiku/modalities/output
     pricing:
       value:
-        cache_read: 0.1
+        cache_read: 0.09999999999999999
         cache_write: 1.25
         input: 1
         output: 5
@@ -279827,7 +279827,7 @@ records:
       pointer: /providers/helicone/models/claude-haiku-4-5-20251001/modalities/output
     pricing:
       value:
-        cache_read: 0.1
+        cache_read: 0.09999999999999999
         cache_write: 1.25
         input: 1
         output: 5
@@ -280554,7 +280554,7 @@ records:
       pointer: /providers/helicone/models/deepseek-v3.1-terminus/modalities/output
     pricing:
       value:
-        cache_read: 0.21600000000000005
+        cache_read: 0.21600000000000003
         input: 0.27
         output: 1
       pointer: /providers/helicone/models/deepseek-v3.1-terminus/cost
@@ -280842,10 +280842,10 @@ records:
       pointer: /providers/helicone/models/gemini-2.5-flash-lite/modalities/output
     pricing:
       value:
-        cache_read: 0.025
-        cache_write: 0.1
-        input: 0.1
-        output: 0.4
+        cache_read: 0.024999999999999998
+        cache_write: 0.09999999999999999
+        input: 0.09999999999999999
+        output: 0.39999999999999997
       pointer: /providers/helicone/models/gemini-2.5-flash-lite/cost
     provider:
       value: helicone
@@ -280997,7 +280997,7 @@ records:
       pointer: /providers/helicone/models/gemini-3-pro-preview/modalities/output
     pricing:
       value:
-        cache_read: 0.2
+        cache_read: 0.19999999999999998
         input: 2
         output: 12
       pointer: /providers/helicone/models/gemini-3-pro-preview/cost
@@ -281073,8 +281073,8 @@ records:
       pointer: /providers/helicone/models/gemma-3-12b-it/modalities/output
     pricing:
       value:
-        input: 0.05
-        output: 0.1
+        input: 0.049999999999999996
+        output: 0.09999999999999999
       pointer: /providers/helicone/models/gemma-3-12b-it/cost
     provider:
       value: helicone
@@ -281207,7 +281207,7 @@ records:
       pointer: /providers/helicone/models/glm-4.6/modalities/output
     pricing:
       value:
-        input: 0.45
+        input: 0.44999999999999996
         output: 1.5
       pointer: /providers/helicone/models/glm-4.6/cost
     provider:
@@ -281347,9 +281347,9 @@ records:
       pointer: /providers/helicone/models/gpt-4.1-mini/modalities/output
     pricing:
       value:
-        cache_read: 0.1
-        input: 0.4
-        output: 1.6
+        cache_read: 0.09999999999999999
+        input: 0.39999999999999997
+        output: 1.5999999999999999
       pointer: /providers/helicone/models/gpt-4.1-mini/cost
     provider:
       value: helicone
@@ -281416,9 +281416,9 @@ records:
       pointer: /providers/helicone/models/gpt-4.1-mini-2025-04-14/modalities/output
     pricing:
       value:
-        cache_read: 0.1
-        input: 0.4
-        output: 1.6
+        cache_read: 0.09999999999999999
+        input: 0.39999999999999997
+        output: 1.5999999999999999
       pointer: /providers/helicone/models/gpt-4.1-mini-2025-04-14/cost
     provider:
       value: helicone
@@ -281485,9 +281485,9 @@ records:
       pointer: /providers/helicone/models/gpt-4.1-nano/modalities/output
     pricing:
       value:
-        cache_read: 0.025
-        input: 0.1
-        output: 0.4
+        cache_read: 0.024999999999999998
+        input: 0.09999999999999999
+        output: 0.39999999999999997
       pointer: /providers/helicone/models/gpt-4.1-nano/cost
     provider:
       value: helicone
@@ -281900,7 +281900,7 @@ records:
       pointer: /providers/helicone/models/gpt-5-mini/modalities/output
     pricing:
       value:
-        cache_read: 0.025
+        cache_read: 0.024999999999999998
         input: 0.25
         output: 2
       pointer: /providers/helicone/models/gpt-5-mini/cost
@@ -281970,8 +281970,8 @@ records:
     pricing:
       value:
         cache_read: 0.005
-        input: 0.05
-        output: 0.4
+        input: 0.049999999999999996
+        output: 0.39999999999999997
       pointer: /providers/helicone/models/gpt-5-nano/cost
     provider:
       value: helicone
@@ -282316,7 +282316,7 @@ records:
       pointer: /providers/helicone/models/gpt-5.1-codex-mini/modalities/output
     pricing:
       value:
-        cache_read: 0.025
+        cache_read: 0.024999999999999998
         input: 0.25
         output: 2
       pointer: /providers/helicone/models/gpt-5.1-codex-mini/cost
@@ -282463,8 +282463,8 @@ records:
       pointer: /providers/helicone/models/gpt-oss-20b/modalities/output
     pricing:
       value:
-        input: 0.05
-        output: 0.2
+        input: 0.049999999999999996
+        output: 0.19999999999999998
       pointer: /providers/helicone/models/gpt-oss-20b/cost
     provider:
       value: helicone
@@ -282744,8 +282744,8 @@ records:
       pointer: /providers/helicone/models/grok-4-1-fast-non-reasoning/modalities/output
     pricing:
       value:
-        cache_read: 0.05
-        input: 0.2
+        cache_read: 0.049999999999999996
+        input: 0.19999999999999998
         output: 0.5
       pointer: /providers/helicone/models/grok-4-1-fast-non-reasoning/cost
     provider:
@@ -282813,8 +282813,8 @@ records:
       pointer: /providers/helicone/models/grok-4-1-fast-reasoning/modalities/output
     pricing:
       value:
-        cache_read: 0.05
-        input: 0.2
+        cache_read: 0.049999999999999996
+        input: 0.19999999999999998
         output: 0.5
       pointer: /providers/helicone/models/grok-4-1-fast-reasoning/cost
     provider:
@@ -282886,8 +282886,8 @@ records:
       pointer: /providers/helicone/models/grok-4-fast-non-reasoning/modalities/output
     pricing:
       value:
-        cache_read: 0.05
-        input: 0.2
+        cache_read: 0.049999999999999996
+        input: 0.19999999999999998
         output: 0.5
       pointer: /providers/helicone/models/grok-4-fast-non-reasoning/cost
     provider:
@@ -282955,8 +282955,8 @@ records:
       pointer: /providers/helicone/models/grok-4-fast-reasoning/modalities/output
     pricing:
       value:
-        cache_read: 0.05
-        input: 0.2
+        cache_read: 0.049999999999999996
+        input: 0.19999999999999998
         output: 0.5
       pointer: /providers/helicone/models/grok-4-fast-reasoning/cost
     provider:
@@ -283027,7 +283027,7 @@ records:
     pricing:
       value:
         cache_read: 0.02
-        input: 0.2
+        input: 0.19999999999999998
         output: 1.5
       pointer: /providers/helicone/models/grok-code-fast-1/cost
     provider:
@@ -283228,7 +283228,7 @@ records:
       pointer: /providers/helicone/models/kimi-k2-0905/modalities/output
     pricing:
       value:
-        cache_read: 0.4
+        cache_read: 0.39999999999999997
         input: 0.5
         output: 2
       pointer: /providers/helicone/models/kimi-k2-0905/cost
@@ -283363,7 +283363,7 @@ records:
       pointer: /providers/helicone/models/llama-3.1-8b-instant/modalities/output
     pricing:
       value:
-        input: 0.05
+        input: 0.049999999999999996
         output: 0.08
       pointer: /providers/helicone/models/llama-3.1-8b-instant/cost
     provider:
@@ -283431,7 +283431,7 @@ records:
     pricing:
       value:
         input: 0.02
-        output: 0.05
+        output: 0.049999999999999996
       pointer: /providers/helicone/models/llama-3.1-8b-instruct/cost
     provider:
       value: helicone
@@ -285000,7 +285000,7 @@ records:
       pointer: /providers/helicone/models/qwen3-coder-30b-a3b-instruct/modalities/output
     pricing:
       value:
-        input: 0.1
+        input: 0.09999999999999999
         output: 0.3
       pointer: /providers/helicone/models/qwen3-coder-30b-a3b-instruct/cost
     provider:
@@ -728272,7 +728272,7 @@ records:
       pointer: /providers/vercel/models/inception~1mercury-2/modalities/output
     pricing:
       value:
-        cache_read: 0.025
+        cache_read: 0.024999999999999998
         input: 0.25
         output: 0.75
       pointer: /providers/vercel/models/inception~1mercury-2/cost

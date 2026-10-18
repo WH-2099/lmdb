@@ -1,0 +1,880 @@
+schema_version: 1
+sources:
+- id: modelsdev-services-06a366b0c98f
+  url: https://models.dev/catalog.json?type=all
+  checked_on: '2026-10-19'
+  scope: Aggregated service metadata, not an official provider API contract. Snapshot modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30;
+    retrieved 2026-10-15T08:21:36.915537522Z. Each model retains its exact record and fact pointers. Unchanged records
+    can retain earlier snapshot origins after later catalog syncs.
+- id: modelsdev-services-c07317294d1e
+  url: https://models.dev/catalog.json?type=all
+  checked_on: '2026-10-19'
+  scope: Aggregated service metadata, not an official provider API contract. Snapshot modelsdev:c07317294d1ed7bf28396cac7da3eac11524304088c72986f1c69b856c8cae56;
+    retrieved 2026-10-18T19:48:29.705155815Z. Each model retains its exact record and fact pointers. Unchanged records
+    can retain earlier snapshot origins after later catalog syncs.
+- id: artificialanalysis-leaderboard
+  url: https://artificialanalysis.ai/leaderboards/models
+  checked_on: '2026-10-19'
+  scope: Public Intelligence Index v4.3.2 top 20 evaluated variants, retrieved 2026-10-18T22:19:39.714983+00:00;
+    HTML SHA256 2c80829ddfacb37f0f3669d021e2a6519aff81bb18ea3b9cb8fbec126488e273. Base-model candidates do not establish
+    exact evaluated API configurations.
+- id: openai-chat
+  url: https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create
+  checked_on: '2026-10-19'
+  scope: Chat request/response schema and endpoint OpenAPI spec
+- id: openai-responses
+  url: https://developers.openai.com/api/reference/resources/responses/methods/create
+  checked_on: '2026-10-19'
+  scope: Responses endpoint OpenAPI examples; generated create markdown incomplete, request union coverage unresolved
+- id: openai-functions
+  url: https://developers.openai.com/api/docs/guides/function-calling
+  checked_on: '2026-10-19'
+  scope: Function/custom calls, results, strict schemas, streaming
+- id: openai-reasoning
+  url: https://developers.openai.com/api/docs/guides/reasoning
+  checked_on: '2026-10-19'
+  scope: Reasoning effort, limits, opaque reasoning continuity
+- id: openai-latest
+  url: https://developers.openai.com/api/docs/guides/latest-model
+  checked_on: '2026-10-19'
+  scope: Current GPT-6 family restrictions, not a blanket rule for older model families
+- id: anthropic-messages
+  url: https://platform.claude.com/docs/en/api/messages/create
+  checked_on: '2026-10-19'
+  scope: Native Anthropic Messages request and response contract.
+- id: anthropic-thinking
+  url: https://platform.claude.com/docs/en/build-with-claude/thinking
+  checked_on: '2026-10-19'
+  scope: Direct Claude API model-specific thinking modes and defaults; gateway behavior is separate.
+- id: anthropic-effort
+  url: https://platform.claude.com/docs/en/build-with-claude/effort
+  checked_on: '2026-10-19'
+  scope: Direct Claude API effort levels and defaults.
+- id: google-generate
+  url: https://ai.google.dev/api/generate-content
+  checked_on: '2026-10-19'
+  scope: Gemini Developer API native GenerateContent request and response contract.
+- id: google-thinking
+  url: https://ai.google.dev/gemini-api/docs/generate-content/thinking
+  checked_on: '2026-10-19'
+  scope: GenerateContent thinking control; Gemini 4 Argon levels and budget compatibility.
+- id: google-signatures
+  url: https://ai.google.dev/gemini-api/docs/generate-content/thought-signatures
+  checked_on: '2026-10-19'
+  scope: GenerateContent function-call thought signature preservation.
+- id: meta-models
+  url: https://dev.meta.ai/docs/models
+  checked_on: '2026-10-19'
+  scope: Muse Wonder API model ID muse-wonder-1.0 supports Chat Completions and Responses. Muse Wonder Full has
+    no public Model API service.
+- id: meta-reasoning
+  url: https://ai.developer.meta.com/docs/reasoning
+  checked_on: '2026-10-19'
+  scope: Muse Wonder reasoning effort minimal/low/medium/high/xhigh/max; none is rejected.
+- id: deepseek_chat
+  url: https://api-docs.deepseek.com/api/create-chat-completion/
+  checked_on: '2026-10-19'
+  scope: Chat Completions API | DeepSeek API Docs; documented interface behavior, no live inference verification.
+- id: deepseek_thinking
+  url: https://api-docs.deepseek.com/guides/thinking_mode
+  checked_on: '2026-10-19'
+  scope: Thinking Mode | DeepSeek API Docs; documented interface behavior, no live inference verification.
+- id: kimi_overview
+  url: https://platform.kimi.ai/docs/overview
+  checked_on: '2026-10-19'
+  scope: Quickstart - Kimi API Platform; documented interface behavior, no live inference verification.
+- id: kimi_chat
+  url: https://platform.kimi.ai/docs/api/chat
+  checked_on: '2026-10-19'
+  scope: Chat Completions API - Kimi API Platform; documented interface behavior, no live inference verification.
+    Extracted source is incomplete; unresolved behavior remains unspecified.
+- id: zai_chat
+  url: https://docs.z.ai/api-reference/llm/chat-completion
+  checked_on: '2026-10-19'
+  scope: Chat Completion - Overview - Z.AI DEVELOPER DOCUMENT; documented interface behavior, no live inference
+    verification.
+- id: minimax_compat
+  url: https://platform.minimax.io/docs/api-reference/text-openai-api
+  checked_on: '2026-10-19'
+  scope: OpenAI SDK - MiniMax API Docs; documented interface behavior, no live inference verification.
+- id: mistral_chat
+  url: https://docs.mistral.ai/api/endpoint/chat
+  checked_on: '2026-10-19'
+  scope: Chat; documented interface behavior, no live inference verification.
+- id: cohere_compat
+  url: https://docs.cohere.com/docs/compatibility-api
+  checked_on: '2026-10-19'
+  scope: cohere_compat; documented interface behavior, no live inference verification.
+- id: qwen_chat
+  url: https://www.alibabacloud.com/help/en/model-studio/qwen-api-via-openai-chat-completions
+  checked_on: '2026-10-19'
+  scope: OpenAI compatible - Chat - Alibaba Cloud Model Studio - Alibaba Cloud Documentation Center; documented
+    interface behavior, no live inference verification. Extracted source is incomplete; unresolved behavior remains
+    unspecified.
+- id: xai_responses
+  url: https://docs.x.ai/developers/rest-api-reference/inference/responses
+  checked_on: '2026-10-19'
+  scope: xai_responses; documented interface behavior, no live inference verification.
+- id: openrouter_overview
+  url: https://openrouter.ai/docs/api_reference/overview
+  checked_on: '2026-10-19'
+  scope: OpenRouter API Reference - Complete Documentation; documented interface behavior, no live inference verification.
+- id: openrouter_errors
+  url: https://openrouter.ai/docs/api_reference/errors-and-debugging
+  checked_on: '2026-10-19'
+  scope: API Error Handling and Debugging - Complete Guide; documented interface behavior, no live inference verification.
+- id: vercel_compat
+  url: https://vercel.com/docs/ai-gateway/sdks-and-apis/openai-chat-completions
+  checked_on: '2026-10-19'
+  scope: OpenAI Chat Completions API with AI Gateway; documented interface behavior, no live inference verification.
+providers:
+- id: openai
+  aliases: []
+  protocols:
+  - openai_chat
+  - openai_responses
+  models:
+  - id: gpt-6-astra
+    record: modelsdev:service:openai/gpt-6-astra
+    protocols:
+    - openai_chat
+    - openai_responses
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1050000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/openai/models/gpt-6-astra.'
+    - 'Field pointers: input_modalities=/providers/openai/models/gpt-6-astra/modalities/input; output_modalities=/providers/openai/models/gpt-6-astra/modalities/output;
+      context_window=/providers/openai/models/gpt-6-astra/limit/context; max_output_tokens=/providers/openai/models/gpt-6-astra/limit/output;
+      tool_call=/providers/openai/models/gpt-6-astra/tool_call; reasoning=/providers/openai/models/gpt-6-astra/reasoning;
+      structured_output=/providers/openai/models/gpt-6-astra/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:openai/gpt-6-astra via /providers/openai/models/gpt-6-astra/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+  - id: gpt-6.1-sol
+    record: modelsdev:service:openai/gpt-6.1-sol
+    protocols:
+    - openai_chat
+    - openai_responses
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1050000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/openai/models/gpt-6.1-sol.'
+    - 'Field pointers: input_modalities=/providers/openai/models/gpt-6.1-sol/modalities/input; output_modalities=/providers/openai/models/gpt-6.1-sol/modalities/output;
+      context_window=/providers/openai/models/gpt-6.1-sol/limit/context; max_output_tokens=/providers/openai/models/gpt-6.1-sol/limit/output;
+      tool_call=/providers/openai/models/gpt-6.1-sol/tool_call; reasoning=/providers/openai/models/gpt-6.1-sol/reasoning;
+      structured_output=/providers/openai/models/gpt-6.1-sol/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:openai/gpt-6.1-sol via /providers/openai/models/gpt-6.1-sol/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+  sources:
+  - openai-chat
+  - openai-responses
+  - openai-functions
+  - openai-reasoning
+  - openai-latest
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+- id: anthropic
+  aliases: []
+  protocols:
+  - anthropic_messages
+  models:
+  - id: claude-opus-5-5
+    record: modelsdev:service:anthropic/claude-opus-5-5
+    protocols:
+    - anthropic_messages
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/anthropic/models/claude-opus-5-5.'
+    - 'Field pointers: input_modalities=/providers/anthropic/models/claude-opus-5-5/modalities/input; output_modalities=/providers/anthropic/models/claude-opus-5-5/modalities/output;
+      context_window=/providers/anthropic/models/claude-opus-5-5/limit/context; max_output_tokens=/providers/anthropic/models/claude-opus-5-5/limit/output;
+      tool_call=/providers/anthropic/models/claude-opus-5-5/tool_call; reasoning=/providers/anthropic/models/claude-opus-5-5/reasoning;
+      structured_output=/providers/anthropic/models/claude-opus-5-5/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:anthropic/claude-opus-5-5 via /providers/anthropic/models/claude-opus-5-5/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+  - id: claude-sonnet-5-5
+    record: modelsdev:service:anthropic/claude-sonnet-5-5
+    protocols:
+    - anthropic_messages
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/anthropic/models/claude-sonnet-5-5.'
+    - 'Field pointers: input_modalities=/providers/anthropic/models/claude-sonnet-5-5/modalities/input; output_modalities=/providers/anthropic/models/claude-sonnet-5-5/modalities/output;
+      context_window=/providers/anthropic/models/claude-sonnet-5-5/limit/context; max_output_tokens=/providers/anthropic/models/claude-sonnet-5-5/limit/output;
+      tool_call=/providers/anthropic/models/claude-sonnet-5-5/tool_call; reasoning=/providers/anthropic/models/claude-sonnet-5-5/reasoning;
+      structured_output=/providers/anthropic/models/claude-sonnet-5-5/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:anthropic/claude-sonnet-5-5 via /providers/anthropic/models/claude-sonnet-5-5/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+  - id: claude-fable-5-1
+    record: modelsdev:service:anthropic/claude-fable-5-1
+    protocols:
+    - anthropic_messages
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/anthropic/models/claude-fable-5-1.'
+    - 'Field pointers: input_modalities=/providers/anthropic/models/claude-fable-5-1/modalities/input; output_modalities=/providers/anthropic/models/claude-fable-5-1/modalities/output;
+      context_window=/providers/anthropic/models/claude-fable-5-1/limit/context; max_output_tokens=/providers/anthropic/models/claude-fable-5-1/limit/output;
+      tool_call=/providers/anthropic/models/claude-fable-5-1/tool_call; reasoning=/providers/anthropic/models/claude-fable-5-1/reasoning;
+      structured_output=/providers/anthropic/models/claude-fable-5-1/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:anthropic/claude-fable-5-1 via /providers/anthropic/models/claude-fable-5-1/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+  sources:
+  - anthropic-messages
+  - anthropic-thinking
+  - anthropic-effort
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+- id: google
+  aliases:
+  - gemini
+  protocols:
+  - gemini_generate
+  models:
+  - id: gemini-4-argon
+    record: modelsdev:service:google/gemini-4-argon
+    protocols:
+    - gemini_generate
+    input_modalities:
+    - text
+    - image
+    - video
+    - audio
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1048576
+    max_output_tokens: 32768
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/google/models/gemini-4-argon.'
+    - 'Field pointers: input_modalities=/providers/google/models/gemini-4-argon/modalities/input; output_modalities=/providers/google/models/gemini-4-argon/modalities/output;
+      context_window=/providers/google/models/gemini-4-argon/limit/context; max_output_tokens=/providers/google/models/gemini-4-argon/limit/output;
+      tool_call=/providers/google/models/gemini-4-argon/tool_call; reasoning=/providers/google/models/gemini-4-argon/reasoning;
+      structured_output=/providers/google/models/gemini-4-argon/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:google/gemini-4-argon via /providers/google/models/gemini-4-argon/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+  sources:
+  - google-generate
+  - google-thinking
+  - google-signatures
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+- id: deepseek
+  aliases: []
+  protocols:
+  - openai_chat
+  models: []
+  sources:
+  - deepseek_chat
+  - deepseek_thinking
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - No model is enabled for this provider in the initial top 20. Add an explicit model profile through a complete
+    custom configuration; top 50 expansion is pending.
+- id: moonshotai
+  aliases:
+  - moonshot
+  - kimi
+  protocols:
+  - openai_chat
+  models: []
+  sources:
+  - kimi_overview
+  - kimi_chat
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - No model is enabled for this provider in the initial top 20. Add an explicit model profile through a complete
+    custom configuration; top 50 expansion is pending.
+- id: zhipuai
+  aliases:
+  - zai
+  protocols:
+  - openai_chat
+  models: []
+  sources:
+  - zai_chat
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - No model is enabled for this provider in the initial top 20. Add an explicit model profile through a complete
+    custom configuration; top 50 expansion is pending.
+- id: minimax
+  aliases: []
+  protocols:
+  - openai_chat
+  models: []
+  sources:
+  - minimax_compat
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - No model is enabled for this provider in the initial top 20. Add an explicit model profile through a complete
+    custom configuration; top 50 expansion is pending.
+- id: mistral
+  aliases: []
+  protocols:
+  - openai_chat
+  models: []
+  sources:
+  - mistral_chat
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - No model is enabled for this provider in the initial top 20. Add an explicit model profile through a complete
+    custom configuration; top 50 expansion is pending.
+- id: cohere
+  aliases: []
+  protocols:
+  - openai_chat
+  models: []
+  sources:
+  - cohere_compat
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - No model is enabled for this provider in the initial top 20. Add an explicit model profile through a complete
+    custom configuration; top 50 expansion is pending.
+- id: alibaba
+  aliases:
+  - qwen
+  - dashscope
+  protocols:
+  - openai_chat
+  models: []
+  sources:
+  - qwen_chat
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - No model is enabled for this provider in the initial top 20. Add an explicit model profile through a complete
+    custom configuration; top 50 expansion is pending.
+- id: xai
+  aliases: []
+  protocols:
+  - openai_responses
+  models: []
+  sources:
+  - xai_responses
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - No model is enabled for this provider in the initial top 20. Add an explicit model profile through a complete
+    custom configuration; top 50 expansion is pending.
+- id: openrouter
+  aliases: []
+  protocols:
+  - openai_chat
+  models:
+  - id: anthropic/claude-opus-5.5
+    record: modelsdev:service:openrouter/anthropic/claude-opus-5.5
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/openrouter/models/anthropic~1claude-opus-5.5.'
+    - 'Field pointers: input_modalities=/providers/openrouter/models/anthropic~1claude-opus-5.5/modalities/input;
+      output_modalities=/providers/openrouter/models/anthropic~1claude-opus-5.5/modalities/output; context_window=/providers/openrouter/models/anthropic~1claude-opus-5.5/limit/context;
+      max_output_tokens=/providers/openrouter/models/anthropic~1claude-opus-5.5/limit/output; tool_call=/providers/openrouter/models/anthropic~1claude-opus-5.5/tool_call;
+      reasoning=/providers/openrouter/models/anthropic~1claude-opus-5.5/reasoning; structured_output=/providers/openrouter/models/anthropic~1claude-opus-5.5/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:anthropic/claude-opus-5-5 via /providers/openrouter/models/anthropic~1claude-opus-5.5/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: anthropic/claude-sonnet-5.5
+    record: modelsdev:service:openrouter/anthropic/claude-sonnet-5.5
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/openrouter/models/anthropic~1claude-sonnet-5.5.'
+    - 'Field pointers: input_modalities=/providers/openrouter/models/anthropic~1claude-sonnet-5.5/modalities/input;
+      output_modalities=/providers/openrouter/models/anthropic~1claude-sonnet-5.5/modalities/output; context_window=/providers/openrouter/models/anthropic~1claude-sonnet-5.5/limit/context;
+      max_output_tokens=/providers/openrouter/models/anthropic~1claude-sonnet-5.5/limit/output; tool_call=/providers/openrouter/models/anthropic~1claude-sonnet-5.5/tool_call;
+      reasoning=/providers/openrouter/models/anthropic~1claude-sonnet-5.5/reasoning; structured_output=/providers/openrouter/models/anthropic~1claude-sonnet-5.5/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:anthropic/claude-sonnet-5-5 via /providers/openrouter/models/anthropic~1claude-sonnet-5.5/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: anthropic/claude-fable-5.1
+    record: modelsdev:service:openrouter/anthropic/claude-fable-5.1
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/openrouter/models/anthropic~1claude-fable-5.1.'
+    - 'Field pointers: input_modalities=/providers/openrouter/models/anthropic~1claude-fable-5.1/modalities/input;
+      output_modalities=/providers/openrouter/models/anthropic~1claude-fable-5.1/modalities/output; context_window=/providers/openrouter/models/anthropic~1claude-fable-5.1/limit/context;
+      max_output_tokens=/providers/openrouter/models/anthropic~1claude-fable-5.1/limit/output; tool_call=/providers/openrouter/models/anthropic~1claude-fable-5.1/tool_call;
+      reasoning=/providers/openrouter/models/anthropic~1claude-fable-5.1/reasoning; structured_output=/providers/openrouter/models/anthropic~1claude-fable-5.1/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:anthropic/claude-fable-5-1 via /providers/openrouter/models/anthropic~1claude-fable-5.1/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: openai/gpt-6-astra
+    record: modelsdev:service:openrouter/openai/gpt-6-astra
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1050000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/openrouter/models/openai~1gpt-6-astra.'
+    - 'Field pointers: input_modalities=/providers/openrouter/models/openai~1gpt-6-astra/modalities/input; output_modalities=/providers/openrouter/models/openai~1gpt-6-astra/modalities/output;
+      context_window=/providers/openrouter/models/openai~1gpt-6-astra/limit/context; max_output_tokens=/providers/openrouter/models/openai~1gpt-6-astra/limit/output;
+      tool_call=/providers/openrouter/models/openai~1gpt-6-astra/tool_call; reasoning=/providers/openrouter/models/openai~1gpt-6-astra/reasoning;
+      structured_output=/providers/openrouter/models/openai~1gpt-6-astra/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:openai/gpt-6-astra via /providers/openrouter/models/openai~1gpt-6-astra/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: google/gemini-4-argon
+    record: modelsdev:service:openrouter/google/gemini-4-argon
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - video
+    - audio
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1048576
+    max_output_tokens: 65536
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/openrouter/models/google~1gemini-4-argon.'
+    - 'Field pointers: input_modalities=/providers/openrouter/models/google~1gemini-4-argon/modalities/input; output_modalities=/providers/openrouter/models/google~1gemini-4-argon/modalities/output;
+      context_window=/providers/openrouter/models/google~1gemini-4-argon/limit/context; max_output_tokens=/providers/openrouter/models/google~1gemini-4-argon/limit/output;
+      tool_call=/providers/openrouter/models/google~1gemini-4-argon/tool_call; reasoning=/providers/openrouter/models/google~1gemini-4-argon/reasoning;
+      structured_output=/providers/openrouter/models/google~1gemini-4-argon/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:google/gemini-4-argon via /providers/openrouter/models/google~1gemini-4-argon/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: openai/gpt-6.1-sol
+    record: modelsdev:service:openrouter/openai/gpt-6.1-sol
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1050000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/openrouter/models/openai~1gpt-6.1-sol.'
+    - 'Field pointers: input_modalities=/providers/openrouter/models/openai~1gpt-6.1-sol/modalities/input; output_modalities=/providers/openrouter/models/openai~1gpt-6.1-sol/modalities/output;
+      context_window=/providers/openrouter/models/openai~1gpt-6.1-sol/limit/context; max_output_tokens=/providers/openrouter/models/openai~1gpt-6.1-sol/limit/output;
+      tool_call=/providers/openrouter/models/openai~1gpt-6.1-sol/tool_call; reasoning=/providers/openrouter/models/openai~1gpt-6.1-sol/reasoning;
+      structured_output=/providers/openrouter/models/openai~1gpt-6.1-sol/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:openai/gpt-6.1-sol via /providers/openrouter/models/openai~1gpt-6.1-sol/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  sources:
+  - openrouter_overview
+  - openrouter_errors
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - Gateway model IDs use explicit models.dev canonical_model_id bindings; names from an unbound catalog record
+    were not treated as identity evidence.
+- id: vercel
+  aliases: []
+  protocols:
+  - openai_chat
+  models:
+  - id: anthropic/claude-opus-5.5
+    record: modelsdev:service:vercel/anthropic/claude-opus-5.5
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/vercel/models/anthropic~1claude-opus-5.5.'
+    - 'Field pointers: input_modalities=/providers/vercel/models/anthropic~1claude-opus-5.5/modalities/input; output_modalities=/providers/vercel/models/anthropic~1claude-opus-5.5/modalities/output;
+      context_window=/providers/vercel/models/anthropic~1claude-opus-5.5/limit/context; max_output_tokens=/providers/vercel/models/anthropic~1claude-opus-5.5/limit/output;
+      tool_call=/providers/vercel/models/anthropic~1claude-opus-5.5/tool_call; reasoning=/providers/vercel/models/anthropic~1claude-opus-5.5/reasoning.'
+    - 'Explicit catalog base-model binding: modelsdev:model:anthropic/claude-opus-5-5 via /providers/vercel/models/anthropic~1claude-opus-5.5/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: anthropic/claude-sonnet-5.5
+    record: modelsdev:service:vercel/anthropic/claude-sonnet-5.5
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/vercel/models/anthropic~1claude-sonnet-5.5.'
+    - 'Field pointers: input_modalities=/providers/vercel/models/anthropic~1claude-sonnet-5.5/modalities/input;
+      output_modalities=/providers/vercel/models/anthropic~1claude-sonnet-5.5/modalities/output; context_window=/providers/vercel/models/anthropic~1claude-sonnet-5.5/limit/context;
+      max_output_tokens=/providers/vercel/models/anthropic~1claude-sonnet-5.5/limit/output; tool_call=/providers/vercel/models/anthropic~1claude-sonnet-5.5/tool_call;
+      reasoning=/providers/vercel/models/anthropic~1claude-sonnet-5.5/reasoning.'
+    - 'Explicit catalog base-model binding: modelsdev:model:anthropic/claude-sonnet-5-5 via /providers/vercel/models/anthropic~1claude-sonnet-5.5/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: anthropic/claude-fable-5.1
+    record: modelsdev:service:vercel/anthropic/claude-fable-5.1
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    sources:
+    - modelsdev-services-c07317294d1e
+    notes:
+    - 'Catalog evidence: modelsdev:c07317294d1ed7bf28396cac7da3eac11524304088c72986f1c69b856c8cae56; record pointer
+      /providers/vercel/models/anthropic~1claude-fable-5.1.'
+    - 'Field pointers: input_modalities=/providers/vercel/models/anthropic~1claude-fable-5.1/modalities/input; output_modalities=/providers/vercel/models/anthropic~1claude-fable-5.1/modalities/output;
+      context_window=/providers/vercel/models/anthropic~1claude-fable-5.1/limit/context; max_output_tokens=/providers/vercel/models/anthropic~1claude-fable-5.1/limit/output;
+      tool_call=/providers/vercel/models/anthropic~1claude-fable-5.1/tool_call; reasoning=/providers/vercel/models/anthropic~1claude-fable-5.1/reasoning.'
+    - 'Explicit catalog base-model binding: modelsdev:model:anthropic/claude-fable-5-1 via /providers/vercel/models/anthropic~1claude-fable-5.1/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: openai/gpt-6-astra
+    record: modelsdev:service:vercel/openai/gpt-6-astra
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1050000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/vercel/models/openai~1gpt-6-astra.'
+    - 'Field pointers: input_modalities=/providers/vercel/models/openai~1gpt-6-astra/modalities/input; output_modalities=/providers/vercel/models/openai~1gpt-6-astra/modalities/output;
+      context_window=/providers/vercel/models/openai~1gpt-6-astra/limit/context; max_output_tokens=/providers/vercel/models/openai~1gpt-6-astra/limit/output;
+      tool_call=/providers/vercel/models/openai~1gpt-6-astra/tool_call; reasoning=/providers/vercel/models/openai~1gpt-6-astra/reasoning;
+      structured_output=/providers/vercel/models/openai~1gpt-6-astra/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:openai/gpt-6-astra via /providers/vercel/models/openai~1gpt-6-astra/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: google/gemini-4-argon
+    record: modelsdev:service:vercel/google/gemini-4-argon
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1000000
+    max_output_tokens: 1000000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/vercel/models/google~1gemini-4-argon.'
+    - 'Field pointers: input_modalities=/providers/vercel/models/google~1gemini-4-argon/modalities/input; output_modalities=/providers/vercel/models/google~1gemini-4-argon/modalities/output;
+      context_window=/providers/vercel/models/google~1gemini-4-argon/limit/context; max_output_tokens=/providers/vercel/models/google~1gemini-4-argon/limit/output;
+      tool_call=/providers/vercel/models/google~1gemini-4-argon/tool_call; reasoning=/providers/vercel/models/google~1gemini-4-argon/reasoning;
+      structured_output=/providers/vercel/models/google~1gemini-4-argon/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:google/gemini-4-argon via /providers/vercel/models/google~1gemini-4-argon/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: meta/muse-wonder-1.0
+    record: modelsdev:service:vercel/meta/muse-wonder-1.0
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1048576
+    max_output_tokens: 1048576
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/vercel/models/meta~1muse-wonder-1.0.'
+    - 'Field pointers: input_modalities=/providers/vercel/models/meta~1muse-wonder-1.0/modalities/input; output_modalities=/providers/vercel/models/meta~1muse-wonder-1.0/modalities/output;
+      context_window=/providers/vercel/models/meta~1muse-wonder-1.0/limit/context; max_output_tokens=/providers/vercel/models/meta~1muse-wonder-1.0/limit/output;
+      tool_call=/providers/vercel/models/meta~1muse-wonder-1.0/tool_call; reasoning=/providers/vercel/models/meta~1muse-wonder-1.0/reasoning;
+      structured_output=/providers/vercel/models/meta~1muse-wonder-1.0/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:meta/muse-wonder-1.0 via /providers/vercel/models/meta~1muse-wonder-1.0/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  - id: openai/gpt-6.1-sol
+    record: modelsdev:service:vercel/openai/gpt-6.1-sol
+    protocols:
+    - openai_chat
+    input_modalities:
+    - text
+    - image
+    - pdf
+    output_modalities:
+    - text
+    context_window: 1050000
+    max_output_tokens: 128000
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/vercel/models/openai~1gpt-6.1-sol.'
+    - 'Field pointers: input_modalities=/providers/vercel/models/openai~1gpt-6.1-sol/modalities/input; output_modalities=/providers/vercel/models/openai~1gpt-6.1-sol/modalities/output;
+      context_window=/providers/vercel/models/openai~1gpt-6.1-sol/limit/context; max_output_tokens=/providers/vercel/models/openai~1gpt-6.1-sol/limit/output;
+      tool_call=/providers/vercel/models/openai~1gpt-6.1-sol/tool_call; reasoning=/providers/vercel/models/openai~1gpt-6.1-sol/reasoning;
+      structured_output=/providers/vercel/models/openai~1gpt-6.1-sol/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:openai/gpt-6.1-sol via /providers/vercel/models/openai~1gpt-6.1-sol/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+    - Capabilities are from this gateway service record. Origin-provider parameter restrictions are not transferred
+      to this interface.
+  sources:
+  - vercel_compat
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
+  - Gateway model IDs use explicit models.dev canonical_model_id bindings; names from an unbound catalog record
+    were not treated as identity evidence.
+- id: meta
+  aliases: []
+  protocols:
+  - openai_chat
+  - openai_responses
+  models:
+  - id: muse-wonder-1.0
+    record: modelsdev:service:meta/muse-wonder-1.0
+    protocols:
+    - openai_chat
+    - openai_responses
+    input_modalities:
+    - text
+    - image
+    - video
+    - pdf
+    - audio
+    output_modalities:
+    - text
+    context_window: 1048576
+    max_output_tokens: 131072
+    tool_call: true
+    reasoning: true
+    structured_output: true
+    sources:
+    - modelsdev-services-06a366b0c98f
+    notes:
+    - 'Catalog evidence: modelsdev:06a366b0c98f08775ae4a524c37032c420659ebe82fa5364fffc22a73d33df30; record pointer
+      /providers/meta/models/muse-wonder-1.0.'
+    - 'Field pointers: input_modalities=/providers/meta/models/muse-wonder-1.0/modalities/input; output_modalities=/providers/meta/models/muse-wonder-1.0/modalities/output;
+      context_window=/providers/meta/models/muse-wonder-1.0/limit/context; max_output_tokens=/providers/meta/models/muse-wonder-1.0/limit/output;
+      tool_call=/providers/meta/models/muse-wonder-1.0/tool_call; reasoning=/providers/meta/models/muse-wonder-1.0/reasoning;
+      structured_output=/providers/meta/models/muse-wonder-1.0/structured_output.'
+    - 'Explicit catalog base-model binding: modelsdev:model:meta/muse-wonder-1.0 via /providers/meta/models/muse-wonder-1.0/canonical_model_id.'
+    - This is a base-model candidate for the selected AA variants; exact evaluated API configuration and fallback
+      settings are unverified.
+  sources:
+  - meta-models
+  - meta-reasoning
+  notes:
+  - Default coverage is limited to base-model candidates in the captured AA Intelligence Index top 20; source claims
+    and synthetic mock behavior have different scopes.
