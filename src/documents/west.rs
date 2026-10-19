@@ -688,6 +688,7 @@ mod tests {
 
     fn run(id: &str, format: Format, raw: &str) -> Extraction {
         let source = PageSource {
+            repository: None,
             id: id.into(),
             vendor: "test".into(),
             kind: DocumentKind::ModelPage,

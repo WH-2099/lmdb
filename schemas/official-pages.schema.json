@@ -35,7 +35,8 @@
       "type": "string",
       "enum": [
         "html",
-        "markdown"
+        "markdown",
+        "pdf"
       ]
     },
     "PageSource": {
@@ -56,6 +57,16 @@
             "type": "string"
           }
         },
+        "repository": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RepositorySource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "url": {
           "type": "string"
         },
@@ -71,6 +82,65 @@
         "url",
         "format",
         "records"
+      ]
+    },
+    "RepositoryRevision": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "tracked"
+            },
+            "reference": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "reference"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "const": "pinned"
+            },
+            "sha": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "sha"
+          ]
+        }
+      ]
+    },
+    "RepositorySource": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "repo": {
+          "description": "Hugging Face model repository, including its organization.",
+          "type": "string"
+        },
+        "revision": {
+          "$ref": "#/$defs/RepositoryRevision"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "repo",
+        "path",
+        "revision"
       ]
     }
   }

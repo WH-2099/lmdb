@@ -14,7 +14,7 @@ pub fn extract(source: &PageSource, page: &Page, out: &mut Extraction) -> Result
         "kimi-k3-card" => (
             "moonshot",
             "huggingface:model:moonshotai/Kimi-K3",
-            "https://huggingface.co/moonshotai/Kimi-K3/raw/f831ab66814297da540d832a5235f8e904f29d06/README.md",
+            "https://huggingface.co/moonshotai/Kimi-K3/raw/main/README.md",
         ),
         "kimi-k3-blog" => (
             "moonshot",
@@ -24,7 +24,7 @@ pub fn extract(source: &PageSource, page: &Page, out: &mut Extraction) -> Result
         "glm-5-3-card" => (
             "zai",
             "huggingface:model:zai-org/GLM-5.3",
-            "https://huggingface.co/zai-org/GLM-5.3/raw/ba32f8c19c8738e2c57c71798c601d477a7bf844/README.md",
+            "https://huggingface.co/zai-org/GLM-5.3/raw/main/README.md",
         ),
         "glm-5-3-detail" => (
             "zai",
@@ -38,7 +38,7 @@ pub fn extract(source: &PageSource, page: &Page, out: &mut Extraction) -> Result
         "minimax-m3-card" => (
             "minimax",
             "huggingface:model:MiniMaxAI/MiniMax-M3",
-            "https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/f0e1c1e04d40177e4673a22097036854f536e9c0/README.md",
+            "https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/main/README.md",
         ),
         "minimax-m3-detail" => (
             "minimax",
@@ -63,11 +63,14 @@ pub fn extract(source: &PageSource, page: &Page, out: &mut Extraction) -> Result
         "baidu-21b-card" => (
             "baidu",
             "modelsdev:model:baidu/ernie-4.5-21b-a3b",
-            "https://huggingface.co/baidu/ERNIE-4.5-21B-A3B-PT/raw/87db95487941cb39592ee0abca3b9155a6d19c5c/README.md",
+            "https://huggingface.co/baidu/ERNIE-4.5-21B-A3B-PT/raw/main/README.md",
         ),
         _ => return Ok(()),
     };
-    if source.vendor != vendor || source.url != url || source.records != [record] {
+    if source.vendor != vendor
+        || !super::repository::same_document_url(&source.url, url)
+        || source.records != [record]
+    {
         out.warnings.push("The selected document no longer has its exact vendor, URL and model binding; extraction skipped.".into());
         return Ok(());
     }

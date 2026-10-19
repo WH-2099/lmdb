@@ -3,8 +3,34 @@
   "title": "DomainMetadata",
   "type": "object",
   "properties": {
+    "access": {
+      "$ref": "#/$defs/Access"
+    },
     "capabilities": {
       "$ref": "#/$defs/Capabilities"
+    },
+    "languages": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Derived2"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "licensing": {
+      "$ref": "#/$defs/Licensing"
+    },
+    "lifecycle": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Derived3"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "limits": {
       "$ref": "#/$defs/TokenLimits"
@@ -41,6 +67,8 @@
   },
   "additionalProperties": false,
   "required": [
+    "licensing",
+    "access",
     "modalities",
     "limits",
     "parameters",
@@ -48,6 +76,32 @@
     "lineage"
   ],
   "$defs": {
+    "Access": {
+      "type": "object",
+      "properties": {
+        "gated": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived4"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "private": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived5"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "Capabilities": {
       "type": "object",
       "properties": {
@@ -94,7 +148,7 @@
         "supported_parameters": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived6"
+              "$ref": "#/$defs/Derived2"
             },
             {
               "type": "null"
@@ -154,6 +208,24 @@
         "pointer"
       ]
     },
+    "Derived10": {
+      "type": "object",
+      "properties": {
+        "fact": {
+          "type": "string"
+        },
+        "pointer": {
+          "type": "string"
+        },
+        "value": true
+      },
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fact",
+        "pointer"
+      ]
+    },
     "Derived2": {
       "type": "object",
       "properties": {
@@ -166,7 +238,7 @@
         "value": {
           "type": "array",
           "items": {
-            "$ref": "#/$defs/ModalityLabel"
+            "type": "string"
           }
         }
       },
@@ -187,9 +259,7 @@
           "type": "string"
         },
         "value": {
-          "type": "integer",
-          "format": "uint64",
-          "minimum": 0
+          "type": "string"
         }
       },
       "additionalProperties": false,
@@ -209,12 +279,7 @@
           "type": "string"
         },
         "value": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "uint64",
-            "minimum": 0
-          }
+          "$ref": "#/$defs/GatedAccess"
         }
       },
       "additionalProperties": false,
@@ -256,7 +321,7 @@
         "value": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/$defs/ModalityLabel"
           }
         }
       },
@@ -277,7 +342,9 @@
           "type": "string"
         },
         "value": {
-          "type": "string"
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0
         }
       },
       "additionalProperties": false,
@@ -297,7 +364,12 @@
           "type": "string"
         },
         "value": {
-          "$ref": "#/$defs/PriceRate"
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0
+          }
         }
       },
       "additionalProperties": false,
@@ -316,7 +388,9 @@
         "pointer": {
           "type": "string"
         },
-        "value": true
+        "value": {
+          "$ref": "#/$defs/PriceRate"
+        }
       },
       "additionalProperties": false,
       "required": [
@@ -325,13 +399,69 @@
         "pointer"
       ]
     },
+    "GatedAccess": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "Licensing": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "link": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "Lineage": {
       "type": "object",
       "properties": {
+        "base_model_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "base_model_relation": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived7"
+              "$ref": "#/$defs/Derived3"
             },
             {
               "type": "null"
@@ -341,7 +471,37 @@
         "base_models": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived6"
+              "$ref": "#/$defs/Derived2"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "new_version": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Derived3"
             },
             {
               "type": "null"
@@ -357,7 +517,7 @@
         "input": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived2"
+              "$ref": "#/$defs/Derived6"
             },
             {
               "type": "null"
@@ -367,7 +527,7 @@
         "output": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived2"
+              "$ref": "#/$defs/Derived6"
             },
             {
               "type": "null"
@@ -415,7 +575,7 @@
         "by_dtype": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived4"
+              "$ref": "#/$defs/Derived8"
             },
             {
               "type": "null"
@@ -425,7 +585,7 @@
         "safetensors_total": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived3"
+              "$ref": "#/$defs/Derived7"
             },
             {
               "type": "null"
@@ -548,19 +708,19 @@
           "description": "Base rates alone are not a quote when conditions or unclassified fields exist.",
           "type": "array",
           "items": {
-            "$ref": "#/$defs/Derived8"
+            "$ref": "#/$defs/Derived9"
           }
         },
         "conditions": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/$defs/Derived9"
+            "$ref": "#/$defs/Derived10"
           }
         },
         "unclassified": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/$defs/Derived9"
+            "$ref": "#/$defs/Derived10"
           }
         }
       },
@@ -648,7 +808,7 @@
         "context_window": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived3"
+              "$ref": "#/$defs/Derived7"
             },
             {
               "type": "null"
@@ -658,7 +818,7 @@
         "max_input_tokens": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived3"
+              "$ref": "#/$defs/Derived7"
             },
             {
               "type": "null"
@@ -668,7 +828,7 @@
         "max_output_tokens": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived3"
+              "$ref": "#/$defs/Derived7"
             },
             {
               "type": "null"
@@ -678,7 +838,7 @@
         "top_provider_context_window": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Derived3"
+              "$ref": "#/$defs/Derived7"
             },
             {
               "type": "null"

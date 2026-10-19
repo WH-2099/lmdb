@@ -336,7 +336,10 @@ mod tests {
         DocumentCatalog {
             schema_version: SCHEMA_VERSION,
             documents: vec![PageDocument {
+                error_kind: None,
+                failed_snapshot: None,
                 source: PageSource {
+                    repository: None,
                     id: "official-specs".into(),
                     vendor: "lab".into(),
                     kind: DocumentKind::ModelPage,

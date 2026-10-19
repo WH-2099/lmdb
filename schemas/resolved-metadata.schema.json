@@ -9,6 +9,9 @@
         "$ref": "#/$defs/Resolution"
       }
     },
+    "observation": {
+      "$ref": "#/$defs/ObservationStatus"
+    },
     "record": {
       "type": "string"
     },
@@ -22,6 +25,7 @@
   "additionalProperties": false,
   "required": [
     "record",
+    "observation",
     "fields",
     "scoped_claims"
   ],
@@ -33,6 +37,9 @@
           "properties": {
             "fact": {
               "$ref": "#/$defs/Fact"
+            },
+            "observation": {
+              "$ref": "#/$defs/ObservationStatus"
             },
             "origin": {
               "$ref": "#/$defs/Origin"
@@ -50,7 +57,8 @@
             "type",
             "record",
             "origin",
-            "fact"
+            "fact",
+            "observation"
           ]
         },
         {
@@ -216,6 +224,16 @@
         "pointer"
       ]
     },
+    "ObservationStatus": {
+      "type": "string",
+      "enum": [
+        "observed",
+        "missing",
+        "not_requested",
+        "failed",
+        "unknown"
+      ]
+    },
     "Origin": {
       "type": "object",
       "properties": {
@@ -240,7 +258,7 @@
           "type": "string"
         },
         "locator": {
-          "description": "CSS path in original HTML, or rendered Markdown DOM, or explicit Markdown byte range.",
+          "description": "CSS path, rendered Markdown DOM, explicit Markdown byte range, or PDF page number.",
           "type": "string"
         }
       },

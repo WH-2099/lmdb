@@ -73,8 +73,12 @@ pub fn read_yaml<T: DeserializeOwned>(path: &Path) -> Result<T> {
 }
 
 pub fn write_yaml<T: Serialize>(path: &Path, value: &T) -> Result<bool> {
-    let text =
-        serde_saphyr::to_string(value).with_context(|| format!("serialize {}", path.display()))?;
+    // Escape source whitespace so formatting tools cannot trim evidence inside block scalars.
+    let options = serde_saphyr::ser_options! {
+        prefer_block_scalars: false,
+    };
+    let text = serde_saphyr::to_string_with_options(value, options)
+        .with_context(|| format!("serialize {}", path.display()))?;
     ensure!(
         text.len() as u64 <= MAX_YAML_BYTES,
         "{} exceeds the 128 MiB YAML limit",
@@ -190,6 +194,27 @@ mod tests {
         write_yaml(&path, &value)?;
         let restored: serde_json::Value = read_yaml(&path)?;
         assert_eq!(restored, value);
+        Ok(())
+    }
+
+    #[test]
+    fn source_string_whitespace_survives_yaml_without_trailing_layout_whitespace() -> Result<()> {
+        let value = serde_json::json!({
+            "tokenizer_config": {
+                "chat_template": "{% for message in messages %}  \n \n{{ message.content }} ✓\n{% endfor %}\n\n",
+                "blank": "\n\n",
+                "windows_lines": "first  \r\nnext\t\r\n",
+                "trailing": "end \t",
+                "long": "word ".repeat(40),
+            }
+        });
+        let temporary = tempfile::tempdir()?;
+        let path = temporary.path().join("source.yaml");
+        write_yaml(&path, &value)?;
+        let text = fs::read_to_string(&path)?;
+        assert!(text.lines().all(|line| !line.ends_with([' ', '\t'])));
+        assert_eq!(read_yaml::<serde_json::Value>(&path)?, value);
+        assert!(!write_yaml(&path, &value)?);
         Ok(())
     }
 

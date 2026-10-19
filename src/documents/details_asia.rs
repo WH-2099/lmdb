@@ -1410,6 +1410,7 @@ mod west_detail_tests {
 
     fn fixture(id: &str, raw: &str) -> (PageSource, Page, Extraction) {
         let source = PageSource {
+            repository: None,
             id: id.into(),
             vendor: "cohere".into(),
             kind: super::super::model::DocumentKind::ModelPage,
@@ -1512,6 +1513,7 @@ mod detail_tests {
 
     fn run(id: &str, body: &str, format: Format) -> Extraction {
         let source = PageSource {
+            repository: None,
             id: id.into(),
             vendor: "nvidia".into(),
             kind: DocumentKind::ModelCard,

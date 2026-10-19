@@ -8,6 +8,7 @@ use serde_json::Value;
 pub enum Format {
     Html,
     Markdown,
+    Pdf,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
@@ -29,6 +30,24 @@ pub struct PageSource {
     pub url: String,
     pub format: Format,
     pub records: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub repository: Option<RepositorySource>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct RepositorySource {
+    /// Hugging Face model repository, including its organization.
+    pub repo: String,
+    pub path: String,
+    pub revision: RepositoryRevision,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[serde(tag = "mode", rename_all = "snake_case", deny_unknown_fields)]
+pub enum RepositoryRevision {
+    Tracked { reference: String },
+    Pinned { sha: String },
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
@@ -41,7 +60,7 @@ pub struct PageConfig {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct PageEvidence {
-    /// CSS path in original HTML, or rendered Markdown DOM, or explicit Markdown byte range.
+    /// CSS path, rendered Markdown DOM, explicit Markdown byte range, or PDF page number.
     pub locator: String,
     /// Short whitespace-normalized DOM text or attribute, or a literal Markdown fragment.
     /// The complete response and deterministic extraction preserve the original evidence.
@@ -102,7 +121,7 @@ pub struct Passage {
     pub heading: Option<String>,
     /// Explicit subjects; empty means the passage concerns the page or model family.
     pub records: Vec<String>,
-    /// Published DOM text with original wording and whitespace, excluding outer whitespace.
+    /// DOM or PDF text-layer output, preserving wording and internal whitespace.
     #[serde(serialize_with = "serialize_original_text")]
     #[schemars(with = "String")]
     pub text: String,
@@ -171,6 +190,13 @@ pub struct PageContent {
     pub extraction: Extraction,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub enum DocumentErrorKind {
+    Fetch,
+    Extraction,
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct PageDocument {
@@ -179,7 +205,12 @@ pub struct PageDocument {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub error: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub error_kind: Option<DocumentErrorKind>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub content: Option<PageContent>,
+    /// Latest downloaded response rejected by the extractor; earlier valid content may remain.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub failed_snapshot: Option<Snapshot>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]

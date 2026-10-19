@@ -67,6 +67,7 @@ mod tests {
 
     fn fixture(raw: &str) -> (Page, Extraction) {
         let source = PageSource {
+            repository: None,
             id: "test".into(),
             vendor: "openai".into(),
             kind: DocumentKind::ReleaseBlog,

@@ -44,7 +44,7 @@ pub fn extract(source: &PageSource, page: &Page, out: &mut Extraction) -> Result
         "modal-wan22-card" => (
             "wan",
             WAN,
-            "https://huggingface.co/Wan-AI/Wan2.2-T2V-A14B/raw/c8c270b13ee05bfa474194ac9fb07a5868a97cea/README.md",
+            "https://huggingface.co/Wan-AI/Wan2.2-T2V-A14B/raw/main/README.md",
         ),
         "modal-wan22-blog" => (
             "wan",
@@ -63,7 +63,10 @@ pub fn extract(source: &PageSource, page: &Page, out: &mut Extraction) -> Result
         ),
         _ => return Ok(()),
     };
-    if source.vendor != vendor || source.url != url || source.records != [record] {
+    if source.vendor != vendor
+        || !super::repository::same_document_url(&source.url, url)
+        || source.records != [record]
+    {
         out.warnings.push("The selected document no longer has its exact vendor, URL and model binding; extraction skipped.".into());
         return Ok(());
     }
@@ -878,6 +881,7 @@ mod tests {
 
     fn source(id: &str, vendor: &str, record: &str, url: &str) -> PageSource {
         PageSource {
+            repository: None,
             id: id.into(),
             vendor: vendor.into(),
             kind: DocumentKind::ModelCard,

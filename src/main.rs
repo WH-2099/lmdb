@@ -8,9 +8,9 @@ use model_metadata::{
     domain::{self, DomainMetadata},
     evidence,
     identity::{self, IdentitySet},
-    model::{Catalog, Record, RecordKind},
+    model::{Catalog, ObservationStatus, Record, RecordKind},
     registry::{self, Registry},
-    relations, rules, store, sync,
+    relations, renormalize, rules, store, sync,
 };
 use serde::Serialize;
 use serde_json::{Value, json};
@@ -41,6 +41,11 @@ enum Command {
         source: Vec<String>,
         #[arg(long)]
         authenticated: bool,
+    },
+    /// Rebuild selected catalogs from cached source evidence without making requests.
+    Renormalize {
+        #[arg(long, value_delimiter = ',', required = true)]
+        source: Vec<String>,
     },
     /// Discover bounded public candidates for review before adding seeds.
     Discover {
@@ -116,6 +121,8 @@ struct Query {
     source: Option<String>,
     #[arg(long, value_enum)]
     kind: Option<Kind>,
+    #[arg(long, value_enum)]
+    observation: Option<Observation>,
     #[arg(long)]
     task: Option<String>,
     #[arg(long)]
@@ -137,6 +144,28 @@ struct Query {
 enum Kind {
     Model,
     Service,
+}
+
+#[derive(Clone, Copy, ValueEnum)]
+#[value(rename_all = "snake_case")]
+enum Observation {
+    Observed,
+    Missing,
+    NotRequested,
+    Failed,
+    Unknown,
+}
+
+impl Observation {
+    fn status(self) -> ObservationStatus {
+        match self {
+            Self::Observed => ObservationStatus::Observed,
+            Self::Missing => ObservationStatus::Missing,
+            Self::NotRequested => ObservationStatus::NotRequested,
+            Self::Failed => ObservationStatus::Failed,
+            Self::Unknown => ObservationStatus::Unknown,
+        }
+    }
 }
 
 #[derive(Clone, Copy, ValueEnum)]
@@ -205,6 +234,7 @@ async fn main() -> Result<()> {
             source,
             authenticated,
         } => sync::run(&cli.root, &source, authenticated).await?,
+        Command::Renormalize { source } => print_json(&renormalize::run(&cli.root, &source)?)?,
         Command::Discover { source, output } => {
             let report = discovery::run(&cli.root, &source, &output).await?;
             print_json(&report)?;
@@ -238,9 +268,19 @@ async fn main() -> Result<()> {
             command: DocumentCommand::Reparse,
         } => {
             let catalog = documents::reparse(&cli.root)?;
+            let failed: Vec<_> = catalog
+                .documents
+                .iter()
+                .filter(|page| page.error.is_some())
+                .map(|page| &page.source.id)
+                .collect();
             print_json(
-                &json!({"reparsed":catalog.documents.iter().filter(|d|d.content.is_some()).count(),"extractor_version":documents::EXTRACTOR_VERSION}),
+                &json!({"reparsed":catalog.documents.iter().filter(|d|d.content.is_some()).count(),"failed":failed,"extractor_version":documents::EXTRACTOR_VERSION}),
             )?;
+            ensure!(
+                failed.is_empty(),
+                "page extraction failures saved in data/documents/official.yaml"
+            );
         }
         Command::Schema { check } => {
             for (name, schema) in [
@@ -323,6 +363,7 @@ async fn main() -> Result<()> {
                     DocumentCommand::Resolve { record } => {
                         print_json(&documents::resolve::resolve(
                             find_record(&registry, &record)?,
+                            observation_status(&registry, find_record(&registry, &record)?),
                             &identities,
                             &document_catalog,
                         )?)?;
@@ -419,11 +460,22 @@ async fn main() -> Result<()> {
                         .map(|r| {
                             Ok((
                                 r.id.as_str(),
-                                documents::resolve::resolve(r, &identities, &document_catalog)?,
+                                documents::resolve::resolve(
+                                    r,
+                                    observation_status(&registry, r),
+                                    &identities,
+                                    &document_catalog,
+                                )?,
                             ))
                         })
                         .collect::<Result<BTreeMap<_, _>>>()?;
                     value["resolved_metadata"] = serde_json::to_value(resolved)?;
+                    value["observations"] = serde_json::to_value(
+                        registry
+                            .records()
+                            .map(|record| (&record.id, observation_metadata(&registry, record)))
+                            .collect::<BTreeMap<_, _>>(),
+                    )?;
                     value["identities"] = serde_json::to_value(&identities)?;
                     value["relationships"] = serde_json::to_value(relations::derive(&registry)?)?;
                     value["official_sources"] = serde_json::to_value(&document_config.pages)?;
@@ -450,11 +502,15 @@ async fn main() -> Result<()> {
                     });
                     let mut records = Vec::new();
                     for record in registry.records() {
+                        let observation = observation_status(&registry, record);
                         if query
                             .source
                             .as_ref()
                             .is_none_or(|source| record.source == *source)
                             && kind.is_none_or(|kind| record.kind == kind)
+                            && query
+                                .observation
+                                .is_none_or(|wanted| wanted.status() == observation)
                             && (record.id.to_lowercase().contains(&text)
                                 || record.name.to_lowercase().contains(&text))
                             && query.identity.as_ref().is_none_or(|id| {
@@ -463,22 +519,27 @@ async fn main() -> Result<()> {
                                     .is_some_and(|model| model.id == *id)
                             })
                         {
-                            let resolved = (record.kind == RecordKind::Model)
-                                .then(|| {
-                                    documents::resolve::resolve(
-                                        record,
-                                        &identities,
-                                        &document_catalog,
-                                    )
-                                })
-                                .transpose()?;
-                            if query.matches(&domain::project(record)?, resolved.as_ref()) {
+                            let resolved = documents::resolve::resolve(
+                                record,
+                                observation,
+                                &identities,
+                                &document_catalog,
+                            )?;
+                            if query.matches(&domain::project(record)?, Some(&resolved)) {
                                 records.push(record);
                             }
                         }
                     }
                     records.sort_by(|a, b| a.id.cmp(&b.id));
                     records.truncate(query.limit);
+                    let records = records
+                        .into_iter()
+                        .map(|record| {
+                            let mut value = serde_json::to_value(record)?;
+                            value["observation"] = observation_metadata(&registry, record);
+                            Ok(value)
+                        })
+                        .collect::<Result<Vec<_>>>()?;
                     print_json(&records)?;
                 }
                 Command::Inspect { record } => {
@@ -494,18 +555,18 @@ async fn main() -> Result<()> {
                         .iter()
                         .find(|catalog| catalog.source == found.source)
                         .expect("record belongs to a catalog");
-                    let observed = catalog
-                        .last_sync
-                        .as_ref()
-                        .map(|last| last.returned_ids.contains(&record));
                     let relationships: Vec<_> = relations::derive(&registry)?
                         .into_iter()
                         .filter(|r| r.from == record || r.to == record)
                         .collect();
-                    let resolved =
-                        documents::resolve::resolve(found, &identities, &document_catalog)?;
+                    let resolved = documents::resolve::resolve(
+                        found,
+                        catalog.observation(found),
+                        &identities,
+                        &document_catalog,
+                    )?;
                     print_json(
-                        &json!({"record":found,"profile":domain::project(found)?,"resolved_metadata":resolved,"identities":selected_identities(identities,Some(&record)),"relationships":relationships,"sync":{"completed_at":catalog.last_sync.as_ref().map(|s|&s.completed_at),"observed_in_last_sync":observed},"rules":{"scopes":scopes,"groups":groups},"official_sources":document_config.pages.iter().filter(|p|p.records.contains(&record)).collect::<Vec<_>>(),"documents":document_catalog.documents.iter().filter(|d|d.source.records.contains(&record)).collect::<Vec<_>>(),"document_comparisons":documents::compare::compare(&document_catalog,&registry)?.into_iter().filter(|c|c.record==record).collect::<Vec<_>>()}),
+                        &json!({"record":found,"profile":domain::project(found)?,"resolved_metadata":resolved,"identities":selected_identities(identities,Some(&record)),"relationships":relationships,"sync":catalog.last_sync,"observation":observation_metadata(&registry,found),"rules":{"scopes":scopes,"groups":groups},"official_sources":document_config.pages.iter().filter(|p|p.records.contains(&record)).collect::<Vec<_>>(),"documents":document_catalog.documents.iter().filter(|d|d.source.records.contains(&record)).collect::<Vec<_>>(),"document_comparisons":documents::compare::compare(&document_catalog,&registry)?.into_iter().filter(|c|c.record==record).collect::<Vec<_>>()}),
                     )?;
                 }
                 Command::Identities { record } => {
@@ -603,17 +664,37 @@ async fn main() -> Result<()> {
                     let written = match command {
                         EvidenceCommand::Archive { output } => {
                             let target = cli.root.join(output);
+                            fs::create_dir_all(&target)?;
+                            ensure!(
+                                !target
+                                    .canonicalize()?
+                                    .starts_with(cli.root.join("data").canonicalize()?),
+                                "evidence archive must be outside the data directory"
+                            );
                             documents::validate(&document_catalog, &registry, Some(&cache))?;
-                            evidence::archive(&registry, &cache, &target)?
+                            let written = evidence::archive(&registry, &cache, &target)?
                                 + documents::copy_evidence(
                                     &document_catalog,
                                     &registry,
                                     &cache,
                                     &target,
-                                )?
+                                )?;
+                            evidence::write_manifest(
+                                &cli.root,
+                                &registry,
+                                &document_catalog,
+                                &target,
+                            )?;
+                            written
                         }
                         EvidenceCommand::Restore { input } => {
                             let source = cli.root.join(input);
+                            evidence::validate_manifest(
+                                &cli.root,
+                                &registry,
+                                &document_catalog,
+                                &source,
+                            )?;
                             documents::validate(&document_catalog, &registry, Some(&source))?;
                             evidence::restore(&registry, &source, &cache)?
                                 + documents::copy_evidence(
@@ -642,14 +723,16 @@ impl Query {
         // A qualified or conflicting official field deliberately blocks raw fallback.
         let official = |property: &str| -> Option<Option<&Value>> {
             let resolved = resolved?;
-            let field = resolved.fields.get(property)?;
-            field
-                .candidates
-                .iter()
-                .any(|candidate| {
+            let documented = resolved.fields.get(property).is_some_and(|field| {
+                field.candidates.iter().any(|candidate| {
                     matches!(candidate, documents::resolve::Candidate::Document { .. })
                 })
-                .then(|| resolved.value(property))
+            });
+            let stale = !matches!(
+                resolved.observation,
+                ObservationStatus::Observed | ObservationStatus::Unknown
+            );
+            (documented || stale).then(|| resolved.value(property))
         };
         let modality = |wanted: &Option<String>,
                         actual: &Option<domain::Derived<Vec<domain::ModalityLabel>>>,
@@ -685,6 +768,14 @@ impl Query {
             ),
         });
         self.task.as_ref().is_none_or(|wanted| {
+            if resolved.is_some_and(|metadata| {
+                !matches!(
+                    metadata.observation,
+                    ObservationStatus::Observed | ObservationStatus::Unknown
+                )
+            }) {
+                return false;
+            }
             profile.tasks.as_ref().is_some_and(|tasks| {
                 tasks.labels.iter().any(|label| {
                     label.value.source_label == *wanted
@@ -719,6 +810,29 @@ impl Query {
                 )
             })
     }
+}
+
+fn observation_status(registry: &Registry, record: &Record) -> ObservationStatus {
+    registry
+        .catalogs
+        .iter()
+        .find(|catalog| catalog.source == record.source)
+        .map_or(ObservationStatus::Unknown, |catalog| {
+            catalog.observation(record)
+        })
+}
+
+fn observation_metadata(registry: &Registry, record: &Record) -> Value {
+    let sync = registry
+        .catalogs
+        .iter()
+        .find(|catalog| catalog.source == record.source)
+        .and_then(|catalog| catalog.last_sync.as_ref());
+    json!({
+        "status": observation_status(registry, record),
+        "attempted_at": sync.map(|sync| &sync.completed_at),
+        "last_successful_at": sync.and_then(|sync| sync.last_successful_at.as_ref()),
+    })
 }
 
 fn find_record<'a>(registry: &'a Registry, id: &str) -> Result<&'a Record> {

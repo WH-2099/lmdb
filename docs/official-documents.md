@@ -25,8 +25,9 @@ cargo run --release --locked -- documents reparse
 `--kind` 接受 `release_blog`、`model_card`、`model_page`、`documentation` 或 `directory`。
 目录页没有模型绑定，可用 `--kind directory` 查看，按 `--record` 筛选时不会出现。
 `documents check` 离线生成字段比较，省略 `--record` 时返回全部已有声明的比较结果。
-`documents resolve RECORD_ID` 返回字段选择状态、选中的候选索引和全部证据。
-`documents reparse` 从已缓存原文离线重建提取结果，适用于提取器升级，保留页面的采集时间、最近尝试时间与错误。
+`documents resolve RECORD_ID` 返回观察状态、字段选择状态、选中的候选索引和全部证据。
+`documents reparse` 从已缓存原文离线重建提取结果，适用于提取器升级，保留页面的采集时间与最近尝试时间。
+它可重试已保存的提取失败响应；只有修复 `extraction` 错误时清除该错误，后续网络失败仍保留。
 同步失败后保留的旧版提取也会从经过摘要校验的缓存原文升级，保留原始快照和本次错误；缺少准确缓存时中止保存，避免丢失旧内容。
 `list`、`check`、`resolve`、`inspect` 和 `export` 都只读取本地数据。
 
@@ -71,7 +72,20 @@ cargo run --release --locked -- documents reparse
 URL 必须属于该厂商允许的 HTTPS 域名；Hugging Face、GitHub 和原始文件域名还检查官方组织命名空间。
 页面绑定仅接受已存在的 `kind: model` 记录，来源定义不会沿服务引用、身份集合或名称相似性扩大范围。
 模型身份成员之间使用官方声明的规则见下方[字段选择](#按来源选择模型字段)。
-固定修订的模型卡可以定位到指定版本；使用分支或动态页面的条目依靠采集时间和原文摘要区分版本。
+HF 模型卡可用 `repository` 明确仓库、路径与跟踪或固定引用，例如：
+
+```yaml
+repository:
+  repo: Qwen/Qwen3-8B
+  path: README.md
+  revision:
+    mode: tracked
+    reference: main
+```
+
+`tracked` 每轮先解析具体提交，再按该提交下载；`pinned` 使用明确的 `sha`。
+配置 `url` 必须与仓库描述相符，实际快照保存提交 URL 和 `upstream_revision`，回放的相对链接也使用该提交。
+其他动态页面继续依靠采集时间和原文摘要区分响应。
 
 ## 官方目录候选
 
@@ -82,7 +96,7 @@ URL 必须属于该厂商允许的 HTTPS 域名；Hugging Face、GitHub 和原�
 目录条目可能指向型号详情、发布文章、仓库、集合或演示入口，链接存在本身不证明模型能力或可调用性。
 提取器每页最多保存 500 个候选，额外条目被省略并留下警告。
 范围仅限本次响应中的已支持正文，不自动翻页、运行交互界面、跟进链接或创建模型记录。
-未找到候选时同样保留页面元数据与警告。
+未找到符合来源结构的候选时记录失败，保留可用旧内容与本次失败响应。
 
 目录候选随页面一起保存至 `data/documents/official.yaml`，可通过 `documents list` 和 `export` 读取，并参与原文证据重放。
 维护者核对主体、版本、官方归属与许可后，再将准确仓库加入种子，或为现有模型增加一条型号页面绑定。
@@ -90,8 +104,10 @@ URL 必须属于该厂商允许的 HTTPS 域名；Hugging Face、GitHub 和原�
 
 ## 提取内容与定位
 
-每个页面保存 `source`、最近尝试时间 `checked_at`、可选 `error` 和可选 `content`。
+每个页面保存 `source`、最近尝试时间 `checked_at`、可选 `error`、`error_kind`、`content` 与 `failed_snapshot`。
 `content` 包括原始响应快照、Content-Type 和带版本号的 `extraction`。
+`failed_snapshot` 保存已收到但未能提取的响应，可能与较早的有效 `content` 同时存在。
+`error_kind` 区分 `fetch` 和 `extraction`；旧记录未写入类型时保持未知。
 
 | 提取内容 | 保存方式与含义 |
 | --- | --- |
@@ -106,7 +122,7 @@ URL 必须属于该厂商允许的 HTTPS 域名；Hugging Face、GitHub 和原�
 
 `links` 每页最多保存 200 项，超限时保留截断警告；它与目录页的 `catalog_entries` 分别提取。
 `passages` 保留所选段落的原始表述与段内空白，仅去除外围空白。
-每页最多保存 6 段、每段最多 2,000 个字符、全页最多 6,000 个字符；完整段落超限时跳过并留下警告。
+每页最多保存 6 段、每段最多 2,000 个字符、全页最多 6,000 个字符；HTML 与 Markdown 的完整段落超限时跳过并留下警告。
 段落主题可为概览、能力、限制、可用性、训练、评估、用法或许可，`records` 为空表示页面或模型家族层面的文字。
 段落正文与最多 240 字符的证据预览分别保存，正文会参与完整证据重放。
 
@@ -126,7 +142,8 @@ URL 必须属于该厂商允许的 HTTPS 域名；Hugging Face、GitHub 和原�
 页面的 `published_at` 不自动写为模型的 `release_date`。
 博客可在模型发布后更新，模型卡也可能没有页面发布时间；缺失值保持缺失。
 标题、链接或页面成功返回本身不构成能力声明。
-提取器按已支持的页面结构、型号段落和表格读取字段，页面无可确认字段时保留元数据和警告。
+提取器按已支持的页面结构、型号段落和表格读取字段，缺少预期身份或正文结构时记录失败。
+已支持的描述页允许没有结构化字段，但仍需核对精确型号与正文，不能只凭 HTTP 200 或标题通过。
 
 HTML 使用 DOM 与 CSS 选择器定位，Markdown 先解析表格和正文再从渲染结果定位。
 `scraper` 提供 HTML DOM 解析，`pulldown-cmark` 处理 Markdown，避免把网页标签或表格语法当作普通字符串切分。
@@ -139,11 +156,14 @@ HTML 使用 DOM 与 CSS 选择器定位，Markdown 先解析表格和正文再�
 | `markdown-bytes:...:frontmatter/...` | Markdown 原始字节范围中的元信息 |
 | `...#json-pointer=...` | DOM 中 JSON 数据内的具体字段 |
 | `embedded-json:...`、`embedded-rsc:...` | 已支持的嵌入正文位置及其内部节点 |
+| `pdf:page:N` | PDF 文本层的第 N 页，页码从 1 开始 |
 
 `evidence.excerpt` 最多保留 240 个字符，并可规范化 DOM 文本空白；`passages.text` 保存预算内的完整段落，原始响应继续保存在缓存。
 定位规则与 `extractor_version` 一起解释，不能把渲染后 CSS 路径当作原 Markdown 的行号。
-目前只接受 UTF-8 的 HTML、Markdown 或纯文本响应，单页上限为 8 MiB。
-PDF、OCR 和浏览器 JavaScript 渲染尚未实现；官方 PDF 等链接可作为链接保留，但链接内容不会被自动提取。
+HTML 与 Markdown 需要 UTF-8，`format: pdf` 保存 PDF 原始字节并使用内置 Rust 解析器，文档上限均为 8 MiB。
+PDF 最多 256 页，在相同段落预算内按页选择连续文本，优先在段落或单词边界结束，省略后续内容时保留警告。
+PDF 段落的 `records` 留空，不自动产生结构化能力声明；加密、损坏和没有文本层的 PDF 会失败，扫描页不执行 OCR。
+采集器不运行页面 JavaScript，也不会自动跟进普通页面中的 PDF 链接；PDF 必须显式加入页面配置。
 
 ## 如何解释字段比较
 
@@ -188,10 +208,11 @@ PDF、OCR 和浏览器 JavaScript 渲染尚未实现；官方 PDF 等链接可�
 | `conflict` | 同一最高优先级的合格候选给出不同值 |
 | `unavailable` | 没有可采用的值 |
 
-每个候选保留原始记录或文档身份、字段值、快照、定位与失败状态。
+每个候选保留原始记录或文档身份、字段值、快照、定位与失败状态，目录候选另有 `observation`。
 没有专门比较规则的结构化属性仍可选择，同级候选按原生 JSON 值和单位判断一致性；数组顺序保留语义。
 因此 `documents check` 的 `not_comparable` 与字段选择结果分别解释。
-没有官方模型声明的字段可以采用当前记录已有的目录事实。
+没有官方模型声明的字段可采用 `observed` 或 `unknown` 记录的目录事实，未知状态继续保留。
+`missing`、`not_requested` 或 `failed` 的目录候选仍可审查，但不会直接选定；要求本轮成功返回的查询可使用 `--observation observed`。
 原始 `facts` 和由它生成的 `profile` 继续表示目录来源，字段选择结果单独保存为 `resolved_metadata`。
 
 `model` 声明可在人工审查的同一模型身份成员间使用，候选仍保留最初绑定记录的 ID 和证据。
@@ -201,20 +222,24 @@ PDF、OCR 和浏览器 JavaScript 渲染尚未实现；官方 PDF 等链接可�
 
 模型查询的 `--input`、`--output`、`--min-context` 和 `--capability` 在存在官方模型声明时使用 `selected` 值。
 `qualified`、`conflict` 或缺少直接采用值的字段不会命中这些筛选，也不会退回目录值。
-没有相应官方模型声明时继续按来源 profile 筛选，`--task` 始终使用 profile 中的任务标签。
-`query` 输出仍为原始记录，可用 `inspect` 或 `documents resolve` 查看命中的字段证据。
+没有相应官方模型声明时，`observed` 或 `unknown` 的模型继续按来源 profile 筛选，`--task` 始终使用 profile 中的任务标签。
+`query` 输出带观察元数据的原始记录，可用 `inspect` 或 `documents resolve` 查看命中的字段证据。
 
 ## 失败、旧内容与证据重放
 
 采集使用匿名 HTTP 请求，认证来源的凭据不会加入请求。
-重定向、HTTP 错误、非 UTF-8 内容、不支持的响应类型和提取错误都会记录为页面失败。
+匿名页面最多跟随 5 次 HTTPS 跳转，每一跳检查厂商允许的 URL；被拒绝的跳转、HTTP 错误、不支持的格式和提取错误都会记录为失败。
+HTML 与 Markdown 的非 UTF-8 内容也会失败，PDF 按其二进制格式验证。
+HTTP 200 应用壳或正文退化会保存为 `extraction` 失败，并保存 `failed_snapshot`。
 本轮失败时，仅当 ID、URL、厂商、格式、类型和绑定等完整 `source` 与旧记录一致，才保留旧的 `content`。
 失败页面仍更新 `checked_at` 和 `error`，旧内容的快照时间保留原值。
 因此 `checked_at` 表示最近尝试时间，不能当作内容获取时间。
 
 成功页面和失败记录一起保存至 `data/documents/official.yaml`，命令在存在失败时返回非零状态。
 旧内容产生的比较带有 `official_stale: true` 与 `source_error`，不会被判为新的精确一致或差异。
-修改配置中的来源定义后应重新同步；普通校验会拒绝与当前配置不一致的旧文档定义。
+修改来源定义后通常需要重新同步；同一 HF 文件的固定 SHA 描述可在严格核对后离线迁移为跟踪描述，旧快照仍保留旧提交。
+没有内容或失败响应的旧错误页也允许只把格式声明改为 PDF，具体迁移条件见[维护流程](maintenance.md#官方页面维护)。
+普通校验会拒绝其他与当前配置不一致的旧文档定义。
 
 原始响应按 SHA-256 保存为 `.cache/documents/<sha256>.bin`，Git 保存页面来源、元数据、预算内的完整段落、证据预览和声明。
 `validate --evidence` 校验原始字节摘要后重新执行完整提取，并核对全部提取结果，包括标题、日期、链接、目录候选、段落、声明、作用域、警告和定位。
@@ -226,9 +251,11 @@ cargo run --release --locked -- evidence archive --output dist/evidence
 cargo run --release --locked -- evidence restore --input /path/to/evidence
 ```
 
-归档和恢复同时处理 `snapshots/<sha256>.json` 与 `documents/<sha256>.bin`。
+归档和恢复同时处理 `snapshots/<sha256>.json` 与 `documents/<sha256>.bin`，包含提取失败响应，并用 manifest 核对数据版本。
 使用相同 Git 数据版本和完整证据目录即可离线恢复与重放；正文缓存和 HTTP 收据继续排除在 Git 之外。
 新增或修订提取器后，应检查页面范围、模型绑定、证据定位和比较口径，再执行 `documents reparse` 并检查 diff。
-当前 `extractor_version` 为 3，已有原文缓存可通过该命令离线迁移。
-重解析核对原始字节的摘要与格式，全部提取和校验完成后才替换文档 YAML；没有内容的错误记录继续保留。
-缺少原文时需恢复相同证据归档；配置中的 URL、格式或绑定发生变化时仍应重新同步页面。
+当前 `extractor_version` 为 4，已有原文缓存可通过该命令离线迁移。
+重解析核对原始字节的摘要与格式，全部页面处理并通过结构和证据校验后原子保存；缺少或损坏的缓存会中止写入。
+失败响应重解析成功时恢复内容，并只清除 `extraction` 错误；后续 `fetch` 或旧未知错误继续标记过期，较新的失败响应也继续保留。
+重解析后仍有页面错误时输出其 ID 并返回非零状态，有效提取与失败记录已写入文件。
+缺少原文时需恢复相同证据归档；其他 URL、格式、引用模式或绑定变化仍需重新同步页面。

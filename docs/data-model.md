@@ -5,7 +5,7 @@
 当前格式为 `schema_version: 1`，原始目录和声明的类型定义位于 [`src/model.rs`](../src/model.rs) 与 [`src/assertion.rs`](../src/assertion.rs)。
 领域视图、身份、关系和规则分别由 `domain`、`identity`、`relations` 与 `rules` 模块定义。
 官方页面配置、提取结果、字段对照与按来源优先级选择的元数据由 [`documents`](../src/documents/mod.rs) 模块定义。
-Rust 类型生成目录、声明、身份、profile、关系、规则、来源约定、发现配置、发现报告、官方页面配置、文档目录、文档对照与字段选择结果共 13 个 JSON Schema。
+Rust 类型生成目录、声明、身份、profile、关系、规则、来源约定、发现配置、发现报告、官方页面配置、文档目录、文档对照、字段选择结果与 Mock 配置共 14 个 JSON Schema。
 CLI 通过类型解析与语义检查执行校验，JSON Schema 为编辑器和其他消费方提供结构说明。
 仅运行通用 JSON Schema 校验不能替代 CLI 的引用、单位、日期与冲突检查。
 
@@ -23,7 +23,8 @@ CLI 通过类型解析与语义检查执行校验，JSON Schema 为编辑器和�
 | `Fact` | `value`、`pointer`、可选 `unit` | 上游 JSON 原值、完整 JSON Pointer 和明确的计量单位 |
 | `Snapshot` | `schema_version`、`id`、`source`、`url` | 快照身份、来源和实际请求 URL |
 | `Snapshot` | `retrieved_at`、`sha256`、可选 `upstream_revision` | 获取时间、原始字节摘要和已知上游修订 |
-| `SyncManifest` | `completed_at`、`returned_ids`、`missing_ids`、`snapshot_ids` | 最近成功同步时间、本轮返回 ID、保留但缺席的 ID、本轮采集快照 |
+| `SyncManifest` | `completed_at`、`returned_ids`、`missing_ids`、`snapshot_ids` | 最近尝试完成时间、本轮返回 ID、完整目录缺席 ID、本轮采集快照 |
+| `SyncManifest` | 可选 `scope`、`status`、`last_successful_at`、`errors` | 请求范围、完成状态、最近整个范围成功时间及逐项错误；历史清单可能缺少这些信息 |
 
 `id` 使用 `<source>:<kind>:<upstream_id>`。
 例如 `huggingface:model:Qwen/Qwen3-8B` 与 `modelscope:model:Qwen/Qwen3-8B` 是两个来源记录。
@@ -56,6 +57,9 @@ JSON Pointer 指向快照根对象下的绝对位置，采用 `/` 分段，并�
 原始响应字节保存在 `.cache/snapshots/<sha256>.json`，快照 ID 为 `<source>:<sha256>`。
 缓存文件不提交到 Git；YAML 保存其身份、请求 URL 和证据定位。
 快照摘要用于核对字节一致性，不能证明来源内容本身正确。
+`validate --evidence` 同时核对记录 ID、上游 ID、名称及来源允许的名称回退规则，字段指针匹配不能替代身份核对。
+适配器新增字段后可用 `renormalize --source NAME` 回放记录引用的原始响应，保留记录身份、获取时间与同步清单。
+新增文件来自另一份响应时必须使用它自己的快照，不能借用目录 API 的 JSON Pointer。
 
 ## 领域视图、身份与关系
 
@@ -84,14 +88,29 @@ Vercel 的 `pricing` 保留平台原始 JSON，并进入 `pricing.unclassified`�
 字段变化时替换该记录，并关联新快照。
 
 本轮没有返回的旧记录继续保留，目录因此包含历史保留项。
-`last_sync.returned_ids` 与 `missing_ids` 明确区分本轮返回和本轮缺席的保留记录。
-这两个列表覆盖当前来源的全部记录，`snapshot_ids` 保存本轮采集证据；它们独立于旧事实的证据时间。
+`last_sync.scope.kind` 为 `full_catalog` 或 `selected_models`，后者保存当轮请求的 `upstream_ids`。
+`status` 为 `complete`、`partial` 或 `failed`，`errors` 保存可选上游 ID 与失败信息。
+`returned_ids` 保存成功返回记录；只有完整目录全部成功时才用 `missing_ids` 描述缺席。
+精选仓库单项失败保留旧记录，成功项可更新；完整目录分页或结构校验失败时保留旧记录并保存失败尝试。
+`snapshot_ids` 保存本轮证据，`completed_at` 保存最近尝试时间，`last_successful_at` 只在整个请求范围成功时更新。
+以上状态独立于旧事实的证据时间。
 缺席不会自动推导为退役、删除或不可调用。
+
+| 派生观察状态 | 条件 |
+| --- | --- |
+| `observed` | 本轮明确范围内成功返回 |
+| `missing` | 完整目录全部成功后没有返回该历史记录 |
+| `not_requested` | 历史记录不在本轮精选范围 |
+| `failed` | 属于本轮请求范围但未成功观察 |
+| `unknown` | 没有清单，或历史清单缺少范围与完成状态 |
+
+`query` 每条结果和 `inspect` 的 `observation` 保存 `status`、`attempted_at` 与 `last_successful_at`，`export.observations` 按记录 ID 索引同一元数据。
+`query --observation STATUS` 可筛选状态，离线重归一化不会把旧清单补写为新一次成功观察。
 同一来源文件可能引用多次获取的快照，不能视作某一时刻完整一致的上游目录。
 `retrieved_at` 是所引用快照的获取时间，不表示事实生效时间、最近同步时间或最近成功核查时间。
 快照列表保留当前记录和最近同步清单引用的元信息，本地缓存可能同时保留未被当前目录引用的响应。
 Git 历史能保存旧记录版本，但只有同时保留对应原始响应，才能重放旧证据。
-`evidence archive` 与 `evidence restore` 提供准确原始字节的目录归档和恢复，支持配合同一版本的 YAML 离线重放。
+`evidence archive` 与 `evidence restore` 提供准确原始字节的目录归档和恢复，manifest 将证据清单绑定到 `data/` 文件摘要，支持同一数据版本离线重放。
 
 ## 官方页面与模型声明
 
@@ -107,9 +126,10 @@ Git 历史能保存旧记录版本，但只有同时保留对应原始响应，�
 
 | 对象 | 字段 | 含义 |
 | --- | --- | --- |
-| `PageSource` | `id`、`vendor`、`kind`、`url`、`format`、`records` | 页面身份、厂商、文档种类、请求地址、解析格式与型号绑定；目录页不绑定模型 |
+| `PageSource` | `id`、`vendor`、`kind`、`url`、`format`、`records`、可选 `repository` | 页面身份、厂商、文档种类、请求地址、解析格式、型号绑定与仓库来源；目录页不绑定模型 |
+| `RepositorySource` | `repo`、`path`、`revision` | HF 仓库与文件路径，revision 明确跟踪引用或固定提交 |
 | `DocumentCatalog` | `schema_version`、`documents` | 保存于 `data/documents/official.yaml` 的文档目录 |
-| `PageDocument` | `source`、`checked_at`、可选 `error`、可选 `content` | 页面配置、最近检查时间、该次错误与可用内容 |
+| `PageDocument` | `source`、`checked_at`、可选 `error`、`error_kind`、`content`、`failed_snapshot` | 页面配置、最近检查时间、错误与类型、可用内容、最近收到但提取失败的响应 |
 | `PageContent` | `snapshot`、`content_type`、`extraction` | 原始响应身份、响应内容类型与提取结果 |
 | `Extraction` | `extractor_version`、`title`、`published_at`、`canonical_url`、`links`、`catalog_entries`、`passages`、`claims`、`warnings` | 提取器版本、页面元信息、官方链接、目录候选、选定原文、结构化声明及提取警告 |
 | `LocatedValue` | `value`、`evidence` | 带来源定位的页面元信息字符串 |
@@ -119,14 +139,18 @@ Git 历史能保存旧记录版本，但只有同时保留对应原始响应，�
 | `Passage` | `topic`、`heading`、`records`、`text`、`evidence` | 选定段落的主题、可选标题、明确主体、原文和证据位置 |
 | `PageEvidence` | `locator`、`excerpt` | 提取位置与至多 240 个字符的证据片段 |
 
-`kind` 区分 `release_blog`、`model_card`、`model_page`、`documentation` 和 `directory`，`format` 支持 `html` 与 `markdown`。
-解析器保存 UTF-8 原始响应，Markdown 正文先渲染为 DOM，再由对应页面的规则提取字段。
-提取范围由已实现的页面规则限定，只有标题、日期或链接的页面也可以保存为文档结果；型号页面没有声明或选定段落时附提取警告。
-标题、版本、章节或表格无法明确对应目标模型时，相关规则可以保留警告或省略声明。
-页面抓取成功与模型字段提取成功因此是不同状态。
+`kind` 区分 `release_blog`、`model_card`、`model_page`、`documentation` 和 `directory`，`format` 支持 `html`、`markdown` 与 `pdf`。
+HTML 与 Markdown 使用 UTF-8，Markdown 正文先渲染为 DOM；PDF 保存原始字节并用内置解析器提取文本。
+页面必须满足对应身份与正文结构契约，HTTP 200 的应用壳和结构退化会保存为提取失败。
+已支持的描述页可只有元信息与正文，没有结构化字段；这种例外仍要确认精确型号与正文位置。
+目录页需提取到符合来源结构的候选，不能把空应用壳当作空目录。
+
+`repository.revision` 使用 `{mode: tracked, reference: main}` 或 `{mode: pinned, sha: ...}`。
+跟踪引用每轮先解析提交，实际下载地址与提交分别写入快照 `url` 和 `upstream_revision`；回放和相对链接解析使用快照地址。
+当前该描述只适用于 HF 模型仓库；其他动态页面继续使用采集时间与原文摘要区分响应。
 
 目录页将符合该页面规则的链接写入 `catalog_entries`，按去除片段后的目标 URL 去重，证据定位到原始 `href`。
-候选最多保留 500 条，发生省略、缺少提取规则或未匹配预期页面结构时保存警告。
+候选最多保留 500 条，发生省略时保存警告；未匹配预期结构时记录失败。
 候选仅表示本次响应中的目录条目，分页和交互结果不会自动枚举，目标页面也不会递归抓取。
 `model_id` 当前不从标签或 URL 推断；即使存在这个可选字段，也不建立本库记录绑定。
 目录候选不新增模型记录、不改变身份集合，也不参与模型字段选择，需先审查具体型号与证据再配置采集。
@@ -142,7 +166,8 @@ Git 历史能保存旧记录版本，但只有同时保留对应原始响应，�
 段落主题包括概述、能力、限制、可用性、训练、评估、使用和许可，`records` 为空时表示页面或模型家族层面的说明。
 有明确主体的段落只能引用该页面已绑定的模型记录，段落正文不会自动转成无条件模型能力。
 每页最多保存 6 段，每段最多 2,000 个字符，合计最多 6,000 个字符。
-超过上限的整段被跳过并留下警告，相同正文去重，完整响应继续保存在原始缓存中。
+HTML 与 Markdown 超过上限的整段被跳过并留下警告，相同正文去重，完整响应继续保存在原始缓存中。
+PDF 按页选择预算内的连续文本，优先在段落或单词处结束，使用 `pdf:page:N` 定位；段落 `records` 留空，也不自动产生能力声明。
 专用提取规则还保存架构、训练阶段、语言、许可、硬件与使用配置等结构化字段，原值形状、单位、条件和定位随声明保留。
 训练硬件、训练算术精度、部署需求和接口条款各自保留适用范围。
 
@@ -169,11 +194,14 @@ HTML 证据通常使用 `css:` 定位，Markdown 正文使用 `markdown-rendered
 每次检查保存 `checked_at`；获取或提取失败时保存 `error`，并在页面配置相同的情况下保留上次可用的 `content`。
 首次失败可以只有错误而没有内容，成功页面和失败状态一同写入文档目录，存在本次所选页面失败时命令返回非零状态。
 `checked_at` 因此不等于内容获取时间，保留内容的时间应读取 `content.snapshot.retrieved_at`。
-`documents reparse` 从已保存且摘要匹配的原始响应离线重建提取结果，保留 `checked_at`、快照获取时间和既有错误。
-它不会补采失败页面，也不会把旧内容标记为新一次成功获取。
-所有页面重新提取和校验完成后才写入文档目录；缺失缓存、损坏字节或解析失败会保留原文件。
-提取器升级可以使用 `reparse` 更新已有内容，页面来源定义改变则需要重新同步，校验会检查配置一致性与提取器版本。
-当前提取器版本为 3，已有原始页面可以离线迁移；新加入配置但尚无保存内容的页面仍需获取后才能提取。
+`error_kind` 为 `fetch` 或 `extraction`，旧记录可缺省；提取失败时用 `failed_snapshot` 保存已收到的原始响应。
+`documents reparse` 从摘要匹配的有效或失败响应离线重建提取结果，保留 `checked_at` 与快照获取时间。
+成功修复提取只清除 `extraction` 错误，后续 `fetch` 或旧未知错误仍保留；较新的失败响应也不会被旧内容覆盖。
+处理后仍有页面错误时命令输出失败 ID 并返回非零状态，有效提取和失败记录已保存。
+全部页面处理并通过结构与证据校验后原子保存，缺失或损坏的缓存会中止写入。
+同一 HF 文件的固定 SHA 来源描述可在严格核对后离线迁移为跟踪描述，具体条件见[维护流程](maintenance.md#官方页面维护)。
+其他来源定义变化需重新同步，校验会检查配置一致性与提取器版本。
+当前提取器版本为 4；没有任何已保存响应的页面仍需获取后才能提取。
 
 `documents list` 展示配置、页面元信息、目录候选、声明和错误，`documents check` 从保存的声明生成字段对照。
 目录页没有模型绑定，按 `--record` 查看或通过 `inspect` 查看模型时不会出现，可用 `documents list --kind directory` 或 `--vendor` 检查目录候选。
@@ -229,27 +257,29 @@ HTML 证据通常使用 `css:` 定位，Markdown 正文使用 `markdown-rendered
 同级另有可用的精确无条件值时仍可选定，带限制的候选继续保留在 `candidates`。
 字段不存在时没有对应结果，不能把缺失解释为不支持。
 每个候选保留目录 `origin` 与 `Fact`，或页面种类、快照、完整声明、旧内容标记和错误。
+`ResolvedMetadata.observation` 和目录候选的 `observation` 保存记录最近观察状态。
+`missing`、`not_requested` 与 `failed` 的目录候选不能直接选定；`unknown` 保留历史查询能力并显式标记未知，不证明本轮返回。
 已有比较规则的属性沿用其值与单位约束；其他结构化字段接受非 `null` JSON 值，并按单位与原生 JSON 值比较。
 这类数组的成员顺序影响相等判断，术语也不会自动归一。
 这套选择规则表达本项目的证据优先级，不证明被选值已经通过推理实测。
 
 模型查询的输入、输出、最小上下文和能力过滤，在对应字段有官方 `model` 声明时使用已选定值，未选定的字段不命中过滤条件，也不回退到目录值。
-没有对应官方模型声明时使用目录 profile，保留原有来源标签和规范标签匹配。
+没有对应官方模型声明时，`observed` 或 `unknown` 的模型可使用目录 profile，保留原有来源标签和规范标签匹配。
 任务过滤继续使用目录任务分类，服务查询继续使用服务自身的事实。
-查询返回原始记录，选定值及其理由可通过 `inspect` 的 `resolved_metadata` 或 `documents resolve` 查看。
+查询返回带观察元数据的原始记录，选定值及其理由可通过 `inspect` 的 `resolved_metadata` 或 `documents resolve` 查看。
 
 ## 官方文档原始证据
 
 页面快照沿用 `Snapshot`，其来源为 `official-<vendor>`，ID 为 `official-<vendor>:<sha256>`。
-HTML 与 Markdown 原始字节保存在 `.cache/documents/<sha256>.bin`，与 API 响应的 `.cache/snapshots/<sha256>.json` 分别保存。
-文档证据校验先核对 SHA-256、UTF-8 和 8 MiB 大小上限，再重跑同一提取器并比较完整 `Extraction`。
+HTML、Markdown 与 PDF 原始字节保存在 `.cache/documents/<sha256>.bin`，与 API 响应的 `.cache/snapshots/<sha256>.json` 分别保存。
+文档证据校验先核对 SHA-256、相应格式和 8 MiB 大小上限，再重跑同一提取器并比较完整 `Extraction`。
 因此校验覆盖页面元信息、链接、目录候选、选定段落、结构化声明、作用域、条件、精度、警告和定位是否可由保留响应重现。
 回放成功说明提取可复现，不能证明官方声明正确或模型实际行为符合描述。
 
 `evidence archive` 与 `evidence restore` 同时处理 API 原始 JSON 和已保存文档引用的原始字节。
-归档目录保留 `snapshots/<sha256>.json` 与 `documents/<sha256>.bin`，使用相应版本的 YAML 可以离线恢复并回放。
+归档目录保留 `manifest.json`、`snapshots/<sha256>.json` 与 `documents/<sha256>.bin`，恢复时核对数据版本与全部引用摘要。
 恢复不会请求上游页面，也不会把新抓取内容当成历史响应的替代品。
-仅配置而尚未保存内容的页面没有可归档文档字节，错误记录本身保存在 YAML 中。
+`failed_snapshot` 也参与归档和摘要校验；只有未收到任何响应的页面没有可归档字节，错误记录本身保存在 YAML 中。
 
 ## 人工条件声明
 

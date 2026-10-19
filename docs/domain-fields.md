@@ -23,6 +23,10 @@
 | 字段组 | 类型与含义 |
 | --- | --- |
 | `tasks` | 可选的来源任务分类，保存 `source`、`taxonomy` 和带证据的 `labels` |
+| `languages` | 来源声明的语言标签，接受字符串或字符串数组，保留原始词表 |
+| `licensing.labels`、`licensing.name`、`licensing.link` | 来源许可证标签、自定义名称及链接或文件路径 |
+| `access.gated`、`access.private` | 来源访问状态；`gated` 保留布尔值或来源标签，`private` 为布尔值 |
+| `lifecycle` | Anthropic `lifecycle` 或 models.dev `status` 的原始状态标签 |
 | `modalities.input`、`modalities.output` | 可选标签数组，每项保存 `source_label` 和可选标准模态 `canonical` |
 | `limits.context_window` | 来源报告的上下文窗口，非负整数，单位为 token |
 | `limits.max_input_tokens`、`limits.max_output_tokens` | 来源明确报告的输入、输出 token 上限 |
@@ -31,6 +35,8 @@
 | `parameters.by_dtype` | 来源报告的各数据类型参数量，保留 `BF16` 等原始键 |
 | `capabilities` | 可选的能力布尔值及 `supported_parameters` 字符串数组 |
 | `lineage.base_models`、`lineage.base_model_relation` | 来源报告的基础模型名称列表及关系标签 |
+| `lineage.new_version` | 发布者在 HF 模型卡中声明的后续版本引用 |
+| `lineage.revision`、`lineage.version`、`lineage.base_model_id` | 来源声明的仓库修订、版本字符串与基础型号标识 |
 | `pricing` | 可选价格表，包含基础费率、原始条件及未归类字段 |
 
 token 上限必须同时具有 `unit: tokens`，总参数量必须具有 `unit: parameters`。
@@ -38,10 +44,51 @@ token 上限必须同时具有 `unit: tokens`，总参数量必须具有 `unit: 
 基础模型字符串被包装成单项数组；ModelScope 的空关系字符串视为未提供。
 这些谱系字段保留来源声明，不自动继承基础模型的能力或许可证。
 
+许可证与语言的单个字符串被包装成单项数组，原始形状可由 `fact` 回放。
+许可证标签保留 `other` 等来源词表，自定义名称和链接各自保存证据。
+HF 的相对许可路径属于当前记录的仓库和 `lineage.revision` 所指修订；来源未提供修订时，路径的修订也未知。
+许可证标签与开放权重状态各自表达来源声明，商业使用条款需要查阅对应许可文本。
+语言标签描述发布者列出的语言，不能证明实际质量或完整语言覆盖。
+
+HF 的 `gated` 可能为 `false`、`auto`、`manual` 或未来增加的标签，投影原样保留。
+`private: false` 与门禁状态分别记录；二者均不表达当前账号下载权限。
+`lifecycle` 保留未知状态标签，且不从本地采集范围或目录缺席推导状态。
+发布日期、弃用日期和退役日期继续分别保留原始事实；数字日期的单位需要来源契约支持。
+版本引用保持来源原文；后续版本引用不等同于别名、等价模型或自动迁移指令。
+
 `capabilities` 包含 `reasoning`、`thinking`、`tool_call`、`structured_output`、`open_weights`、`attachment`、`temperature_control` 与 `supported_parameters`。
 各布尔值独立保留，`reasoning` 和 `thinking` 不互相推导。
 `temperature_control` 仅接收 models.dev 的布尔字段 `temperature`，其他来源中的采样温度数值不属于这个能力字段。
 这些字段表达来源报告的值，不代表经过推理调用验证。
+
+## Hugging Face 复合元数据
+
+以下字段直接读取已保存的模型目录响应，所有复合对象与数组完整保存在事实中。
+每项事实的 JSON Pointer 指向当前记录引用的同一份响应。
+
+| 事实键 | 来源路径 | 含义 |
+| --- | --- | --- |
+| `license_name` | `/cardData/license_name` | 自定义许可证名称 |
+| `datasets` | `/cardData/datasets` | 发布者填写的数据集标签 |
+| `new_version` | `/cardData/new_version` | 后续版本引用 |
+| `torch_dtype`、`dtype` | `/config/torch_dtype`、`/config/dtype` | 配置声明的数据类型，分别保留 |
+| `quantization_config` | `/config/quantization_config` | 完整量化配置，包括方法、块大小和排除模块等来源字段 |
+| `tokenizer_config` | `/config/tokenizer_config` | 目录响应中的 tokenizer 配置摘要 |
+| `auto_map` | `/config/auto_map` | 来源声明的自定义代码入口 |
+| `transformers_version` | `/config/transformers_version` | 配置中保存的库版本 |
+| `transformers_info` | `/transformersInfo` | Hub 返回的 Transformers 运行信息 |
+| `num_experts`、`num_experts_per_tok` | `/config/num_experts`、`/config/num_experts_per_tok` | 配置声明的专家数与每 token 专家数 |
+| `siblings` | `/siblings` | 文件清单，保留已返回的路径、大小、Git OID 与 LFS 元数据 |
+| `model_index` | `/cardData/model-index` | 模型卡中的旧评测 payload |
+| `eval_results` | `/evalResults` | Hub 返回的评测引用，包含已有的贡献者、PR 和验证状态 |
+
+缺失或顶层 `null` 省略，空对象与空数组原样保留。
+`torch_dtype: bfloat16` 和 `quantization_config.quant_method: fp8` 可以同时存在，投影不将其折叠为单个精度标签。
+配置中的库版本表达保存配置时的声明，不能确定最低兼容版本；专家数也不用于推算激活参数量。
+模板可能位于 tokenizer 摘要、独立 `chat_template.jinja` 或 `additional_chat_templates/` 文件，清单只记录已返回的文件信息。
+文件清单中的权重摘要与目录响应的 `Snapshot.sha256` 分属不同内容；映射这些字段不下载权重。
+数据集标签没有训练、微调或评测角色时，保留其未分类状态。
+评测结果保留原始归因与 `verified`，社区提交不会因出现在模型目录中而变成厂商声明。
 
 ## 任务与模态
 

@@ -36,6 +36,8 @@ cargo run --release --locked -- sync --source vercel
 cargo run --release --locked -- sync --source official
 cargo run --release --locked -- documents resolve huggingface:model:Qwen/Qwen3-8B
 cargo run --release --locked -- sync --source huggingface --source modelscope
+cargo run --release --locked -- renormalize --source huggingface
+cargo run --release --locked -- query --observation observed --source huggingface --limit 10
 cargo run --release --locked -- validate --evidence
 cargo run --release --locked -- schema --check
 ```
@@ -44,14 +46,16 @@ cargo run --release --locked -- schema --check
 Hugging Face 和 ModelScope 只同步配置中明确列出的模型；`discover` 将有数量上限的公开候选写入报告，审查后再加入清单。
 `sources` 读取 `config/sources.yaml` 中 14 个来源的覆盖范围、认证约定和条款状态，其中 6 个公开来源、8 个认证来源，列出约定时不读取凭据。
 认证来源需要同时指定 `--source NAME` 与 `--authenticated`，本轮未进行真实认证采集。
-目录同步逐来源保存成功结果；失败来源保留旧目录，命令最终以非零状态报告失败。
+完整目录全部分页成功后更新，HF 与 ModelScope 的精选仓库逐项保存成功结果；失败项保留旧记录，命令最终以非零状态报告失败。
 官方页面按页记录失败；同一来源定义下保留的旧内容会显式标记过期。
+页面身份或结构不符也会记录失败，并保留失败响应供提取器修复后重放。
 `documents reparse` 可从缓存原文离线更新提取结果，`documents resolve RECORD_ID` 展示来源选择、限定条件与冲突，详见[官方页面与字段核对](docs/official-documents.md)。
+`renormalize --source NAME` 从已缓存的原始 JSON 补齐当前适配器字段映射，保留证据获取时间与同步清单。
 
 普通 `validate` 不需要原始响应。
 `validate --evidence` 需要本地 `.cache/snapshots/` 的目录原始 JSON，以及 `.cache/documents/` 的官方页面原文；普通克隆不包含这些文件。
 重新同步不会自动恢复已被上游覆盖的历史快照。
-使用 `evidence archive --output PATH` 保存当前目录引用的准确原始字节，在相同数据版本的克隆中用 `evidence restore --input PATH` 恢复后即可离线重放证据。
+使用 `evidence archive --output PATH` 保存原始字节及关联数据版本的 manifest，在相同数据版本的克隆中用 `evidence restore --input PATH` 恢复后即可离线重放证据。
 具体步骤见[维护流程](docs/maintenance.md#缓存与证据保存)。
 
 ## 当前数据如何理解
@@ -64,11 +68,11 @@ Hugging Face 和 ModelScope 只同步配置中明确列出的模型；`discover`
 | 内容 | 范围 |
 | --- | --- |
 | models.dev | 模型目录与服务条目，保留上游明确的模型关联 |
-| Hugging Face、ModelScope | 精选仓库的身份、任务、谱系、许可及版本信息 |
+| Hugging Face、ModelScope | 精选仓库的身份、任务、谱系、许可及版本信息；HF 还保留 Tokenizer、量化、运行信息与文件清单等快照字段 |
 | OpenRouter | 平台目录中的模态、限制、参数与价格原值 |
 | Vercel AI Gateway | 匿名公开路由目录中的服务记录，保存类型、模态、限制、参数、价格与平台声明 |
 | 领域视图（profile） | 任务与模态标签、限制、参数、能力和价格结构，每个派生值保留事实定位 |
-| 官方页面 | 按清单采集发布博客、模型卡、详情页与文档，保存原文段落、声明、比较与字段选择结果 |
+| 官方页面 | 按清单采集发布博客、模型卡、详情页与文档，保存原文段落、声明、比较与字段选择结果；支持 PDF 页码和仓库引用跟踪 |
 | 官方目录页 | 厂商型号、发布博客和下载索引中的候选链接，保存页面快照与链接定位，审查后再补充模型绑定 |
 | 人工条件声明 | 官方文档中的角色、功能组合、音视频、检索及专业模型限制，条件求值保留未知和冲突 |
 | 身份与关系 | 精确成员映射、接口绑定，以及有来源证据的服务、引用和派生关系 |
@@ -81,9 +85,11 @@ Vercel AI Gateway 的记录 ID 为 `vercel:service:<上游 ID>`，不根据路�
 
 记录 ID 包含来源和类型，同一模型在不同来源出现时会有多个记录。
 统计数字表示来源记录数，不能视为跨来源去重后的模型总量。
-来源本轮未返回的旧记录会保留，`last_sync` 独立记录本次返回、缺席和采集快照。
+来源本轮未返回的旧记录会保留，`last_sync` 记录本次范围、完成状态、返回、缺席、失败和采集快照。
+查询与导出暴露 `observed`、`missing`、`not_requested`、`failed` 或 `unknown`，可用 `query --observation STATUS` 筛选。
+历史清单没有记录采集范围和完成状态时保持未知，离线迁移不会补写网络观察。
 缺席不表示退役，目录中存在某条记录也不证明模型仍可调用。
-字段未变化时保留旧证据，快照日期表示该证据的获取时间，最近同步时间从 `last_sync.completed_at` 读取。
+字段未变化时保留旧证据，快照日期表示该证据的获取时间，最近尝试时间为 `last_sync.completed_at`，最近整个范围成功时间为 `last_sync.last_successful_at`。
 
 专业样本包括 GR00T 的本体相关动作表示、ESMFold2 的蛋白结构输出、按 checkpoint 区分的 MedSAM2，以及 FAST 的 `action_tokenizer` 角色。
 FAST 的 `robotics` 任务标签表示领域归类，其角色应连同声明读取；详见[专业模型](docs/specialized-models.md)。
@@ -120,6 +126,7 @@ Muse Wonder Full 的公开 API 缺口、精确 effort 映射以及前 50 名扩�
 | [候选发现](docs/discovery.md) | 公开仓库发现规则、官方目录候选、预算和种子审查 |
 | [专业模型](docs/specialized-models.md) | 机器人、蛋白结构、医疗分割与 tokenizer 的具体样本 |
 | [维护流程](docs/maintenance.md) | 命令、更新、校验、缓存、依赖与来源许可 |
+| [元信息采集计划](docs/metadata-collection-plan.md) | 证据与状态修复、字段迁移、验收及后续来源接入条件 |
 | [条件声明](docs/assertions.md) | 人工证据、状态、条件与实际样本的解释 |
 | [认证来源](docs/authenticated-sources.md) | 来源键、环境变量、字段与分页边界 |
 | [Mock 服务](docs/mock-server.md) | 本地模型 API、原生协议、确定性会话、工具续轮、SSE 与错误场景 |
@@ -144,6 +151,7 @@ lmdb/
 │   └── identities/          模型身份与接口绑定证据
 ├── schemas/                 由 Rust 类型生成的 JSON Schema
 ├── tests/fixtures/          合成响应与回归样本
+├── scripts/                 仅依赖标准库的证据包工具
 ├── docs/                    使用与维护文档
 ├── reports/discovery/       按日期保留的候选发现报告
 ├── licenses/                已保留的上游许可证
@@ -156,8 +164,8 @@ lmdb/
 
 ## 依赖与使用边界
 
-当前实现直接使用 Rust，没有 Python 包装层。
-未来出现独立 Python 任务时，`pyproject.toml` 作为直接运行时依赖的唯一来源。
+当前核心使用 Rust，证据包脚本使用 Python 3 标准库，没有第三方运行时依赖。
+未来 Python 任务需要第三方依赖时，`pyproject.toml` 作为直接运行时依赖的唯一来源。
 每次修改 `pyproject.toml` 后运行 `uv lock` 并提交 `uv.lock`，再通过 `uv export --format requirements.txt --frozen --no-header --no-annotate --no-hashes --output-file requirements.txt` 生成 legacy 安装文件。
 uv 部署使用 `uv sync --frozen`，依赖一致性检查使用 `uv lock --check`。
 

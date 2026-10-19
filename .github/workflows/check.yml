@@ -3,6 +3,14 @@ name: Check
 on:
   push:
   pull_request:
+  workflow_dispatch:
+    inputs:
+      evidence_archive_url:
+        description: HTTPS URL of an approved uncompressed evidence tar archive
+        type: string
+      evidence_archive_sha256:
+        description: SHA-256 of that archive (64 lowercase hexadecimal characters)
+        type: string
 
 permissions:
   contents: read
@@ -23,7 +31,41 @@ jobs:
         run: cargo clippy --locked --all-targets -- -D warnings
       - name: Run tests
         run: cargo test --locked
+      - name: Test evidence archive safety
+        run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - name: Validate committed metadata
         run: cargo run --locked -- validate
       - name: Check generated schemas
         run: cargo run --locked -- schema --check
+      - name: Configure evidence replay
+        id: evidence
+        env:
+          EVIDENCE_URL: ${{ inputs.evidence_archive_url || vars.LMDB_EVIDENCE_ARCHIVE_URL }}
+          EVIDENCE_SHA256: ${{ inputs.evidence_archive_sha256 || vars.LMDB_EVIDENCE_ARCHIVE_SHA256 }}
+        run: |
+          if [[ -z "$EVIDENCE_URL" && -z "$EVIDENCE_SHA256" ]]; then
+            echo '::notice::Raw evidence replay is pending storage: configure an approved archive URL and SHA-256.'
+            echo 'Raw evidence replay: **pending storage**. Set LMDB_EVIDENCE_ARCHIVE_URL and LMDB_EVIDENCE_ARCHIVE_SHA256 after choosing an approved archive location.' >> "$GITHUB_STEP_SUMMARY"
+            echo 'configured=false' >> "$GITHUB_OUTPUT"
+          else
+            if [[ -z "$EVIDENCE_URL" || ! "$EVIDENCE_SHA256" =~ ^[0-9a-f]{64}$ ]]; then
+              echo '::error::Evidence replay requires both an HTTPS archive URL and its 64-character lowercase SHA-256.'
+              exit 1
+            fi
+            python3 scripts/evidence_bundle.py validate-url "$EVIDENCE_URL"
+            echo 'configured=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Restore and replay original evidence
+        if: steps.evidence.outputs.configured == 'true'
+        env:
+          EVIDENCE_URL: ${{ inputs.evidence_archive_url || vars.LMDB_EVIDENCE_ARCHIVE_URL }}
+          EVIDENCE_SHA256: ${{ inputs.evidence_archive_sha256 || vars.LMDB_EVIDENCE_ARCHIVE_SHA256 }}
+        run: |
+          curl --silent --show-error --fail --location --max-redirs 3 \
+            --proto '=https' --proto-redir '=https' \
+            --connect-timeout 10 --max-time 180 --max-filesize 268435456 \
+            --output "$RUNNER_TEMP/evidence.tar" --url "$EVIDENCE_URL"
+          python3 scripts/evidence_bundle.py unpack "$RUNNER_TEMP/evidence.tar" "$RUNNER_TEMP/evidence" "$EVIDENCE_SHA256"
+          cargo run --locked -- evidence restore --input "$RUNNER_TEMP/evidence"
+          cargo run --locked -- validate --evidence
+          echo 'Raw evidence replay: **passed** for the current data tree and all referenced snapshot hashes.' >> "$GITHUB_STEP_SUMMARY"

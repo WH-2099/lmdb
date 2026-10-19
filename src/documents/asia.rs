@@ -993,6 +993,7 @@ mod extraction_tests {
 
     fn run(id: &str, body: &str, format: Format) -> Extraction {
         let source = PageSource {
+            repository: None,
             id: id.into(),
             vendor: "test".into(),
             kind: DocumentKind::ModelCard,

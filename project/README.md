@@ -9,6 +9,7 @@
 官方页面已扩展到 20 个厂商，新增 9 个官方目录入口和 Vercel 服务目录。
 新增的本地模型 API Mock 服务提供原生协议、确定性会话、工具续轮、SSE 和错误场景。
 数据规模、验证记录、AA 前 20 名覆盖与后续工作见[路线与进度](roadmap.md)。
+本轮元信息采集的修复顺序、迁移与接入条件见[实施计划](../docs/metadata-collection-plan.md)。
 
 | 文档 | 内容 | 更新时机 |
 | --- | --- | --- |
@@ -28,6 +29,7 @@
 | [公开候选发现](../docs/discovery.md) | HF 与 ModelScope 的有界查询、候选报告及种子审查 |
 | [专业模型声明](../docs/specialized-models.md) | 机器人、蛋白质结构预测和医学分割的具体条件 |
 | [维护流程](../docs/maintenance.md) | 同步、校验、查询、导出与证据归档恢复 |
+| [元信息采集计划](../docs/metadata-collection-plan.md) | 当前修复、阶段依赖、迁移验收及后续来源接入条件 |
 | [Mock 服务](../docs/mock-server.md) | 本地 HTTP 服务、提供方选择、会话与协议测试 |
 | [Mock 协议研究](../research/2026-10-19/mock-server.md) | 排名口径、一手来源、协议冲突与验证边界 |
 

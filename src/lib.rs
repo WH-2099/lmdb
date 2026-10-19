@@ -10,6 +10,7 @@ pub mod mock;
 pub mod model;
 pub mod registry;
 pub mod relations;
+pub mod renormalize;
 pub mod rules;
 pub mod store;
 pub mod sync;

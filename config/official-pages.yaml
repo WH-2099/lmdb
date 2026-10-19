@@ -26,7 +26,7 @@ pages:
   vendor: anthropic
   kind: model_card
   url: https://www.anthropic.com/claude-4-system-card
-  format: html
+  format: pdf
   records:
   - modelsdev:model:anthropic/claude-sonnet-4-20250514
 - id: google-gemini25-blog
@@ -95,8 +95,14 @@ pages:
 - id: deepseek-card
   vendor: deepseek
   kind: model_card
-  url: https://huggingface.co/deepseek-ai/DeepSeek-V3.2/raw/a7e62ac04ecb2c0a54d736dc46601c5606cf10a6/README.md
+  url: https://huggingface.co/deepseek-ai/DeepSeek-V3.2/raw/main/README.md
   format: markdown
+  repository:
+    repo: deepseek-ai/DeepSeek-V3.2
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - huggingface:model:deepseek-ai/DeepSeek-V3.2
 - id: deepseek-updates
@@ -116,8 +122,14 @@ pages:
 - id: qwen-card
   vendor: qwen
   kind: model_card
-  url: https://huggingface.co/Qwen/Qwen3-8B/raw/b968826d9c46dd6066d109eabc6255188de91218/README.md
+  url: https://huggingface.co/Qwen/Qwen3-8B/raw/main/README.md
   format: markdown
+  repository:
+    repo: Qwen/Qwen3-8B
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - huggingface:model:Qwen/Qwen3-8B
 - id: qwen-ai-blog
@@ -137,8 +149,14 @@ pages:
 - id: nvidia-card
   vendor: nvidia
   kind: model_card
-  url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16/raw/2dc98e2afe4face0e4ce40972a915c45368bd34a/README.md
+  url: https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16/raw/main/README.md
   format: markdown
+  repository:
+    repo: nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - huggingface:model:nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-BF16
 - id: nvidia-page
@@ -158,8 +176,14 @@ pages:
 - id: west-mistral-card
   vendor: mistral
   kind: model_card
-  url: https://huggingface.co/mistralai/Magistral-Small-2506/raw/ad2fce5b4113139e1877dcadfd826c9262ad8e8c/README.md
+  url: https://huggingface.co/mistralai/Magistral-Small-2506/raw/main/README.md
   format: markdown
+  repository:
+    repo: mistralai/Magistral-Small-2506
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - huggingface:model:mistralai/Magistral-Small-2506
 - id: west-cohere-blog
@@ -186,15 +210,27 @@ pages:
 - id: west-microsoft-card
   vendor: microsoft
   kind: model_card
-  url: https://huggingface.co/microsoft/phi-4/raw/2db69c1c3e91a05d2c64a3185acfbaf36f744e25/README.md
+  url: https://huggingface.co/microsoft/phi-4/raw/main/README.md
   format: markdown
+  repository:
+    repo: microsoft/phi-4
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - huggingface:model:microsoft/phi-4
 - id: kimi-k3-card
   vendor: moonshot
   kind: model_card
-  url: https://huggingface.co/moonshotai/Kimi-K3/raw/f831ab66814297da540d832a5235f8e904f29d06/README.md
+  url: https://huggingface.co/moonshotai/Kimi-K3/raw/main/README.md
   format: markdown
+  repository:
+    repo: moonshotai/Kimi-K3
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - huggingface:model:moonshotai/Kimi-K3
 - id: kimi-k3-blog
@@ -207,8 +243,14 @@ pages:
 - id: glm-5-3-card
   vendor: zai
   kind: model_card
-  url: https://huggingface.co/zai-org/GLM-5.3/raw/ba32f8c19c8738e2c57c71798c601d477a7bf844/README.md
+  url: https://huggingface.co/zai-org/GLM-5.3/raw/main/README.md
   format: markdown
+  repository:
+    repo: zai-org/GLM-5.3
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - huggingface:model:zai-org/GLM-5.3
 - id: glm-5-3-detail
@@ -221,8 +263,14 @@ pages:
 - id: minimax-m3-card
   vendor: minimax
   kind: model_card
-  url: https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/f0e1c1e04d40177e4673a22097036854f536e9c0/README.md
+  url: https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/main/README.md
   format: markdown
+  repository:
+    repo: MiniMaxAI/MiniMax-M3
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - huggingface:model:MiniMaxAI/MiniMax-M3
 - id: minimax-m3-detail
@@ -256,8 +304,14 @@ pages:
 - id: baidu-21b-card
   vendor: baidu
   kind: model_card
-  url: https://huggingface.co/baidu/ERNIE-4.5-21B-A3B-PT/raw/87db95487941cb39592ee0abca3b9155a6d19c5c/README.md
+  url: https://huggingface.co/baidu/ERNIE-4.5-21B-A3B-PT/raw/main/README.md
   format: markdown
+  repository:
+    repo: baidu/ERNIE-4.5-21B-A3B-PT
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - modelsdev:model:baidu/ernie-4.5-21b-a3b
 - id: modal-bfl-flux2-blog
@@ -284,8 +338,14 @@ pages:
 - id: modal-wan22-card
   vendor: wan
   kind: model_card
-  url: https://huggingface.co/Wan-AI/Wan2.2-T2V-A14B/raw/c8c270b13ee05bfa474194ac9fb07a5868a97cea/README.md
+  url: https://huggingface.co/Wan-AI/Wan2.2-T2V-A14B/raw/main/README.md
   format: markdown
+  repository:
+    repo: Wan-AI/Wan2.2-T2V-A14B
+    path: README.md
+    revision:
+      mode: tracked
+      reference: main
   records:
   - huggingface:model:Wan-AI/Wan2.2-T2V-A14B
 - id: modal-wan22-blog

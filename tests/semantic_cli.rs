@@ -1,5 +1,4 @@
 use std::{
-    collections::BTreeMap,
     fs,
     path::Path,
     process::{Command, Output},
@@ -7,9 +6,13 @@ use std::{
 
 use anyhow::Result;
 use model_metadata::{
+    adapters,
     assertion::AssertionSet,
+    documents::{self, DocumentCatalog, PageConfig, PageContent, PageDocument, PageSource},
     identity::IdentitySet,
-    model::{Catalog, Fact, Record, Snapshot, SyncManifest, pointer_segment},
+    model::{
+        Catalog, Fact, Snapshot, SyncFailure, SyncManifest, SyncScope, SyncStatus, pointer_segment,
+    },
     store,
 };
 use serde_json::{Value, json};
@@ -57,96 +60,116 @@ fn ids(records: &Value) -> Vec<&str> {
 
 fn seed(root: &Path) -> Result<Vec<Catalog>> {
     let mut catalogs = Vec::new();
-    for (source, raw) in [
+    for (source, pages) in [
         (
             "huggingface",
-            json!([
-                {"kind":"model", "id":"lab/alpha", "facts":{
-                    "task":"text-ranking", "input_modalities":["text","image"],
-                    "output_modalities":["text"], "context_window":4096,
-                    "reasoning":true, "tool_call":true, "structured_output":false,
-                    "open_weights":true, "base_models":["lab/base"]
-                }},
-                {"kind":"model", "id":"lab/zero", "facts":{
-                    "task":"feature-extraction", "context_window":0,
-                    "reasoning":false, "tool_call":false,
-                    "structured_output":true, "open_weights":false
-                }},
-                {"kind":"model", "id":"lab/unknown", "facts":{"task":"future-task"}}
-            ]),
+            vec![
+                (
+                    "https://huggingface.co/api/models/lab/alpha",
+                    json!({
+                        "id":"lab/alpha", "pipeline_tag":"text-ranking",
+                        "cardData":{"base_model":["lab/base"]},
+                        "fixture_facts":{
+                            "input_modalities":["text","image"], "output_modalities":["text"],
+                            "context_window":4096, "reasoning":true, "tool_call":true,
+                            "structured_output":false, "open_weights":true
+                        }
+                    }),
+                ),
+                (
+                    "https://huggingface.co/api/models/lab/zero",
+                    json!({
+                        "id":"lab/zero", "pipeline_tag":"feature-extraction",
+                        "fixture_facts":{
+                            "context_window":0, "reasoning":false, "tool_call":false,
+                            "structured_output":true, "open_weights":false
+                        }
+                    }),
+                ),
+                (
+                    "https://huggingface.co/api/models/lab/unknown",
+                    json!({"id":"lab/unknown", "pipeline_tag":"future-task"}),
+                ),
+            ],
         ),
         (
             "modelsdev",
-            json!([
-                {"kind":"model", "id":"lab/alpha", "facts":{
-                    "weights":[{"url":"https://huggingface.co/lab/alpha"}],
-                    "open_weights":true
-                }},
-                {"kind":"service", "id":"native/alpha", "model":MIRROR,
-                 "facts":{"canonical_model_id":"lab/alpha", "tool_call":true}}
-            ]),
+            vec![
+                (
+                    "https://models.dev/models.json",
+                    json!({"lab/alpha":{
+                        "id":"lab/alpha", "weights":[{"url":"https://huggingface.co/lab/alpha"}],
+                        "open_weights":true
+                    }}),
+                ),
+                (
+                    "https://models.dev/catalog.json",
+                    json!({"providers":{"native":{"id":"native", "models":{"alpha":{
+                        "id":"alpha", "canonical_model_id":"lab/alpha", "tool_call":true
+                    }}}}}),
+                ),
+            ],
         ),
         (
             "openrouter",
-            json!([
-                {"kind":"service", "id":"host/alpha", "facts":{
-                    "hugging_face_id":"lab/alpha", "input_modalities":["text"],
-                    "output_modalities":["speech"]
-                }}
-            ]),
+            vec![(
+                "https://openrouter.ai/api/v1/models",
+                json!({"data":[{
+                    "id":"host/alpha", "hugging_face_id":"lab/alpha",
+                    "architecture":{"input_modalities":["text"], "output_modalities":["speech"]}
+                }]}),
+            )],
         ),
     ] {
-        let mut bytes = serde_json::to_vec_pretty(&raw)?;
-        bytes.push(b'\n');
-        let sha256 = format!("{:x}", Sha256::digest(&bytes));
-        let snapshot = Snapshot {
-            schema_version: 1,
-            id: format!("{source}:{sha256}"),
-            source: source.into(),
-            url: format!("https://example.com/{source}.json"),
-            retrieved_at: "2026-10-16T00:00:00Z".into(),
-            sha256,
-            upstream_revision: None,
-        };
-        let records = raw
-            .as_array()
-            .unwrap()
-            .iter()
-            .enumerate()
-            .map(|(index, item)| {
-                let upstream_id = item["id"].as_str().unwrap();
-                let kind = item["kind"].as_str().unwrap();
-                let facts = item["facts"]
-                    .as_object()
-                    .unwrap()
-                    .iter()
-                    .map(|(key, value)| {
-                        (
-                            key.clone(),
-                            Fact {
-                                value: value.clone(),
-                                pointer: format!("/{index}/facts/{}", pointer_segment(key)),
-                                unit: (key == "context_window").then(|| "tokens".into()),
-                            },
-                        )
-                    })
-                    .collect::<BTreeMap<_, _>>();
-                serde_json::from_value::<Record>(json!({
-                    "schema_version":1, "kind":kind,
-                    "id":format!("{source}:{kind}:{upstream_id}"),
-                    "source":source, "upstream_id":upstream_id, "name":upstream_id,
-                    "model":item.get("model"),
-                    "origin":{"snapshot":snapshot.id, "pointer":format!("/{index}")},
-                    "facts":facts
-                }))
-            })
-            .collect::<std::result::Result<Vec<_>, _>>()?;
+        let mut records = Vec::new();
+        let mut snapshots = Vec::new();
+        for (url, raw) in pages {
+            let mut bytes = serde_json::to_vec_pretty(&raw)?;
+            bytes.push(b'\n');
+            let sha256 = format!("{:x}", Sha256::digest(&bytes));
+            let snapshot = Snapshot {
+                schema_version: 1,
+                id: format!("{source}:{sha256}"),
+                source: source.into(),
+                url: url.into(),
+                retrieved_at: "2026-10-16T00:00:00Z".into(),
+                sha256,
+                upstream_revision: None,
+            };
+            let mut normalized = adapters::normalize(&raw, &snapshot)?.unwrap();
+            // Extra source-backed facts isolate projection semantics from adapter field coverage.
+            if let Some(facts) = raw.get("fixture_facts").and_then(Value::as_object) {
+                for (key, value) in facts {
+                    normalized[0].facts.insert(
+                        key.clone(),
+                        Fact {
+                            value: value.clone(),
+                            pointer: format!("/fixture_facts/{}", pointer_segment(key)),
+                            unit: (key == "context_window").then(|| "tokens".into()),
+                        },
+                    );
+                }
+            }
+            records.extend(normalized);
+            store::write_bytes(
+                &root
+                    .join(".cache/snapshots")
+                    .join(format!("{}.json", snapshot.sha256)),
+                &bytes,
+            )?;
+            snapshots.push(snapshot);
+        }
         let mut returned_ids: Vec<_> = records
             .iter()
             .filter(|record| record.id != UNKNOWN)
             .map(|record| record.id.clone())
             .collect();
         returned_ids.sort();
+        let mut snapshot_ids: Vec<_> = snapshots
+            .iter()
+            .map(|snapshot| snapshot.id.clone())
+            .collect();
+        snapshot_ids.sort();
         let catalog = Catalog {
             schema_version: 1,
             source: source.into(),
@@ -158,17 +181,15 @@ fn seed(root: &Path) -> Result<Vec<Catalog>> {
                     .filter(|record| record.id == UNKNOWN)
                     .map(|record| record.id.clone())
                     .collect(),
-                snapshot_ids: vec![snapshot.id.clone()],
+                snapshot_ids,
+                scope: Some(SyncScope::FullCatalog),
+                status: Some(SyncStatus::Complete),
+                last_successful_at: Some("2026-10-16T00:01:00Z".into()),
+                ..Default::default()
             }),
-            snapshots: vec![snapshot],
+            snapshots,
             records,
         };
-        store::write_bytes(
-            &root
-                .join(".cache/snapshots")
-                .join(format!("{}.json", catalog.snapshots[0].sha256)),
-            &bytes,
-        )?;
         store::write_yaml(&root.join(format!("data/catalogs/{source}.yaml")), &catalog)?;
         catalogs.push(catalog);
     }
@@ -212,14 +233,25 @@ fn queries_use_explicit_typed_facts_and_keep_raw_record_output() -> Result<()> {
     for task in ["reranking", "text-ranking"] {
         let result = output(root.path(), &["query", "--task", task]);
         assert_eq!(ids(&result), [MODEL]);
-        assert_eq!(result[0], serde_json::to_value(&catalogs[0].records[0])?);
+        let mut expected = serde_json::to_value(&catalogs[0].records[0])?;
+        expected["observation"] = json!({
+            "attempted_at":"2026-10-16T00:01:00Z", "last_successful_at":"2026-10-16T00:01:00Z",
+            "status":"observed"
+        });
+        assert_eq!(result[0], expected);
     }
-    for (task, expected) in [("feature-extraction", ZERO), ("future-task", UNKNOWN)] {
-        assert_eq!(
-            ids(&output(root.path(), &["query", "--task", task])),
-            [expected]
-        );
-    }
+    assert_eq!(
+        ids(&output(
+            root.path(),
+            &["query", "--task", "feature-extraction"]
+        )),
+        [ZERO]
+    );
+    assert!(ids(&output(root.path(), &["query", "--task", "future-task"])).is_empty());
+    assert_eq!(
+        output(root.path(), &["query", UNKNOWN])[0]["facts"]["task"]["value"],
+        "future-task"
+    );
     assert_eq!(
         ids(&output(root.path(), &["query", "--input", "text"])),
         [MODEL, HOSTED]
@@ -300,12 +332,12 @@ fn inspect_exposes_evidence_bindings_relationships_and_sync_state() -> Result<()
     assert_eq!(
         inspected["profile"]["limits"]["context_window"],
         json!({
-            "value":4096, "fact":"context_window", "pointer":"/0/facts/context_window"
+            "value":4096, "fact":"context_window", "pointer":"/fixture_facts/context_window"
         })
     );
     assert_eq!(
-        inspected["sync"],
-        json!({"completed_at":"2026-10-16T00:01:00Z", "observed_in_last_sync":true})
+        inspected["observation"],
+        json!({"attempted_at":"2026-10-16T00:01:00Z", "last_successful_at":"2026-10-16T00:01:00Z", "status":"observed"})
     );
     assert_eq!(
         inspected["identities"],
@@ -351,9 +383,233 @@ fn inspect_exposes_evidence_bindings_relationships_and_sync_state() -> Result<()
         "unknown"
     );
     let unknown = output(root.path(), &["inspect", UNKNOWN]);
-    assert_eq!(unknown["sync"]["observed_in_last_sync"], false);
+    assert_eq!(unknown["observation"]["status"], "missing");
     assert_eq!(unknown["rules"]["groups"], json!([]));
     assert_eq!(unknown["identities"]["sources"], json!({}));
+    Ok(())
+}
+
+#[test]
+fn observation_states_are_explicit_and_stale_catalog_facts_do_not_drive_queries() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let original = seed(root.path())?.remove(0);
+    let previous = original.last_sync.as_ref().unwrap();
+    let mut missing = previous.clone();
+    missing.completed_at = "2026-10-17T00:01:00Z".into();
+    missing.last_successful_at = Some(missing.completed_at.clone());
+    missing.returned_ids = vec![ZERO.into()];
+    missing.missing_ids = vec![MODEL.into(), UNKNOWN.into()];
+    let mut not_requested = missing.clone();
+    not_requested.scope = Some(SyncScope::SelectedModels {
+        upstream_ids: vec!["lab/zero".into()],
+    });
+    not_requested.missing_ids.clear();
+    let failed = SyncManifest {
+        completed_at: "2026-10-18T00:01:00Z".into(),
+        scope: Some(SyncScope::FullCatalog),
+        status: Some(SyncStatus::Failed),
+        errors: vec![SyncFailure {
+            upstream_id: None,
+            message: "HTTP 503".into(),
+        }],
+        last_successful_at: previous.last_successful_at.clone(),
+        ..Default::default()
+    };
+    let mut legacy = previous.clone();
+    legacy.scope = None;
+    legacy.status = None;
+    legacy.last_successful_at = None;
+    for (state, manifest) in [
+        ("observed", Some(previous.clone())),
+        ("missing", Some(missing)),
+        ("not_requested", Some(not_requested)),
+        ("failed", Some(failed)),
+        ("unknown", Some(legacy)),
+        ("unknown", None),
+    ] {
+        let mut catalog = original.clone();
+        catalog.last_sync = manifest;
+        store::write_yaml(
+            &root.path().join("data/catalogs/huggingface.yaml"),
+            &catalog,
+        )?;
+        success(root.path(), &["validate", "--evidence"]);
+        let expected = json!({
+            "status":state,
+            "attempted_at":catalog.last_sync.as_ref().map(|sync| &sync.completed_at),
+            "last_successful_at":catalog.last_sync.as_ref().and_then(|sync| sync.last_successful_at.as_ref())
+        });
+        let inspected = output(root.path(), &["inspect", MODEL]);
+        assert_eq!(inspected["observation"], expected);
+        assert_eq!(inspected["sync"], serde_json::to_value(&catalog.last_sync)?);
+        assert_eq!(
+            inspected["record"],
+            serde_json::to_value(&original.records[0])?
+        );
+        assert!(inspected["profile"]["lifecycle"].is_null());
+        assert!(
+            inspected["resolved_metadata"]["fields"]
+                .get("lifecycle")
+                .is_none()
+        );
+        for filter in ["observed", "missing", "not_requested", "failed", "unknown"] {
+            let queried = output(root.path(), &["query", MODEL, "--observation", filter]);
+            assert_eq!(
+                ids(&queried),
+                if state == filter { vec![MODEL] } else { vec![] }
+            );
+            if state == filter {
+                assert_eq!(queried[0]["observation"], expected);
+                assert_eq!(queried[0]["facts"], inspected["record"]["facts"]);
+            }
+        }
+        let current = matches!(state, "observed" | "unknown");
+        let resolved = output(root.path(), &["documents", "resolve", MODEL]);
+        assert_eq!(resolved["observation"], state);
+        let context = &resolved["fields"]["context_window"];
+        assert_eq!(
+            context["status"],
+            if current { "selected" } else { "unavailable" }
+        );
+        assert_eq!(context["candidates"][0]["observation"], state);
+        assert_eq!(context["candidates"][0]["fact"]["value"], 4096);
+        assert_eq!(context.get("selected").is_some(), current);
+        for filter in [
+            ["--min-context", "1"],
+            ["--capability", "reasoning"],
+            ["--input", "image"],
+            ["--task", "text-ranking"],
+            ["--task", "reranking"],
+        ] {
+            let queried = output(root.path(), &["query", MODEL, filter[0], filter[1]]);
+            assert_eq!(ids(&queried), if current { vec![MODEL] } else { vec![] });
+        }
+        success(root.path(), &["export"]);
+        let exported: Value =
+            serde_json::from_slice(&fs::read(root.path().join("dist/registry.json"))?)?;
+        assert_eq!(exported["observations"][MODEL], expected);
+        assert_eq!(exported["resolved_metadata"][MODEL], resolved);
+    }
+    Ok(())
+}
+
+#[test]
+fn current_official_claims_remain_usable_when_the_bound_catalog_record_is_missing() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let mut catalogs = seed(root.path())?;
+    let sync = catalogs[0].last_sync.as_mut().unwrap();
+    sync.returned_ids = vec![ZERO.into()];
+    sync.missing_ids = vec![MODEL.into(), UNKNOWN.into()];
+    store::write_yaml(
+        &root.path().join("data/catalogs/huggingface.yaml"),
+        &catalogs[0],
+    )?;
+
+    let source: PageSource = serde_json::from_value(json!({
+        "id":"openai-gpt41-model", "vendor":"openai", "kind":"model_page",
+        "url":"https://developers.openai.com/api/docs/models/gpt-4.1", "format":"html",
+        "records":[MIRROR]
+    }))?;
+    let bytes = br"<html><head><title>GPT-4.1</title></head><body><main><h1>GPT-4.1</h1>
+        <p>GPT-4.1 excels at instruction following and tool calling. It performs without a reasoning step.</p>
+        <div>8,192 context window</div><div>4,096 max output tokens</div>
+        <section><div>Modalities</div><div><div>Text</div><div>Input and output</div></div></section>
+        </main></body></html>";
+    let sha256 = format!("{:x}", Sha256::digest(bytes));
+    let snapshot = Snapshot {
+        schema_version: 1,
+        id: format!("official-openai:{sha256}"),
+        source: "official-openai".into(),
+        url: source.url.clone(),
+        retrieved_at: "2026-10-17T00:00:00Z".into(),
+        sha256,
+        upstream_revision: None,
+    };
+    let documents = DocumentCatalog {
+        schema_version: 1,
+        documents: vec![PageDocument {
+            source: source.clone(),
+            checked_at: "2026-10-17T00:01:00Z".into(),
+            error: None,
+            error_kind: None,
+            failed_snapshot: None,
+            content: Some(PageContent {
+                extraction: documents::extract(&source, bytes)?,
+                snapshot: snapshot.clone(),
+                content_type: Some("text/html".into()),
+            }),
+        }],
+    };
+    store::write_yaml(
+        &root.path().join("config/official-pages.yaml"),
+        &PageConfig {
+            schema_version: 1,
+            pages: vec![source],
+        },
+    )?;
+    store::write_yaml(
+        &root.path().join("data/documents/official.yaml"),
+        &documents,
+    )?;
+    store::write_bytes(
+        &root
+            .path()
+            .join(format!(".cache/documents/{}.bin", snapshot.sha256)),
+        bytes,
+    )?;
+    success(root.path(), &["validate", "--evidence"]);
+
+    let resolved = output(root.path(), &["documents", "resolve", MODEL]);
+    assert_eq!(resolved["observation"], "missing");
+    for (property, value) in [
+        ("context_window", json!(8192)),
+        ("input_modalities", json!(["text"])),
+        ("reasoning", json!(false)),
+    ] {
+        let field = &resolved["fields"][property];
+        assert_eq!(field["status"], "selected");
+        let selected = &field["candidates"][field["selected"].as_u64().unwrap() as usize];
+        assert_eq!(selected["type"], "document");
+        assert_eq!(selected["claim"]["record"], MIRROR);
+        assert_eq!(selected["claim"]["value"], value);
+        let retained = field["candidates"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|candidate| candidate["type"] == "catalog")
+            .unwrap();
+        assert_eq!(retained["observation"], "missing");
+    }
+    for filter in [["--min-context", "8000"], ["--input", "text"]] {
+        let queried = output(
+            root.path(),
+            &[
+                "query",
+                MODEL,
+                filter[0],
+                filter[1],
+                "--observation",
+                "missing",
+            ],
+        );
+        assert_eq!(ids(&queried), [MODEL]);
+        assert_eq!(queried[0]["facts"]["context_window"]["value"], 4096);
+    }
+    assert_eq!(resolved["fields"]["open_weights"]["status"], "unavailable");
+    assert_eq!(
+        ids(&output(
+            root.path(),
+            &["query", MODEL, "--capability", "open-weights"]
+        )),
+        Vec::<&str>::new()
+    );
+    assert_eq!(
+        ids(&output(
+            root.path(),
+            &["query", MODEL, "--capability", "reasoning"]
+        )),
+        Vec::<&str>::new()
+    );
     Ok(())
 }
 

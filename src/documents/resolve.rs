@@ -11,13 +11,14 @@ use super::{
 };
 use crate::{
     identity::IdentitySet,
-    model::{Fact, Origin, Record, RecordKind, Snapshot},
+    model::{Fact, ObservationStatus, Origin, Record, RecordKind, Snapshot},
 };
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
 #[serde(deny_unknown_fields)]
 pub struct ResolvedMetadata {
     pub record: String,
+    pub observation: ObservationStatus,
     pub fields: BTreeMap<String, Resolution>,
     pub scoped_claims: Vec<Candidate>,
 }
@@ -47,6 +48,7 @@ pub enum Candidate {
         record: String,
         origin: Origin,
         fact: Fact,
+        observation: ObservationStatus,
     },
     Document {
         document: String,
@@ -99,7 +101,15 @@ impl Candidate {
 
     fn eligible(&self) -> bool {
         match self {
-            Self::Catalog { fact, .. } => !fact.value.is_null(),
+            Self::Catalog {
+                fact, observation, ..
+            } => {
+                !fact.value.is_null()
+                    && matches!(
+                        observation,
+                        ObservationStatus::Observed | ObservationStatus::Unknown
+                    )
+            }
             Self::Document { claim, stale, .. } => {
                 claim.scope == ClaimScope::Model
                     && !stale
@@ -122,6 +132,7 @@ impl Candidate {
                 record,
                 origin,
                 fact,
+                ..
             } => (&origin.snapshot, record, "", &fact.pointer),
             Self::Document {
                 document,
@@ -141,6 +152,7 @@ impl Candidate {
 /// Resolve validated model bindings without changing source records or their evidence.
 pub fn resolve(
     record: &Record,
+    observation: ObservationStatus,
     identities: &IdentitySet,
     documents: &DocumentCatalog,
 ) -> Result<ResolvedMetadata> {
@@ -153,6 +165,7 @@ pub fn resolve(
                 record: record.id.clone(),
                 origin: record.origin.clone(),
                 fact: fact.clone(),
+                observation,
             });
     }
     let mut scoped_claims = Vec::new();
@@ -202,6 +215,7 @@ pub fn resolve(
         .collect::<Result<_>>()?;
     Ok(ResolvedMetadata {
         record: record.id.clone(),
+        observation,
         fields,
         scoped_claims,
     })
@@ -327,6 +341,7 @@ mod tests {
     fn page(id: &str, kind: DocumentKind, claims: Vec<Claim>) -> PageDocument {
         PageDocument {
             source: PageSource {
+                repository: None,
                 id: id.into(),
                 vendor: "lab".into(),
                 kind,
@@ -336,6 +351,8 @@ mod tests {
             },
             checked_at: "2026-10-16T00:00:00Z".into(),
             error: None,
+            error_kind: None,
+            failed_snapshot: None,
             content: Some(PageContent {
                 snapshot: Snapshot {
                     schema_version: 1,
@@ -382,6 +399,46 @@ mod tests {
     }
 
     #[test]
+    fn collection_failures_and_omissions_keep_evidence_without_selecting_catalog_values() {
+        let record = record("a:model:release");
+        let empty = documents(vec![]);
+        for observation in [
+            ObservationStatus::Missing,
+            ObservationStatus::NotRequested,
+            ObservationStatus::Failed,
+        ] {
+            let resolved = resolve(&record, observation, &identities(), &empty).unwrap();
+            assert_eq!(resolved.observation, observation);
+            assert_eq!(resolved.value("context_window"), None);
+            assert_eq!(
+                resolved.fields["context_window"].status,
+                ResolutionStatus::Unavailable
+            );
+            assert_eq!(resolved.fields["context_window"].candidates.len(), 1);
+            assert!(matches!(&resolved.fields["context_window"].candidates[0],
+                Candidate::Catalog { observation: saved, .. } if *saved == observation));
+        }
+        for observation in [ObservationStatus::Observed, ObservationStatus::Unknown] {
+            let resolved = resolve(&record, observation, &identities(), &empty).unwrap();
+            assert_eq!(resolved.value("context_window"), Some(&json!(32768)));
+            assert_eq!(resolved.observation, observation);
+        }
+        let current_page = documents(vec![page(
+            "card",
+            DocumentKind::ModelCard,
+            vec![claim(&record.id, "context_window", json!(65536))],
+        )]);
+        let resolved = resolve(
+            &record,
+            ObservationStatus::Missing,
+            &identities(),
+            &current_page,
+        )
+        .unwrap();
+        assert_eq!(resolved.value("context_window"), Some(&json!(65536)));
+    }
+
+    #[test]
     fn official_card_overrides_catalog_without_mutating_raw_evidence() {
         let record = record("a:model:release");
         let before = record.clone();
@@ -390,7 +447,13 @@ mod tests {
             DocumentKind::ModelCard,
             vec![claim(&record.id, "context_window", json!(131072))],
         )]);
-        let resolved = resolve(&record, &identities(), &documents).unwrap();
+        let resolved = resolve(
+            &record,
+            ObservationStatus::Unknown,
+            &identities(),
+            &documents,
+        )
+        .unwrap();
         assert_eq!(resolved.value("context_window"), Some(&json!(131072)));
         assert_eq!(record, before);
         let field = &resolved.fields["context_window"];
@@ -414,7 +477,13 @@ mod tests {
             DocumentKind::ModelCard,
             vec![original.clone()],
         )]);
-        let resolved = resolve(&record, &identities(), &documents).unwrap();
+        let resolved = resolve(
+            &record,
+            ObservationStatus::Unknown,
+            &identities(),
+            &documents,
+        )
+        .unwrap();
         assert_eq!(resolved.value("context_window"), Some(&json!(131072)));
         assert!(resolved.fields["context_window"].candidates.iter().any(
             |candidate| matches!(candidate, Candidate::Document { claim, .. } if claim.as_ref() == &original)
@@ -423,7 +492,13 @@ mod tests {
         service.id = "host:service:release".into();
         service.kind = RecordKind::Service;
         service.model = Some(record.id);
-        let resolved = resolve(&service, &identities(), &documents).unwrap();
+        let resolved = resolve(
+            &service,
+            ObservationStatus::Unknown,
+            &identities(),
+            &documents,
+        )
+        .unwrap();
         assert_eq!(resolved.value("context_window"), Some(&json!(32768)));
         assert_eq!(resolved.fields["context_window"].candidates.len(), 1);
         assert!(resolved.scoped_claims.is_empty());
@@ -447,12 +522,19 @@ mod tests {
                 claim(&record.id, "context_window", json!(131072)),
             ],
         )]);
-        let resolved = resolve(&record, &identities(), &documents).unwrap();
+        let resolved = resolve(
+            &record,
+            ObservationStatus::Unknown,
+            &identities(),
+            &documents,
+        )
+        .unwrap();
         assert_eq!(resolved.value("context_window"), Some(&json!(131072)));
         assert_eq!(resolved.scoped_claims.len(), 2);
         let mut peer = record;
         peer.id = "b:model:release".into();
-        let resolved = resolve(&peer, &identities(), &documents).unwrap();
+        let resolved =
+            resolve(&peer, ObservationStatus::Unknown, &identities(), &documents).unwrap();
         assert!(resolved.scoped_claims.is_empty());
         assert_eq!(resolved.value("context_window"), Some(&json!(131072)));
     }
@@ -477,7 +559,13 @@ mod tests {
                 vec![claim(&record.id, "context_window", json!(32768))],
             ),
         ]);
-        let resolved = resolve(&record, &identities(), &documents).unwrap();
+        let resolved = resolve(
+            &record,
+            ObservationStatus::Unknown,
+            &identities(),
+            &documents,
+        )
+        .unwrap();
         assert_eq!(
             resolved.fields["context_window"].status,
             ResolutionStatus::Conflict
@@ -511,7 +599,13 @@ mod tests {
                     vec![claim(&record.id, "context_window", json!(65536))],
                 ),
             ]);
-            let resolved = resolve(&record, &identities(), &documents).unwrap();
+            let resolved = resolve(
+                &record,
+                ObservationStatus::Unknown,
+                &identities(),
+                &documents,
+            )
+            .unwrap();
             assert_eq!(
                 resolved.fields["context_window"].status,
                 ResolutionStatus::Qualified,
@@ -523,7 +617,13 @@ mod tests {
                 DocumentKind::ModelPage,
                 vec![claim(&record.id, "context_window", json!(32768))],
             ));
-            let resolved = resolve(&record, &identities(), &documents).unwrap();
+            let resolved = resolve(
+                &record,
+                ObservationStatus::Unknown,
+                &identities(),
+                &documents,
+            )
+            .unwrap();
             assert_eq!(
                 resolved.value("context_window"),
                 Some(&json!(32768)),
@@ -556,7 +656,13 @@ mod tests {
                 )],
             ),
         ]);
-        let resolved = resolve(&record, &identities(), &documents).unwrap();
+        let resolved = resolve(
+            &record,
+            ObservationStatus::Unknown,
+            &identities(),
+            &documents,
+        )
+        .unwrap();
         assert_eq!(resolved.value("context_window"), Some(&json!(131072)));
         assert_eq!(resolved.fields["context_window"].candidates.len(), 3);
     }
@@ -586,7 +692,13 @@ mod tests {
             ],
         );
         let mut documents = documents(vec![first, second]);
-        let original = resolve(&record, &identities(), &documents).unwrap();
+        let original = resolve(
+            &record,
+            ObservationStatus::Unknown,
+            &identities(),
+            &documents,
+        )
+        .unwrap();
         assert_eq!(
             original.fields["input_modalities"].status,
             ResolutionStatus::Selected
@@ -602,7 +714,13 @@ mod tests {
             claims.push(claims[0].clone());
         }
         assert_eq!(
-            resolve(&record, &identities(), &documents).unwrap(),
+            resolve(
+                &record,
+                ObservationStatus::Unknown,
+                &identities(),
+                &documents
+            )
+            .unwrap(),
             original
         );
     }
@@ -633,7 +751,13 @@ mod tests {
                 claim(&record.id, "license_name", json!("Model License")),
             ],
         )]);
-        let resolved = resolve(&record, &identities(), &documents).unwrap();
+        let resolved = resolve(
+            &record,
+            ObservationStatus::Unknown,
+            &identities(),
+            &documents,
+        )
+        .unwrap();
         assert_eq!(resolved.value("parameter_count"), Some(&json!(1000)));
         assert_eq!(resolved.value("active_parameter_count"), Some(&json!(100)));
         assert_eq!(
@@ -667,7 +791,13 @@ mod tests {
                 claim(&record.id, "license", json!(["mit"])),
             ],
         )]);
-        let resolved = resolve(&record, &identities(), &documents).unwrap();
+        let resolved = resolve(
+            &record,
+            ObservationStatus::Unknown,
+            &identities(),
+            &documents,
+        )
+        .unwrap();
         for property in ["release_date", "license"] {
             assert_eq!(
                 resolved.fields[property].status,
@@ -686,6 +816,14 @@ mod tests {
             vec![claim("a:model:release", "context_window", json!(131072))],
         );
         card.source.records = vec!["a:model:other".into()];
-        assert!(resolve(&record, &identities(), &documents(vec![card])).is_err());
+        assert!(
+            resolve(
+                &record,
+                ObservationStatus::Unknown,
+                &identities(),
+                &documents(vec![card])
+            )
+            .is_err()
+        );
     }
 }

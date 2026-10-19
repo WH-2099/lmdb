@@ -8,6 +8,8 @@ mod expanded_asia;
 mod expanded_modal;
 pub mod model;
 pub mod page;
+mod pdf;
+mod repository;
 pub mod resolve;
 mod west;
 pub use model::*;
@@ -29,7 +31,7 @@ use std::{
 };
 use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 
-pub const EXTRACTOR_VERSION: u32 = 3;
+pub const EXTRACTOR_VERSION: u32 = 4;
 const MAX_DOCUMENT_BYTES: u64 = 8 * 1024 * 1024;
 
 pub fn is_official_url(vendor: &str, raw: &str) -> bool {
@@ -63,6 +65,7 @@ pub fn is_official_url(vendor: &str, raw: &str) -> bool {
                 "docs.anthropic.com",
                 "platform.claude.com",
                 "assets.anthropic.com",
+                "www-cdn.anthropic.com",
             ],
             &["anthropics"],
         ),
@@ -200,6 +203,7 @@ fn validate_source(source: &PageSource) -> Result<()> {
         "{}: URL is not on the configured vendor's official domains",
         source.id
     );
+    repository::validate(source)?;
     if source.kind == DocumentKind::Directory {
         ensure!(
             source.records.is_empty(),
@@ -243,6 +247,13 @@ pub fn load(root: &Path) -> Result<DocumentCatalog> {
 }
 
 pub fn extract(source: &PageSource, bytes: &[u8]) -> Result<Extraction> {
+    ensure!(
+        bytes.len() as u64 <= MAX_DOCUMENT_BYTES,
+        "document exceeds 8 MiB limit"
+    );
+    if source.format == Format::Pdf {
+        return pdf::extract(source, bytes);
+    }
     let page = page::Page::parse(source, bytes)?;
     let mut out = page::metadata(source, &page)?;
     out.extractor_version = EXTRACTOR_VERSION;
@@ -272,7 +283,19 @@ pub fn extract(source: &PageSource, bytes: &[u8]) -> Result<Extraction> {
     }
     out.warnings.sort();
     out.warnings.dedup();
+    page::require_content(source, &page, &out)?;
     Ok(out)
+}
+
+fn extract_snapshot(
+    source: &PageSource,
+    snapshot: &crate::model::Snapshot,
+    bytes: &[u8],
+) -> Result<Extraction> {
+    let mut resolved = source.clone();
+    // Relative links belong to the fetched revision, including when replaying older evidence.
+    resolved.url = snapshot.url.clone();
+    extract(&resolved, bytes)
 }
 
 pub fn validate(
@@ -297,6 +320,27 @@ pub fn validate(
             "{}: document has neither content nor failure",
             source.id
         );
+        ensure!(
+            document.error_kind.is_none() || document.error.is_some(),
+            "{}: error kind requires a diagnostic",
+            source.id
+        );
+        if let Some(snapshot) = &document.failed_snapshot {
+            ensure!(
+                document.error.is_some(),
+                "{}: rejected snapshot requires a diagnostic",
+                source.id
+            );
+            validate_snapshot(source, snapshot)?;
+            if let Some(cache) = cache {
+                let bytes = read_raw(cache, &snapshot.sha256)?;
+                ensure!(
+                    extract_snapshot(source, snapshot, &bytes).is_err(),
+                    "{}: rejected snapshot now extracts successfully; run documents reparse",
+                    source.id
+                );
+            }
+        }
         if let Some(content) = &document.content {
             let snapshot = &content.snapshot;
             validate_snapshot(source, snapshot)?;
@@ -407,7 +451,7 @@ pub fn validate(
             if let Some(cache) = cache {
                 let bytes = read_raw(cache, &snapshot.sha256)?;
                 ensure!(
-                    extract(source, &bytes)? == content.extraction,
+                    extract_snapshot(source, snapshot, &bytes)? == content.extraction,
                     "{}: extracted document metadata differs from snapshot replay",
                     source.id
                 );
@@ -421,7 +465,7 @@ fn validate_snapshot(source: &PageSource, snapshot: &crate::model::Snapshot) -> 
     ensure!(
         snapshot.schema_version == 1
             && snapshot.source == format!("official-{}", source.vendor)
-            && snapshot.url == source.url
+            && is_official_url(&source.vendor, &snapshot.url)
             && snapshot.id == format!("{}:{}", snapshot.source, snapshot.sha256),
         "{}: snapshot identity mismatch",
         source.id
@@ -434,6 +478,7 @@ fn validate_snapshot(source: &PageSource, snapshot: &crate::model::Snapshot) -> 
                 .all(|c| c.is_ascii_digit() || (b'a'..=b'f').contains(&c)),
         "invalid document hash"
     );
+    repository::validate_snapshot(source, snapshot)?;
     OffsetDateTime::parse(&snapshot.retrieved_at, &Rfc3339)
         .context("invalid document retrieved_at")?;
     Ok(())
@@ -448,18 +493,124 @@ pub fn reparse(root: &Path) -> Result<DocumentCatalog> {
         catalog.schema_version == 1,
         "unsupported document catalog version"
     );
+    for document in &mut catalog.documents {
+        if let Some(configured) = config
+            .pages
+            .iter()
+            .find(|source| source.id == document.source.id)
+        {
+            migrate_source_definition(document, configured)?;
+        }
+    }
     validate_configuration(&config, &catalog, &registry)?;
     for document in &mut catalog.documents {
-        if let Some(content) = &mut document.content {
+        if let Some(mut content) = document.content.take() {
             validate_snapshot(&document.source, &content.snapshot)?;
             let bytes = read_raw(&root.join(".cache"), &content.snapshot.sha256)?;
-            content.extraction = extract(&document.source, &bytes)?;
+            match extract_snapshot(&document.source, &content.snapshot, &bytes) {
+                Ok(extraction) => {
+                    content.extraction = extraction;
+                    document.content = Some(content);
+                }
+                Err(error) => {
+                    if document.error.is_none() {
+                        document.error_kind = Some(DocumentErrorKind::Extraction);
+                    }
+                    if document.failed_snapshot.is_none() {
+                        document.failed_snapshot = Some(content.snapshot);
+                    }
+                    let diagnostic = format!("cached document rejected during reparse: {error:#}");
+                    document.error = Some(match document.error.take() {
+                        Some(previous) => format!("{previous}; {diagnostic}"),
+                        None => diagnostic,
+                    });
+                }
+            }
+        }
+        if let Some(snapshot) = document.failed_snapshot.as_ref() {
+            validate_snapshot(&document.source, snapshot)?;
+            let bytes = read_raw(&root.join(".cache"), &snapshot.sha256)?;
+            if let Ok(extraction) = extract_snapshot(&document.source, snapshot, &bytes) {
+                document.content = Some(PageContent {
+                    snapshot: snapshot.clone(),
+                    content_type: None,
+                    extraction,
+                });
+                document.failed_snapshot = None;
+                if document.error_kind == Some(DocumentErrorKind::Extraction) {
+                    document.error = None;
+                    document.error_kind = None;
+                }
+            }
         }
     }
     // Finish every parse and validation before replacing the saved catalog.
     validate(&catalog, &registry, None)?;
     store::write_yaml(&root.join("data/documents/official.yaml"), &catalog)?;
     Ok(catalog)
+}
+
+fn migrate_source_definition(document: &mut PageDocument, configured: &PageSource) -> Result<()> {
+    if document.source == *configured {
+        return Ok(());
+    }
+    let old = &document.source;
+    let mut expected = old.clone();
+    if document.content.is_none()
+        && document.failed_snapshot.is_none()
+        && old.format == Format::Html
+        && configured.format == Format::Pdf
+    {
+        expected.format = Format::Pdf;
+        if expected == *configured {
+            document.source = configured.clone();
+            return Ok(());
+        }
+    }
+    // A legacy immutable URL already proves the old commit; migration changes no observation date.
+    ensure!(
+        old.repository.is_none()
+            && matches!(
+                configured.repository.as_ref().map(|repo| &repo.revision),
+                Some(RepositoryRevision::Tracked { .. })
+            ),
+        "{}: source changed beyond a legacy repository migration; sync documents again",
+        old.id
+    );
+    expected.url = configured.url.clone();
+    expected.repository = configured.repository.clone();
+    ensure!(
+        expected == *configured && repository::same_document_url(&old.url, &configured.url),
+        "{}: repository migration changed document identity or path; sync documents again",
+        old.id
+    );
+    let old_url = Url::parse(&old.url)?;
+    let sha = old_url
+        .path_segments()
+        .and_then(|mut segments| segments.nth(3))
+        .filter(|sha| sha.len() == 40 && sha.bytes().all(|byte| byte.is_ascii_hexdigit()))
+        .context("legacy repository migration requires an immutable 40-digit commit URL")?;
+    for snapshot in document
+        .content
+        .as_mut()
+        .map(|content| &mut content.snapshot)
+        .into_iter()
+        .chain(document.failed_snapshot.as_mut())
+    {
+        ensure!(
+            snapshot.url == old.url
+                && snapshot
+                    .upstream_revision
+                    .as_deref()
+                    .is_none_or(|revision| revision == sha),
+            "{}: legacy snapshot does not match its configured commit",
+            old.id
+        );
+        snapshot.upstream_revision = Some(sha.into());
+        validate_snapshot(configured, snapshot)?;
+    }
+    document.source = configured.clone();
+    Ok(())
 }
 
 pub fn validate_configuration(
@@ -523,41 +674,21 @@ pub async fn sync(root: &Path, vendor: Option<&str>) -> Result<DocumentCatalog> 
         }
         eprintln!("official: {}", source.id);
         let checked_at = OffsetDateTime::now_utc().format(&Rfc3339)?;
-        let result = async {
-            let (snapshot, bytes, content_type) = fetcher
-                .get_document(&format!("official-{}", source.vendor), &source.url)
+        let response = async {
+            let (url, revision) = repository::fetch_target(&source, &fetcher).await?;
+            let (mut snapshot, bytes, content_type) = fetcher
+                .get_document_with_redirects(&format!("official-{}", source.vendor), &url, |url| {
+                    is_official_url(&source.vendor, url)
+                })
                 .await?;
-            let extraction = extract(&source, &bytes)?;
-            Ok::<_, anyhow::Error>(PageContent {
-                snapshot,
-                content_type,
-                extraction,
-            })
+            snapshot.upstream_revision = revision;
+            validate_snapshot(&source, &snapshot)?;
+            Ok((snapshot, bytes, content_type))
         }
         .await;
-        let (content, error) = match result {
-            Ok(content) => (Some(content), None),
-            Err(error) => {
-                eprintln!("{}: {error:#}", source.id);
-                let mut retained = previous.and_then(|d| d.content);
-                if let Some(content) = retained.as_mut()
-                    && content.extraction.extractor_version != EXTRACTOR_VERSION
-                {
-                    validate_snapshot(&source, &content.snapshot)?;
-                    let bytes = read_raw(&cache, &content.snapshot.sha256).with_context(|| {
-                        format!("{}: cached body required to upgrade retained extraction after fetch failure", source.id)
-                    })?;
-                    content.extraction = extract(&source, &bytes)?;
-                }
-                (retained, Some(format!("{error:#}")))
-            }
-        };
-        documents.push(PageDocument {
-            source,
-            checked_at,
-            error,
-            content,
-        });
+        documents.push(refresh_response(
+            source, previous, checked_at, response, &cache,
+        )?);
     }
     documents.sort_by(|a, b| a.source.id.cmp(&b.source.id));
     let catalog = DocumentCatalog {
@@ -568,6 +699,67 @@ pub async fn sync(root: &Path, vendor: Option<&str>) -> Result<DocumentCatalog> 
     validate(&catalog, &registry, None)?;
     store::write_yaml(&root.join("data/documents/official.yaml"), &catalog)?;
     Ok(catalog)
+}
+
+fn refresh_response(
+    source: PageSource,
+    previous: Option<PageDocument>,
+    checked_at: String,
+    response: Result<(crate::model::Snapshot, Vec<u8>, Option<String>)>,
+    cache: &Path,
+) -> Result<PageDocument> {
+    let previous = previous.filter(|document| document.source == source);
+    let mut failed_snapshot = previous
+        .as_ref()
+        .and_then(|document| document.failed_snapshot.clone());
+    let mut error_kind = DocumentErrorKind::Fetch;
+    let result = response.and_then(|(snapshot, bytes, content_type)| {
+        validate_snapshot(&source, &snapshot)?;
+        error_kind = DocumentErrorKind::Extraction;
+        failed_snapshot = Some(snapshot.clone());
+        let extraction = extract_snapshot(&source, &snapshot, &bytes)?;
+        failed_snapshot = None;
+        Ok(PageContent {
+            snapshot,
+            content_type,
+            extraction,
+        })
+    });
+    let (content, error) = match result {
+        Ok(content) => (Some(content), None),
+        Err(error) => {
+            let mut diagnostic = format!("{error:#}");
+            eprintln!("{}: {diagnostic}", source.id);
+            let mut retained = previous.and_then(|document| document.content);
+            if let Some(content) = retained.as_mut()
+                && content.extraction.extractor_version != EXTRACTOR_VERSION
+            {
+                validate_snapshot(&source, &content.snapshot)?;
+                let bytes = read_raw(cache, &content.snapshot.sha256).with_context(|| {
+                    format!("{}: cached body required to upgrade retained extraction after fetch failure", source.id)
+                })?;
+                match extract_snapshot(&source, &content.snapshot, &bytes) {
+                    Ok(extraction) => content.extraction = extraction,
+                    Err(error) => {
+                        if failed_snapshot.is_none() {
+                            failed_snapshot = Some(content.snapshot.clone());
+                        }
+                        diagnostic.push_str(&format!("; retained body rejected: {error:#}"));
+                        retained = None;
+                    }
+                }
+            }
+            (retained, Some(diagnostic))
+        }
+    };
+    Ok(PageDocument {
+        error_kind: error.as_ref().map(|_| error_kind),
+        source,
+        checked_at,
+        error,
+        content,
+        failed_snapshot,
+    })
 }
 
 fn read_raw(root: &Path, hash: &str) -> Result<Vec<u8>> {
@@ -589,7 +781,6 @@ fn read_raw(root: &Path, hash: &str) -> Result<Vec<u8>> {
         "{}: document SHA-256 mismatch",
         path.display()
     );
-    std::str::from_utf8(&bytes).context("document is not UTF-8")?;
     Ok(bytes)
 }
 
@@ -604,8 +795,14 @@ pub fn copy_evidence(
     let hashes: BTreeSet<_> = catalog
         .documents
         .iter()
-        .filter_map(|d| d.content.as_ref())
-        .map(|c| c.snapshot.sha256.as_str())
+        .flat_map(|d| {
+            d.content
+                .as_ref()
+                .map(|c| &c.snapshot)
+                .into_iter()
+                .chain(d.failed_snapshot.as_ref())
+        })
+        .map(|snapshot| snapshot.sha256.as_str())
         .collect();
     let mut written = 0;
     for hash in hashes {
@@ -667,6 +864,7 @@ mod tests {
     fn config_rejects_duplicates_and_foreign_authors() -> Result<()> {
         let root = tempfile::tempdir()?;
         let source = PageSource {
+            repository: None,
             id: "qwen-card".into(),
             vendor: "qwen".into(),
             kind: DocumentKind::ModelCard,
@@ -701,6 +899,7 @@ mod tests {
     #[test]
     fn content_pages_cannot_fan_out_to_multiple_models_and_directories_cannot_bind_models() {
         let mut source = PageSource {
+            repository: None,
             id: "microsoft-phi4-card".into(),
             vendor: "microsoft".into(),
             kind: DocumentKind::ModelCard,
@@ -718,5 +917,225 @@ mod tests {
         assert!(validate_source(&source).is_err());
         source.records.clear();
         assert!(validate_source(&source).is_ok());
+    }
+    fn model_source() -> PageSource {
+        serde_json::from_value(serde_json::json!({
+            "id": "openai-gpt41-model", "vendor": "openai", "kind": "model_page",
+            "url": "https://developers.openai.com/api/docs/models/gpt-4.1",
+            "format": "html", "records": ["modelsdev:model:openai/gpt-4.1"]
+        }))
+        .unwrap()
+    }
+
+    fn response(
+        source: &PageSource,
+        bytes: &[u8],
+    ) -> (crate::model::Snapshot, Vec<u8>, Option<String>) {
+        let sha256 = format!("{:x}", Sha256::digest(bytes));
+        (
+            crate::model::Snapshot {
+                schema_version: 1,
+                id: format!("official-{}:{sha256}", source.vendor),
+                source: format!("official-{}", source.vendor),
+                url: source.url.clone(),
+                retrieved_at: "2026-10-19T00:00:00Z".into(),
+                sha256,
+                upstream_revision: None,
+            },
+            bytes.to_vec(),
+            Some("text/html".into()),
+        )
+    }
+
+    #[test]
+    fn shell_or_missing_identity_retains_previous_content_and_rejected_evidence() -> Result<()> {
+        let source = model_source();
+        let cache = tempfile::tempdir()?;
+        let raw = br"<main><h1>GPT-4.1</h1><div>1,047,576 context window</div><div>32,768 max output tokens</div></main>";
+        let previous = refresh_response(
+            source.clone(),
+            None,
+            "2026-10-18T00:00:00Z".into(),
+            Ok(response(&source, raw)),
+            cache.path(),
+        )?;
+        assert!(previous.error.is_none());
+        for raw in [
+            b"<html><head><title>GPT-4.1</title></head><body><div id='app'></div><script>load()</script></body></html>".as_slice(),
+            b"<main><h1>Another model</h1><div>1,047,576 context window</div><div>32,768 max output tokens</div></main>".as_slice(),
+        ] {
+            let fetched = response(&source, raw);
+            let rejected = fetched.0.clone();
+            let refreshed = refresh_response(source.clone(), Some(previous.clone()), "2026-10-19T00:00:00Z".into(), Ok(fetched), cache.path())?;
+            assert_eq!(refreshed.content, previous.content);
+            assert_eq!(refreshed.failed_snapshot, Some(rejected));
+            assert!(refreshed.error.as_deref().unwrap().contains("identity or content structure was absent"));
+            assert_ne!(refreshed.checked_at, previous.checked_at);
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn descriptive_release_and_directory_succeed_without_model_claims() -> Result<()> {
+        let mut source = model_source();
+        source.kind = DocumentKind::ReleaseBlog;
+        source.id = "anthropic-claude4-blog".into();
+        source.vendor = "anthropic".into();
+        source.url = "https://www.anthropic.com/news/claude-4".into();
+        let out = extract(&source, "<main><article><p class='post-text'>Today, we’re introducing Claude 4.</p></article></main>".as_bytes())?;
+        assert!(out.claims.is_empty());
+        assert_eq!(out.passages.len(), 1);
+        source.kind = DocumentKind::Directory;
+        source.id = "google-model-directory".into();
+        source.vendor = "google".into();
+        source.url = "https://ai.google.dev/gemini-api/docs/models".into();
+        source.records.clear();
+        assert!(extract(&source, b"<main><h1>Models</h1></main>").is_err());
+        let out = extract(
+            &source,
+            include_bytes!("../../tests/fixtures/official/google-directory.html"),
+        )?;
+        assert!(out.claims.is_empty());
+        assert!(!out.catalog_entries.is_empty());
+        Ok(())
+    }
+
+    #[test]
+    fn changed_source_cannot_reuse_previous_body() -> Result<()> {
+        let mut source = model_source();
+        let cache = tempfile::tempdir()?;
+        let raw = br"<main><h1>GPT-4.1</h1><div>1,047,576 context window</div><div>32,768 max output tokens</div></main>";
+        let previous = refresh_response(
+            source.clone(),
+            None,
+            "2026-10-18T00:00:00Z".into(),
+            Ok(response(&source, raw)),
+            cache.path(),
+        )?;
+        source.url = "https://developers.openai.com/api/docs/models/gpt-4.1-mini".into();
+        let refreshed = refresh_response(
+            source,
+            Some(previous),
+            "2026-10-19T00:00:00Z".into(),
+            Err(anyhow::anyhow!("network failed")),
+            cache.path(),
+        )?;
+        assert!(refreshed.content.is_none());
+        assert!(refreshed.failed_snapshot.is_none());
+        Ok(())
+    }
+    #[test]
+    fn legacy_repository_migration_preserves_exact_commit_and_replay() -> Result<()> {
+        let sha = "1234567890123456789012345678901234567890";
+        let source: PageSource = serde_json::from_value(serde_json::json!({
+            "id":"qwen-card", "vendor":"qwen", "kind":"model_card",
+            "url":format!("https://huggingface.co/Qwen/Qwen3-8B/raw/{sha}/README.md"),
+            "format":"markdown", "records":["huggingface:model:Qwen/Qwen3-8B"]
+        }))?;
+        let raw = b"---\nlicense: apache-2.0\n---\n# Qwen3-8B\n\n[Configuration](config.json)\n";
+        let fetched = response(&source, raw);
+        let original_snapshot = fetched.0.clone();
+        let cache = tempfile::tempdir()?;
+        let mut previous = refresh_response(
+            source.clone(),
+            None,
+            "2026-10-18T00:00:00Z".into(),
+            Ok(fetched),
+            cache.path(),
+        )?;
+        let old_extraction = previous.content.as_ref().unwrap().extraction.clone();
+        let mut configured = source.clone();
+        configured.url = "https://huggingface.co/Qwen/Qwen3-8B/raw/main/README.md".into();
+        configured.repository = Some(RepositorySource {
+            repo: "Qwen/Qwen3-8B".into(),
+            path: "README.md".into(),
+            revision: RepositoryRevision::Tracked {
+                reference: "main".into(),
+            },
+        });
+        migrate_source_definition(&mut previous, &configured)?;
+        assert_eq!(previous.source, configured);
+        assert_eq!(previous.checked_at, "2026-10-18T00:00:00Z");
+        let snapshot = &previous.content.as_ref().unwrap().snapshot;
+        assert_eq!(snapshot.url, original_snapshot.url);
+        assert_eq!(snapshot.retrieved_at, original_snapshot.retrieved_at);
+        assert_eq!(snapshot.sha256, original_snapshot.sha256);
+        assert_eq!(snapshot.upstream_revision.as_deref(), Some(sha));
+        assert_eq!(
+            extract_snapshot(&configured, snapshot, raw)?,
+            old_extraction
+        );
+        assert!(old_extraction.links[0].url.contains(sha));
+        Ok(())
+    }
+
+    #[test]
+    fn repository_migration_rejects_changed_subject_path_and_unproven_revision() -> Result<()> {
+        let configured: PageSource = serde_json::from_value(serde_json::json!({
+            "id":"qwen-card", "vendor":"qwen", "kind":"model_card",
+            "url":"https://huggingface.co/Qwen/Qwen3-8B/raw/main/README.md",
+            "format":"markdown", "records":["huggingface:model:Qwen/Qwen3-8B"],
+            "repository":{"repo":"Qwen/Qwen3-8B", "path":"README.md", "revision":{"mode":"tracked", "reference":"main"}}
+        }))?;
+        let mut legacy = configured.clone();
+        legacy.repository = None;
+        legacy.url = "https://huggingface.co/Qwen/Qwen3-8B/raw/1234567890123456789012345678901234567890/README.md".into();
+        let old = PageDocument {
+            error_kind: None,
+            source: legacy,
+            checked_at: "2026-10-18T00:00:00Z".into(),
+            content: None,
+            failed_snapshot: None,
+            error: Some("failed".into()),
+        };
+        for change in ["subject", "path", "revision", "snapshot"] {
+            let mut document = old.clone();
+            match change {
+                "subject" => {
+                    document.source.records = vec!["huggingface:model:Qwen/Qwen3-4B".into()]
+                }
+                "path" => {
+                    document.source.url = document.source.url.replace("README.md", "OTHER.md")
+                }
+                "revision" => {
+                    document.source.url = document
+                        .source
+                        .url
+                        .replace("1234567890123456789012345678901234567890", "main")
+                }
+                "snapshot" => {
+                    let mut snapshot = response(&document.source, b"bad").0;
+                    snapshot.upstream_revision = Some("f".repeat(40));
+                    document.failed_snapshot = Some(snapshot);
+                }
+                _ => unreachable!(),
+            }
+            assert!(
+                migrate_source_definition(&mut document, &configured).is_err(),
+                "{change}"
+            );
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn format_migration_only_changes_sources_without_a_saved_response() -> Result<()> {
+        let mut source = model_source();
+        let mut document = PageDocument {
+            error_kind: None,
+            source: source.clone(),
+            checked_at: "2026-10-18T00:00:00Z".into(),
+            content: None,
+            failed_snapshot: None,
+            error: Some("HTTP 307".into()),
+        };
+        source.format = Format::Pdf;
+        let mut with_body = document.clone();
+        with_body.failed_snapshot = Some(response(&document.source, b"not PDF").0);
+        assert!(migrate_source_definition(&mut with_body, &source).is_err());
+        migrate_source_definition(&mut document, &source)?;
+        assert_eq!(document.source.format, Format::Pdf);
+        assert_eq!(document.error.as_deref(), Some("HTTP 307"));
+        Ok(())
     }
 }

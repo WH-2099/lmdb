@@ -212,7 +212,7 @@
           "type": "string"
         },
         "locator": {
-          "description": "CSS path in original HTML, or rendered Markdown DOM, or explicit Markdown byte range.",
+          "description": "CSS path, rendered Markdown DOM, explicit Markdown byte range, or PDF page number.",
           "type": "string"
         }
       },

@@ -1,11 +1,161 @@
-use std::{collections::BTreeSet, fs::File, io::Read, path::Path};
+use std::{
+    collections::{BTreeMap, BTreeSet},
+    fs::{self, File},
+    io::Read,
+    path::Path,
+};
 
 use anyhow::{Context, Result, ensure};
+use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
-use crate::{registry::Registry, store};
+use crate::{documents::DocumentCatalog, registry::Registry, store};
 
 const MAX_SNAPSHOT_BYTES: u64 = 64 * 1024 * 1024;
+const MAX_MANIFEST_BYTES: u64 = 4 * 1024 * 1024;
+const MAX_DATA_FILE_BYTES: u64 = 128 * 1024 * 1024;
+
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct Manifest {
+    schema_version: u32,
+    data_tree_sha256: String,
+    data_files: BTreeMap<String, String>,
+    snapshots: BTreeSet<String>,
+    documents: BTreeSet<String>,
+}
+
+/// Write only after both catalog and document bodies have been archived successfully.
+pub fn write_manifest(
+    root: &Path,
+    registry: &Registry,
+    documents: &DocumentCatalog,
+    archive_dir: &Path,
+) -> Result<bool> {
+    let manifest = manifest(root, registry, documents)?;
+    let mut bytes = serde_json::to_vec_pretty(&manifest)?;
+    bytes.push(b'\n');
+    ensure!(
+        bytes.len() as u64 <= MAX_MANIFEST_BYTES,
+        "evidence manifest exceeds the 4 MiB limit"
+    );
+    store::write_bytes(&archive_dir.join("manifest.json"), &bytes)
+}
+
+/// Check metadata and all referenced hashes before restoring any archive bodies.
+pub fn validate_manifest(
+    root: &Path,
+    registry: &Registry,
+    documents: &DocumentCatalog,
+    archive_dir: &Path,
+) -> Result<()> {
+    let path = archive_dir.join("manifest.json");
+    let file =
+        File::open(&path).with_context(|| format!("open evidence manifest {}", path.display()))?;
+    ensure!(
+        file.metadata()?.len() <= MAX_MANIFEST_BYTES,
+        "evidence manifest exceeds the 4 MiB limit"
+    );
+    let mut bytes = Vec::new();
+    file.take(MAX_MANIFEST_BYTES + 1).read_to_end(&mut bytes)?;
+    ensure!(
+        bytes.len() as u64 <= MAX_MANIFEST_BYTES,
+        "evidence manifest exceeds the 4 MiB limit"
+    );
+    let archived: Manifest = serde_json::from_slice(&bytes).context("parse evidence manifest")?;
+    let expected = manifest(root, registry, documents)?;
+    ensure!(
+        archived.schema_version == 1,
+        "unsupported evidence manifest version"
+    );
+    ensure!(
+        archived.data_tree_sha256 == expected.data_tree_sha256
+            && archived.data_files == expected.data_files,
+        "evidence archive belongs to a different data tree; create an archive for the current data"
+    );
+    ensure!(
+        archived.snapshots == expected.snapshots && archived.documents == expected.documents,
+        "evidence manifest snapshot hashes differ from the current catalogs"
+    );
+    Ok(())
+}
+
+fn manifest(root: &Path, registry: &Registry, documents: &DocumentCatalog) -> Result<Manifest> {
+    let mut data_files = BTreeMap::new();
+    collect_data_files(root, &root.join("data"), &mut data_files)?;
+    // Sorted relative paths and their byte hashes bind the archive to an exact data tree.
+    let data_tree_sha256 = format!("{:x}", Sha256::digest(serde_json::to_vec(&data_files)?));
+    Ok(Manifest {
+        schema_version: 1,
+        data_tree_sha256,
+        data_files,
+        snapshots: registry
+            .catalogs
+            .iter()
+            .flat_map(|catalog| &catalog.snapshots)
+            .map(|snapshot| snapshot.sha256.clone())
+            .collect(),
+        documents: documents
+            .documents
+            .iter()
+            .flat_map(|document| {
+                document
+                    .content
+                    .as_ref()
+                    .map(|content| &content.snapshot)
+                    .into_iter()
+                    .chain(document.failed_snapshot.as_ref())
+            })
+            .map(|snapshot| snapshot.sha256.clone())
+            .collect(),
+    })
+}
+
+fn collect_data_files(
+    root: &Path,
+    directory: &Path,
+    hashes: &mut BTreeMap<String, String>,
+) -> Result<()> {
+    ensure!(
+        fs::symlink_metadata(directory)?.file_type().is_dir(),
+        "{} must be a directory without symbolic links",
+        directory.display()
+    );
+    for entry in fs::read_dir(directory)? {
+        let entry = entry?;
+        let path = entry.path();
+        let file_type = entry.file_type()?;
+        if file_type.is_dir() {
+            collect_data_files(root, &path, hashes)?;
+            continue;
+        }
+        ensure!(
+            file_type.is_file(),
+            "{} must be a regular data file",
+            path.display()
+        );
+        let relative = path
+            .strip_prefix(root)?
+            .to_str()
+            .context("data filenames must be UTF-8")?
+            .replace(std::path::MAIN_SEPARATOR, "/");
+        let file = File::open(&path)?;
+        ensure!(
+            file.metadata()?.len() <= MAX_DATA_FILE_BYTES,
+            "{} exceeds the 128 MiB data file limit",
+            path.display()
+        );
+        let mut hasher = Sha256::new();
+        let bytes = std::io::copy(&mut file.take(MAX_DATA_FILE_BYTES + 1), &mut hasher)?;
+        ensure!(
+            bytes <= MAX_DATA_FILE_BYTES,
+            "{} exceeds the 128 MiB data file limit",
+            path.display()
+        );
+        hashes.insert(relative, format!("{:x}", hasher.finalize()));
+    }
+    Ok(())
+}
 
 pub fn archive(registry: &Registry, cache_root: &Path, archive_dir: &Path) -> Result<usize> {
     copy_snapshots(registry, cache_root, archive_dir)
@@ -115,6 +265,92 @@ mod tests {
     }
 
     #[test]
+    fn manifest_binds_data_bytes_and_all_snapshot_hashes() -> Result<()> {
+        let root = tempfile::tempdir()?;
+        let archive_dir = tempfile::tempdir()?;
+        let registry = registry(RAW);
+        let failed = snapshot(b"failed page body");
+        let documents: DocumentCatalog = serde_json::from_value(json!({
+            "schema_version": 1,
+            "documents": [{
+                "source": {
+                    "id": "test-page", "vendor": "test", "kind": "model_card",
+                    "url": "https://example.com/model", "format": "markdown", "records": []
+                },
+                "checked_at": "2026-10-16T00:00:00Z",
+                "error": "page extraction failed",
+                "failed_snapshot": failed
+            }]
+        }))?;
+        let data = root.path().join("data/catalogs/test.yaml");
+        store::write_bytes(&data, b"original data\n")?;
+        assert!(write_manifest(
+            root.path(),
+            &registry,
+            &documents,
+            archive_dir.path()
+        )?);
+        assert!(!write_manifest(
+            root.path(),
+            &registry,
+            &documents,
+            archive_dir.path()
+        )?);
+        validate_manifest(root.path(), &registry, &documents, archive_dir.path())?;
+        let saved: serde_json::Value =
+            serde_json::from_slice(&fs::read(archive_dir.path().join("manifest.json"))?)?;
+        assert_eq!(saved["documents"], json!([failed.sha256]));
+
+        fs::write(&data, b"changed data\n")?;
+        let error =
+            validate_manifest(root.path(), &registry, &documents, archive_dir.path()).unwrap_err();
+        assert!(error.to_string().contains("different data tree"));
+        fs::write(&data, b"original data\n")?;
+
+        let mut changed_registry = Registry {
+            catalogs: registry.catalogs.clone(),
+            assertions: registry.assertions.clone(),
+        };
+        changed_registry.catalogs[0].snapshots[0].sha256 = "0".repeat(64);
+        let error = validate_manifest(
+            root.path(),
+            &changed_registry,
+            &documents,
+            archive_dir.path(),
+        )
+        .unwrap_err();
+        assert!(error.to_string().contains("snapshot hashes differ"));
+
+        let path = archive_dir.path().join("manifest.json");
+        let mut edited: serde_json::Value = serde_json::from_slice(&fs::read(&path)?)?;
+        edited["documents"] = json!(["0".repeat(64)]);
+        fs::write(&path, serde_json::to_vec(&edited)?)?;
+        let error =
+            validate_manifest(root.path(), &registry, &documents, archive_dir.path()).unwrap_err();
+        assert!(error.to_string().contains("snapshot hashes differ"));
+        Ok(())
+    }
+
+    #[test]
+    fn manifest_rejects_missing_and_oversized_input() -> Result<()> {
+        let root = tempfile::tempdir()?;
+        let archive_dir = tempfile::tempdir()?;
+        let registry = registry(RAW);
+        let documents = DocumentCatalog {
+            schema_version: 1,
+            documents: vec![],
+        };
+        let error =
+            validate_manifest(root.path(), &registry, &documents, archive_dir.path()).unwrap_err();
+        assert!(error.to_string().contains("open evidence manifest"));
+        File::create(archive_dir.path().join("manifest.json"))?.set_len(MAX_MANIFEST_BYTES + 1)?;
+        let error =
+            validate_manifest(root.path(), &registry, &documents, archive_dir.path()).unwrap_err();
+        assert!(error.to_string().contains("4 MiB"));
+        Ok(())
+    }
+
+    #[test]
     fn roundtrip_preserves_bytes_and_all_snapshots_without_http_receipts() -> Result<()> {
         let source = tempfile::tempdir()?;
         let archive_dir = tempfile::tempdir()?;
@@ -133,6 +369,7 @@ mod tests {
             returned_ids: vec!["test:model:a".into()],
             missing_ids: vec![],
             snapshot_ids: vec![extra_snapshot.id.clone()],
+            ..Default::default()
         });
         registry.catalogs[0].snapshots.push(extra_snapshot);
         store::write_bytes(&path(source.path(), RAW), RAW)?;

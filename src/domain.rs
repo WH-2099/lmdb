@@ -20,6 +20,12 @@ pub struct Derived<T> {
 pub struct DomainMetadata {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub tasks: Option<TaskLabels>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub languages: Option<Derived<Vec<String>>>,
+    pub licensing: Licensing,
+    pub access: Access,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub lifecycle: Option<Derived<String>>,
     pub modalities: Modalities,
     pub limits: TokenLimits,
     pub parameters: Parameters,
@@ -27,6 +33,33 @@ pub struct DomainMetadata {
     pub lineage: Lineage,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pricing: Option<PriceSchedule>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct Licensing {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub labels: Option<Derived<Vec<String>>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub name: Option<Derived<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub link: Option<Derived<String>>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[serde(deny_unknown_fields)]
+pub struct Access {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub gated: Option<Derived<GatedAccess>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub private: Option<Derived<bool>>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
+#[serde(untagged)]
+pub enum GatedAccess {
+    Flag(bool),
+    SourceLabel(String),
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
@@ -135,6 +168,14 @@ pub struct Lineage {
     pub base_models: Option<Derived<Vec<String>>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub base_model_relation: Option<Derived<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub new_version: Option<Derived<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub revision: Option<Derived<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub version: Option<Derived<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub base_model_id: Option<Derived<String>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize, JsonSchema)]
@@ -221,6 +262,21 @@ pub fn project(record: &Record) -> Result<DomainMetadata> {
     }
     Ok(DomainMetadata {
         tasks: tasks(record)?,
+        languages: string_list(record, "languages")?,
+        licensing: Licensing {
+            labels: string_list(record, "license")?,
+            name: typed(record, "license_name")?,
+            link: typed(record, "license_link")?,
+        },
+        access: Access {
+            gated: typed(record, "gated")?,
+            private: typed(record, "private")?,
+        },
+        lifecycle: match record.source.as_str() {
+            "anthropic" => typed(record, "lifecycle")?,
+            "modelsdev" => typed(record, "status")?,
+            _ => None,
+        },
         modalities,
         limits: TokenLimits {
             context_window: count(record, "context_window", "tokens")?,
@@ -249,6 +305,10 @@ pub fn project(record: &Record) -> Result<DomainMetadata> {
         lineage: Lineage {
             base_models: string_list(record, "base_models")?,
             base_model_relation: relation,
+            new_version: typed(record, "new_version")?,
+            revision: typed(record, "revision")?,
+            version: typed(record, "version")?,
+            base_model_id: typed(record, "base_model_id")?,
         },
         pricing,
     })
@@ -685,6 +745,63 @@ mod tests {
     }
 
     #[test]
+    fn preserves_license_access_and_version_labels_without_inferred_permissions() {
+        let profile = project(&record(
+            "huggingface",
+            json!({
+                "license": ["mit", "other"], "license_name": "Custom License",
+                "license_link": "LICENSE", "languages": [], "gated": false, "private": false,
+                "new_version": "lab/successor", "revision": "commit-sha"
+            }),
+        ))
+        .unwrap();
+        assert_eq!(
+            profile.licensing.labels.unwrap().value,
+            vec!["mit", "other"]
+        );
+        assert_eq!(profile.languages.unwrap().value, Vec::<String>::new());
+        assert_eq!(
+            profile.access.gated.unwrap().value,
+            GatedAccess::Flag(false)
+        );
+        assert!(!profile.access.private.unwrap().value);
+        assert_eq!(profile.lineage.new_version.unwrap().pointer, "/new_version");
+        assert!(profile.capabilities.open_weights.is_none());
+        assert!(profile.lifecycle.is_none());
+
+        let unknown =
+            project(&record("huggingface", json!({"gated": "future-gate-mode"}))).unwrap();
+        assert_eq!(
+            unknown.access.gated.unwrap().value,
+            GatedAccess::SourceLabel("future-gate-mode".into())
+        );
+        assert!(unknown.licensing.labels.is_none());
+        assert!(unknown.languages.is_none());
+        assert!(unknown.lineage.new_version.is_none());
+        for (source, key) in [("anthropic", "lifecycle"), ("modelsdev", "status")] {
+            let profile = project(&record(source, json!({key: "future-status"}))).unwrap();
+            let status = profile.lifecycle.unwrap();
+            assert_eq!(status.value, "future-status");
+            assert_eq!(status.fact, key);
+            assert_eq!(status.pointer, format!("/{key}"));
+            assert!(project(&record(source, json!({key: false}))).is_err());
+        }
+        let version = project(&record(
+            "gemini",
+            json!({"base_model_id": "model-family", "version": "001"}),
+        ))
+        .unwrap();
+        assert_eq!(version.lineage.version.unwrap().value, "001");
+        assert_eq!(version.lineage.base_model_id.unwrap().value, "model-family");
+        let dates = project(&record(
+            "vercel",
+            json!({"deprecated_at": 1803600000000u64}),
+        ))
+        .unwrap();
+        assert!(dates.lifecycle.is_none());
+    }
+
+    #[test]
     fn keeps_task_taxonomies_and_normalizes_only_documented_families() {
         let hf = project(&record("huggingface", json!({"task":"text-ranking", "base_models":"lab/base", "parameters":{"BF16":0}, "safetensors_parameter_count":0}))).unwrap();
         let task = &hf.tasks.unwrap().labels[0];
@@ -744,6 +861,16 @@ mod tests {
             json!({"safetensors_parameter_count":false}),
             json!({"base_models":[1]}),
             json!({"base_model_relation":[]}),
+            json!({"new_version":[]}),
+            json!({"license":[false]}),
+            json!({"license_name":3}),
+            json!({"license_link":{}}),
+            json!({"languages":[null]}),
+            json!({"gated":1}),
+            json!({"private":"false"}),
+            json!({"revision":false}),
+            json!({"version":1}),
+            json!({"base_model_id":[]}),
             json!({"supported_parameters":[null]}),
             json!({"task":[]}),
             json!({"pricing":[]}),

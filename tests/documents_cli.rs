@@ -17,7 +17,11 @@ const MODEL: &str = "modelsdev:model:openai/gpt-4.1";
 const SIMILAR: &str = "modelsdev:model:openai/gpt-4.1-mini";
 const URL: &str = "https://developers.openai.com/api/docs/models/gpt-4.1";
 const RELEASE: &str = "https://openai.com/index/gpt-4-1/";
-const RAW: &[u8] = b"{\n  \"model\": { \"context_window\": 4096 },\n  \"similar\": { \"context_window\": 1047576 }\n}\n";
+const RAW: &[u8] = br#"{
+  "openai/gpt-4.1": { "id": "openai/gpt-4.1", "context_window": 4096 },
+  "openai/gpt-4.1-mini": { "id": "openai/gpt-4.1-mini", "context_window": 1047576 }
+}
+"#;
 const HTML: &[u8] = br#"<!doctype html>
 <html><head><title>GPT-4.1</title>
 <link rel="canonical" href="https://developers.openai.com/api/docs/models/gpt-4.1">
@@ -70,8 +74,8 @@ fn snapshot(source: &str, url: &str, bytes: &[u8]) -> Snapshot {
 fn seed(root: &Path) -> Result<(Catalog, DocumentCatalog)> {
     let raw_snapshot = snapshot("modelsdev", "https://models.dev/models.json", RAW);
     let records: Vec<_> = [
-        ("openai/gpt-4.1", "/model", 4096),
-        ("openai/gpt-4.1-mini", "/similar", 1047576),
+        ("openai/gpt-4.1", "/openai~1gpt-4.1", 4096),
+        ("openai/gpt-4.1-mini", "/openai~1gpt-4.1-mini", 1047576),
     ].into_iter().map(|(upstream_id, pointer, context)| json!({
         "schema_version":1, "kind":"model", "id":format!("modelsdev:model:{upstream_id}"),
         "source":"modelsdev", "upstream_id":upstream_id, "name":upstream_id,
@@ -109,6 +113,8 @@ fn seed(root: &Path) -> Result<(Catalog, DocumentCatalog)> {
     let documents = DocumentCatalog {
         schema_version: 1,
         documents: vec![PageDocument {
+            error_kind: None,
+            failed_snapshot: None,
             source,
             checked_at: "2026-10-16T00:01:00Z".into(),
             error: None,
@@ -134,7 +140,10 @@ fn official_resolution_drives_queries_and_preserves_raw_records() -> Result<()> 
         .iter()
         .find(|record| record["id"] == MODEL)
         .expect("official context includes the model in the query");
-    assert_eq!(found, &raw_record);
+    assert_eq!(found["observation"]["status"], "unknown");
+    let mut unannotated = found.clone();
+    unannotated.as_object_mut().unwrap().remove("observation");
+    assert_eq!(unannotated, raw_record);
     assert_eq!(found["facts"]["context_window"]["value"], 4096);
 
     let resolved = output(root.path(), &["documents", "resolve", MODEL]);
@@ -300,7 +309,12 @@ fn reparse_migrates_cached_extractions_and_never_partially_writes() -> Result<()
     let path = root.path().join("data/documents/official.yaml");
     store::write_yaml(&path, &legacy)?;
     let old_bytes = fs::read(&path)?;
-    success(root.path(), &["documents", "reparse"]);
+    let result = run(root.path(), &["documents", "reparse"]);
+    assert!(
+        !result.status.success(),
+        "the previous refresh failure remains visible"
+    );
+    assert!(String::from_utf8_lossy(&result.stderr).contains("page extraction failures saved"));
     let reparsed = documents::load(root.path())?;
     assert_eq!(reparsed, expected);
     let content = reparsed.documents[0].content.as_ref().unwrap();
@@ -474,7 +488,7 @@ fn document_commands_preserve_source_evidence_and_exact_record_bindings() -> Res
     assert_eq!(context["official"]["value"], 1047576);
     assert_eq!(context["official_snapshot"]["url"], URL);
     assert_eq!(context["catalog"]["value"], 4096);
-    assert_eq!(context["catalog_origin"]["pointer"], "/model");
+    assert_eq!(context["catalog_origin"]["pointer"], "/openai~1gpt-4.1");
     assert_eq!(context["official_stale"], false);
     let inspected = output(root.path(), &["inspect", MODEL]);
     assert_eq!(inspected["official_sources"], listed["sources"]);
@@ -628,6 +642,8 @@ fn directory_entries_remain_unbound_and_preserve_replayable_evidence() -> Result
     let raw_path = format!("documents/{}.bin", content.snapshot.sha256);
     store::write_bytes(&root.path().join(".cache").join(&raw_path), raw)?;
     let directory = PageDocument {
+        error_kind: None,
+        failed_snapshot: None,
         source,
         checked_at: "2026-10-19T00:00:00Z".into(),
         error: None,
@@ -808,5 +824,140 @@ fn fetch_errors_remain_visible_with_retained_or_absent_content() -> Result<()> {
         serde_json::from_slice(&fs::read(root.path().join("dist/registry.json"))?)?;
     assert_eq!(exported["documents"], listed["documents"]);
     assert_eq!(exported["document_comparisons"], json!([]));
+    Ok(())
+}
+
+#[test]
+fn reparse_retains_rejected_response_as_replayable_evidence() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let (_, mut saved) = seed(root.path())?;
+    let document = &mut saved.documents[0];
+    let raw = b"<html><head><title>GPT-4.1</title></head><body><div id='app'></div></body></html>";
+    let rejected = snapshot("official-openai", URL, raw);
+    let page = documents::page::Page::parse(&document.source, raw)?;
+    let mut extraction = documents::page::metadata(&document.source, &page)?;
+    extraction.extractor_version = documents::EXTRACTOR_VERSION - 1;
+    document.content = Some(PageContent {
+        snapshot: rejected.clone(),
+        content_type: Some("text/html".into()),
+        extraction,
+    });
+    store::write_bytes(
+        &root
+            .path()
+            .join(format!(".cache/documents/{}.bin", rejected.sha256)),
+        raw,
+    )?;
+    store::write_yaml(&root.path().join("data/documents/official.yaml"), &saved)?;
+    let result = run(root.path(), &["documents", "reparse"]);
+    assert!(!result.status.success());
+    assert!(String::from_utf8_lossy(&result.stderr).contains("page extraction failures saved"));
+    let migrated = documents::load(root.path())?;
+    let document = &migrated.documents[0];
+    assert!(document.content.is_none());
+    assert_eq!(document.failed_snapshot.as_ref(), Some(&rejected));
+    assert!(
+        document
+            .error
+            .as_deref()
+            .unwrap()
+            .contains("expected ModelPage identity or content structure was absent")
+    );
+    success(root.path(), &["validate", "--evidence"]);
+    success(root.path(), &["evidence", "archive", "--output", "archive"]);
+    let evidence_path = root
+        .path()
+        .join(format!("archive/documents/{}.bin", rejected.sha256));
+    assert_eq!(fs::read(&evidence_path)?, raw);
+    fs::write(
+        root.path()
+            .join(format!(".cache/documents/{}.bin", rejected.sha256)),
+        b"corrupt",
+    )?;
+    let result = run(root.path(), &["validate", "--evidence"]);
+    assert!(!result.status.success());
+    assert!(String::from_utf8_lossy(&result.stderr).contains("document SHA-256 mismatch"));
+    Ok(())
+}
+
+#[test]
+fn reparse_recovers_latest_rejected_response_when_older_content_is_invalid() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let (_, mut saved) = seed(root.path())?;
+    let document = &mut saved.documents[0];
+    let latest = document.content.clone().unwrap();
+    let shell =
+        b"<html><head><title>GPT-4.1</title></head><body><div id='app'></div></body></html>";
+    let old_snapshot = snapshot("official-openai", URL, shell);
+    let page = documents::page::Page::parse(&document.source, shell)?;
+    let mut extraction = documents::page::metadata(&document.source, &page)?;
+    extraction.extractor_version = documents::EXTRACTOR_VERSION - 1;
+    document.content = Some(PageContent {
+        snapshot: old_snapshot.clone(),
+        content_type: Some("text/html".into()),
+        extraction,
+    });
+    let mut latest_snapshot = latest.snapshot;
+    latest_snapshot.retrieved_at = "2026-10-17T00:00:00Z".into();
+    document.failed_snapshot = Some(latest_snapshot.clone());
+    document.error = Some("previous extractor rejected the latest response".into());
+    document.error_kind = Some(documents::DocumentErrorKind::Extraction);
+    store::write_bytes(
+        &root
+            .path()
+            .join(format!(".cache/documents/{}.bin", old_snapshot.sha256)),
+        shell,
+    )?;
+    store::write_yaml(&root.path().join("data/documents/official.yaml"), &saved)?;
+    success(root.path(), &["documents", "reparse"]);
+    let reparsed = documents::load(root.path())?;
+    let document = &reparsed.documents[0];
+    assert!(document.failed_snapshot.is_none());
+    assert!(document.error.is_none());
+    let recovered = document.content.as_ref().unwrap();
+    assert_eq!(recovered.snapshot, latest_snapshot);
+    assert_eq!(recovered.extraction, latest.extraction);
+    success(root.path(), &["validate", "--evidence"]);
+    Ok(())
+}
+
+#[test]
+fn reparse_recovery_preserves_a_later_fetch_failure_and_stale_status() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    let (_, mut saved) = seed(root.path())?;
+    let document = &mut saved.documents[0];
+    let content = document.content.take().unwrap();
+    document.failed_snapshot = Some(content.snapshot.clone());
+    document.error = Some("HTTP 503 from a later refresh".into());
+    document.error_kind = Some(documents::DocumentErrorKind::Fetch);
+    document.checked_at = "2026-10-19T00:00:00Z".into();
+    store::write_yaml(&root.path().join("data/documents/official.yaml"), &saved)?;
+    let result = run(root.path(), &["documents", "reparse"]);
+    assert!(!result.status.success());
+    let reparsed = documents::load(root.path())?;
+    let document = &reparsed.documents[0];
+    assert!(document.failed_snapshot.is_none());
+    assert_eq!(
+        document.error.as_deref(),
+        Some("HTTP 503 from a later refresh")
+    );
+    assert_eq!(
+        document.error_kind,
+        Some(documents::DocumentErrorKind::Fetch)
+    );
+    assert_eq!(document.checked_at, "2026-10-19T00:00:00Z");
+    assert_eq!(
+        document.content.as_ref().unwrap().snapshot,
+        content.snapshot
+    );
+    let resolved = output(root.path(), &["documents", "resolve", MODEL]);
+    assert!(
+        resolved["fields"]["context_window"]["candidates"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|candidate| candidate["type"] == "document" && candidate["stale"] == true)
+    );
+    success(root.path(), &["validate", "--evidence"]);
     Ok(())
 }

@@ -221,6 +221,7 @@ mod tests {
 
     fn source(vendor: &str, id: &str, url: &str) -> PageSource {
         PageSource {
+            repository: None,
             id: id.into(),
             vendor: vendor.into(),
             kind: DocumentKind::Directory,

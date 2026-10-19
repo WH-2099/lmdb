@@ -32,13 +32,26 @@ pub fn huggingface(value: &Value, snapshot: &Snapshot) -> Result<Vec<Record>> {
                 ("task", "/pipeline_tag", None),
                 ("library", "/library_name", None),
                 ("license", "/cardData/license", None),
+                ("license_name", "/cardData/license_name", None),
                 ("license_link", "/cardData/license_link", None),
                 ("base_models", "/cardData/base_model", None),
                 ("base_model_relation", "/cardData/base_model_relation", None),
+                ("new_version", "/cardData/new_version", None),
                 ("languages", "/cardData/language", None),
+                ("datasets", "/cardData/datasets", None),
+                ("model_index", "/cardData/model-index", None),
                 ("revision", "/sha", None),
                 ("architectures", "/config/architectures", None),
                 ("model_type", "/config/model_type", None),
+                ("torch_dtype", "/config/torch_dtype", None),
+                ("dtype", "/config/dtype", None),
+                ("quantization_config", "/config/quantization_config", None),
+                ("tokenizer_config", "/config/tokenizer_config", None),
+                ("auto_map", "/config/auto_map", None),
+                ("transformers_version", "/config/transformers_version", None),
+                ("transformers_info", "/transformersInfo", None),
+                ("num_experts", "/config/num_experts", None),
+                ("num_experts_per_tok", "/config/num_experts_per_tok", None),
                 ("parameters", "/safetensors/parameters", None),
                 (
                     "safetensors_parameter_count",
@@ -50,6 +63,8 @@ pub fn huggingface(value: &Value, snapshot: &Snapshot) -> Result<Vec<Record>> {
                 ("created_at", "/createdAt", None),
                 ("updated_at", "/lastModified", None),
                 ("tags", "/tags", None),
+                ("siblings", "/siblings", None),
+                ("eval_results", "/evalResults", None),
             ],
         ),
     }])
@@ -267,6 +282,88 @@ mod tests {
             huggingface(&json!({"id": "example/minimal"}), &snapshot("huggingface")).unwrap();
         assert!(sparse[0].facts.is_empty());
         assert_eq!(sparse[0].name, "example/minimal");
+    }
+
+    #[test]
+    fn huggingface_preserves_config_metadata_and_evaluation_attribution() {
+        let value = json!({
+            "id": "lab/mixed-weights",
+            "sha": "revision-1",
+            "gated": "manual",
+            "cardData": {
+                "license": "other",
+                "license_name": "Lab Research License",
+                "license_link": "LICENSE.md",
+                "language": "future-language",
+                "datasets": ["lab/reported-data"],
+                "new_version": "lab/successor",
+                "model-index": [{
+                    "name": "Publisher result",
+                    "results": [{"dataset": {"type": "lab/eval"}, "metrics": []}]
+                }]
+            },
+            "config": {
+                "torch_dtype": "bfloat16",
+                "dtype": "bfloat16",
+                "quantization_config": {
+                    "quant_method": "fp8", "activation_scheme": "dynamic",
+                    "weight_block_size": [128, 128], "modules_to_not_convert": ["lm_head"]
+                },
+                "tokenizer_config": {"chat_template": "{{ messages }}", "eos_token": "<end>"},
+                "auto_map": {"AutoModel": "modeling.Model"},
+                "transformers_version": "4.51.0",
+                "num_experts": 128,
+                "num_experts_per_tok": 8
+            },
+            "transformersInfo": {"auto_model": "AutoModel", "custom_class": "modeling.Model"},
+            "siblings": [
+                {"rfilename": "chat_template.jinja"},
+                {"rfilename": "model.safetensors", "size": 4000000000u64,
+                 "blobId": "git-object-id", "lfs": {"sha256": "weight-content-hash"}}
+            ],
+            "evalResults": [{
+                "filename": "community.yaml", "verified": false,
+                "source": {"user": "community-contributor"}, "pullRequest": 42,
+                "results": [{"dataset": "lab/eval", "metric": "accuracy", "value": 0}]
+            }]
+        });
+        let record = huggingface(&value, &snapshot("huggingface"))
+            .unwrap()
+            .remove(0);
+        assert_eq!(record.facts["torch_dtype"].value, "bfloat16");
+        assert_eq!(
+            record.facts["quantization_config"].value["quant_method"],
+            "fp8"
+        );
+        assert_eq!(
+            record.facts["model_index"].value,
+            value["cardData"]["model-index"]
+        );
+        assert_eq!(record.facts["eval_results"].value, value["evalResults"]);
+        assert_eq!(record.facts["siblings"].value, value["siblings"]);
+        for fact in record.facts.values() {
+            assert_eq!(value.pointer(&fact.pointer), Some(&fact.value));
+        }
+        let profile = crate::domain::project(&record).unwrap();
+        assert_eq!(profile.licensing.labels.unwrap().value, vec!["other"]);
+        let license_name = profile.licensing.name.unwrap();
+        assert_eq!(license_name.value, "Lab Research License");
+        assert_eq!(license_name.pointer, "/cardData/license_name");
+        assert_eq!(profile.licensing.link.unwrap().value, "LICENSE.md");
+        assert_eq!(profile.languages.unwrap().value, vec!["future-language"]);
+        assert_eq!(profile.lineage.new_version.unwrap().value, "lab/successor");
+        assert_eq!(profile.lineage.revision.unwrap().value, "revision-1");
+        assert!(profile.capabilities.open_weights.is_none());
+        assert!(profile.capabilities.tool_call.is_none());
+        assert!(profile.lifecycle.is_none());
+
+        let sparse = huggingface(
+            &json!({"id": "lab/sparse", "config": {"quantization_config": null}, "cardData": {"license_name": null}}),
+            &snapshot("huggingface"),
+        )
+        .unwrap()
+        .remove(0);
+        assert!(sparse.facts.is_empty());
     }
 
     #[test]

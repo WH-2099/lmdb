@@ -116,10 +116,23 @@ fn catalogs_roundtrip_and_invalid_evidence_or_references_fail() -> Result<()> {
     assert_eq!(export["schema_version"], 1);
     assert_eq!(export["snapshots"].as_array().unwrap().len(), 2);
     for (kind, field) in [("model", "models"), ("service", "services")] {
-        let records: Value = serde_json::from_slice(&success(
+        let mut records: Value = serde_json::from_slice(&success(
             root.path(),
             &["query", "--source", "modelsdev", "--kind", kind],
         ))?;
+        for record in records.as_array_mut().unwrap() {
+            assert_eq!(
+                record["observation"],
+                export["observations"][record["id"].as_str().unwrap()]
+            );
+            assert_eq!(
+                record["observation"],
+                serde_json::json!({
+                    "status":"unknown", "attempted_at":null, "last_successful_at":null
+                })
+            );
+            record.as_object_mut().unwrap().remove("observation");
+        }
         assert_eq!(records, export[field]);
         assert_eq!(records.as_array().unwrap().len(), 2);
     }
@@ -163,6 +176,31 @@ fn catalogs_roundtrip_and_invalid_evidence_or_references_fail() -> Result<()> {
 }
 
 #[test]
+fn evidence_archives_reject_data_paths_before_copying_snapshot_bodies() -> Result<()> {
+    let root = tempfile::tempdir()?;
+    seed(root.path())?;
+    let catalog_path = root.path().join("data/catalogs/modelsdev.yaml");
+    let before = fs::read(&catalog_path)?;
+    let mut destinations = vec!["data", "data/archive", "archive/../data/another"];
+    #[cfg(unix)]
+    {
+        std::os::unix::fs::symlink(root.path().join("data"), root.path().join("data-link"))?;
+        destinations.push("data-link/evidence");
+    }
+    for destination in destinations {
+        let result = run(
+            root.path(),
+            &["evidence", "archive", "--output", destination],
+        );
+        assert!(!result.status.success());
+        assert!(String::from_utf8_lossy(&result.stderr).contains("outside the data directory"));
+        assert!(!root.path().join(destination).join("snapshots").exists());
+        assert_eq!(fs::read(&catalog_path)?, before);
+    }
+    Ok(())
+}
+
+#[test]
 fn authenticated_sources_are_rejected_before_reading_data_or_creating_cache() -> Result<()> {
     let root = tempfile::tempdir()?;
     let catalog = root.path().join("data/catalogs/invalid.yaml");
@@ -178,6 +216,25 @@ fn authenticated_sources_are_rejected_before_reading_data_or_creating_cache() ->
         );
         assert!(!error.contains("fetching metadata"), "{error}");
         assert!(!root.path().join(".cache").exists());
+    }
+    for key in [None, Some(""), Some("LOCAL_SENTINEL_SECRET_\n_END")] {
+        let mut command = Command::new(env!("CARGO_BIN_EXE_lmdb"));
+        command.env_clear();
+        if let Some(key) = key {
+            command.env("OPENAI_API_KEY", key);
+        }
+        let result = command
+            .arg("--root")
+            .arg(root.path())
+            .args(["sync", "--source", "modelsdev,openai", "--authenticated"])
+            .output()?;
+        assert!(!result.status.success());
+        let error = String::from_utf8_lossy(&result.stderr);
+        assert!(error.contains("OPENAI_API_KEY"), "{error}");
+        assert!(!error.contains("SENTINEL"));
+        assert!(!error.contains("fetching metadata"));
+        assert!(!root.path().join(".cache").exists());
+        assert!(!root.path().join("data/catalogs/openai.yaml").exists());
     }
     #[cfg(unix)]
     {

@@ -177,11 +177,42 @@
         "sha256"
       ]
     },
+    "SyncFailure": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "upstream_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "message"
+      ]
+    },
     "SyncManifest": {
       "type": "object",
       "properties": {
         "completed_at": {
           "type": "string"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SyncFailure"
+          }
+        },
+        "last_successful_at": {
+          "description": "Most recent attempt that completed the entire requested collection.",
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "missing_ids": {
           "type": "array",
@@ -195,11 +226,32 @@
             "type": "string"
           }
         },
+        "scope": {
+          "description": "Absent on historical manifests whose collection scope was not recorded.",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SyncScope"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "snapshot_ids": {
           "type": "array",
           "items": {
             "type": "string"
           }
+        },
+        "status": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SyncStatus"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false,
@@ -208,6 +260,51 @@
         "returned_ids",
         "missing_ids",
         "snapshot_ids"
+      ]
+    },
+    "SyncScope": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "full_catalog"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "selected_models"
+            },
+            "upstream_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "upstream_ids"
+          ]
+        }
+      ]
+    },
+    "SyncStatus": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "partial",
+        "failed"
       ]
     }
   }

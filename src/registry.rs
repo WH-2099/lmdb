@@ -8,8 +8,11 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 
+use crate::adapters::identity::IdentityIndex;
 use crate::assertion::{self, AssertionSet};
-use crate::model::{Catalog, Record, RecordKind, SCHEMA_VERSION, SyncManifest};
+use crate::model::{
+    Catalog, Record, RecordKind, SCHEMA_VERSION, Snapshot, SyncManifest, SyncScope, SyncStatus,
+};
 use crate::store;
 
 pub struct Registry {
@@ -82,6 +85,7 @@ impl Registry {
                 catalog.source
             );
             let mut snapshots = BTreeMap::new();
+            let mut identity_indexes = BTreeMap::new();
             for snapshot in &catalog.snapshots {
                 ensure!(
                     snapshot.schema_version == SCHEMA_VERSION,
@@ -189,6 +193,15 @@ impl Registry {
                             .is_some_and(Value::is_object),
                         "record {id}: origin pointer must reference an object"
                     );
+                    let index = match identity_indexes.entry(snapshot.id.as_str()) {
+                        std::collections::btree_map::Entry::Occupied(entry) => entry.into_mut(),
+                        std::collections::btree_map::Entry::Vacant(entry) => {
+                            entry.insert(IdentityIndex::from_snapshot(raw, snapshot)?)
+                        }
+                    };
+                    if let Some(index) = index {
+                        index.validate(record)?;
+                    }
                 }
                 for (key, fact) in &record.facts {
                     ensure!(
@@ -216,61 +229,7 @@ impl Registry {
                     }
                 }
             }
-            if let Some(sync) = &catalog.last_sync {
-                OffsetDateTime::parse(&sync.completed_at, &Rfc3339)
-                    .with_context(|| format!("{}: invalid sync completed_at", catalog.source))?;
-                ensure!(
-                    !sync.returned_ids.is_empty(),
-                    "{}: sync returned_ids must not be empty",
-                    catalog.source
-                );
-                ensure!(
-                    !sync.snapshot_ids.is_empty(),
-                    "{}: sync snapshot_ids must not be empty",
-                    catalog.source
-                );
-                for (name, values) in [
-                    ("returned_ids", &sync.returned_ids),
-                    ("missing_ids", &sync.missing_ids),
-                    ("snapshot_ids", &sync.snapshot_ids),
-                ] {
-                    ensure!(
-                        values.windows(2).all(|pair| pair[0] < pair[1]),
-                        "{}: sync {name} must be sorted and unique",
-                        catalog.source
-                    );
-                }
-                let record_ids = catalog
-                    .records
-                    .iter()
-                    .map(|record| record.id.as_str())
-                    .collect::<BTreeSet<_>>();
-                let returned_ids = sync
-                    .returned_ids
-                    .iter()
-                    .map(String::as_str)
-                    .collect::<BTreeSet<_>>();
-                ensure!(
-                    returned_ids.is_subset(&record_ids),
-                    "{}: sync returned_ids contains an unknown record",
-                    catalog.source
-                );
-                ensure!(
-                    sync.missing_ids
-                        .iter()
-                        .map(String::as_str)
-                        .eq(record_ids.difference(&returned_ids).copied()),
-                    "{}: sync missing_ids must contain exactly the records not returned",
-                    catalog.source
-                );
-                for id in &sync.snapshot_ids {
-                    ensure!(
-                        snapshots.contains_key(id.as_str()),
-                        "{}: sync references unknown snapshot {id}",
-                        catalog.source
-                    );
-                }
-            }
+            validate_sync(catalog, &snapshots)?;
         }
         let mut assertion_ids = BTreeSet::new();
         for set in &self.assertions {
@@ -326,6 +285,168 @@ fn valid_pointer(pointer: &str) -> bool {
     true
 }
 
+fn validate_sync(catalog: &Catalog, snapshots: &BTreeMap<&str, &Snapshot>) -> Result<()> {
+    let Some(sync) = &catalog.last_sync else {
+        return Ok(());
+    };
+    let completed = OffsetDateTime::parse(&sync.completed_at, &Rfc3339)
+        .with_context(|| format!("{}: invalid sync completed_at", catalog.source))?;
+    if let Some(success) = &sync.last_successful_at {
+        ensure!(
+            OffsetDateTime::parse(success, &Rfc3339).context("invalid last_successful_at")?
+                <= completed,
+            "last_successful_at is after latest attempt"
+        );
+    }
+    for (name, values) in [
+        ("returned_ids", &sync.returned_ids),
+        ("missing_ids", &sync.missing_ids),
+        ("snapshot_ids", &sync.snapshot_ids),
+    ] {
+        ensure!(
+            values.windows(2).all(|pair| pair[0] < pair[1]),
+            "{}: sync {name} must be sorted and unique",
+            catalog.source
+        );
+    }
+    let record_ids = catalog
+        .records
+        .iter()
+        .map(|record| record.id.as_str())
+        .collect::<BTreeSet<_>>();
+    let returned = sync
+        .returned_ids
+        .iter()
+        .map(String::as_str)
+        .collect::<BTreeSet<_>>();
+    ensure!(
+        returned.is_subset(&record_ids),
+        "{}: sync returned_ids contains an unknown record",
+        catalog.source
+    );
+    for id in &sync.snapshot_ids {
+        ensure!(
+            snapshots.contains_key(id.as_str()),
+            "{}: sync references unknown snapshot {id}",
+            catalog.source
+        );
+    }
+    if !returned.is_empty() {
+        ensure!(
+            !sync.snapshot_ids.is_empty(),
+            "sync returned records require snapshots"
+        );
+    }
+    // Older manifests did not record scope, so their historical partition proves no current status.
+    let Some(status) = sync.status else {
+        ensure!(
+            sync.scope.is_none() && sync.errors.is_empty(),
+            "legacy sync cannot include scope or errors"
+        );
+        ensure!(
+            !returned.is_empty(),
+            "legacy sync returned_ids must not be empty"
+        );
+        ensure!(
+            sync.missing_ids
+                .iter()
+                .map(String::as_str)
+                .eq(record_ids.difference(&returned).copied()),
+            "sync missing_ids must contain exactly the records not returned"
+        );
+        return Ok(());
+    };
+    ensure!(
+        sync.errors
+            .iter()
+            .all(|error| !error.message.trim().is_empty()),
+        "sync errors must have messages"
+    );
+    match status {
+        SyncStatus::Complete => ensure!(
+            sync.errors.is_empty() && !returned.is_empty(),
+            "complete sync requires returned records and no errors"
+        ),
+        SyncStatus::Partial => ensure!(
+            !sync.errors.is_empty() && !returned.is_empty(),
+            "partial sync requires returned records and errors"
+        ),
+        SyncStatus::Failed => ensure!(
+            !sync.errors.is_empty() && returned.is_empty(),
+            "failed sync requires errors and no returned records"
+        ),
+    }
+    match &sync.scope {
+        Some(SyncScope::FullCatalog) => {
+            ensure!(
+                status != SyncStatus::Partial
+                    && sync.errors.iter().all(|error| error.upstream_id.is_none()),
+                "full catalogs must complete atomically"
+            );
+            if status == SyncStatus::Complete {
+                ensure!(
+                    sync.missing_ids
+                        .iter()
+                        .map(String::as_str)
+                        .eq(record_ids.difference(&returned).copied()),
+                    "sync missing_ids must contain exactly the records not returned"
+                );
+            } else {
+                ensure!(
+                    sync.missing_ids.is_empty(),
+                    "failed catalog cannot declare missing records"
+                );
+            }
+        }
+        Some(SyncScope::SelectedModels { upstream_ids }) => {
+            ensure!(
+                !upstream_ids.is_empty()
+                    && upstream_ids.iter().all(|id| !id.trim().is_empty())
+                    && upstream_ids.windows(2).all(|pair| pair[0] < pair[1]),
+                "selected model IDs must be nonempty, sorted and unique"
+            );
+            ensure!(
+                sync.missing_ids.is_empty(),
+                "selected requests cannot declare missing records"
+            );
+            let mut outcomes = BTreeSet::new();
+            for record in catalog
+                .records
+                .iter()
+                .filter(|record| returned.contains(record.id.as_str()))
+            {
+                ensure!(
+                    record.kind == RecordKind::Model
+                        && upstream_ids.contains(&record.upstream_id)
+                        && outcomes.insert(record.upstream_id.as_str()),
+                    "returned model is outside selected scope"
+                );
+            }
+            for error in &sync.errors {
+                let id = error
+                    .upstream_id
+                    .as_deref()
+                    .context("selected failure requires upstream_id")?;
+                ensure!(
+                    upstream_ids.iter().any(|requested| requested == id) && outcomes.insert(id),
+                    "failure is duplicated or outside selected scope"
+                );
+            }
+            ensure!(
+                outcomes.len() == upstream_ids.len(),
+                "selected scope must account for every request"
+            );
+        }
+        None => ensure!(
+            status == SyncStatus::Failed
+                && sync.missing_ids.is_empty()
+                && sync.errors.iter().all(|error| error.upstream_id.is_none()),
+            "unknown scope is only allowed for a failed attempt"
+        ),
+    }
+    Ok(())
+}
+
 pub fn merge_catalog(
     old: Option<Catalog>,
     incoming: Catalog,
@@ -336,17 +457,33 @@ pub fn merge_catalog(
         incoming.schema_version == SCHEMA_VERSION,
         "unsupported incoming catalog version"
     );
+    let mut sync = incoming.last_sync.unwrap_or_else(|| SyncManifest {
+        scope: Some(SyncScope::FullCatalog),
+        status: Some(SyncStatus::Complete),
+        ..Default::default()
+    });
     ensure!(
-        !incoming.records.is_empty(),
-        "refusing to merge an empty incoming catalog"
+        !incoming.records.is_empty() || sync.status == Some(SyncStatus::Failed),
+        "refusing to merge an empty successful incoming catalog"
+    );
+    ensure!(
+        sync.status != Some(SyncStatus::Failed) || incoming.records.is_empty(),
+        "failed catalog must not replace records"
     );
     let mut records = BTreeMap::new();
     let mut snapshots = BTreeMap::new();
+    let mut previous_success = None;
     if let Some(old) = old {
         ensure!(
             old.source == incoming.source && old.schema_version == SCHEMA_VERSION,
             "catalog source or version mismatch"
         );
+        if let Some(previous) = old.last_sync {
+            previous_success = previous.last_successful_at.or_else(|| {
+                (previous.status.is_none() || previous.status == Some(SyncStatus::Complete))
+                    .then_some(previous.completed_at)
+            });
+        }
         for record in old.records {
             ensure!(
                 records.insert(record.id.clone(), record).is_none(),
@@ -392,23 +529,39 @@ pub fn merge_catalog(
         ensure!(snapshots.contains_key(*id), "unknown merged snapshot: {id}");
     }
     snapshots.retain(|id, _| referenced.contains(id.as_str()));
-    let missing_ids = records
-        .keys()
-        .filter(|id| !incoming_ids.contains(*id))
-        .cloned()
-        .collect();
-    Ok(Catalog {
+    sync.completed_at = completed_at.into();
+    sync.last_successful_at = if sync.status == Some(SyncStatus::Complete) {
+        Some(completed_at.into())
+    } else {
+        previous_success
+    };
+    sync.missing_ids = if sync.status == Some(SyncStatus::Complete)
+        && sync.scope == Some(SyncScope::FullCatalog)
+    {
+        records
+            .keys()
+            .filter(|id| !incoming_ids.contains(*id))
+            .cloned()
+            .collect()
+    } else {
+        Vec::new()
+    };
+    sync.returned_ids = incoming_ids.into_iter().collect();
+    sync.snapshot_ids = incoming_snapshots.into_iter().collect();
+    let catalog = Catalog {
         schema_version: SCHEMA_VERSION,
         source: incoming.source,
-        last_sync: Some(SyncManifest {
-            completed_at: completed_at.into(),
-            returned_ids: incoming_ids.into_iter().collect(),
-            missing_ids,
-            snapshot_ids: incoming_snapshots.into_iter().collect(),
-        }),
+        last_sync: Some(sync),
         snapshots: snapshots.into_values().collect(),
         records: records.into_values().collect(),
-    })
+    };
+    let snapshots = catalog
+        .snapshots
+        .iter()
+        .map(|snapshot| (snapshot.id.as_str(), snapshot))
+        .collect();
+    validate_sync(&catalog, &snapshots)?;
+    Ok(catalog)
 }
 
 fn same_content(old: &Record, new: &Record) -> bool {
@@ -521,6 +674,7 @@ mod tests {
         let repeated = merge_catalog(Some(merged.clone()), incoming, NEXT_SYNC)?;
         let mut expected = merged;
         expected.last_sync.as_mut().unwrap().completed_at = NEXT_SYNC.into();
+        expected.last_sync.as_mut().unwrap().last_successful_at = Some(NEXT_SYNC.into());
         assert_eq!(repeated, expected);
         let latest = catalog(br#"{"data":[{"context":42}],"updated":true}"#);
         let latest_snapshot = latest.snapshots[0].clone();
@@ -554,6 +708,7 @@ mod tests {
         assert_eq!(next.snapshots, first.snapshots);
         let mut expected = first;
         expected.last_sync.as_mut().unwrap().completed_at = NEXT_SYNC.into();
+        expected.last_sync.as_mut().unwrap().last_successful_at = Some(NEXT_SYNC.into());
         assert_eq!(next, expected);
 
         let mut returned = catalog(br#"{"data":[{"context":42}]}"#);
@@ -731,5 +886,231 @@ mod tests {
             .unwrap()
             .unit = None;
         assert!(registry(invalid).validate(None).is_err());
+    }
+
+    fn observation_catalog(ids: &[&str], raw: &[u8]) -> Catalog {
+        let mut result = catalog(raw);
+        let record = result.records[0].clone();
+        result.records = ids
+            .iter()
+            .map(|upstream_id| Record {
+                id: format!("test:model:{upstream_id}"),
+                upstream_id: (*upstream_id).into(),
+                name: upstream_id.to_uppercase(),
+                ..record.clone()
+            })
+            .collect();
+        result
+    }
+
+    #[test]
+    fn observation_legacy_manifests_do_not_prove_current_presence_or_absence() -> Result<()> {
+        use crate::model::ObservationStatus;
+
+        let original = observation_catalog(&["a", "b"], b"{}");
+        for record in &original.records {
+            assert_eq!(original.observation(record), ObservationStatus::Unknown);
+        }
+        let synced = merge_catalog(
+            Some(original),
+            observation_catalog(&["a"], b"{}"),
+            FIRST_SYNC,
+        )?;
+        let mut encoded = serde_json::to_value(synced)?;
+        let manifest = encoded["last_sync"].as_object_mut().unwrap();
+        manifest.remove("scope");
+        manifest.remove("status");
+        manifest.remove("last_successful_at");
+        let legacy: Catalog = serde_json::from_value(encoded)?;
+        registry(legacy.clone()).validate(None)?;
+        assert_eq!(
+            legacy.last_sync.as_ref().unwrap().missing_ids,
+            ["test:model:b"]
+        );
+        for record in &legacy.records {
+            assert_eq!(legacy.observation(record), ObservationStatus::Unknown);
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn observation_selected_failures_preserve_records_and_recovery_clears_errors() -> Result<()> {
+        use crate::model::{ObservationStatus, SyncFailure};
+
+        let old = observation_catalog(&["a", "b", "c"], b"{}");
+        let mut incoming = observation_catalog(&["a"], br#"{"updated":true}"#);
+        incoming.last_sync = Some(SyncManifest {
+            scope: Some(SyncScope::SelectedModels {
+                upstream_ids: vec!["a".into(), "b".into(), "new".into()],
+            }),
+            status: Some(SyncStatus::Partial),
+            errors: ["b", "new"]
+                .into_iter()
+                .map(|id| SyncFailure {
+                    upstream_id: Some(id.into()),
+                    message: "request failed".into(),
+                })
+                .collect(),
+            ..Default::default()
+        });
+        let incoming_snapshot = incoming.snapshots[0].id.clone();
+        let partial = merge_catalog(Some(old.clone()), incoming, FIRST_SYNC)?;
+        registry(partial.clone()).validate(None)?;
+        assert_eq!(partial.records, old.records);
+        assert_eq!(partial.snapshots.len(), 2);
+        let sync = partial.last_sync.as_ref().unwrap();
+        assert_eq!(sync.snapshot_ids, [incoming_snapshot]);
+        assert!(sync.missing_ids.is_empty());
+        assert_eq!(sync.last_successful_at, None);
+        assert_eq!(
+            partial.observation(&partial.records[0]),
+            ObservationStatus::Observed
+        );
+        assert_eq!(
+            partial.observation(&partial.records[1]),
+            ObservationStatus::Failed
+        );
+        assert_eq!(
+            partial.observation(&partial.records[2]),
+            ObservationStatus::NotRequested
+        );
+
+        let mut incoming = observation_catalog(&["a", "b", "new"], br#"{"recovered":true}"#);
+        incoming.last_sync = Some(SyncManifest {
+            scope: partial.last_sync.as_ref().unwrap().scope.clone(),
+            status: Some(SyncStatus::Complete),
+            ..Default::default()
+        });
+        let recovered = merge_catalog(Some(partial), incoming, NEXT_SYNC)?;
+        registry(recovered.clone()).validate(None)?;
+        let sync = recovered.last_sync.as_ref().unwrap();
+        assert!(sync.errors.is_empty());
+        assert!(sync.missing_ids.is_empty());
+        assert_eq!(sync.last_successful_at.as_deref(), Some(NEXT_SYNC));
+        assert_eq!(recovered.records.len(), 4);
+        for record in &recovered.records {
+            assert_eq!(
+                recovered.observation(record),
+                if record.upstream_id == "c" {
+                    ObservationStatus::NotRequested
+                } else {
+                    ObservationStatus::Observed
+                }
+            );
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn observation_failed_catalog_retains_evidence_and_previous_success() -> Result<()> {
+        use crate::model::{ObservationStatus, SyncFailure};
+
+        let old = merge_catalog(None, observation_catalog(&["a", "b"], b"{}"), FIRST_SYNC)?;
+        let mut incoming = observation_catalog(&[], b"{}");
+        incoming.snapshots.clear();
+        incoming.last_sync = Some(SyncManifest {
+            scope: Some(SyncScope::FullCatalog),
+            status: Some(SyncStatus::Failed),
+            errors: vec![SyncFailure {
+                upstream_id: None,
+                message: "page request failed".into(),
+            }],
+            ..Default::default()
+        });
+        let failed = merge_catalog(Some(old.clone()), incoming, NEXT_SYNC)?;
+        registry(failed.clone()).validate(None)?;
+        assert_eq!(failed.records, old.records);
+        assert_eq!(failed.snapshots, old.snapshots);
+        let sync = failed.last_sync.as_ref().unwrap();
+        assert!(sync.returned_ids.is_empty());
+        assert!(sync.missing_ids.is_empty());
+        assert!(sync.snapshot_ids.is_empty());
+        assert_eq!(sync.last_successful_at.as_deref(), Some(FIRST_SYNC));
+        for record in &failed.records {
+            assert_eq!(failed.observation(record), ObservationStatus::Failed);
+        }
+
+        let mut unknown = failed.clone();
+        unknown.last_sync.as_mut().unwrap().scope = None;
+        registry(unknown.clone()).validate(None)?;
+        for record in &unknown.records {
+            assert_eq!(unknown.observation(record), ObservationStatus::Unknown);
+        }
+
+        let recovered = merge_catalog(Some(failed), observation_catalog(&["a"], b"{}"), NEXT_SYNC)?;
+        registry(recovered.clone()).validate(None)?;
+        assert!(recovered.last_sync.as_ref().unwrap().errors.is_empty());
+        assert_eq!(
+            recovered.last_sync.as_ref().unwrap().missing_ids,
+            ["test:model:b"]
+        );
+        assert_eq!(
+            recovered.observation(&recovered.records[0]),
+            ObservationStatus::Observed
+        );
+        assert_eq!(
+            recovered.observation(&recovered.records[1]),
+            ObservationStatus::Missing
+        );
+        Ok(())
+    }
+
+    #[test]
+    fn observation_manifest_rejects_ambiguous_or_unaccounted_request_outcomes() -> Result<()> {
+        use crate::model::SyncFailure;
+
+        let mut incoming = observation_catalog(&["a"], b"{}");
+        incoming.last_sync = Some(SyncManifest {
+            scope: Some(SyncScope::SelectedModels {
+                upstream_ids: vec!["a".into(), "b".into()],
+            }),
+            status: Some(SyncStatus::Partial),
+            errors: vec![SyncFailure {
+                upstream_id: Some("b".into()),
+                message: "request failed".into(),
+            }],
+            ..Default::default()
+        });
+        let partial = merge_catalog(None, incoming, FIRST_SYNC)?;
+        registry(partial.clone()).validate(None)?;
+        for (field, value) in [
+            ("scope", Value::Null),
+            ("scope", json!({"kind":"full_catalog"})),
+            (
+                "scope",
+                json!({"kind":"selected_models","upstream_ids":["a","b","c"]}),
+            ),
+            (
+                "scope",
+                json!({"kind":"selected_models","upstream_ids":["a","a","b"]}),
+            ),
+            ("status", Value::Null),
+            ("status", json!("complete")),
+            ("status", json!("failed")),
+            ("missing_ids", json!(["test:model:a"])),
+            ("returned_ids", json!(["test:model:unknown"])),
+            ("errors", json!([])),
+            ("errors", json!([{"upstream_id":"a","message":"failed"}])),
+            ("errors", json!([{"upstream_id":"c","message":"failed"}])),
+            ("errors", json!([{"message":"failed"}])),
+            ("errors", json!([{"upstream_id":"b","message":" "}])),
+            (
+                "errors",
+                json!([
+                    {"upstream_id":"b","message":"failed"},
+                    {"upstream_id":"b","message":"failed again"}
+                ]),
+            ),
+            ("last_successful_at", json!(NEXT_SYNC)),
+        ] {
+            let mut value_catalog = serde_json::to_value(&partial)?;
+            value_catalog["last_sync"][field] = value.clone();
+            let invalid: Catalog = serde_json::from_value(value_catalog)?;
+            assert!(
+                registry(invalid).validate(None).is_err(),
+                "{field}: {value}"
+            );
+        }
+        Ok(())
     }
 }

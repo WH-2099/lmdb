@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, bail, ensure};
 use pulldown_cmark::{Options, Parser, html};
 use reqwest::Url;
 use scraper::{ElementRef, Html, Selector};
@@ -24,6 +24,7 @@ impl Page {
             .context("document response is not UTF-8")?
             .to_owned();
         let rendered = match source.format {
+            Format::Pdf => bail!("PDF documents require the PDF extractor"),
             Format::Html => raw.clone(),
             Format::Markdown => {
                 let mut rendered = String::new();
@@ -75,11 +76,58 @@ impl Page {
             .collect();
         path.reverse();
         let prefix = match self.format {
+            Format::Pdf => unreachable!("PDF documents have no DOM"),
             Format::Html => "css:",
             Format::Markdown => "markdown-rendered-css:",
         };
         format!("{prefix}{}", path.join(" > "))
     }
+}
+
+/// Known parsers establish identity through their scoped claims and selected passages.
+/// Directory success requires the source's own card/row selector to yield an entry.
+pub(super) fn require_content(source: &PageSource, page: &Page, out: &Extraction) -> Result<()> {
+    let recognized = match source.kind {
+        DocumentKind::Directory => !out.catalog_entries.is_empty(),
+        DocumentKind::ReleaseBlog => !out.claims.is_empty() || !out.passages.is_empty(),
+        DocumentKind::ModelCard | DocumentKind::ModelPage | DocumentKind::Documentation => {
+            !out.claims.is_empty()
+                || out
+                    .passages
+                    .iter()
+                    .any(|passage| !passage.records.is_empty())
+        }
+    };
+    // These pages intentionally publish descriptive text without a field extractor.
+    let descriptive_page = match source.id.as_str() {
+        "openai-gpt41-blog" => {
+            page.select("article h1, main h1")
+                .iter()
+                .any(|node| text(*node).contains("GPT-4.1"))
+                && page
+                    .select("article p, main p")
+                    .iter()
+                    .any(|node| text(*node).contains("GPT-4.1"))
+        }
+        "xai-code-model" => {
+            page.select("main h1")
+                .iter()
+                .any(|node| text(*node) == "Grok Code Fast 1")
+                && page
+                    .select("main p, main table, main dl")
+                    .iter()
+                    .any(|node| !text(*node).is_empty())
+        }
+        _ => false,
+    };
+    ensure!(
+        recognized || descriptive_page,
+        "{}: expected {:?} identity or content structure was absent; response may be an application shell or changed page. {}",
+        source.id,
+        source.kind,
+        out.warnings.join(" ")
+    );
+    Ok(())
 }
 
 pub fn text(element: ElementRef<'_>) -> String {
@@ -479,6 +527,7 @@ mod tests {
 
     fn source(format: Format, url: &str) -> PageSource {
         PageSource {
+            repository: None,
             id: "test".into(),
             vendor: "openai".into(),
             kind: DocumentKind::ReleaseBlog,
