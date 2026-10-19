@@ -1,0 +1,182 @@
+{
+  "observed_date": "2026-10-19",
+  "code_and_catalog_baseline": "fde0614",
+  "purpose": "Research observations; not production source contracts or imported model facts",
+  "current_huggingface_snapshot_inventory": {
+    "records": 151,
+    "missing_snapshots": [],
+    "field_presence_counts": {
+      "cardData/language": 82,
+      "cardData/model-index": 8,
+      "config/tokenizer_config": 101,
+      "siblings": 151,
+      "config/auto_map": 30,
+      "transformersInfo": 97,
+      "safetensors": 129,
+      "usedStorage": 151,
+      "disabled": 151,
+      "cardData/datasets": 20,
+      "cardData/license_name": 34,
+      "config/num_experts": 1,
+      "config/num_experts_per_tok": 8,
+      "cardData/new_version": 2,
+      "config/quantization_config": 9
+    }
+  },
+  "anonymous_http_observations": [
+    {
+      "url": "https://openrouter.ai/api/v1/models/openai/gpt-4.1/endpoints",
+      "status": 200,
+      "bytes": 3313,
+      "sha256": "0aa255e91f8e89e320107ed340f2ee13c90cee7c22676499eddb5ee38f049a21",
+      "endpoints_count": 3,
+      "provider_sample": {
+        "provider_name": "Azure",
+        "max_completion_tokens": 942818
+      },
+      "scope": "single model; source declarations; anonymous request"
+    },
+    {
+      "url": "https://ai-gateway.vercel.sh/v1/models/openai/gpt-4.1/endpoints",
+      "status": 200,
+      "bytes": 2233,
+      "sha256": "d36400c80d2dd93b7642af1ce5543b695e320c514c52b5f7d331b9c9a5d1d9cd",
+      "endpoints_count": 2,
+      "provider_sample": {
+        "provider_name": "azure",
+        "max_completion_tokens": 32768
+      },
+      "scope": "single model; source declarations; anonymous request"
+    },
+    {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/region_index.json",
+      "status": 200,
+      "bytes": 6302,
+      "sha256": "1f3983528789ce2a519405c5f592e509f7447bf369abd59267100c3b50fac3d7",
+      "counts": {
+        "regions": 36
+      },
+      "scope": "requested resource or filtered page only"
+    },
+    {
+      "url": "https://prices.azure.com/api/retail/prices?%24filter=serviceName+eq+%27Cognitive+Services%27+and+contains%28productName%2C+%27Azure+OpenAI%27%29+and+armRegionName+eq+%27eastus%27",
+      "status": 200,
+      "bytes": 125,
+      "sha256": "d05e6f94eecce83d548e0b39f3f76ef094c8653c0b9747f93828be4ad6134691",
+      "counts": {
+        "Items": 0
+      },
+      "scope": "requested resource or filtered page only"
+    },
+    {
+      "url": "https://assets.ngc.nvidia.com/products/api-catalog/featured-models.json",
+      "status": 200,
+      "bytes": 773,
+      "sha256": "e0c661949af0309d70188d6ea81e8ccb6b1e0bbd57857ce8f1a319463e371b82",
+      "counts": {
+        "featured-models": 4
+      },
+      "scope": "requested resource or filtered page only"
+    },
+    {
+      "url": "https://prices.azure.com/api/retail/prices?$filter=contains(productName,%27OpenAI%27)",
+      "status": 200,
+      "bytes": 613427,
+      "sha256": "87bd83dc584b17de6b0ffe17324024cfea0063f929b70bb40fc83f7aa532729a",
+      "scope": "one page, pagination incomplete",
+      "counts": {
+        "items": 1000
+      },
+      "observed_service_names": [
+        "Foundry Models"
+      ]
+    },
+    {
+      "url": "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/20261016210806/ap-northeast-3/index.json",
+      "status": 200,
+      "bytes": 98812,
+      "sha256": "e8d03edcf839ea94bbc8a8cb79d709783f259525c2c333a2137a381004b937b8",
+      "scope": "one fixed-version region",
+      "counts": {
+        "items": 71
+      },
+      "observed_service_names": null
+    },
+    {
+      "url": "https://api.elevenlabs.io/v1/models",
+      "status": 404,
+      "repeat_count": 2,
+      "error_code": "workspace_not_found",
+      "scope": "anonymous request; docs mark key optional; authenticated path not tested"
+    },
+    {
+      "url": "https://datasets-server.huggingface.co/rows?dataset=lmarena-ai%2Fleaderboard-dataset&config=text_style_control&split=latest&offset=0&length=1",
+      "status": 200,
+      "bytes": 1316,
+      "sha256": "59e3d19c7404f6e6789fd0f17674554157354170d6a930129ec345adc033ac2e",
+      "scope": "anonymous metadata or contract sample; no inference"
+    },
+    {
+      "url": "https://huggingface.co/api/datasets/lmarena-ai/leaderboard-dataset",
+      "status": 200,
+      "bytes": 23603,
+      "sha256": "b44abe87641407514cdccda4c6d47f295b732aab72137ccbdf85a815731ba9b2",
+      "scope": "anonymous metadata or contract sample; no inference"
+    },
+    {
+      "url": "https://huggingface.co/api/models/Qwen/Qwen3.5-397B-A17B?expand=evalResults",
+      "status": 200,
+      "bytes": 6744,
+      "sha256": "f7e526db8dbe166f373b0b4ad2640d78280f575e28edea0c8da74a18896cf0b0",
+      "scope": "anonymous metadata or contract sample; no inference"
+    },
+    {
+      "url": "https://artificialanalysis.ai/api/v2/openapi",
+      "status": 200,
+      "bytes": 206396,
+      "sha256": "e66daecd874b80cf692429fc6b908d6e520d7cececde807f5ff108d23f735e33",
+      "scope": "anonymous metadata or contract sample; no inference"
+    },
+    {
+      "url": "https://huggingface.co/api/models/Qwen/Qwen3-235B-A22B?blobs=true",
+      "status": 200,
+      "bytes": 38066,
+      "sha256": "7ed816f875ac464f59646b13b800d9e69d3ed9970dd5f2b4c70d18d350d83605",
+      "scope": "file metadata only; no weights downloaded"
+    }
+  ],
+  "local_reproductions": {
+    "identity_validation": {
+      "raw": {
+        "id": "example/real-model",
+        "name": "Real Model",
+        "author": "example"
+      },
+      "saved_identity": {
+        "id": "huggingface:model:example/invented-model",
+        "upstream_id": "example/invented-model",
+        "name": "Invented Model"
+      },
+      "unchanged_fact": {
+        "publisher": {
+          "value": "example",
+          "pointer": "/author"
+        }
+      },
+      "command": "lmdb --root ISOLATED_FIXTURE validate --evidence",
+      "exit_code": 0,
+      "raw_sha256": "d1779e3470d0abe045a4b68e67f01bb3f1cc73014346ee2aba43dc7d2b94bcee"
+    },
+    "document_extraction": {
+      "source_id": "openai-gpt41-model",
+      "prior_claims": 12,
+      "prior_passages": 1,
+      "input": "<html><head><title>Please wait</title></head><body><div id=\"app\"></div></body></html>",
+      "result": "Ok",
+      "claims": 0,
+      "passages": 0,
+      "warnings": 2,
+      "production_catalog_modified": false
+    }
+  }
+}
